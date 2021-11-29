@@ -1,0 +1,528 @@
+﻿@model IEnumerable<issDomain.Models.SiteDetails>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    .addNew {
+        padding: 5px;
+        background-color: #FF5F04;
+        color: white;
+        float: right;
+        margin: 10px;
+        border-radius: 3px;
+        text-decoration: none;
+    }
+
+        .addNew:hover {
+            text-decoration: none;
+        }
+</style>
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Project - Index Page
+    </div>
+    <div class="panel panel-body">
+        @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+        <table class="table" id="AGMaster">
+            <thead>
+                <tr>
+                    <th>
+                        <label>Project Date</label>
+                    </th>
+                    <th>
+                        <label>Project Name</label>
+                    </th>
+                    <th>
+                        <label>Site Name</label>
+                    </th>
+                    <th>
+                        <label>Site Address </label>
+                    </th>
+                    <th>
+                        <label>Client Name</label>
+                    </th>
+                    <th>
+                        <label>Supervisor Name</label>
+                    </th>
+
+                    <th>
+                        <label>Created Date</label>
+                    </th>
+                    <th>
+                        <label>Updated By</label>
+                    </th>
+                    <th>
+                        <label>Updated Date</label>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClientName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SupervisorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdateBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdatedDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#AGMaster').DataTable({
+            dom: 'Bfrtip',
+
+            buttons: [
+                'copy',
+                {
+                    extend: 'excel',
+                    title: function () {
+                        var printTitle = 'New Title';
+                        return printTitle
+                    }
+                   // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                },
+                {
+                    extend: 'pdf',
+                  //  messageBottom: null
+                },
+                {
+                    extend: 'print',
+                }
+
+            ]
+        });
+
+    });
+</script>
+
+
+@*<h2>Site Details</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SiteName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SiteAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobileNo1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobileNo2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReffBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReffContactNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Branch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NatureOfWork)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupervisorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Length)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Breath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sqrft)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BuildupArea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FSI)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoOfFloor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CostPerSqrft)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdditionalCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NetCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoOfColoumn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeasurmentOfBelt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payment1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payment2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payment3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payment4)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payment5)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payment1Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payment2Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payment3Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payment4Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.payment5Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeOfWork)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Field)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenderName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenderEMDCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkAllocated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AgreementTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecurityDeposit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdditionalSD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusinessFund)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reduction)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenderDD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BankName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DDNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DDDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RefundDate)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.isDeleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SiteName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SiteAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNo1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNo2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReffBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReffContactNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NatureOfWork)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupervisorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Breath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sqrft)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuildupArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FSI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfFloor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostPerSqrft)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdditionalCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NetCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfColoumn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeasurmentOfBelt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment4)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment5)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment1Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment2Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment3Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment4Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.payment5Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfWork)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Field)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenderName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenderEMDCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkAllocated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AgreementTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecurityDeposit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdditionalSD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BusinessFund)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reduction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenderDD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DDNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DDDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RefundDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            </td>
+        </tr>
+    }
+
+    </table>*@

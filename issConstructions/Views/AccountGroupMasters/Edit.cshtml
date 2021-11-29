@@ -1,0 +1,72 @@
+﻿@model issDomain.Models.AccountGroupMaster
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="panel-group">
+
+    <div class="panel panel-heading header">
+        Account Group - Edit Page
+    </div>
+    <div class="panel panel-body">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label>Group Name</label>
+
+                @Html.EditorFor(model => model.GroupName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GroupName, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group  col-md-4">
+                <label>Parent Group</label>
+
+                @Html.EditorFor(model => model.ParentGroup, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ParentGroup, "", new { @class = "text-danger" })
+
+            </div>
+
+        </div>
+        <div class="form-group" style="float:right">
+            <input type="submit" value="Save" class="btn btn-default" />
+            @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+        </div>
+    </div>
+
+    
+</div>
+    
+}
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+

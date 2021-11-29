@@ -1,0 +1,842 @@
+﻿@model issDomain.Models.SiteDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<style>
+    #AccountGroupMaster {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+
+    #AccountGroupMaster td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #AccountGroupMaster tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #AccountGroupMaster tr:hover {
+        background-color: #ddd;
+    }
+
+    #AccountGroupMaster th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    #btn-edit a:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+    #btn-edit a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+</style>
+
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Project Details Page
+    </div>
+    <div class="panel panel-body">
+
+        <table id="AccountGroupMaster">
+            <tr>
+                <th>Project Date</th>
+                <td>  @Html.DisplayFor(model => model.ProjectDate)</td>
+            </tr>
+
+            <tr>
+                <th>Project Name</th>
+                <td>  @Html.DisplayFor(model => model.ProjectName)</td>
+            </tr>
+            <tr>
+                <th>Site Name</th>
+                <td>  @Html.DisplayFor(model => model.SiteName)</td>
+            </tr>
+            <tr>
+                <th>Site Address</th>
+                <td>  @Html.DisplayFor(model => model.SiteAddress)</td>
+            </tr>
+            <tr>
+                <th>Client Name</th>
+                <td>  @Html.DisplayFor(model => model.ClientName)</td>
+            </tr>
+            <tr>
+                <th>Client Address</th>
+                <td>  @Html.DisplayFor(model => model.ClientAddress)</td>
+            </tr>
+            <tr>
+                <th>Mobile No</th>
+                <td>  @Html.DisplayFor(model => model.MobileNo1)</td>
+            </tr>
+            <tr>
+                <th>Mobile No</th>
+                <td>  @Html.DisplayFor(model => model.MobileNo2)</td>
+            </tr>
+            <tr>
+                <th>Email ID</th>
+                <td>  @Html.DisplayFor(model => model.Email1)</td>
+            </tr>
+            <tr>
+                <th>Email ID</th>
+                <td>  @Html.DisplayFor(model => model.Email2)</td>
+            </tr>
+            <tr>
+                <th>Date of Start</th>
+                <td>  @Html.DisplayFor(model => model.DateOfStart)</td>
+            </tr>
+            <tr>
+                <th>Refered By</th>
+                <td>  @Html.DisplayFor(model => model.ReffBy)</td>
+            </tr>
+            <tr>
+                <th>Referer Contact No</th>
+                <td>  @Html.DisplayFor(model => model.ReffContactNo)</td>
+            </tr>
+            <tr>
+                <th>Branch</th>
+                <td>  @Html.DisplayFor(model => model.Branch)</td>
+            </tr>
+            <tr>
+                <th>Nature of Work</th>
+                <td>  @Html.DisplayFor(model => model.NatureOfWork)</td>
+            </tr>
+            <tr>
+                <th>Work Status</th>
+                <td>  @Html.DisplayFor(model => model.WorkStatus)</td>
+            </tr>
+            <tr>
+                <th>Client Type </th>
+                <td>  @Html.DisplayFor(model => model.ClientType)</td>
+            </tr>
+            <tr>
+                <th>Supervisor Name </th>
+                <td>  @Html.DisplayFor(model => model.SupervisorName)</td>
+            </tr>
+            <tr>
+                <th>Length </th>
+                <td>  @Html.DisplayFor(model => model.Length)</td>
+            </tr>
+            <tr>
+                <th>Breath</th>
+                <td>  @Html.DisplayFor(model => model.Breath)</td>
+            </tr>
+            <tr>
+                <th>Square Foot </th>
+                <td>  @Html.DisplayFor(model => model.Sqrft)</td>
+            </tr>
+            <tr>
+                <th>Buildup Area</th>
+                <td>  @Html.DisplayFor(model => model.BuildupArea)</td>
+            </tr>
+            <tr>
+                <th>FSI</th>
+                <td>  @Html.DisplayFor(model => model.FSI)</td>
+            </tr>
+            <tr>
+                <th>No of Floor</th>
+                <td>  @Html.DisplayFor(model => model.NoOfFloor)</td>
+            </tr>
+            <tr>
+                <th>Cost per Square Foot </th>
+                <td>  @Html.DisplayFor(model => model.CostPerSqrft)</td>
+            </tr>
+            <tr>
+                <th>Total Cost</th>
+                <td>  @Html.DisplayFor(model => model.TotalCost)</td>
+            </tr>
+            <tr>
+                <th>Additional Cost</th>
+                <td>  @Html.DisplayFor(model => model.AdditionalCost)</td>
+            </tr>
+            <tr>
+                <th>Net Cost</th>
+                <td>  @Html.DisplayFor(model => model.NetCost)</td>
+            </tr>
+            <tr>
+                <th>Additional Cost</th>
+                <td>  @Html.DisplayFor(model => model.AdditionalCost)</td>
+            </tr>
+            <tr>
+                <th>Net Cost</th>
+                <td>  @Html.DisplayFor(model => model.NetCost)</td>
+            </tr>
+            <tr>
+                <th>No of Column</th>
+                <td>  @Html.DisplayFor(model => model.NoOfColoumn)</td>
+            </tr>
+            <tr>
+                <th>Measurement of Belt</th>
+                <td>  @Html.DisplayFor(model => model.MeasurmentOfBelt)</td>
+            </tr>
+            <tr>
+                <th>Payment 1</th>
+                <td>  @Html.DisplayFor(model => model.payment1)</td>
+            </tr>
+            <tr>
+                <th>Payment 1 Description</th>
+                <td>  @Html.DisplayFor(model => model.payment1Description)</td>
+            </tr>
+            <tr>
+                <th>Payment 2</th>
+                <td>  @Html.DisplayFor(model => model.payment2)</td>
+            </tr>
+            <tr>
+                <th>Payment 2 Description</th>
+                <td>  @Html.DisplayFor(model => model.payment2Description)</td>
+            </tr>
+            <tr>
+                <th>Payment 3</th>
+                <td>  @Html.DisplayFor(model => model.payment3)</td>
+            </tr>
+            <tr>
+                <th>Payment 3 Description</th>
+                <td>  @Html.DisplayFor(model => model.payment3Description)</td>
+            </tr>
+            <tr>
+                <th>Payment 4</th>
+                <td>  @Html.DisplayFor(model => model.payment4)</td>
+            </tr>
+            <tr>
+                <th>Payment 4 Description</th>
+                <td>  @Html.DisplayFor(model => model.payment4Description)</td>
+            </tr>
+            <tr>
+                <th>Payment 5</th>
+                <td>  @Html.DisplayFor(model => model.payment5)</td>
+            </tr>
+            <tr>
+                <th>Payment 5 Description</th>
+                <td>  @Html.DisplayFor(model => model.payment5Description)</td>
+            </tr>
+            <tr>
+                <th>Type of Work</th>
+                <td>  @Html.DisplayFor(model => model.TypeOfWork)</td>
+            </tr>
+            <tr>
+                <th>Work Description</th>
+                <td>  @Html.DisplayFor(model => model.WorkDescription)</td>
+            </tr>
+            <tr>
+                <th>Field </th>
+                <td>  @Html.DisplayFor(model => model.Field)</td>
+            </tr>
+            <tr>
+                <th>Department</th>
+                <td>  @Html.DisplayFor(model => model.Department)</td>
+            </tr>
+            <tr>
+                <th>Tender Name</th>
+                <td>  @Html.DisplayFor(model => model.TenderName)</td>
+            </tr>
+            <tr>
+                <th>Tender Date</th>
+                <td>  @Html.DisplayFor(model => model.TenderDate)</td>
+            </tr>
+            <tr>
+                <th>Tender EMD Cost</th>
+                <td>  @Html.DisplayFor(model => model.TenderEMDCost)</td>
+            </tr>
+            <tr>
+                <th>Work Allocated</th>
+                <td>  @Html.DisplayFor(model => model.WorkAllocated)</td>
+            </tr>
+            <tr>
+                <th>Agreement Time</th>
+                <td>  @Html.DisplayFor(model => model.AgreementTime)</td>
+            </tr>
+            <tr>
+                <th>Security Desposit </th>
+                <td>  @Html.DisplayFor(model => model.SecurityDeposit)</td>
+            </tr>
+            <tr>
+                <th>Business Fund</th>
+                <td>  @Html.DisplayFor(model => model.BusinessFund)</td>
+            </tr>
+            <tr>
+                <th>Additional SD</th>
+                <td>  @Html.DisplayFor(model => model.AdditionalSD)</td>
+            </tr>
+            <tr>
+                <th>Reduction</th>
+                <td>  @Html.DisplayFor(model => model.Reduction)</td>
+            </tr>
+            <tr>
+                <th>Tender DD</th>
+                <td>  @Html.DisplayFor(model => model.TenderDD)</td>
+            </tr>
+            <tr>
+                <th>Bank Name</th>
+                <td>  @Html.DisplayFor(model => model.BankName)</td>
+            </tr>
+            <tr>
+                <th>DD No</th>
+                <td>  @Html.DisplayFor(model => model.DDNo)</td>
+            </tr>
+            <tr>
+                <th>DD Date</th>
+                <td>  @Html.DisplayFor(model => model.DDDate)</td>
+            </tr>
+            <tr>
+                <th>Refund Date</th>
+                <td>  @Html.DisplayFor(model => model.RefundDate)</td>
+            </tr>
+            <tr>
+                <th> Created Date</th>
+                <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
+            </tr>
+
+            <tr>
+                <th> Updated By</th>
+                <td>  @Html.DisplayFor(model => model.UpdateBy)</td>
+            </tr>
+            <tr>
+                <th> Updated  Date</th>
+                <td>  @Html.DisplayFor(model => model.UpdatedDate)</td>
+            </tr>
+
+        </table>
+
+        <p style="float:right;">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+            @*<button type="button" class = "btn btn-default" id="btn-edit"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </button>*@
+            @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+        </p>
+
+    </div>
+
+
+
+
+</div>
+
+@*<h2>Details</h2>
+
+    <div>
+        <h4>SiteDetails</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.isDeleted)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.isDeleted)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdateBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UpdateBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UpdatedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProjectDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProjectDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProjectName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProjectName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SiteName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SiteName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SiteAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SiteAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ClientName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClientName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ClientAddress)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClientAddress)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MobileNo1)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MobileNo1)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MobileNo2)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MobileNo2)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email1)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email1)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email2)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email2)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateOfStart)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DateOfStart)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ReffBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ReffBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ReffContactNo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ReffContactNo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Branch)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Branch)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NatureOfWork)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NatureOfWork)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.WorkStatus)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WorkStatus)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ClientType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClientType)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SupervisorName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SupervisorName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Length)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Length)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Breath)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Breath)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Sqrft)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Sqrft)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BuildupArea)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BuildupArea)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FSI)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FSI)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NoOfFloor)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NoOfFloor)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CostPerSqrft)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CostPerSqrft)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalCost)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TotalCost)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AdditionalCost)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AdditionalCost)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NetCost)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NetCost)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NoOfColoumn)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NoOfColoumn)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MeasurmentOfBelt)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MeasurmentOfBelt)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.payment1)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.payment1)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.payment2)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.payment2)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.payment3)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.payment3)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.payment4)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.payment4)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.payment5)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.payment5)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.payment1Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.payment2Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.pay)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.payment2Date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.payment3Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.payment3Date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.payment4Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.payment4Date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.payment5Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.payment5Date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TypeOfWork)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TypeOfWork)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.WorkDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WorkDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Field)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Field)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Department)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Department)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TenderName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TenderName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TenderDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TenderDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TenderEMDCost)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TenderEMDCost)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.WorkAllocated)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.WorkAllocated)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AgreementTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AgreementTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SecurityDeposit)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SecurityDeposit)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AdditionalSD)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AdditionalSD)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BusinessFund)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BusinessFund)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Reduction)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Reduction)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TenderDD)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TenderDD)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BankName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BankName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DDNo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DDNo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DDDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DDDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.RefundDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.RefundDate)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

@@ -1,0 +1,164 @@
+﻿@model issDomain.Models.Users
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<style>
+    #AccountGroupMaster {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+
+    #AccountGroupMaster td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #AccountGroupMaster tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #AccountGroupMaster tr:hover {
+        background-color: #ddd;
+    }
+
+    #AccountGroupMaster th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    #btn-edit a:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+    #btn-edit a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+</style>
+
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Users -  Details Page
+    </div>
+    <div class="panel panel-body">
+
+        <table id="AccountGroupMaster">
+            <tr>
+                <th>Select User Type</th>
+                <td>  @Html.DisplayFor(model => model.SelectUserType)</td>
+            </tr>
+
+            <tr>
+                <th>User Name</th>
+                <td>  @Html.DisplayFor(model => model.Username)</td>
+            </tr>
+
+            <tr>
+                <th> Password</th>
+                <td>   @Html.DisplayFor(model => model.Password)</td>
+            </tr>
+
+            
+
+        </table>
+
+        <p style="float:right;">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+            @*<button type="button" class = "btn btn-default" id="btn-edit"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </button>*@
+            @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+        </p>
+
+    </div>
+
+
+
+
+</div>
+
+@*<h2>Details</h2>
+
+    <div>
+        <h4>Users</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.SelectUserType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SelectUserType)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Username)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Username)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Password)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.isDeleted)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.isDeleted)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdateBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UpdateBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UpdatedDate)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

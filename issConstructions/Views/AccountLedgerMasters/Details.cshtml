@@ -1,0 +1,183 @@
+﻿@model issDomain.Models.AccountLedgerMaster
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<style>
+    #AccountGroupMaster {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #AccountGroupMaster th {
+            max-width: 50%;
+        }
+
+        #AccountGroupMaster td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #AccountGroupMaster tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #AccountGroupMaster tr:hover {
+            background-color: #ddd;
+        }
+
+        #AccountGroupMaster th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+    #btn-edit a:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+    #btn-edit a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+</style>
+
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Account Ledger -  Details Page
+    </div>
+    <div class="panel panel-body">
+
+        <table id="AccountGroupMaster">
+            <tr>
+                <th>Account Ledger</th>
+                <td>  @Html.DisplayFor(model => model.AccountLedger)</td>
+            </tr>
+
+            <tr>
+                <th>Account Group</th>
+                <td>  @Html.DisplayFor(model => model.AccountGroup.GroupName)</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>  @Html.DisplayFor(model => model.Type)</td>
+            </tr>
+            <tr>
+                <th> Created Date</th>
+                <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
+            </tr>
+
+            <tr>
+                <th> Updated By</th>
+                <td>  @Html.DisplayFor(model => model.UpdateBy)</td>
+            </tr>
+            <tr>
+                <th> Updated  Date</th>
+                <td>  @Html.DisplayFor(model => model.UpdatedDate)</td>
+            </tr>
+
+        </table>
+        <br />
+
+        <p style="float:right;">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+            @*<button type="button" class = "btn btn-default" id="btn-edit"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </button>*@
+            @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+        </p>
+
+    </div>
+
+
+
+
+</div>
+@*<div>
+        <h4>AccountLedgerMaster</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.AccountLedger)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AccountLedger)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AccountGroup)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AccountGroup)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.OpeningBal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.OpeningBal)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.isDeleted)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.isDeleted)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdateBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UpdateBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UpdatedDate)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
