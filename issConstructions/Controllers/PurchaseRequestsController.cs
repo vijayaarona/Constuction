@@ -84,11 +84,21 @@ namespace issConstructions.Controllers
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult SupplierAddressId(int SUPPLIERNAME)
+        public JsonResult SupplierAddressId(int LOCATION)
         {
-            if (SUPPLIERNAME > 0)
+            if (LOCATION > 0)
             {
-                var resp = db.supplierMasters.Where(x => x.SupplierId == SUPPLIERNAME).ToList();
+                var resp = db.supplierMasters.Where(x => x.SupplierId == LOCATION).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult ProjectId(int NSITE)
+        {
+            if (NSITE > 0)
+            {
+                var resp = db.siteDetails.Where(x => x.ProjectId == NSITE).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
