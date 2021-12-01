@@ -43,7 +43,7 @@ namespace issConstructions.Controllers
             ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address");
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName");
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName");
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress");
+            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress")
 
             return View();
         }
