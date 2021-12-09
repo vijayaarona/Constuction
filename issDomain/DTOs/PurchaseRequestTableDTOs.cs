@@ -11,6 +11,7 @@ namespace issDomain.DTOs
         public int ID { get; set; }
         public int purchaseRequestId { get; set; }
         public int productId { get; set; }
+        public int productTax { get; set; }
         public string Description { get; set; }
         public string Rate { get; set; }
         public string Quantity { get; set; }

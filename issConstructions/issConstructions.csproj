@@ -154,6 +154,14 @@
     <Compile Include="Migrations\202111261124343_m2.designer.cs">
       <DependentUpon>202111261124343_m2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112080530171_m5.cs" />
+    <Compile Include="Migrations\202112080530171_m5.designer.cs">
+      <DependentUpon>202112080530171_m5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112080535367_m6.cs" />
+    <Compile Include="Migrations\202112080535367_m6.designer.cs">
+      <DependentUpon>202112080535367_m6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -306,6 +314,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111261124343_m2.resx">
       <DependentUpon>202111261124343_m2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112080530171_m5.resx">
+      <DependentUpon>202112080530171_m5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112080535367_m6.resx">
+      <DependentUpon>202112080535367_m6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

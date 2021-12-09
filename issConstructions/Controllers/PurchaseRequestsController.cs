@@ -1,6 +1,7 @@
 ﻿using issConstructions.Models;
 using issDomain.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace issConstructions.Controllers
         // GET: PurchaseRequests
         public ActionResult Index()
         {
-            var purchaseRequest = db.purchaseRequest.Include(p => p.Category).Include(p => p.Supplier);
+            var purchaseRequest = db.purchaseRequest.Include(p => p.Category).Include(p => p.Supplier).Include(p => p.SiteDetails);
             return View(purchaseRequest.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
 
@@ -44,6 +45,26 @@ namespace issConstructions.Controllers
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName");
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName");
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress");
+
+            //Product
+
+            var listItems = new SelectList(db.productMasters, "ID", "ProductName");
+            List<SelectListItem> Product = new List<SelectListItem>();
+            foreach (var item in db.productMasters.ToList())
+            {
+                Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
+            }
+            ViewBag.ProductId = Product;
+
+            //Tax
+
+            var listsItem = new SelectList(db.productMasters, "ID", "Tax");
+            List<SelectListItem> Tax = new List<SelectListItem>();
+            foreach (var items in db.productMasters.ToList())
+            {
+                Tax.Add(new SelectListItem { Text = items.Tax, Value = items.ID.ToString() });
+            }
+            ViewBag.ProductTax = Tax;
 
             return View();
         }
@@ -73,6 +94,7 @@ namespace issConstructions.Controllers
 
             return View(purchaseRequest);
         }
+
         [HttpPost]
         public JsonResult SupplierId(int NAME)
         {
@@ -83,18 +105,40 @@ namespace issConstructions.Controllers
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost]
-        public JsonResult SupplierAddressId(int SUPPLIERNAME)
+        public JsonResult SupplierAddressId(int ADDRESS)
         {
-            if (SUPPLIERNAME > 0)
+            if (ADDRESS > 0)
             {
-                var resp = db.supplierMasters.Where(x => x.SupplierId == SUPPLIERNAME).ToList();
+                var resp = db.supplierMasters.Where(x => x.ID == ADDRESS).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
 
+        [HttpPost]
+        public JsonResult SiteId(int NSITE)
+        {
+            if (NSITE > 0)
+            {
+                var resp = db.siteDetails.Where(x => x.ID == NSITE).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult TaxId(int TAX)
+        {
+            if (TAX > 0)
+            {
+                var resp = db.productMasters.Where(x => x.ID == TAX).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
 
         // GET: PurchaseRequests/Edit/5
         public ActionResult Edit(int? id)

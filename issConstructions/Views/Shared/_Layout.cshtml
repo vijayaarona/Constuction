@@ -45,10 +45,6 @@
     <script src=@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js")></script>
     <script src=@Url.Content("https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js")></script>
     <script src=@Url.Content("https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js")></script>
-
-
-
-
 </head>
 <body style="background-color:#ebcece">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -63,10 +59,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li style="color:white">@Html.ActionLink("Dashboard", "Index", "Home")</li>
+                    <li> @Html.ActionLink("Dashboard", "Index", "Home")</li>
                     <li>
                         <div class="col-md-2">
-                            <a href="#" class="navbar-brand" data-toggle="dropdown" style="font-size:15px !important" aria-expanded="true">Masters</a>
+                            <a href="#" class="navbar-brand" data-toggle="dropdown" style="font-size:15px; color:white !important" aria-expanded="true">Masters</a>
                             <ul class="dropdown-menu" style="font-family:Calibri;padding:5px;background-color:#ebcece;">
 
                                 <li>
@@ -105,7 +101,9 @@
                     <li>@Html.ActionLink("New Project", "Index", "SiteDetails")</li>
                     <li>
                         <div class="col-md-2">
-                            <a href="#" class="navbar-brand" data-toggle="dropdown" style="font-size:15px !important" aria-expanded="true">Transaction</a>
+                            <a href="#" class="navbar-brand" data-toggle="dropdown" style="font-size:15px;color:white !important" aria-expanded="true">
+                                Transaction
+                            </a>
                             <ul class="dropdown-menu" style="font-family:Calibri;padding:5px;background-color:#ebcece;">
                                 <li>@Html.ActionLink("Purchase Request", "Index", "PurchaseRequests")</li>
                                 <li>@Html.ActionLink("Purchase Order", "Index", "PurchaseOrders")</li>
