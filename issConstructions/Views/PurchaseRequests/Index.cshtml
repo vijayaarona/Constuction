@@ -76,47 +76,62 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                <tr>
+                   
+                    @if (@item.RequestDate != null)
+                    {
                         <td>
-                            @Html.DisplayFor(modelItem => item.RequestDate)
+                            @item.RequestDate.Value.ToShortDateString()
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Supplier.address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SiteDetails.ProjectName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SiteDetails.SiteName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SiteDetails.SiteAddress)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.mobileno)
-                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Supplier.address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteDetails.ProjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteDetails.SiteName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteDetails.SiteAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.mobileno)
+                    </td>
 
+                    
+                    @if (@item.CreatedDate != null)
+                    {
                         <td>
-                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                            @item.CreatedDate.Value.ToShortDateString()
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UpdateBy)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UpdatedDate)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                        </td>
-                    </tr>
+                    }
+                    else
+                    {
+                        <td></td>}
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdateBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdatedDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
 
                 }
             </tbody>
@@ -154,156 +169,3 @@
     });
 </script>
 
-@*<h2>Index</h2>
-
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Category.CategoryName)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Product.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Supplier.Suppliername)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupplierAddressId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SiteId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SiteAddressId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.mobileno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.sno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quality)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tax)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RequestBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Remarks)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.isDeleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdateBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDate)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierAddressId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SiteId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SiteAddressId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.mobileno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.sno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quality)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tax)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remarks)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-
-    </table>*@
