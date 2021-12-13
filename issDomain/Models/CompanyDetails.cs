@@ -8,7 +8,7 @@ namespace issDomain.Models
 {
     public class CompanyDetails
     {
-      
+        public int ID { get; set; }
         public string NameoftheCompany { get; set; }
         public string PrintName { get; set; }
         public string Address { get; set; }
@@ -21,6 +21,5 @@ namespace issDomain.Models
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
-        public int ID { get; set; }
     }
 }

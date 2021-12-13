@@ -62,7 +62,7 @@ namespace issConstructions.Controllers
             List<SelectListItem> Tax = new List<SelectListItem>();
             foreach (var items in db.productMasters.ToList())
             {
-                Tax.Add(new SelectListItem { Text = items.Tax, Value = items.ID.ToString() });
+                Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
             }
             ViewBag.ProductTax = Tax;
 

@@ -18,6 +18,9 @@ namespace issDomain.DTOs
         public int SiteId { get; set; }
         public int SiteAddressId { get; set; }
         public string mobileno { get; set; }
+        public decimal NetAmount { get; set; }
+        public string RequestBy { get; set; }
+        public string Remarks { get; set; }
         public bool isDeleted { get; set; } = false;
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }

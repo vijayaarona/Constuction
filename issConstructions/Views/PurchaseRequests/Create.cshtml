@@ -36,11 +36,15 @@
     select #Product, #TaxId {
         max-width: 500px;
     }
+
+    .example-open .modal-backdrop {
+        background-color: transparent;
+    }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -108,11 +112,13 @@
                         <tr>
                             <th>Sl.No</th>
                             <th>Item Name</th>
+                            <th>Rate Of Tax</th>
                             <th>Description</th>
                             <th>Rate</th>
-                            <th>Qty</th>
-                            <th>Tax</th>
+                            <th>Quantity</th>
                             <th>Amount</th>
+                            <th>Tax Amount</th>
+                            <th>Total Amount</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -133,7 +139,8 @@
                                         <form action="createitem">
                                             <div class="form-group col-md-6">
                                                 <label>Product Name</label><br />
-                                                <select id="Product" name="" style="width:356px; height:30px">
+                                                <select id="Product" name="" style="width:352px; height:27px">
+                                                    <option value="0">Please Select</option>
                                                     @foreach (var item in @ViewBag.ProductId)
                                                     {
                                                         <option value="@item.Value">@item.Text</option>
@@ -141,33 +148,35 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label>Rate of Tax</label><br />
-                                                <input type="text" id="TaxId" name="description" size="50" />
+                                                <label style="width:352px; height:27px">Rate of Tax</label><br />
+                                                <input type="text" readonly="readonly" id="TaxId" name="description" size="50" />
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Description</label><br />
+                                            <div class="form-group col-md-6" style="min-height:58px">
+                                                <label style="width:352px; height:27px">Description</label><br />
                                                 <input type="text" id="Description" name="description" size="50" />
                                             </div>
+
+
                                             <div class="form-group col-md-6">
-                                                <label>Rate</label><br />
+                                                <label style="width:352px; height:27px">Rate</label><br />
                                                 <input type="text" id="Rate" name="Rate" size="50" />
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label>Quantity</label><br />
-                                                <input type="text" id="Quality" name="Qty" size="50" />
+                                                <label style="width:352px; height:27px">Quantity</label><br />
+                                                <input type="text" id="Quantity" name="Quantity" size="50" />
                                             </div>
 
                                             <div class="form-group col-md-6">
-                                                <label>Amount</label><br />
-                                                <input type="text" id="Amount" name="Amount" size="50" />
+                                                <label style="width:352px; height:27px">Amount</label><br />
+                                                <input type="text" readonly="readonly" id="Amount" name="Amount" size="50" />
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label>Tax Amount</label><br />
-                                                <input type="text" id="TaxAmount" name="TaxAmount" size="50" />
+                                                <label style="width:352px; height:27px">Tax Amount</label><br />
+                                                <input type="text" id="TaxAmt" name="TaxAmt" size="50" />
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label>Total Amount</label><br />
-                                                <input type="text" id="TotalAmount" name="TotalAmount" size="50" />
+                                                <label style="width:352px; height:27px">Total Amount</label><br />
+                                                <input type="text" id="TotalAmt" readonly="readonly" name="TotalAmt" size="50" />
                                             </div>
                                         </form>
                                     </div>
@@ -175,7 +184,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-save="modal" id="btnSave">Add</button>
+                                <button type="button" class="btn btn-default" data-save="modal" id="btnSave" data-dismiss="modal">Add</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancel()">Close</button>
                             </div>
                         </div>
@@ -186,8 +195,8 @@
             <br />
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label>Net Amount</label>
-
+                    <label>Net Amount:</label>
+                    <label id="netAmt"></label>
                 </div>
                 <div class="form-group col-md-4">
                     <label>Request By</label>
@@ -212,8 +221,9 @@
 }
 
 <script>
-
+    let sNo = 1;
     var lstItems = [];
+    var ntAmt;
     $(document).ready(function ()
     {
         $("#categoryId").change(function ()
@@ -232,7 +242,7 @@
             SiteId(nsite);
         })
 
-        //})
+
         $("#Product").change(function () {
             var taxAmount = $(this).find('option:selected').val();
             TaxId(taxAmount);
@@ -242,52 +252,126 @@
         //    $('#Product').val("");
         //});
         $('#btnSave').click(function () {
-            let newItem = {};
-            newItem.Product = $('#Product ').val();
-            newItem.ProductText = $('#Product option:selected').text();
-            newItem.Description = $('#Description').val();
-            newItem.Rate = $('#Rate').val();
-            newItem.Quality = $('#Quality').val();
-            newItem.Tax = $('#TaxId').val();
-            newItem.Taxtext = $('#TaxId option:selected').text();
-            newItem.Amount = $('#Amount').val();
-            lstItems.push(newItem);
-            console.log(lstItems);
-            bindItems();
+
+
+            if ($('#Product').val() == '' || $('#TaxId').val() == '' || $('#Rate').val() == '' || $('#Quantity').val() == '' || $('#Amount').val() == '' || $('#TaxAmt').val() == '' || $('#TotalAmt').val() == '')
+            {
+                alert('Please fill required Fields');
+
+            } else {
+            
+                let newItem = {};
+                newItem.Product = $('#Product ').val();
+                newItem.ProductText = $('#Product option:selected').text();
+                newItem.TaxT = $('#TaxId').val();
+                newItem.Taxtext = $('#TaxId option:selected').text();
+                newItem.Description = $('#Description').val();
+                newItem.Rate = $('#Rate').val();
+                newItem.Quantity = $('#Quantity').val();
+                newItem.Amount = $('#Amount').val();
+                newItem.TaxAmt = $('#TaxAmt').val();
+                newItem.TotalAmt = $('#TotalAmt').val();
+                newItem.sNo = sNo;
+                lstItems.push(newItem);
+                console.log(lstItems);
+                bindItems();
+            }
+            $('#Product').val(0);
+            $('Description').val('');
+            $('#Rate').val('');
+            $('#TotalAmt').val('');
         });
         function bindItems() {
+
             $("#tblpurchaserequest").empty();
             if (lstItems.length > 0) {
 
                 let sNo = 1;
+                let ntTotal = 0;
                 for (var i = 0; i < lstItems.length; i++)
                 {
                     var row = `<tr id=rm${sNo}>`
                         + `<td>${sNo}</td>`
                         + `<td>${lstItems[i].ProductText}</td>`
+                        + `<td>${lstItems[i].TaxT}</td>`
                         + `<td>${lstItems[i].Description}</td>`
                         + `<td>${lstItems[i].Rate}</td>`
-                        + `<td>${lstItems[i].Quality}</td>`
-                        + `<td>${lstItems[i].Taxtext}</td>`
+                        + `<td>${lstItems[i].Quantity}</td>`
                         + `<td>${lstItems[i].Amount}</td>`
+                        + `<td>${lstItems[i].TaxAmt}</td>`
+                        + `<td>${lstItems[i].TotalAmt}</td>`
                         + `<td>
 
-                                <button type="button" class="btn btn-default id="editbtn" onclick="editBTN("sNo")>Edit</button>
+                                <button type="button" class="btn btn-default id="editbtn" onclick="editBTN(${sNo})">Edit</button>
                                 | <button type="button" class="btn btn-default" onclick="removeTR(${sNo})">Remove</button>
                         </td>`
                         + "</tr>";
+                   let amount = 0;
+                    lstItems[i].TotalAmt != null ? amount = parseFloat(lstItems[i].TotalAmt) : amount = 0;
+                    ntTotal += amount
+                    
                     $('#tblpurchaserequest').append(row);
-                    sNo++;
+                    sNo++;   
                 }
+                $('#netAmt').text(ntTotal.toFixed());
+            }
+            $("#Quantity, #TaxId, #Amount, #TaxAmt").val('');
+        }
+        ////Tax Calulation
+
+        $("#Quantity, #TaxId, #TaxAmt").blur(function () {
+            var productRate = parseFloat($("#Rate").val());
+            var productamt = parseFloat($(this).val() * productRate);
+
+            //Tax Amount
+            var per = $("#TaxId").val();
+            var productQuantit = parseFloat((per / 100) * productamt).toFixed(2);
+
+            //Total Amount
+            var tamt = parseFloat(productamt) + parseFloat(productQuantit);
+            if ($("#Quantity").val()!='')
+            {
+                $("#TotalAmt").val(tamt.toFixed(2));
+                $("#Amount").val(productamt.toFixed(2));
+                $("#TaxAmt").val(productQuantit);
+            }
+
+        })
+    });
+
+    $('#myModal').on('show.bs.modal', function (e)
+    {
+        $('body').addClass("example-open");
+    }).on('hide.bs.modal', function (e) {
+        $('body').removeClass("example-open");
+    })
+
+    function removeTR(item) {
+        $('#rm' + item).remove();
+    }
+
+  
+    function editBTN(item) {
+        debugger
+      
+        for (var i = 1; i < lstItems.length; i++)
+        {
+            debugger
+            
+            if (lstItems[i] == item) {
+
+                console.log(item);  
             }
         }
 
 
-    });
-    function removeTR(item) {
-        $('#rm' + item).remove();
-    }
-    function editBTN() {
+
+        //debugger
+        //var card_value = $(lstItems).eq(sNo).val();
+        //console.log(card_value);
+        //var card_value = lstItems.$(":eq(sNo)").val();
+        //var card_value = lstItems.eq(sNo).val();
+        // var card_value = $("lstItems:eq(sNo)").val();
 
     }
     function SupplierId(name)
@@ -299,8 +383,7 @@
             data: { NAME: name },
                   success: function (result)
                   {
-                      console.log(result)
-                      var data = result;
+                   var data = result;
                       $("#SupplierId").empty();
 
                 for (var i = 0; i < data.length; i++) {
@@ -320,8 +403,7 @@
             dataType: 'json',
                   data: { ADDRESS: address },
                   success: function (result) {
-                      console.log(result)
-                      var data = result;
+                     var data = result;
 
                       $("#SupplierAddressId").empty();
                       for (var i = 0; i < data.length; i++) {
@@ -341,7 +423,6 @@
             dataType: 'json',
                   data: { NSITE: nsite },
                   success: function (result) {
-                      console.log(result)
                       var data = result;
 
                       $("#SiteId").empty();
@@ -366,8 +447,7 @@
                   dataType: 'json',
                   data: { TAX: taxAmount },
                   success: function (result) {
-                      console.log(result)
-                      var data = result;
+                     var data = result;
                       $("#TaxId").empty();
                 for (var i = 0; i < data.length; i++) {
                     //$("#TaxId").append("<option value='" + data[i].ID + "'>" + data[i].Tax + "</option>");
