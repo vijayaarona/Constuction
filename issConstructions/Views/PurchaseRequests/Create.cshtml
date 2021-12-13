@@ -44,7 +44,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -228,21 +227,19 @@
     {
         $("#categoryId").change(function ()
         {
-            var name = $(this).find('option:selected').val();
-           SupplierId(name);
+            var supName = $(this).find('option:selected').val();
+            SupplierId(supName);
         })
         $("#SupplierId").change(function ()
         {
-            var address = $(this).find('option:selected').val();
-            SupplierAddressId(address);
+            var supAddress = $(this).find('option:selected').val();
+            SupplierAddressId(supAddress);
         })
         $("#ProjectId").change(function ()
         {
-            var nsite = $(this).find('option:selected').val();
-            SiteId(nsite);
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
         })
-
-
         $("#Product").change(function () {
             var taxAmount = $(this).find('option:selected').val();
             TaxId(taxAmount);
@@ -363,24 +360,14 @@
                 console.log(item);  
             }
         }
-
-
-
-        //debugger
-        //var card_value = $(lstItems).eq(sNo).val();
-        //console.log(card_value);
-        //var card_value = lstItems.$(":eq(sNo)").val();
-        //var card_value = lstItems.eq(sNo).val();
-        // var card_value = $("lstItems:eq(sNo)").val();
-
     }
-    function SupplierId(name)
+    function SupplierId(supName)
     {
               $.ajax({
             type: 'POST',
             url: '@Url.Content("~/PurchaseRequests/SupplierId")',
             dataType: 'json',
-            data: { NAME: name },
+                  data: { supplier_Name: supName },
                   success: function (result)
                   {
                    var data = result;
@@ -395,13 +382,13 @@
             }
         });
     };
-   function SupplierAddressId(address)
+    function SupplierAddressId(supAddress)
     {
               $.ajax({
             type: 'POST',
             url: '@Url.Content("~/PurchaseRequests/SupplierAddressId")',
             dataType: 'json',
-                  data: { ADDRESS: address },
+                  data: { supplier_Address: supAddress },
                   success: function (result) {
                      var data = result;
 
@@ -415,13 +402,13 @@
             }
         });
     };
-    function SiteId(nsite)
+    function SiteId(projectSite)
     {
               $.ajax({
             type: 'POST',
             url: '@Url.Content("~/PurchaseRequests/SiteId")',
             dataType: 'json',
-                  data: { NSITE: nsite },
+                  data: { site_Name: projectSite },
                   success: function (result) {
                       var data = result;
 
@@ -445,7 +432,7 @@
             type: 'POST',
             url: '@Url.Content("~/PurchaseRequests/TaxId")',
                   dataType: 'json',
-                  data: { TAX: taxAmount },
+                  data: { tax_Amount: taxAmount },
                   success: function (result) {
                      var data = result;
                       $("#TaxId").empty();
