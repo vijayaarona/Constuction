@@ -13,47 +13,42 @@
         font-family: Calibri;
         font-size: 22px;
     }
-
-    .btn-default {
+    .btn-default
+    {
         background-color: #FF5F04;
         color: white;
     }
-
-    input, select, textarea {
+    input, select, textarea
+    {
         max-width: 500px;
     }
-
-    th, td {
+    th, td 
+    {
         border: 1px solid black;
         text-align: center;
         height: 50px;
     }
-
-    .itemtable th {
+    .itemtable th
+    {
         text-align: center;
     }
-
-    select #Product, #TaxId {
+    select #Product, #TaxId 
+    {
         max-width: 500px;
     }
-
-    .example-open .modal-backdrop {
+    .example-open .modal-backdrop
+    {
         background-color: transparent;
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
-
     <div class="panel-group">
         <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
             Purchase Request - Add Page
@@ -99,11 +94,8 @@
                     @Html.EditorFor(model => model.mobileno, new { htmlAttributes = new { @class = "form-control", @id = "mobileno" } })
                     @Html.ValidationMessageFor(model => model.mobileno, "", new { @class = "text-danger" })
                 </div>
-
-
             </div>
             <button type="button" style="float:right" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Item</button>
-
             <br /><br />
             <div class="itemtable">
                 <table class="create" style="width:100%">
@@ -154,8 +146,6 @@
                                                 <label style="width:352px; height:27px">Description</label><br />
                                                 <input type="text" id="Description" name="description" size="50" />
                                             </div>
-
-
                                             <div class="form-group col-md-6">
                                                 <label style="width:352px; height:27px">Rate</label><br />
                                                 <input type="text" id="Rate" name="Rate" size="50" />
@@ -164,7 +154,6 @@
                                                 <label style="width:352px; height:27px">Quantity</label><br />
                                                 <input type="text" id="Quantity" name="Quantity" size="50" />
                                             </div>
-
                                             <div class="form-group col-md-6">
                                                 <label style="width:352px; height:27px">Amount</label><br />
                                                 <input type="text" readonly="readonly" id="Amount" name="Amount" size="50" />
@@ -181,7 +170,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-save="modal" id="btnSave" data-dismiss="modal">Add</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancel()">Close</button>
@@ -190,7 +178,6 @@
                     </div>
                 </div>
             </div>
-
             <br />
             <div class="row">
                 <div class="form-group col-md-4">
@@ -203,16 +190,13 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label>Remarks</label>
-
                 </div>
             </div>
             <div class="form-group" style="float:right">
                 <input type="submit" value="Submit" class="btn btn-default" />
                 @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
             </div>
-
         </div>
-
     </div>
 }
 @section Scripts {
@@ -244,13 +228,7 @@
             var taxAmount = $(this).find('option:selected').val();
             TaxId(taxAmount);
         })
-
-        //$('#btnCancel').click(function () {
-        //    $('#Product').val("");
-        //});
         $('#btnSave').click(function () {
-
-
             if ($('#Product').val() == '' || $('#TaxId').val() == '' || $('#Rate').val() == '' || $('#Quantity').val() == '' || $('#Amount').val() == '' || $('#TaxAmt').val() == '' || $('#TotalAmt').val() == '')
             {
                 alert('Please fill required Fields');
@@ -282,7 +260,6 @@
 
             $("#tblpurchaserequest").empty();
             if (lstItems.length > 0) {
-
                 let sNo = 1;
                 let ntTotal = 0;
                 for (var i = 0; i < lstItems.length; i++)
@@ -298,15 +275,13 @@
                         + `<td>${lstItems[i].TaxAmt}</td>`
                         + `<td>${lstItems[i].TotalAmt}</td>`
                         + `<td>
-
                                 <button type="button" class="btn btn-default id="editbtn" onclick="editBTN(${sNo})">Edit</button>
                                 | <button type="button" class="btn btn-default" onclick="removeTR(${sNo})">Remove</button>
                         </td>`
                         + "</tr>";
                    let amount = 0;
                     lstItems[i].TotalAmt != null ? amount = parseFloat(lstItems[i].TotalAmt) : amount = 0;
-                    ntTotal += amount
-                    
+                    ntTotal += amount;
                     $('#tblpurchaserequest').append(row);
                     sNo++;   
                 }
@@ -319,11 +294,9 @@
         $("#Quantity, #TaxId, #TaxAmt").blur(function () {
             var productRate = parseFloat($("#Rate").val());
             var productamt = parseFloat($(this).val() * productRate);
-
             //Tax Amount
             var per = $("#TaxId").val();
             var productQuantit = parseFloat((per / 100) * productamt).toFixed(2);
-
             //Total Amount
             var tamt = parseFloat(productamt) + parseFloat(productQuantit);
             if ($("#Quantity").val()!='')
@@ -332,29 +305,22 @@
                 $("#Amount").val(productamt.toFixed(2));
                 $("#TaxAmt").val(productQuantit);
             }
-
         })
     });
-
     $('#myModal').on('show.bs.modal', function (e)
     {
         $('body').addClass("example-open");
     }).on('hide.bs.modal', function (e) {
         $('body').removeClass("example-open");
     })
-
     function removeTR(item) {
         $('#rm' + item).remove();
-    }
-
-  
+    } 
     function editBTN(item) {
-        debugger
-      
+        debugger      
         for (var i = 1; i < lstItems.length; i++)
         {
             debugger
-            
             if (lstItems[i] == item) {
 
                 console.log(item);  
@@ -393,14 +359,16 @@
                      var data = result;
 
                       $("#SupplierAddressId").empty();
-                      for (var i = 0; i < data.length; i++) {
+                      for (var i = 0; i < data.length; i++)
+                      {
                           $("#SupplierAddressId").append("<option value='" + data[i].ID + "'>" + data[i].address + "</option>");
-                }
-            },
-            error: function (err) {
+                      }
+                  },
+                  error: function (err)
+                  {
                 console.log(err);
-            }
-        });
+                  }
+              });
     };
     function SiteId(projectSite)
     {
@@ -411,13 +379,11 @@
                   data: { site_Name: projectSite },
                   success: function (result) {
                       var data = result;
-
                       $("#SiteId").empty();
                       $("#SiteAddressId").empty();
                       for (var i = 0; i < data.length; i++) {
                     $("#SiteId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
                     $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
-
                 }
             },
             error: function (err) {
@@ -425,7 +391,6 @@
             }
         });
     };
-
      function TaxId(taxAmount)
     {
               $.ajax({
@@ -436,15 +401,15 @@
                   success: function (result) {
                      var data = result;
                       $("#TaxId").empty();
-                for (var i = 0; i < data.length; i++) {
-                    //$("#TaxId").append("<option value='" + data[i].ID + "'>" + data[i].Tax + "</option>");
+                      for (var i = 0; i < data.length; i++)
+                      {
                     $("#TaxId").val(data[i].Tax)
-                }
-            },
-            error: function (err) {
+                      }
+                  },
+                  error: function (err)
+                  {
                 console.log(err);
-            }
-        });
-    };
-
+                  }
+              });
+     };
 </script>
