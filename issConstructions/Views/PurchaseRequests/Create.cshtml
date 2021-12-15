@@ -1,7 +1,7 @@
 ﻿@model issDomain.Models.PurchaseRequest
 
 @{
-    ViewBag.Title = "Create";
+                ViewBag.Title = "Create";
 }
 
 <style>
@@ -13,31 +13,31 @@
         font-family: Calibri;
         font-size: 22px;
     }
-    .btn-default
-    {
+
+    .btn-default {
         background-color: #FF5F04;
         color: white;
     }
-    input, select, textarea
-    {
+
+    input, select, textarea {
         max-width: 500px;
     }
-    th, td 
-    {
+
+    th, td {
         border: 1px solid black;
         text-align: center;
         height: 50px;
     }
-    .itemtable th
-    {
+
+    .itemtable th {
         text-align: center;
     }
-    select #Product, #TaxId 
-    {
+
+    select #Product, #TaxId {
         max-width: 500px;
     }
-    .example-open .modal-backdrop
-    {
+
+    .example-open .modal-backdrop {
         background-color: transparent;
     }
 </style>
@@ -55,10 +55,6 @@
         </div>
         <div class="panel panel-body" style="overflow:auto">
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label>Request Date</label>
-                    @Html.TextBoxFor(m => m.RequestDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", id = "requestDate" })
-                </div>
                 <div class="form-group col-md-6">
                     <label>Category</label>
                     @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", @id = "categoryId" })
@@ -181,7 +177,7 @@
             <br />
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label>Net Amount:</label>
+                    <label>Net Amount : </label>
                     <label id="netAmt"></label>
                 </div>
                 <div class="form-group col-md-4">
@@ -229,14 +225,15 @@
             TaxId(taxAmount);
         })
         $('#btnSave').click(function () {
+
             if ($('#Product').val() == '' || $('#TaxId').val() == '' || $('#Rate').val() == '' || $('#Quantity').val() == '' || $('#Amount').val() == '' || $('#TaxAmt').val() == '' || $('#TotalAmt').val() == '')
             {
                 alert('Please fill required Fields');
 
             } else {
-            
+
                 let newItem = {};
-                newItem.Product = $('#Product ').val();
+                newItem.Product = $('#Product').val();
                 newItem.ProductText = $('#Product option:selected').text();
                 newItem.TaxT = $('#TaxId').val();
                 newItem.Taxtext = $('#TaxId option:selected').text();
@@ -252,7 +249,7 @@
                 bindItems();
             }
             $('#Product').val(0);
-            $('Description').val('');
+            $('#Description').val('');
             $('#Rate').val('');
             $('#TotalAmt').val('');
         });
@@ -283,7 +280,7 @@
                     lstItems[i].TotalAmt != null ? amount = parseFloat(lstItems[i].TotalAmt) : amount = 0;
                     ntTotal += amount;
                     $('#tblpurchaserequest').append(row);
-                    sNo++;   
+                    sNo++;
                 }
                 $('#netAmt').text(ntTotal.toFixed());
             }
@@ -291,7 +288,7 @@
         }
         ////Tax Calulation
 
-        $("#Quantity, #TaxId, #TaxAmt").blur(function () {
+        $("#Quantity, #TaxId").blur(function () {
             var productRate = parseFloat($("#Rate").val());
             var productamt = parseFloat($(this).val() * productRate);
             //Tax Amount
@@ -315,17 +312,33 @@
     })
     function removeTR(item) {
         $('#rm' + item).remove();
-    } 
+    }
     function editBTN(item) {
-        debugger      
-        for (var i = 1; i < lstItems.length; i++)
-        {
-            debugger
-            if (lstItems[i] == item) {
-
-                console.log(item);  
-            }
+        debugger
+        var tempTR = $('#rm' + item).children();
+        console.log(tempTR);
+        
+        var column = [9];
+        for (var i = 0; i < tempTR.length; i++)
+        {  
+           //console.log(tempTR[i].innerText);
+            column[i] = tempTR[i].innerText;
+            
+           //Array for store the value   
         }
+        $('#myModal').modal('show');
+        alert(column[1]);
+        //$('#Product').val(column[1]);
+        $("#Product option:contains(" + column[1] + ")").attr('selected', 'selected');
+        $('#TaxId').val(column[2]);
+        $('#Description').val(column[3]);
+        $('#Rate').val(column[4]);
+        $('#Quantity').val(column[5]);
+        $('#Amount').val(column[6]);
+        $('#TaxAmt').val(column[7]);
+        $('#TotalAmt').val(column[8]);
+       // 
+        
     }
     function SupplierId(supName)
     {

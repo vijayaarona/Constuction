@@ -47,8 +47,67 @@ namespace issConstructions.Controllers
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName");
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress");
             ViewBag.OrderId = new SelectList(db.PurchaseOrders, "ID", "OrderId");
+            //Product
+            var listItems = new SelectList(db.productMasters, "ID", "ProductName");
+            List<SelectListItem> Product = new List<SelectListItem>();
+            foreach (var item in db.productMasters.ToList())
+            {
+                Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
+            }
+            ViewBag.ProductId = Product;
 
+            //Tax
+            var listsItem = new SelectList(db.productMasters, "ID", "Tax");
+            List<SelectListItem> Tax = new List<SelectListItem>();
+            foreach (var items in db.productMasters.ToList())
+            {
+                Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
+            }
+            ViewBag.ProductTax = Tax;
             return View();
+        }
+        [HttpPost]
+        public JsonResult SupplierId(int supplier_Name)
+        {
+            if (supplier_Name > 0)
+            {
+                var resp = db.supplierMasters.Where(x => x.CategoryId == supplier_Name).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SupplierAddressId(int supplier_Address)
+        {
+            if (supplier_Address > 0)
+            {
+                var resp = db.supplierMasters.Where(x => x.ID == supplier_Address).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SiteId(int site_Name)
+        {
+            if (site_Name > 0)
+            {
+                var resp = db.siteDetails.Where(x => x.ID == site_Name).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult TaxId(int tax_Amount)
+        {
+            if (tax_Amount > 0)
+            {
+                var resp = db.productMasters.Where(x => x.ID == tax_Amount).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
         // POST: PurchaseEntries/Create
