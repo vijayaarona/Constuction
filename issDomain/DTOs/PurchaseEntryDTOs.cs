@@ -10,7 +10,7 @@ namespace issDomain.DTOs
     {
         public int ID { get; set; }
         public int OrderId { get; set; }
-        public string purchaseId { get; set; }
+        public int purchaseId { get; set; }
         public DateTime? purchaseDate { get; set; }
         public string Invoice { get; set; }
         public int CategoryId { get; set; }

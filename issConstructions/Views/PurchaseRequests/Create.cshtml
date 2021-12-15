@@ -207,13 +207,13 @@
     {
         $("#categoryId").change(function ()
         {
-            var supName = $(this).find('option:selected').val();
-            SupplierId(supName);
+            var supNameId = $(this).find('option:selected').val();
+            SupplierId(supNameId);
         })
         $("#SupplierId").change(function ()
         {
-            var supAddress = $(this).find('option:selected').val();
-            SupplierAddressId(supAddress);
+            var supAddressId = $(this).find('option:selected').val();
+            SupplierAddressId(supAddressId);
         })
         $("#ProjectId").change(function ()
         {
@@ -225,33 +225,42 @@
             TaxId(taxAmount);
         })
         $('#btnSave').click(function () {
+            let btntext = this.Text();
 
-            if ($('#Product').val() == '' || $('#TaxId').val() == '' || $('#Rate').val() == '' || $('#Quantity').val() == '' || $('#Amount').val() == '' || $('#TaxAmt').val() == '' || $('#TotalAmt').val() == '')
-            {
-                alert('Please fill required Fields');
+            if (btntext == "Add") {
 
+
+                if ($('#Product').val() == '' || $('#TaxId').val() == '' || $('#Rate').val() == '' || $('#Quantity').val() == '' || $('#Amount').val() == '' || $('#TaxAmt').val() == '' || $('#TotalAmt').val() == '') {
+                    alert('Please fill required Fields');
+
+                } else {
+
+                    let newItem = {};
+                    newItem.Product = $('#Product').val();
+                    newItem.ProductText = $('#Product option:selected').text();
+                    newItem.TaxT = $('#TaxId').val();
+                    newItem.Taxtext = $('#TaxId option:selected').text();
+                    newItem.Description = $('#Description').val();
+                    newItem.Rate = $('#Rate').val();
+                    newItem.Quantity = $('#Quantity').val();
+                    newItem.Amount = $('#Amount').val();
+                    newItem.TaxAmt = $('#TaxAmt').val();
+                    newItem.TotalAmt = $('#TotalAmt').val();
+                    newItem.sNo = sNo;
+                    lstItems.push(newItem);
+                    console.log(lstItems);
+                    bindItems();
+                }
+                $('#Product').val(0);
+                $('#Description').val('');
+                $('#Rate').val('');
+                $('#TotalAmt').val('');
             } else {
-
-                let newItem = {};
-                newItem.Product = $('#Product').val();
-                newItem.ProductText = $('#Product option:selected').text();
-                newItem.TaxT = $('#TaxId').val();
-                newItem.Taxtext = $('#TaxId option:selected').text();
-                newItem.Description = $('#Description').val();
-                newItem.Rate = $('#Rate').val();
-                newItem.Quantity = $('#Quantity').val();
-                newItem.Amount = $('#Amount').val();
-                newItem.TaxAmt = $('#TaxAmt').val();
-                newItem.TotalAmt = $('#TotalAmt').val();
-                newItem.sNo = sNo;
-                lstItems.push(newItem);
-                console.log(lstItems);
-                bindItems();
+                let produect = $('#Product').val();
+                var editItem = lstItems.filter(x => x.Product == produect);
+                //+editItem.sNo).remove();
+                //update query
             }
-            $('#Product').val(0);
-            $('#Description').val('');
-            $('#Rate').val('');
-            $('#TotalAmt').val('');
         });
         function bindItems() {
 
@@ -287,7 +296,7 @@
             $("#Quantity, #TaxId, #Amount, #TaxAmt").val('');
         }
         ////Tax Calulation
-
+        
         $("#Quantity, #TaxId").blur(function () {
             var productRate = parseFloat($("#Rate").val());
             var productamt = parseFloat($(this).val() * productRate);
@@ -303,6 +312,12 @@
                 $("#TaxAmt").val(productQuantit);
             }
         })
+    });
+
+    $(document).keydown(function (event) {
+        if (event.altKey && event.which === 65) {
+            $('#myModal').modal('show');
+        }
     });
     $('#myModal').on('show.bs.modal', function (e)
     {
@@ -322,14 +337,11 @@
         for (var i = 0; i < tempTR.length; i++)
         {  
            //console.log(tempTR[i].innerText);
-            column[i] = tempTR[i].innerText;
-            
+            column[i] = tempTR[i].innerText; 
            //Array for store the value   
         }
         $('#myModal').modal('show');
-        alert(column[1]);
-        //$('#Product').val(column[1]);
-        $("#Product option:contains(" + column[1] + ")").attr('selected', 'selected');
+        $("#Product option:contains(" + column[1] + ")").prop('selected', 'selected');
         $('#TaxId').val(column[2]);
         $('#Description').val(column[3]);
         $('#Rate').val(column[4]);
@@ -337,16 +349,15 @@
         $('#Amount').val(column[6]);
         $('#TaxAmt').val(column[7]);
         $('#TotalAmt').val(column[8]);
-       // 
-        
+        $('#btnSave').text("Update");
     }
-    function SupplierId(supName)
+    function SupplierId(supNameId)
     {
               $.ajax({
             type: 'POST',
             url: '@Url.Content("~/PurchaseRequests/SupplierId")',
             dataType: 'json',
-                  data: { supplier_Name: supName },
+                  data: { supplier_NameId: supNameId },
                   success: function (result)
                   {
                    var data = result;
@@ -361,13 +372,13 @@
             }
         });
     };
-    function SupplierAddressId(supAddress)
+    function SupplierAddressId(supAddressId)
     {
               $.ajax({
             type: 'POST',
             url: '@Url.Content("~/PurchaseRequests/SupplierAddressId")',
             dataType: 'json',
-                  data: { supplier_Address: supAddress },
+                  data: { supplier_AddressId: supAddressId },
                   success: function (result) {
                      var data = result;
 
@@ -389,7 +400,7 @@
             type: 'POST',
             url: '@Url.Content("~/PurchaseRequests/SiteId")',
             dataType: 'json',
-                  data: { site_Name: projectSite },
+                  data: { site_NameId: projectSite },
                   success: function (result) {
                       var data = result;
                       $("#SiteId").empty();
@@ -424,5 +435,6 @@
                 console.log(err);
                   }
               });
-     };
+    };
+
 </script>

@@ -70,7 +70,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,CategoryId,SupplierId,SupplierAddressId,ProjectId,SiteId,SiteAddressId,mobileno,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
+        public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
         {
             if (ModelState.IsValid)
             {
@@ -92,33 +92,33 @@ namespace issConstructions.Controllers
         }
 
         [HttpPost]
-        public JsonResult SupplierId(int supplier_Name)
+        public JsonResult SupplierId(int supplier_NameId)
         {
-            if (supplier_Name > 0)
+            if (supplier_NameId > 0)
             {
-                var resp = db.supplierMasters.Where(x => x.CategoryId == supplier_Name).ToList();
+                var resp = db.supplierMasters.Where(x => x.CategoryId == supplier_NameId).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult SupplierAddressId(int supplier_Address)
+        public JsonResult SupplierAddressId(int supplier_AddressId)
         {
-            if (supplier_Address > 0)
+            if (supplier_AddressId > 0)
             {
-                var resp = db.supplierMasters.Where(x => x.ID == supplier_Address).ToList();
+                var resp = db.supplierMasters.Where(x => x.ID == supplier_AddressId).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult SiteId(int site_Name)
+        public JsonResult SiteId(int site_NameId)
         {
-            if (site_Name > 0)
+            if (site_NameId > 0)
             {
-                var resp = db.siteDetails.Where(x => x.ID == site_Name).ToList();
+                var resp = db.siteDetails.Where(x => x.ID == site_NameId).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);

@@ -54,11 +54,11 @@
         <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
             Purchase Order - Add Page
         </div>
-        <div class="panel panel-body" style="overflow:auto">
+            <div class="panel panel-body" style="overflow:auto">
             <div class="row">
                 <div class="form-group col-md-6">
                     <label>Request ID</label>
-                    @Html.DropDownList("RequestID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("RequestID", null, htmlAttributes: new { @class = "form-control", @id="purchaseRequestId" })
                     @Html.ValidationMessageFor(model => model.RequestID, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
@@ -67,37 +67,37 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label>Category</label>
-                    @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", @id = "categoryId" })
+                    @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", @id = "categoryOrderId" })
                     @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Supplier Name</label>
-                    @Html.DropDownList("SupplierId", null, htmlAttributes: new { @class = "form-control", @id = "SupplierId" })
+                    @Html.DropDownList("SupplierId", null, htmlAttributes: new { @class = "form-control", @id = "SupplierOrderId" })
                     @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Supplier Address</label>
-                    @Html.DropDownList("SupplierAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SupplierAddressId" })
+                    @Html.DropDownList("SupplierAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SupplierAddressOrderId" })
                     @Html.ValidationMessageFor(model => model.SupplierAddressId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Project Name</label>
-                    @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
+                    @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", @id = "ProjectNameOrderId" })
                     @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site Name</label>
-                    @Html.DropDownList("SiteId", null, htmlAttributes: new { @class = "form-control", @id = "SiteId" })
+                    @Html.DropDownList("SiteId", null, htmlAttributes: new { @class = "form-control", @id = "SiteNameOrderId" })
                     @Html.ValidationMessageFor(model => model.SiteId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site Address</label>
-                    @Html.DropDownList("SiteAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SiteAddressId" })
+                    @Html.DropDownList("SiteAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SiteOrderAddressId" })
                     @Html.ValidationMessageFor(model => model.SiteAddressId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Mobile No</label>
-                    @Html.EditorFor(model => model.mobileno, new { htmlAttributes = new { @class = "form-control", @id = "mobileno" } })
+                    @Html.EditorFor(model => model.mobileno, new { htmlAttributes = new { @class = "form-control", @id = "requestMobileNo" } })
                     @Html.ValidationMessageFor(model => model.mobileno, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -215,24 +215,9 @@
     var ntAmt;
     $(document).ready(function ()
     {
-        $("#categoryId").change(function ()
-        {
-            var supName = $(this).find('option:selected').val();
-            SupplierId(supName);
-        })
-        $("#SupplierId").change(function ()
-        {
-            var supAddress = $(this).find('option:selected').val();
-            SupplierAddressId(supAddress);
-        })
-        $("#ProjectId").change(function ()
-        {
-            var projectSite = $(this).find('option:selected').val();
-            SiteId(projectSite);
-        })
-        $("#Product").change(function () {
-            var taxAmount = $(this).find('option:selected').val();
-            TaxId(taxAmount);
+        $("#purchaseRequestId").change(function () {
+            var requestId = $(this).find('option:selected').val();
+            categoryOrderId(requestId);
         })
         $('#btnSave').click(function () {
             if ($('#Product').val() == '' || $('#TaxId').val() == '' || $('#Rate').val() == '' || $('#Quantity').val() == '' || $('#Amount').val() == '' || $('#TaxAmt').val() == '' || $('#TotalAmt').val() == '')
@@ -340,87 +325,37 @@
             $('myModal').val(column[7].TaxAmt);
             $('myModal').val(column[8].TotalAmt);
         }
-        //$('#pro').val(column[1].pro);
-        //$('#pro').val(column[2].pro);
-        //$('#pro').val(column[3].pro);
     }
-    function SupplierId(supName)
-    {
-              $.ajax({
-            type: 'POST',
-            url: '@Url.Content("~/PurchaseOrders/SupplierId")',
-            dataType: 'json',
-                  data: { supplier_Name: supName },
-                  success: function (result)
-                  {
-                   var data = result;
-                      $("#SupplierId").empty();
 
-                for (var i = 0; i < data.length; i++) {
-                    $("#SupplierId").append("<option value='" + data[i].ID + "'>" + data[i].Suppliername + "</option>");
-                }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
-    };
-    function SupplierAddressId(supAddress)
+    function categoryOrderId(requestId)
     {
               $.ajax({
             type: 'POST',
-            url: '@Url.Content("~/PurchaseOrders/SupplierAddressId")',
+            url: '@Url.Content("~/PurchaseOrders/purchaseReqOrders")',
             dataType: 'json',
-                  data: { supplier_Address: supAddress },
+                  data: { purchaseRequestOrderId: requestId },
                   success: function (result) {
-                     var data = result;
-
-                      $("#SupplierAddressId").empty();
-                      for (var i = 0; i < data.length; i++)
-                      {
-                          $("#SupplierAddressId").append("<option value='" + data[i].ID + "'>" + data[i].address + "</option>");
-                      }
-                  },
-                  error: function (err)
-                  {
-                console.log(err);
-                  }
-              });
-    };
-    function SiteId(projectSite)
-    {
-              $.ajax({
-            type: 'POST',
-            url: '@Url.Content("~/PurchaseOrders/SiteId")',
-            dataType: 'json',
-                  data: { site_Name: projectSite },
-                  success: function (result) {
+                      console.log(result)
                       var data = result;
-                      $("#SiteId").empty();
-                      $("#SiteAddressId").empty();
-                      for (var i = 0; i < data.length; i++) {
-                    $("#SiteId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
-                    $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
-                }
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        });
-    };
-     function TaxId(taxAmount)
-    {
-              $.ajax({
-            type: 'POST',
-            url: '@Url.Content("~/PurchaseOrders/TaxId")',
-                  dataType: 'json',
-                  data: { tax_Amount: taxAmount },
-                  success: function (result) {
-                     var data = result;
-                      $("#TaxId").empty();
+                     debugger
+                      $('#categoryOrderId').empty();
+                      $('#SupplierOrderId').empty();
+                      $('#SupplierAddressOrderId').empty();
+                      $('#ProjectNameOrderId').empty();
+                      $('#SiteNameOrderId').empty();
+                      $('#SiteOrderAddressId').empty();
+                      $('#requestMobileNo').empty();
                       for (var i = 0; i < data.length; i++)
                       {
-                    $("#TaxId").val(data[i].Tax)
+                          debugger
+                          $("#categoryOrderId").append("<option value='" + data[i].ID + "'>" + data[i].Category.CategoryName + "</option>");
+                          $("#Supplierorderid").append("<option value='" + data[i].ID + "'>" + data[i].Supplier.Suppliername + "</option>");
+                          $("#Supplieraddressorderid").append("<option value='" + data[i].ID + "'>" + data[i].Supplier.address + "</option>");
+                          $("#Projectnameorderid").append("<option value='" + data[i].ID + "'>" + data[i].ProjectId + "</option>");
+                          $("#Sitenameorderid").append("<option value='" + data[i].ID + "'>" + data[i].SiteId + "</option>");
+                          $("#Siteorderaddressid").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddressId + "</option>");
+                          // $("#requestmobileno").append("<option value='" + data[i].id + "'>" + data[i].suppliername + "</option>");
+                          $('#requestmobileno').val(data[i].mobileno);
                       }
                   },
                   error: function (err)
@@ -428,5 +363,5 @@
                 console.log(err);
                   }
               });
-     };
+    };
 </script>

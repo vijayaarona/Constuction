@@ -9,7 +9,7 @@ namespace issDomain.Models
     public class PurchaseRequest
     {
         public int ID { get; set; }
-        public string RequestID { get; set; }
+        public int RequestID { get; set; }
         public DateTime? RequestDate { get; set; }
         public int CategoryId { get; set; }
         public virtual CategoryMaster Category { get; set; }

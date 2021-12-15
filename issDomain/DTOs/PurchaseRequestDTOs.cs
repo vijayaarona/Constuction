@@ -9,11 +9,12 @@ namespace issDomain.DTOs
     public class PurchaseRequestDTOs
     {
         public int ID { get; set; }
-        public string RequestID { get; set; }
+        public int RequestID { get; set; }
         public DateTime? RequestDate { get; set; }
         public int CategoryId { get; set; }
         public int SupplierId { get; set; }
         public int SupplierAddressId { get; set; }
+        public int SiteDetailsId { get; set; }
         public int ProjectId { get; set; }
         public int SiteId { get; set; }
         public int SiteAddressId { get; set; }
