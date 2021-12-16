@@ -12,7 +12,7 @@ namespace issDomain.Models
         public int OrderId { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
         public string Invoice { get; set; }
-        public string purchaseId { get; set; }
+        public int purchaseId { get; set; }
         public DateTime? purchaseDate { get; set; }
         public int CategoryId { get; set; }
         public virtual CategoryMaster Category { get; set; }

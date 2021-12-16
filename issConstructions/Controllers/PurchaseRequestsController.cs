@@ -1,6 +1,7 @@
 ﻿using issConstructions.Models;
 using issDomain.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace issConstructions.Controllers
         // GET: PurchaseRequests
         public ActionResult Index()
         {
-            var purchaseRequest = db.purchaseRequest.Include(p => p.Category).Include(p => p.Supplier);
+            var purchaseRequest = db.purchaseRequest.Include(p => p.Category).Include(p => p.Supplier).Include(p => p.SiteDetails);
             return View(purchaseRequest.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
 
@@ -43,17 +44,33 @@ namespace issConstructions.Controllers
             ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address");
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName");
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName");
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress")
+            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress");
 
+            //Product
+            var listItems = new SelectList(db.productMasters, "ID", "ProductName");
+            List<SelectListItem> Product = new List<SelectListItem>();
+            foreach (var item in db.productMasters.ToList())
+            {
+                Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
+            }
+            ViewBag.ProductId = Product;
+
+            //Tax
+            var listsItem = new SelectList(db.productMasters, "ID", "Tax");
+            List<SelectListItem> Tax = new List<SelectListItem>();
+            foreach (var items in db.productMasters.ToList())
+            {
+                Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
+            }
+            ViewBag.ProductTax = Tax;
             return View();
         }
-
         // POST: PurchaseRequests/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,CategoryId,SupplierId,SupplierAddressId,ProjectId,SiteId,SiteAddressId,mobileno,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
+        public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
         {
             if (ModelState.IsValid)
             {
@@ -73,38 +90,50 @@ namespace issConstructions.Controllers
 
             return View(purchaseRequest);
         }
+
         [HttpPost]
-        public JsonResult SupplierId(int NAME)
+        public JsonResult SupplierId(int supplier_NameId)
         {
-            if (NAME > 0)
+            if (supplier_NameId > 0)
             {
-                var resp = db.supplierMasters.Where(x => x.CategoryId == NAME).ToList();
-                return Json(resp, JsonRequestBehavior.AllowGet);
-            }
-            else return Json("NoData", JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult SupplierAddressId(int LOCATION)
-        {
-            if (LOCATION > 0)
-            {
-                var resp = db.supplierMasters.Where(x => x.SupplierId == LOCATION).ToList();
-                return Json(resp, JsonRequestBehavior.AllowGet);
-            }
-            else return Json("NoData", JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult ProjectId(int NSITE)
-        {
-            if (NSITE > 0)
-            {
-                var resp = db.siteDetails.Where(x => x.ProjectId == NSITE).ToList();
+                var resp = db.supplierMasters.Where(x => x.CategoryId == supplier_NameId).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult SupplierAddressId(int supplier_AddressId)
+        {
+            if (supplier_AddressId > 0)
+            {
+                var resp = db.supplierMasters.Where(x => x.ID == supplier_AddressId).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
 
+        [HttpPost]
+        public JsonResult SiteId(int site_NameId)
+        {
+            if (site_NameId > 0)
+            {
+                var resp = db.siteDetails.Where(x => x.ID == site_NameId).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult TaxId(int tax_Amount)
+        {
+            if (tax_Amount > 0)
+            {
+                var resp = db.productMasters.Where(x => x.ID == tax_Amount).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
 
         // GET: PurchaseRequests/Edit/5
         public ActionResult Edit(int? id)
