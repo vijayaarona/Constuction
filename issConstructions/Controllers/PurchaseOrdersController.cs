@@ -99,7 +99,7 @@ namespace issConstructions.Controllers
         {
             if (purchaseRequestOrderId > 0)
             {
-                var resp = db.purchaseRequest.Where(x => x.ID == purchaseRequestOrderId).ToList();
+                var resp = db.purchaseRequest.Where(x => x.ID == purchaseRequestOrderId).FirstOrDefault();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
