@@ -8,6 +8,7 @@ namespace issDomain.DTOs
 {
     class CompanyDetailsDTOs
     {
+        public int ID { get; set; }
         public string NameoftheCompany { get; set; }
         public string PrintName { get; set; }
         public string Address { get; set; }
@@ -20,7 +21,6 @@ namespace issDomain.DTOs
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
-        public int ID { get; set; }
     }
 }
 

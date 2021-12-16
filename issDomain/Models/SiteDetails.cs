@@ -8,9 +8,9 @@ namespace issDomain.Models
 {
    public class SiteDetails
     {
+        public int ID { get; set; }
         public int ProjectId;
         public int SiteId;
-
         public DateTime? ProjectDate { get; set; }
         public string ProjectName { get; set; }
         public string SiteName { get; set; }
@@ -70,7 +70,6 @@ namespace issDomain.Models
         public DateTime? DDDate { get; set; }
         public DateTime? RefundDate { get; set; }
         public bool isDeleted { get; set; } = false;
-        public int ID { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }
         public DateTime? UpdatedDate { get; set; }

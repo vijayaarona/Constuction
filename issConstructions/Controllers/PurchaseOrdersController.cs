@@ -18,7 +18,7 @@ namespace issConstructions.Controllers
         // GET: PurchaseOrders
         public ActionResult Index()
         {
-            var purchaseOrders = db.PurchaseOrders.Include(p => p.Category).Include(p => p.Supplier);
+            var purchaseOrders = db.PurchaseOrders.Include(p => p.Category).Include(p => p.Supplier).Include(p => p.SiteDetails);
             return View(purchaseOrders.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
 
@@ -46,7 +46,24 @@ namespace issConstructions.Controllers
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName");
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName");
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress");
-            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "RequestID");
+            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID");
+            //Product
+            var listItems = new SelectList(db.productMasters, "ID", "ProductName");
+            List<SelectListItem> Product = new List<SelectListItem>();
+            foreach (var item in db.productMasters.ToList())
+            {
+                Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
+            }
+            ViewBag.ProductId = Product;
+
+            //Tax
+            var listsItem = new SelectList(db.productMasters, "ID", "Tax");
+            List<SelectListItem> Tax = new List<SelectListItem>();
+            foreach (var items in db.productMasters.ToList())
+            {
+                Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
+            }
+            ViewBag.ProductTax = Tax;
             return View();
         }
 
@@ -72,9 +89,20 @@ namespace issConstructions.Controllers
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseOrder.ProjectId);
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
-            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "RequestID",purchaseOrder.PurchaseRequest);
+            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID",purchaseOrder.PurchaseRequest);
 
             return View(purchaseOrder);
+        }
+
+        [HttpPost]
+        public JsonResult purchaseReqOrders(int purchaseRequestOrderId)
+        {
+            if (purchaseRequestOrderId > 0)
+            {
+                var resp = db.purchaseRequest.Where(x => x.ID == purchaseRequestOrderId).FirstOrDefault();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
         // GET: PurchaseOrders/Edit/5
@@ -95,7 +123,7 @@ namespace issConstructions.Controllers
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseOrder.ProjectId);
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
-            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "RequestID", purchaseOrder.PurchaseRequest);
+            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID", purchaseOrder.PurchaseRequest);
             return View(purchaseOrder);
         }
 
@@ -120,7 +148,7 @@ namespace issConstructions.Controllers
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseOrder.ProjectId);
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
-            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "RequestID", purchaseOrder.PurchaseRequest);
+            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID", purchaseOrder.PurchaseRequest);
             return View(purchaseOrder);
         }
 

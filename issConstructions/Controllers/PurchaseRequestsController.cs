@@ -47,7 +47,6 @@ namespace issConstructions.Controllers
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress");
 
             //Product
-
             var listItems = new SelectList(db.productMasters, "ID", "ProductName");
             List<SelectListItem> Product = new List<SelectListItem>();
             foreach (var item in db.productMasters.ToList())
@@ -57,24 +56,21 @@ namespace issConstructions.Controllers
             ViewBag.ProductId = Product;
 
             //Tax
-
             var listsItem = new SelectList(db.productMasters, "ID", "Tax");
             List<SelectListItem> Tax = new List<SelectListItem>();
             foreach (var items in db.productMasters.ToList())
             {
-                Tax.Add(new SelectListItem { Text = items.Tax, Value = items.ID.ToString() });
+                Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
             }
             ViewBag.ProductTax = Tax;
-
             return View();
         }
-
         // POST: PurchaseRequests/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,CategoryId,SupplierId,SupplierAddressId,ProjectId,SiteId,SiteAddressId,mobileno,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
+        public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
         {
             if (ModelState.IsValid)
             {
@@ -96,45 +92,44 @@ namespace issConstructions.Controllers
         }
 
         [HttpPost]
-        public JsonResult SupplierId(int NAME)
+        public JsonResult SupplierId(int supplier_NameId)
         {
-            if (NAME > 0)
+            if (supplier_NameId > 0)
             {
-                var resp = db.supplierMasters.Where(x => x.CategoryId == NAME).ToList();
+                var resp = db.supplierMasters.Where(x => x.CategoryId == supplier_NameId).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult SupplierAddressId(int ADDRESS)
+        public JsonResult SupplierAddressId(int supplier_AddressId)
         {
-            if (ADDRESS > 0)
+            if (supplier_AddressId > 0)
             {
-                var resp = db.supplierMasters.Where(x => x.ID == ADDRESS).ToList();
-                return Json(resp, JsonRequestBehavior.AllowGet);
-            }
-            else return Json("NoData", JsonRequestBehavior.AllowGet);
-        }
-
-
-        [HttpPost]
-        public JsonResult SiteId(int NSITE)
-        {
-            if (NSITE > 0)
-            {
-                var resp = db.siteDetails.Where(x => x.ID == NSITE).ToList();
+                var resp = db.supplierMasters.Where(x => x.ID == supplier_AddressId).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult TaxId(int TAX)
+        public JsonResult SiteId(int site_NameId)
         {
-            if (TAX > 0)
+            if (site_NameId > 0)
             {
-                var resp = db.productMasters.Where(x => x.ID == TAX).ToList();
+                var resp = db.siteDetails.Where(x => x.ID == site_NameId).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult TaxId(int tax_Amount)
+        {
+            if (tax_Amount > 0)
+            {
+                var resp = db.productMasters.Where(x => x.ID == tax_Amount).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
