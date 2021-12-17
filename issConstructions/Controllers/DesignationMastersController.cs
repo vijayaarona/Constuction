@@ -39,6 +39,7 @@ namespace issConstructions.Controllers
         // GET: DesignationMasters/Create
         public ActionResult Create()
         {
+            ViewBag.DesignationName = "";
             return View();
         }
 
@@ -51,11 +52,19 @@ namespace issConstructions.Controllers
         {
             if (ModelState.IsValid)
             {
-                designationMaster.CreatedDate = DateTime.UtcNow;
-                designationMaster.UpdatedDate = DateTime.UtcNow;
-                db.designationMasters.Add(designationMaster);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var duplicate = db.designationMasters.Where(x => x.DesignationName == designationMaster.DesignationName).FirstOrDefault();
+                if (duplicate == null)
+                {
+                    designationMaster.CreatedDate = DateTime.UtcNow;
+                    designationMaster.UpdatedDate = DateTime.UtcNow;
+                    db.designationMasters.Add(designationMaster);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.DesignationName = "Already Exists....!";
+                }
             }
 
             return View(designationMaster);

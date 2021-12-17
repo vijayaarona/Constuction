@@ -8,8 +8,8 @@ namespace issDomain.Models
 {
    public class AccountGroupMaster
     {
-        public int ID { get; set; }
-        public string GroupName { get; set; }
+       public int ID { get; set; }
+       public string GroupName { get; set; }
        public string ParentGroup { get; set; }
        public bool isDeleted { get; set; } = false;
        public DateTime? CreatedDate { get; set; }

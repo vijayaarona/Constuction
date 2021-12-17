@@ -1,0 +1,261 @@
+﻿@model IEnumerable<issDomain.Models.receiptEntry>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    .addNew {
+        padding: 5px;
+        background-color: #FF5F04;
+        color: white;
+        float: right;
+        margin: 10px;
+        border-radius: 3px;
+        text-decoration: none;
+    }
+
+        .addNew:hover {
+            text-decoration: none;
+        }
+</style>
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Receipt Entry - Index Page
+    </div>
+    <div class="panel panel-body" style="overflow:auto">
+        @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+        <table class="table" id="AGMaster">
+            <thead>
+                <tr>
+                    <th>
+                        <label>Payment Type</label>
+                    </th>
+                    <th>
+                        <label>Project</label>
+                    </th>
+                    <th>
+                        <label>Site Name</label>
+                    </th>
+                    <th>
+                        <label>Account Ledger Name</label>
+                    </th>
+                    <th>
+                        <label>Given By</label>
+                    </th>
+                    <th>
+                        <label>Collected By</label>
+                    </th>
+                    <th>
+                        <label>Amount</label>
+                    </th>
+                    <th>
+                        <label>Remarks</label>
+                    </th>
+                    <th>
+                        <label>Created Date</label>
+                    </th>
+                    <th>
+                        <label>Updated By</label>
+                    </th>
+                    <th>
+                        <label>Updated Date</label>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.paymentTypeId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.projectNameId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.siteNameId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.accountLedgerNameId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.givenBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.collectBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.remarks)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UpdateBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UpdatedDate)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#AGMaster').DataTable({
+            dom: 'Bfrtip',
+
+            buttons: [
+                'copy',
+                {
+                    extend: 'excel',
+                    title: function () {
+                        var printTitle = 'New Title';
+                        return printTitle
+                    }
+                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                },
+                {
+                    extend: 'pdf',
+                    //  messageBottom: null
+                },
+                {
+                    extend: 'print',
+                }
+
+            ]
+        });
+
+    });
+</script>
+
+
+@*<h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.receiptID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.receiptDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.paymentTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.accountLedgerNameId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.projectNameId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.siteNameId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.givenBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.collectBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.remarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isDeleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.receiptID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.receiptDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.paymentTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.accountLedgerNameId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.projectNameId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.siteNameId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.givenBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.collectBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.remarks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isDeleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            </td>
+        </tr>
+    }
+
+    </table>*@

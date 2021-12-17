@@ -24,6 +24,14 @@ namespace issDomain.Models
         public int SiteAddressId { get; set; }
         public virtual SiteDetails SiteDetails { get; set; }
         public string mobileno { get; set; }
+        public string ReceivedBy { get; set; }
+        public string Remarks { get; set; }
+        public string ReffBillNo { get; set; }
+        public string DeliveryNo { get; set; }
+        public decimal totalDiscount { get; set; }
+        public decimal totalTax { get; set; }
+        public decimal freightCharges { get; set; }
+        public decimal netAmount { get; set; }
         public bool isDeleted { get; set; } = false;
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }

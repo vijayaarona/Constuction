@@ -41,6 +41,7 @@ namespace issConstructions.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName");
+            ViewBag.ProductName = "";
             return View();
         }
 
@@ -53,11 +54,19 @@ namespace issConstructions.Controllers
         {
             if (ModelState.IsValid)
             {
-                productMaster.CreatedDate = DateTime.UtcNow;
-                productMaster.UpdatedDate = DateTime.UtcNow;
-                db.productMasters.Add(productMaster);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var duplicate = db.productMasters.Where(x => x.ProductName == productMaster.ProductName).FirstOrDefault();
+                if (duplicate == null)
+                {
+                    productMaster.CreatedDate = DateTime.UtcNow;
+                    productMaster.UpdatedDate = DateTime.UtcNow;
+                    db.productMasters.Add(productMaster);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.ProductName = "Already Exists....!";
+                }
             }
 
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", productMaster.CategoryId);

@@ -36,6 +36,8 @@
         Account Ledger - Add Page
     </div>
     <div class="panel panel-body" style="overflow:auto">
+        <span>@ViewBag.AccountLedger</span> <br>
+
         <div class="row">
             <div class="form-group col-md-6">
                 <label>Account Ledger</label>
@@ -52,29 +54,20 @@
 
             <div class="form-group col-md-6">
                 <label>Opening Balance</label>
-
                 @Html.EditorFor(model => model.OpeningBal, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.OpeningBal, "", new { @class = "text-danger" })
-
             </div>
             <div class="form-group col-md-6">
                 <label>Type</label>
-
                 <select class="form-control" id="accounttype" name="Type">
                     <option> Debit</option>
                     <option>Credit</option>
-
                 </select>
-
-                @*@Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })*@
-
             </div>
             <div class="form-group" style="float:right">
-
                 <input type="submit" value="Submit" class="btn btn-default" />
-                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
 
+                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
             </div>
         </div>
 
@@ -83,86 +76,7 @@
 
     }
 
-    
-
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 
-
-    @*<div class="form-horizontal">
-            <h4>AccountLedgerMaster</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.AccountLedger, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.AccountLedger, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.AccountLedger, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.AccountGroup, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.AccountGroup, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.AccountGroup, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.OpeningBal, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.OpeningBal, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.OpeningBal, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.isDeleted)
-                        @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UpdateBy, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UpdateBy, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UpdateBy, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-        </div>*@

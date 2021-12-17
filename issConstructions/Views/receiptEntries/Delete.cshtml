@@ -1,8 +1,4 @@
-﻿@model issDomain.Models.ToolsMaster
-
-@{
-    ViewBag.Title = "Delete";
-}
+﻿@model issDomain.Models.receiptEntry
 
 <style>
     #AccountGroupMaster {
@@ -60,7 +56,7 @@
 <div class="panel-group">
 
     <div class="panel panel-heading header">
-        Account Group -  Delete Page
+        Receipt Entry -  Delete Page
 
     </div>
     <div class="panel panel-body">
@@ -69,24 +65,35 @@
 
 
         <table id="AccountGroupMaster">
+           
             <tr>
-                <th>Tools Name</th>
-                <td>  @Html.DisplayFor(model => model.ToolsName)</td>
+                <th>Receipt Name</th>
+                <td>  @Html.DisplayFor(model => model.receiptDate)</td>
             </tr>
             <tr>
-                <th>UOM</th>
-                <td>  @Html.DisplayFor(model => model.UOM)</td>
+                <th>Project</th>
+                <td>  @Html.DisplayFor(model => model.projectNameId)</td>
             </tr>
             <tr>
-                <th>Category</th>
-                <td>  @Html.DisplayFor(model => model.Category.CategoryName)</td>
+                <th>Site Name</th>
+                <td>  @Html.DisplayFor(model => model.siteNameId)</td>
             </tr>
-
             <tr>
-                <th>Opening Stock</th>
-                <td>  @Html.DisplayFor(model => model.openingStock)</td>
+                <th>Given By</th>
+                <td>  @Html.DisplayFor(model => model.givenBy)</td>
             </tr>
-
+            <tr>
+                <th>Collected By</th>
+                <td>  @Html.DisplayFor(model => model.collectBy)</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>  @Html.DisplayFor(model => model.amount)</td>
+            </tr>
+            <tr>
+                <th>Remarks</th>
+                <td>  @Html.DisplayFor(model => model.remarks)</td>
+            </tr>
             <tr>
                 <th> Created Date</th>
                 <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
@@ -112,50 +119,99 @@
                 @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
             </div>
         }
-
     </div>
-
-
-
 </div>
 
-@*<h2>Delete</h2>
+
+@*@{
+        ViewBag.Title = "Delete";
+    }
+
+    <h2>Delete</h2>
 
     <h3>Are you sure you want to delete this?</h3>
     <div>
-        <h4>ToolsMaster</h4>
+        <h4>receiptEntry</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.ToolsName)
+                @Html.DisplayNameFor(model => model.receiptID)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.ToolsName)
+                @Html.DisplayFor(model => model.receiptID)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.UOM)
+                @Html.DisplayNameFor(model => model.receiptDate)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.UOM)
+                @Html.DisplayFor(model => model.receiptDate)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Category)
+                @Html.DisplayNameFor(model => model.paymentTypeId)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Category)
+                @Html.DisplayFor(model => model.paymentTypeId)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.openingStock)
+                @Html.DisplayNameFor(model => model.accountLedgerNameId)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.openingStock)
+                @Html.DisplayFor(model => model.accountLedgerNameId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.projectNameId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.projectNameId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.siteNameId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.siteNameId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.givenBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.givenBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.collectBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.collectBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.amount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.amount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.remarks)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.remarks)
             </dd>
 
             <dt>
