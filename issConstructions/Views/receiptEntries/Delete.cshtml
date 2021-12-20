@@ -1,8 +1,4 @@
-﻿@model issDomain.Models.AccountGroupMaster
-
-@{
-    ViewBag.Title = "Delete";
-}
+﻿@model issDomain.Models.receiptEntry
 
 <style>
     #AccountGroupMaster {
@@ -48,10 +44,11 @@
         font-family: Calibri;
         font-size: 22px;
     }
+
     .btn-default {
         background-color: #FF5F04;
         color: white;
-        float:right;
+        float: right;
     }
 </style>
 
@@ -59,7 +56,7 @@
 <div class="panel-group">
 
     <div class="panel panel-heading header">
-        Account Group -  Delete Page
+        Receipt Entry -  Delete Page
 
     </div>
     <div class="panel panel-body">
@@ -68,16 +65,35 @@
 
 
         <table id="AccountGroupMaster">
+           
             <tr>
-                <th>Group Name</th>
-                <td>  @Html.DisplayFor(model => model.GroupName)</td>
+                <th>Receipt Name</th>
+                <td>  @Html.DisplayFor(model => model.receiptDate)</td>
             </tr>
-
             <tr>
-                <th>Parent Group</th>
-                <td>  @Html.DisplayFor(model => model.ParentGroup)</td>
+                <th>Project</th>
+                <td>  @Html.DisplayFor(model => model.projectNameId)</td>
             </tr>
-
+            <tr>
+                <th>Site Name</th>
+                <td>  @Html.DisplayFor(model => model.siteNameId)</td>
+            </tr>
+            <tr>
+                <th>Given By</th>
+                <td>  @Html.DisplayFor(model => model.givenBy)</td>
+            </tr>
+            <tr>
+                <th>Collected By</th>
+                <td>  @Html.DisplayFor(model => model.collectBy)</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>  @Html.DisplayFor(model => model.amount)</td>
+            </tr>
+            <tr>
+                <th>Remarks</th>
+                <td>  @Html.DisplayFor(model => model.remarks)</td>
+            </tr>
             <tr>
                 <th> Created Date</th>
                 <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
@@ -93,7 +109,7 @@
             </tr>
 
         </table>
-        <hr style="text-decoration:none"/>
+        <hr style="text-decoration:none" />
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
@@ -103,11 +119,6 @@
                 @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
             </div>
         }
-
     </div>
-
-
-   
 </div>
-
 

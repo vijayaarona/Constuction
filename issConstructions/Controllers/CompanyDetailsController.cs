@@ -39,6 +39,7 @@ namespace issConstructions.Controllers
         // GET: CompanyDetails/Create
         public ActionResult Create()
         {
+            ViewBag.NameoftheCompany = "";
             return View();
         }
 
@@ -51,11 +52,19 @@ namespace issConstructions.Controllers
         {
             if (ModelState.IsValid)
             {
-                companyDetails.CreatedDate = DateTime.UtcNow;
-                companyDetails.UpdatedDate = DateTime.UtcNow;
-                db.companyDetails.Add(companyDetails);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var duplicate = db.companyDetails.Where(x => x.NameoftheCompany == companyDetails.NameoftheCompany && x.Address == companyDetails.Address).FirstOrDefault();
+                if (duplicate == null)
+                {
+                    companyDetails.CreatedDate = DateTime.UtcNow;
+                    companyDetails.UpdatedDate = DateTime.UtcNow;
+                    db.companyDetails.Add(companyDetails);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.NameoftheCompany = "Already Exists....!";
+                }
             }
 
             return View(companyDetails);

@@ -135,10 +135,12 @@
     <Compile Include="Controllers\DesignationMastersController.cs" />
     <Compile Include="Controllers\EmployeeMastersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\paymentEntriesController.cs" />
     <Compile Include="Controllers\ProductMastersController.cs" />
     <Compile Include="Controllers\PurchaseEntriesController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\PurchaseRequestsController.cs" />
+    <Compile Include="Controllers\receiptEntriesController.cs" />
     <Compile Include="Controllers\SiteDetailsController.cs" />
     <Compile Include="Controllers\SupplierMastersController.cs" />
     <Compile Include="Controllers\ToolsMastersController.cs" />
@@ -173,6 +175,10 @@
     <Compile Include="Migrations\202112151355581_m9.cs" />
     <Compile Include="Migrations\202112151355581_m9.designer.cs">
       <DependentUpon>202112151355581_m9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112161312461_m10.cs" />
+    <Compile Include="Migrations\202112161312461_m10.designer.cs">
+      <DependentUpon>202112161312461_m10.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
@@ -288,6 +294,16 @@
     <Content Include="Views\PurchaseOrders\Details.cshtml" />
     <Content Include="Views\PurchaseOrders\Edit.cshtml" />
     <Content Include="Views\PurchaseOrders\Index.cshtml" />
+    <Content Include="Views\receiptEntries\Create.cshtml" />
+    <Content Include="Views\receiptEntries\Delete.cshtml" />
+    <Content Include="Views\receiptEntries\Details.cshtml" />
+    <Content Include="Views\receiptEntries\Edit.cshtml" />
+    <Content Include="Views\receiptEntries\Index.cshtml" />
+    <Content Include="Views\paymentEntries\Create.cshtml" />
+    <Content Include="Views\paymentEntries\Delete.cshtml" />
+    <Content Include="Views\paymentEntries\Details.cshtml" />
+    <Content Include="Views\paymentEntries\Edit.cshtml" />
+    <Content Include="Views\paymentEntries\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -341,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112151355581_m9.resx">
       <DependentUpon>202112151355581_m9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112161312461_m10.resx">
+      <DependentUpon>202112161312461_m10.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

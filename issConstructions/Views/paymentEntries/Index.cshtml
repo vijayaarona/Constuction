@@ -1,8 +1,4 @@
-﻿@model IEnumerable<issDomain.Models.ToolsMaster>
-
-@{
-    ViewBag.Title = "Index";
-}
+﻿@model IEnumerable<issDomain.Models.paymentEntry>
 
 <style>
     .header {
@@ -30,7 +26,7 @@
 </style>
 <div class="panel-group">
     <div class="panel panel-heading header">
-         Tool - Index Page
+        Payment Entry - Index Page
     </div>
     <div class="panel panel-body" style="overflow:auto">
         @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
@@ -38,25 +34,37 @@
             <thead>
                 <tr>
                     <th>
-                        Tools Name
+                        <label>Payment Type</label>
                     </th>
                     <th>
-                        UOM
+                        <label>Project</label>
                     </th>
                     <th>
-                        Category
+                        <label>Site Name</label>
                     </th>
                     <th>
-                        Opening Stock
+                        <label>Account Ledger Name</label>
                     </th>
                     <th>
-                        Created Date
+                        <label>Given By</label>
                     </th>
                     <th>
-                        Updated By
+                        <label>Collected By</label>
                     </th>
                     <th>
-                        Updated Date
+                        <label>Amount</label>
+                    </th>
+                    <th>
+                        <label>Remarks</label>
+                    </th>
+                    <th>
+                        <label>Created Date</label>
+                    </th>
+                    <th>
+                        <label>Updated By</label>
+                    </th>
+                    <th>
+                        <label>Updated Date</label>
                     </th>
                     <th></th>
                 </tr>
@@ -66,16 +74,28 @@
                 {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ToolsName)
+                        @Html.DisplayFor(modelItem => item.paymentTypeId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.UOM)
+                        @Html.DisplayFor(modelItem => item.projectNameId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                        @Html.DisplayFor(modelItem => item.siteNameId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.openingStock)
+                        @Html.DisplayFor(modelItem => item.accountLedgerNameId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.givenBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.collectBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.remarks)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedDate)
@@ -129,72 +149,3 @@
     });
 </script>
 
-@*<h2>Index</h2>
-
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ToolsName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UOM)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.openingStock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.isDeleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdateBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDate)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ToolsName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UOM)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.openingStock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-
-    </table>*@

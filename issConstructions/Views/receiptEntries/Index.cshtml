@@ -1,4 +1,4 @@
-﻿@model IEnumerable<issDomain.Models.AccountGroupMaster>
+﻿@model IEnumerable<issDomain.Models.receiptEntry>
 
 @{
     ViewBag.Title = "Index";
@@ -30,7 +30,7 @@
 </style>
 <div class="panel-group">
     <div class="panel panel-heading header">
-        Account Group - Index Page
+        Receipt Entry - Index Page
     </div>
     <div class="panel panel-body" style="overflow:auto">
         @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
@@ -38,12 +38,29 @@
             <thead>
                 <tr>
                     <th>
-                        <label>Group Name</label>
+                        <label>Payment Type</label>
                     </th>
                     <th>
-                        <label>Parent Name</label>
+                        <label>Project</label>
                     </th>
-
+                    <th>
+                        <label>Site Name</label>
+                    </th>
+                    <th>
+                        <label>Account Ledger Name</label>
+                    </th>
+                    <th>
+                        <label>Given By</label>
+                    </th>
+                    <th>
+                        <label>Collected By</label>
+                    </th>
+                    <th>
+                        <label>Amount</label>
+                    </th>
+                    <th>
+                        <label>Remarks</label>
+                    </th>
                     <th>
                         <label>Created Date</label>
                     </th>
@@ -61,12 +78,29 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.GroupName)
+                            @Html.DisplayFor(modelItem => item.paymentTypeId)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ParentGroup)
+                            @Html.DisplayFor(modelItem => item.projectNameId)
                         </td>
-
+                        <td>
+                            @Html.DisplayFor(modelItem => item.siteNameId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.accountLedgerNameId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.givenBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.collectBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.remarks)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CreatedDate)
                         </td>
@@ -103,11 +137,11 @@
                         var printTitle = 'New Title';
                         return printTitle
                     }
-                   // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
                 },
                 {
                     extend: 'pdf',
-                  //  messageBottom: null
+                    //  messageBottom: null
                 },
                 {
                     extend: 'print',
@@ -118,3 +152,4 @@
 
     });
 </script>
+
