@@ -11,7 +11,8 @@ namespace issDomain.Models
         public int ID { get; set; }
         public int receiptID { get; set; }
         public DateTime? receiptDate { get; set; }
-        public int paymentTypeId { get; set; }
+        public int groupNameID { get; set; }
+        public virtual AccountGroupMaster accountGroup { get; set; }
         public int accountLedgerNameId { get; set; }
         public virtual AccountLedgerMaster AccountLedger { get; set; }
         public int projectNameId { get; set; }

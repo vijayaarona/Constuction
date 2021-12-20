@@ -11,7 +11,7 @@ namespace issDomain.DTOs
         public int ID { get; set; }
         public int paymentID { get; set; }
         public DateTime? paymenttDate { get; set; }
-        public int paymentTypeId { get; set; }
+        public int accountGroupID { get; set; }
         public int accountLedgerNameId { get; set; }
         public int projectNameId { get; set; }
         public int siteNameId { get; set; }
