@@ -50,7 +50,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ProductName,UOM,CategoryId,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ProductMaster productMaster)
+        public ActionResult Create([Bind(Include = "ID,ProductName,UOM,Tax,CategoryId,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ProductMaster productMaster)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ProductName,UOM,CategoryId,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ProductMaster productMaster)
+        public ActionResult Edit([Bind(Include = "ID,ProductName,UOM,Tax,CategoryId,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ProductMaster productMaster)
         {
             if (ModelState.IsValid)
             {

@@ -78,10 +78,10 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.paymentTypeId)
+                            @Html.DisplayFor(modelItem => item.AccountLedger.AccountGroup.GroupName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.projectNameId)
+                            @Html.DisplayFor(modelItem => item.SiteDetail.ProjectName)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.siteNameId)

@@ -15,7 +15,7 @@ namespace issConstructions.Controllers
         // GET: receiptEntries
         public ActionResult Index()
         {
-            return View(db.receiptEntries.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
+            return View(db.receiptEntries.Include(x=>x.SiteDetail).Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
 
         // GET: receiptEntries/Details/5
