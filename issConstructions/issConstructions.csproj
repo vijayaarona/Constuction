@@ -141,6 +141,7 @@
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\PurchaseRequestsController.cs" />
     <Compile Include="Controllers\receiptEntriesController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SiteDetailsController.cs" />
     <Compile Include="Controllers\SupplierMastersController.cs" />
     <Compile Include="Controllers\ToolsMastersController.cs" />
@@ -308,6 +309,8 @@
     <Content Include="Views\paymentEntries\Details.cshtml" />
     <Content Include="Views\paymentEntries\Edit.cshtml" />
     <Content Include="Views\paymentEntries\Index.cshtml" />
+    <Content Include="Views\Report\Paymentvoucher.cshtml" />
+    <Content Include="Views\Report\Receiptvoucher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

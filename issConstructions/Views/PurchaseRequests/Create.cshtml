@@ -405,7 +405,8 @@
                       var data = result;
                       $("#SiteId").empty();
                       $("#SiteAddressId").empty();
-                      for (var i = 0; i < data.length; i++) {
+                      for (var i = 0; i < data.length; i++)
+                      {
                     $("#SiteId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
                     $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
                 }

@@ -66,6 +66,17 @@ namespace issConstructions.Controllers
             return View(paymentEntry);
         }
 
+        [HttpPost]
+        public JsonResult siteNameId(int site_Name_Id)
+        {
+            if (site_Name_Id > 0)
+            {
+                var resp = db.siteDetails.Where(x => x.ID == site_Name_Id).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
         // GET: paymentEntries/Edit/5
         public ActionResult Edit(int? id)
         {

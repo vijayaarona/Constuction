@@ -39,6 +39,7 @@ namespace issConstructions.Controllers
         // GET: SiteDetails/Create
         public ActionResult Create()
         {
+            ViewBag.ProjectName = "";
             return View();
         }
 
@@ -51,11 +52,21 @@ namespace issConstructions.Controllers
         {
             if (ModelState.IsValid)
             {
-                siteDetails.CreatedDate = DateTime.UtcNow;
-                siteDetails.UpdatedDate = DateTime.UtcNow;
-                db.siteDetails.Add(siteDetails);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                //var duplicate = db.siteDetails.Where(x => x.ProjectName == siteDetails.SiteName).FirstOrDefault();
+                var duplicate = db.siteDetails.Where(x => x.ProjectName == siteDetails.SiteName).FirstOrDefault();
+
+                if (duplicate != null)
+                {
+                    siteDetails.CreatedDate = DateTime.UtcNow;
+                    siteDetails.UpdatedDate = DateTime.UtcNow;
+                    db.siteDetails.Add(siteDetails);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.ProjectName = "Site alredy exists....!";
+                }
             }
 
             return View(siteDetails);

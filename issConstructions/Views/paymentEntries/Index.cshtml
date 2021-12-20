@@ -34,6 +34,9 @@
             <thead>
                 <tr>
                     <th>
+                        <label>Payment Date</label>
+                    </th>
+                    <th>
                         <label>Payment Type</label>
                     </th>
                     <th>
@@ -74,6 +77,9 @@
                 {
                 <tr>
                     <td>
+                        @Html.DisplayFor(modelItem => item.paymenttDate)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.accountGroup.GroupName)
                     </td>
                     <td>
@@ -110,6 +116,7 @@
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        <a href="~/Report/Paymentvoucher/@ViewBag.Id">Voucher</a>
                     </td>
                 </tr>
 
