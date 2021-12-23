@@ -1,5 +1,6 @@
 ﻿using issConstructions.Models;
 using issDomain.Models;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace issConstructions.Controllers
     {
         private issDB db = new issDB();
 
+        public object Custom { get; private set; }
+
         // GET: receiptEntries
         public ActionResult Index()
         {
-            return View(db.receiptEntries.Include(x=>x.SiteDetail).Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
+            return View(db.receiptEntries.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
 
         // GET: receiptEntries/Details/5
@@ -48,14 +51,33 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,receiptID,receiptDate,groupNameID,accountLedgerNameId,projectNameId,siteNameId,givenBy,collectBy,amount,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] receiptEntry receiptEntry)
+        public ActionResult Create([Bind(Include = "ID,receiptID,receiptDate,groupNameID,accountLedgerNameId,approvedBy,preparedBy,projectNameId,siteNameId,givenBy,collectBy,amount,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] receiptEntry receiptEntry)
         {
             if (ModelState.IsValid)
             {
+               
                 db.receiptEntries.Add(receiptEntry);
+               // var company = db.accountGroupMasters.Where(x => x.ParentGroup =Custom.).FirstOrDefault();
+                masterTbl masterTbl = new masterTbl();
+                masterTbl.entryDate = receiptEntry.receiptDate;
+                masterTbl.payType = Convert.ToString(receiptEntry.groupNameID);
+                masterTbl.AccountID = Convert.ToString(receiptEntry.accountLedgerNameId);
+                masterTbl.GroupID = "q";
+                masterTbl.description = receiptEntry.remarks;
+                masterTbl.expense = '0';
+                masterTbl.income = receiptEntry.amount;
+                //masterTbl.underGroup = receiptEntry.accountGroup.ParentGroup;
+                masterTbl.type = "R";
+                masterTbl.financialYear = "2021";
+                //masterTbl.projectName = receiptEntry.SiteDetail.ProjectName;
+                //masterTbl.siteName = receiptEntry.SiteDetail.SiteName;
+                masterTbl.CreatedDate = receiptEntry.CreatedDate;
+                masterTbl.UpdatedDate = receiptEntry.UpdatedDate;
+                db.masterTbls.Add(masterTbl);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+           
             ViewBag.groupNameID = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", receiptEntry.projectNameId);
@@ -97,7 +119,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,receiptID,receiptDate,groupNameID,accountLedgerNameId,projectNameId,siteNameId,givenBy,collectBy,amount,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] receiptEntry receiptEntry)
+        public ActionResult Edit([Bind(Include = "ID,receiptID,receiptDate,groupNameID,accountLedgerNameId,approvedBy,preparedBy,projectNameId,siteNameId,givenBy,collectBy,amount,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] receiptEntry receiptEntry)
         {
             if (ModelState.IsValid)
             {

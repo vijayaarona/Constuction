@@ -76,9 +76,17 @@
                 @foreach (var item in Model)
                 {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.paymenttDate)
-                    </td>
+                    @if (@item.paymenttDate != null)
+                    {
+                        <td>
+                            @item.paymenttDate.Value.ToShortDateString()
+
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
                     <td>
                         @Html.DisplayFor(modelItem => item.accountGroup.GroupName)
                     </td>
@@ -115,7 +123,7 @@
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
                         <a href="~/Report/Paymentvoucher/@ViewBag.Id">Voucher</a>
                     </td>
                 </tr>

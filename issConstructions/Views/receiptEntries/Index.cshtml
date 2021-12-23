@@ -80,9 +80,18 @@
                 @foreach (var item in Model)
                 {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.receiptDate)
-                    </td>
+
+                    @if (@item.receiptDate != null)
+                    {
+                        <td>
+                            @item.receiptDate.Value.ToShortDateString()
+
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
                     <td>
                         @Html.DisplayFor(modelItem => item.AccountLedger.AccountGroup.GroupName)
                     </td>
@@ -119,7 +128,8 @@
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+                        <a href="~/Report/Receiptvoucher/@ViewBag.Id">Voucher</a>
                     </td>
                 </tr>
 

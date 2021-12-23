@@ -185,6 +185,18 @@
     <Compile Include="Migrations\202112200602344_m11.designer.cs">
       <DependentUpon>202112200602344_m11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112211139476_m12.cs" />
+    <Compile Include="Migrations\202112211139476_m12.designer.cs">
+      <DependentUpon>202112211139476_m12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112220904231_m14.cs" />
+    <Compile Include="Migrations\202112220904231_m14.designer.cs">
+      <DependentUpon>202112220904231_m14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112230527551_m15.cs" />
+    <Compile Include="Migrations\202112230527551_m15.designer.cs">
+      <DependentUpon>202112230527551_m15.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -370,6 +382,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112200602344_m11.resx">
       <DependentUpon>202112200602344_m11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112211139476_m12.resx">
+      <DependentUpon>202112211139476_m12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112220904231_m14.resx">
+      <DependentUpon>202112220904231_m14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112230527551_m15.resx">
+      <DependentUpon>202112230527551_m15.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

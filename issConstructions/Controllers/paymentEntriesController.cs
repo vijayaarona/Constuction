@@ -51,11 +51,27 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,paymentID,paymenttDate,groupNameID,accountLedgerNameId,projectNameId,siteNameId,givenBy,collectBy,amount,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
+        public ActionResult Create([Bind(Include = "ID,paymentID,paymenttDate,groupNameID,accountLedgerNameId,projectNameId,siteNameId,givenBy,collectBy,amount,approvedBy,preparedBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
         {
             if (ModelState.IsValid)
             {
                 db.paymentEntries.Add(paymentEntry);
+                masterTbl masterTbl = new masterTbl();
+                masterTbl.entryDate = paymentEntry.paymenttDate;
+                masterTbl.payType = Convert.ToString(paymentEntry.groupNameID);
+                masterTbl.AccountID = Convert.ToString(paymentEntry.accountLedgerNameId);
+                masterTbl.GroupID = "c";
+                masterTbl.description = paymentEntry.remarks;
+                masterTbl.expense = paymentEntry.amount;
+                masterTbl.income = '0';
+                masterTbl.projectName =Convert.ToString(paymentEntry.projectNameId);
+                masterTbl.siteName = Convert.ToString(paymentEntry.siteNameId);
+                masterTbl.type = "P";
+                masterTbl.financialYear = "2021";
+                masterTbl.CreatedDate = paymentEntry.CreatedDate;
+                masterTbl.UpdatedDate = paymentEntry.UpdatedDate;
+                db.masterTbls.Add(masterTbl);
+                paymentEntry.CreatedDate = DateTime.Now;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -102,10 +118,12 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,paymentID,paymenttDate,groupNameID,accountLedgerNameId,projectNameId,siteNameId,givenBy,collectBy,amount,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
+        public ActionResult Edit([Bind(Include = "ID,paymentID,paymenttDate,groupNameID,accountLedgerNameId,projectNameId,siteNameId,givenBy,collectBy,amount,approvedBy,preparedBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
         {
             if (ModelState.IsValid)
             {
+                paymentEntry.CreatedDate = DateTime.UtcNow;
+                paymentEntry.UpdatedDate = DateTime.UtcNow;
                 db.Entry(paymentEntry).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -139,6 +157,7 @@ namespace issConstructions.Controllers
         {
             paymentEntry paymentEntry = db.paymentEntries.Find(id);
             db.paymentEntries.Remove(paymentEntry);
+            paymentEntry.isDeleted = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -54,7 +54,7 @@ namespace issConstructions.Controllers
                 if (duplicate == null)
                 {
                     accountGroupMaster.CreatedDate = DateTime.UtcNow;
-                    accountGroupMaster.UpdatedDate = DateTime.UtcNow;
+                
                     db.accountGroupMasters.Add(accountGroupMaster);
                     db.SaveChanges();
                     return RedirectToAction("Index");
