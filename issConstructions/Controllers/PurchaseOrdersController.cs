@@ -38,7 +38,6 @@ namespace issConstructions.Controllers
             }
             return View(purchaseOrder);
         }
-
         // GET: PurchaseOrders/Create
         public ActionResult Create()
         {

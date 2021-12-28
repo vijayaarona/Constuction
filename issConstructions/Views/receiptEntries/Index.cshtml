@@ -93,7 +93,7 @@
                         <td></td>
                     }
                     <td>
-                        @Html.DisplayFor(modelItem => item.accountLedger)
+                        @Html.DisplayFor(modelItem => item.accountLedger.AccountLedger)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.siteDetailsId)
@@ -129,7 +129,7 @@
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
-                        <a href="~/Report/Receiptvoucher/@ViewBag.Id">Voucher</a>
+                        <a href="~/Report/Receiptvoucher/@ViewBag.ID">Voucher</a>
                     </td>
                 </tr>
 

@@ -118,8 +118,9 @@
         });
     });
 
-    function loadData()
-    {
+    function loadData() {
+        let id =@ViewBag.ID;
+        console.log(ID);
         $.ajax({
            type: 'POST',
            url: '@Url.Content("~/Report/receiptdata")',

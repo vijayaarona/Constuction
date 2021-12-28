@@ -18,21 +18,21 @@ namespace issConstructions.Controllers
         private issDB db = new issDB();
 
         // GET: Report
-        public ActionResult Paymentvoucher(int? id)
+        public ActionResult Paymentvoucher(int? ID)
         {
-            ViewBag.Id = id;
+            ViewBag.ID = ID;
             return View();
         }
         // GET: Receipt Voucher
-        public ActionResult Receiptvoucher(int? id)
+        public ActionResult Receiptvoucher(int? ID)
         {
-            ViewBag.Id = id;
+            ViewBag.ID = ID;
             return View();
         }
         [HttpPost]
-        public JsonResult receiptdata(int id)
+        public JsonResult receiptdata(int ID)
         {
-            var RawData = db.receiptEntries.Where(x => x.ID == id).FirstOrDefault();
+            var RawData = db.receiptEntries.Where(x => x.ID == ID).FirstOrDefault();
 
 
             return Json(RawData, JsonRequestBehavior.AllowGet);

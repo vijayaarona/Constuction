@@ -51,21 +51,21 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,paymentID,paymenttDate,accountGroupId,accountGroup,accountLedgerId,accountLedger,siteDetailsId,siteDetails,givenBy,collectBy,amount,approvedBy,preparedBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
+        public ActionResult Create([Bind(Include = "ID,paymentID,paymenttDate,accountLedgerId,accountLedger,siteDetailsId,siteDetails,givenBy,collectBy,amount,approvedBy,preparedBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
         {
             if (ModelState.IsValid)
             {
                 var groupid = db.accountLedgerMasters.Where(x => x.ID == paymentEntry.accountLedgerId).FirstOrDefault();
-                var parentid = db.accountGroupMasters.Where(x => x.ID == paymentEntry.accountGroupId).FirstOrDefault();
-                //var data = db.accountLedgerMasters.Where(x => x.ID == paymentEntry.accountLedgerId).FirstOrDefault();
+                //var parentid = db.accountGroupMasters.Where(x => x.ID == paymentEntry.accountGroupId).FirstOrDefault();
+               // var data = db.accountLedgerMasters.Where(x => x.ID == paymentEntry.accountLedgerId).FirstOrDefault();
                 paymentEntry.CreatedDate = DateTime.Now;
                 db.paymentEntries.Add(paymentEntry);
                 masterTbl masterTbl = new masterTbl();
                 masterTbl.entryDate = paymentEntry.paymenttDate;
                 masterTbl.payType = Convert.ToString(paymentEntry.accountLedgerId);
-                masterTbl.AccountID = Convert.ToString(groupid);
-               // masterTbl.underGroup = parentid.ParentGroup;
-                masterTbl.GroupID = Convert.ToString(paymentEntry.accountGroupId);
+                masterTbl.AccountID = groupid.AccountLedger;
+                 //masterTbl.underGroup = paymentEntry.accountGroup.ParentGroup;
+                masterTbl.GroupID = Convert.ToString(groupid.AccountGroupID);
                 masterTbl.description = paymentEntry.remarks;
                 masterTbl.expense = paymentEntry.amount;
                 masterTbl.income = '0';
@@ -75,7 +75,7 @@ namespace issConstructions.Controllers
                     masterTbl.projectName = sdetails.ProjectName;
                 }
                 masterTbl.siteName = paymentEntry.siteDetails.SiteName;
-                masterTbl.type = "P";
+                masterTbl.type = "Payment";
                 masterTbl.financialYear = "2021";
                 masterTbl.CreatedDate = DateTime.UtcNow;
                 masterTbl.UpdatedDate = DateTime.UtcNow;
@@ -88,7 +88,7 @@ namespace issConstructions.Controllers
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.siteDetails.ProjectName);
             ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails.SiteName);
-            ViewBag.accountGroupId = new SelectList(db.accountLedgerMasters, "ID", "AccountGroupID", paymentEntry.accountGroupId);
+           // ViewBag.accountGroupId = new SelectList(db.accountLedgerMasters, "ID", "AccountGroupID", paymentEntry.accountGroupId);
             return View(paymentEntry);
         }
 
@@ -128,7 +128,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,paymentID,paymenttDate,accountGroupId,accountGroup,accountLedgerId,accountLedger,siteDetailsId,siteDetails,givenBy,collectBy,amount,approvedBy,preparedBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
+        public ActionResult Edit([Bind(Include = "ID,paymentID,paymenttDate,accountLedgerId,accountLedger,siteDetailsId,siteDetails,givenBy,collectBy,amount,approvedBy,preparedBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
         {
             {
                 if (ModelState.IsValid)
