@@ -45,23 +45,23 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label>Payment Type</label>
-                    @Html.DropDownList("groupNameID", null, htmlAttributes: new { @class = "form-control", @id = "groupNameID" })
-                    @Html.ValidationMessageFor(model => model.groupNameID, "", new { @class = "text-danger" })
+                    @Html.DropDownList("accountLedgerId", null, htmlAttributes: new { @class = "form-control", @id = "groupNameID" })
+                    @Html.ValidationMessageFor(model => model.accountGroupId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Project</label>
                     @Html.DropDownList("projectNameId", null, htmlAttributes: new { @class = "form-control", @id= "projectNameId" })
-                    @Html.ValidationMessageFor(model => model.projectNameId, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.siteDetails, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site Name</label>
-                    @Html.DropDownList("siteNameId", null, htmlAttributes: new { @class = "form-control", @id= "siteNameId" })
-                    @Html.ValidationMessageFor(model => model.siteNameId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control", @id= "siteNameId" })
+                    @Html.ValidationMessageFor(model => model.siteDetailsId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Account Ledger Name</label>
                     @Html.DropDownList("accountLedgerNameId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.accountLedgerNameId, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.accountLedgerId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Given By</label>

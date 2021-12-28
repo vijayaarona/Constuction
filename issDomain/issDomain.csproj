@@ -83,6 +83,7 @@
     <Compile Include="Models\DesignationMaster.cs" />
     <Compile Include="Models\EmployeeMaster.cs" />
     <Compile Include="Models\Errorlog.cs" />
+    <Compile Include="Models\LoginView.cs" />
     <Compile Include="Models\masterTbl.cs" />
     <Compile Include="Models\paymentEntry.cs" />
     <Compile Include="Models\ProductMaster.cs" />

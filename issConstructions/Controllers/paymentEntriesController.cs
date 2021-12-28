@@ -18,7 +18,7 @@ namespace issConstructions.Controllers
         // GET: paymentEntries
         public ActionResult Index()
         {
-            return View(db.paymentEntries.Include(x => x.SiteDetail).Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
+            return View(db.paymentEntries.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
 
         // GET: paymentEntries/Details/5
@@ -39,10 +39,10 @@ namespace issConstructions.Controllers
         // GET: paymentEntries/Create
         public ActionResult Create()
         {
-            ViewBag.groupNameID = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
+            ViewBag.accountLedgerId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" && x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName");
-            ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName");
+            ViewBag.siteDetailsId = new SelectList(db.siteDetails, "ID", "SiteName");
             return View();
         }
 
@@ -51,34 +51,44 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,paymentID,paymenttDate,groupNameID,accountLedgerNameId,projectNameId,siteNameId,givenBy,collectBy,amount,approvedBy,preparedBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
+        public ActionResult Create([Bind(Include = "ID,paymentID,paymenttDate,accountGroupId,accountGroup,accountLedgerId,accountLedger,siteDetailsId,siteDetails,givenBy,collectBy,amount,approvedBy,preparedBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
         {
             if (ModelState.IsValid)
             {
+                var groupid = db.accountLedgerMasters.Where(x => x.ID == paymentEntry.accountLedgerId).FirstOrDefault();
+                var parentid = db.accountGroupMasters.Where(x => x.ID == paymentEntry.accountGroupId).FirstOrDefault();
+                //var data = db.accountLedgerMasters.Where(x => x.ID == paymentEntry.accountLedgerId).FirstOrDefault();
+                paymentEntry.CreatedDate = DateTime.Now;
                 db.paymentEntries.Add(paymentEntry);
                 masterTbl masterTbl = new masterTbl();
                 masterTbl.entryDate = paymentEntry.paymenttDate;
-                masterTbl.payType = Convert.ToString(paymentEntry.groupNameID);
-                masterTbl.AccountID = Convert.ToString(paymentEntry.accountLedgerNameId);
-                masterTbl.GroupID = "c";
+                masterTbl.payType = Convert.ToString(paymentEntry.accountLedgerId);
+                masterTbl.AccountID = Convert.ToString(groupid);
+               // masterTbl.underGroup = parentid.ParentGroup;
+                masterTbl.GroupID = Convert.ToString(paymentEntry.accountGroupId);
                 masterTbl.description = paymentEntry.remarks;
                 masterTbl.expense = paymentEntry.amount;
                 masterTbl.income = '0';
-                masterTbl.projectName =Convert.ToString(paymentEntry.projectNameId);
-                masterTbl.siteName = Convert.ToString(paymentEntry.siteNameId);
+                if (paymentEntry.siteDetailsId != 0)
+                {
+                    var sdetails = db.siteDetails.Where(x => x.ID == paymentEntry.siteDetailsId).FirstOrDefault();
+                    masterTbl.projectName = sdetails.ProjectName;
+                }
+                masterTbl.siteName = paymentEntry.siteDetails.SiteName;
                 masterTbl.type = "P";
                 masterTbl.financialYear = "2021";
-                masterTbl.CreatedDate = paymentEntry.CreatedDate;
-                masterTbl.UpdatedDate = paymentEntry.UpdatedDate;
+                masterTbl.CreatedDate = DateTime.UtcNow;
+                masterTbl.UpdatedDate = DateTime.UtcNow;
                 db.masterTbls.Add(masterTbl);
-                paymentEntry.CreatedDate = DateTime.Now;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.groupNameID = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
-            ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.projectNameId);
-            ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteNameId);
+            ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.siteDetails.ProjectName);
+            ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails.SiteName);
+            ViewBag.accountGroupId = new SelectList(db.accountLedgerMasters, "ID", "AccountGroupID", paymentEntry.accountGroupId);
             return View(paymentEntry);
         }
 
@@ -108,8 +118,8 @@ namespace issConstructions.Controllers
 
             ViewBag.groupNameID = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
-            ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.projectNameId);
-            ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteNameId);
+            ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.siteDetails);
+            ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails);
             return View(paymentEntry);
         }
 
@@ -118,23 +128,24 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,paymentID,paymenttDate,groupNameID,accountLedgerNameId,projectNameId,siteNameId,givenBy,collectBy,amount,approvedBy,preparedBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
+        public ActionResult Edit([Bind(Include = "ID,paymentID,paymenttDate,accountGroupId,accountGroup,accountLedgerId,accountLedger,siteDetailsId,siteDetails,givenBy,collectBy,amount,approvedBy,preparedBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] paymentEntry paymentEntry)
         {
-            if (ModelState.IsValid)
             {
-                paymentEntry.CreatedDate = DateTime.UtcNow;
-                paymentEntry.UpdatedDate = DateTime.UtcNow;
-                db.Entry(paymentEntry).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    paymentEntry.CreatedDate = DateTime.UtcNow;
+                    paymentEntry.UpdatedDate = DateTime.UtcNow;
+                    db.Entry(paymentEntry).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.groupNameID = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
+                ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
+                ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.siteDetails.ProjectName);
+                ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails.SiteName);
+                return View(paymentEntry);
             }
-            ViewBag.groupNameID = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
-            ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
-            ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.projectNameId);
-            ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteNameId);
-            return View(paymentEntry);
         }
-
         // GET: paymentEntries/Delete/5
         public ActionResult Delete(int? id)
         {

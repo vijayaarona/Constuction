@@ -11,10 +11,9 @@ namespace issDomain.DTOs
         public int ID { get; set; }
         public int receiptID { get; set; }
         public DateTime? receiptDate { get; set; }
-        public int accountGroupID { get; set; }
-        public int accountLedgerNameId { get; set; }
-        public int projectNameId { get; set; }
-        public int siteNameId { get; set; }
+        public int accountGroupId { get; set; }
+        public int accountLedgerId { get; set; }
+        public int siteDetailsId { get; set; }
         public string givenBy { get; set; }
         public string collectBy { get; set; }
         public string approvedBy { get; set; }

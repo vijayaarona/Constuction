@@ -1,4 +1,5 @@
-﻿using issConstructions.Models;
+﻿using issConstructions.Custom;
+using issConstructions.Models;
 using issDomain.Models;
 using System;
 using System.Data;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace issConstructions.Controllers
 {
+   // [CustomAuthorize(Roles = "Admin,Manager")]
     public class AccountLedgerMastersController : Controller
     {
         private issDB db = new issDB();

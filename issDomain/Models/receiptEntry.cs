@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace issDomain.Models
 {
+
     public class receiptEntry
     {
         public int ID { get; set; }
         public int receiptID { get; set; }
         public DateTime? receiptDate { get; set; }
-        public int groupNameID { get; set; }
+        public int accountGroupId { get; set; }
         public virtual AccountGroupMaster accountGroup { get; set; }
-        public int accountLedgerNameId { get; set; }
-        public virtual AccountLedgerMaster AccountLedger { get; set; }
-        public int projectNameId { get; set; }
-        public int siteNameId { get; set; }
-        public virtual SiteDetails SiteDetail { get; set; }
+        public int accountLedgerId { get; set; }
+        public virtual AccountLedgerMaster accountLedger { get; set; }
+        public int siteDetailsId { get; set; }
+        public virtual SiteDetails siteDetails { get; set; }
         public string givenBy { get; set; }
         public string collectBy { get; set; }
         public string approvedBy { get; set; }
