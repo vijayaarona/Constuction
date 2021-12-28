@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using issConstructions.Custom;
 using issConstructions.Models;
 using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
+    [CustomAuthorize(Roles = "Admin,Manager")]
     public class EmployeeMastersController : Controller
     {
         private issDB db = new issDB();
@@ -42,6 +44,7 @@ namespace issConstructions.Controllers
         {
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName");
             ViewBag.DesignationId = new SelectList(db.designationMasters, "ID", "DesignationName");
+            ViewBag.name = "";
             return View();
         }
 
@@ -54,11 +57,20 @@ namespace issConstructions.Controllers
         {
             if (ModelState.IsValid)
             {
-                employeeMaster.CreatedDate = DateTime.UtcNow;
-                employeeMaster.UpdatedDate = DateTime.UtcNow;
-                db.employeeMaster.Add(employeeMaster);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var duplicate = db.employeeMaster.Where(x => x.name == employeeMaster.name && x.address == employeeMaster.address).FirstOrDefault();
+                if (duplicate == null)
+                {
+                    employeeMaster.CreatedDate = DateTime.UtcNow;
+                    employeeMaster.UpdatedDate = DateTime.UtcNow;
+                    db.employeeMaster.Add(employeeMaster);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.name = "Already Exists....!";
+                }
+               
             }
 
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", employeeMaster.CategoryId);

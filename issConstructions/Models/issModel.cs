@@ -31,5 +31,8 @@ namespace issConstructions.Models
         public System.Data.Entity.DbSet<PurchaseOrderTable> purchaseOrderTables { get; set; }
         public System.Data.Entity.DbSet<PurchaseEntry> purchaseEntries { get; set; }
         public System.Data.Entity.DbSet<PurchaseEntryTable> purchaseEntryTables { get; set; }
+        public System.Data.Entity.DbSet<paymentEntry> paymentEntries { get; set; }
+        public System.Data.Entity.DbSet<receiptEntry> receiptEntries { get; set; }
+        public System.Data.Entity.DbSet<masterTbl> masterTbls { get; set; }
     }
 }

@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using issConstructions.Custom;
+using issConstructions.Models;
+using issDomain.Models;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using issConstructions.Models;
-using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
+   // [CustomAuthorize(Roles = "Admin,Manager")]
     public class AccountLedgerMastersController : Controller
     {
         private issDB db = new issDB();
@@ -39,8 +39,11 @@ namespace issConstructions.Controllers
         // GET: AccountLedgerMasters/Create
         public ActionResult Create()
         {
-            ViewBag.AccountGroupID = new SelectList(db.accountGroupMasters, "ID", "GroupName");
+
+            ViewBag.AccountGroupID = new SelectList(db.accountGroupMasters.Where(x => x.isDeleted == false), "ID", "GroupName");
+            ViewBag.AccountLedger = "";
             return View();
+
         }
 
         // POST: AccountLedgerMasters/Create
@@ -52,12 +55,21 @@ namespace issConstructions.Controllers
         {
             if (ModelState.IsValid)
             {
-                accountLedgerMaster.CreatedDate = DateTime.UtcNow;
-                accountLedgerMaster.UpdatedDate = DateTime.UtcNow;
-                db.accountLedgerMasters.Add(accountLedgerMaster);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var duplicate = db.accountLedgerMasters.Where(x => x.AccountLedger == accountLedgerMaster.AccountLedger).FirstOrDefault();
+                if (duplicate == null)
+                {
+
+                    accountLedgerMaster.CreatedDate = DateTime.UtcNow;
+                    accountLedgerMaster.UpdatedDate = DateTime.UtcNow;
+                    db.accountLedgerMasters.Add(accountLedgerMaster);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else {
+                    ViewBag.AccountLedger = "Already Exists....!";
+                }
             }
+            
             ViewBag.AccountGroupID = new SelectList(db.accountGroupMasters, "ID", "GroupName", accountLedgerMaster.AccountGroupID);
 
             return View(accountLedgerMaster);

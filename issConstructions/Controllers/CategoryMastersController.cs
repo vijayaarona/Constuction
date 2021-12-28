@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using issConstructions.Custom;
 using issConstructions.Models;
 using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
+    [CustomAuthorize(Roles = "Admin,Manager")]
     public class CategoryMastersController : Controller
     {
         private issDB db = new issDB();
@@ -39,6 +41,7 @@ namespace issConstructions.Controllers
         // GET: CategoryMasters/Create
         public ActionResult Create()
         {
+            ViewBag.CategoryName = "";
             return View();
         }
 
@@ -49,13 +52,21 @@ namespace issConstructions.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,CategoryName,Remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] CategoryMaster categoryMaster)
         {
-            if (ModelState.IsValid)
+             if (ModelState.IsValid)
             {
-                categoryMaster.CreatedDate = DateTime.UtcNow;
-                categoryMaster.UpdatedDate = DateTime.UtcNow;
-                db.categoryMasters.Add(categoryMaster);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var duplicate = db.categoryMasters.Where(x => x.CategoryName == categoryMaster.CategoryName).FirstOrDefault();
+                if (duplicate == null)
+                {
+                    categoryMaster.CreatedDate = DateTime.UtcNow;
+                    categoryMaster.UpdatedDate = DateTime.UtcNow;
+                    db.categoryMasters.Add(categoryMaster);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else {
+                    ViewBag.CategoryName = "Already Exists...!";
+                }
+                
             }
 
             return View(categoryMaster);

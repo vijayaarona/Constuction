@@ -1,0 +1,91 @@
+﻿@model issDomain.Models.paymentEntry
+
+@{
+    ViewBag.Title = "Edit";
+}
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="panel-group">
+
+        <div class="panel panel-heading header">
+            Payment Entry - Edit Page
+        </div>
+        <div class="panel panel-body">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Payment Date</label>
+                    @Html.TextBoxFor(m => m.paymenttDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Payment Type</label>
+                    @Html.DropDownList("accountGroupId", null, htmlAttributes: new { @class = "form-control", @id = "groupNameID" })
+                    @Html.ValidationMessageFor(model => model.accountGroupId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Project</label>
+                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.siteDetailsId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Site Name</label>
+                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.siteDetailsId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Account Ledger Name</label>
+                    @Html.DropDownList("accountLedgerId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.accountLedgerId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Given By</label>
+                    @Html.EditorFor(model => model.givenBy, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.givenBy, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Collected By</label>
+                    @Html.EditorFor(model => model.collectBy, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.collectBy, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Amount</label>
+                    @Html.EditorFor(model => model.amount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Remarks</label>
+                    @Html.EditorFor(model => model.remarks, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.remarks, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="float:right">
+                <input type="submit" value="Save" class="btn btn-default" />
+                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

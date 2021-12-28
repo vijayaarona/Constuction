@@ -1,0 +1,149 @@
+﻿@model issDomain.Models.receiptEntry
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<style>
+    #AccountGroupMaster {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+
+    #AccountGroupMaster td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #AccountGroupMaster tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #AccountGroupMaster tr:hover {
+        background-color: #ddd;
+    }
+
+    #AccountGroupMaster th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    #btn-edit a:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+    #btn-edit a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+</style>
+
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Receipt Entry -  Details Page
+    </div>
+    <div class="panel panel-body">
+
+        <table id="AccountGroupMaster">
+         
+            <tr>
+                <th>Receipt Date</th>
+                <td>  @Html.DisplayFor(model => model.receiptDate)</td>
+            </tr>
+            <tr>
+                <th>Project</th>
+                <td>  @Html.DisplayFor(model => model.projectNameId)</td>
+            </tr>
+            <tr>
+                <th>Site Name</th>
+                <td>  @Html.DisplayFor(model => model.siteNameId)</td>
+            </tr>
+            <tr>
+                <th>Account Ledger Name</th>
+                <td>  @Html.DisplayFor(model => model.accountLedgerNameId)</td>
+            </tr>
+            <tr>
+                <th>Given By</th>
+                <td>  @Html.DisplayFor(model => model.givenBy)</td>
+            </tr>
+            <tr>
+                <th>Collected By</th>
+                <td>  @Html.DisplayFor(model => model.collectBy)</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>  @Html.DisplayFor(model => model.amount)</td>
+            </tr>
+            <tr>
+                <th>Remarks</th>
+                <td>  @Html.DisplayFor(model => model.remarks)</td>
+            </tr>
+            <tr>
+                <th> Created Date</th>
+                <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
+            </tr>
+
+            <tr>
+                <th> Updated By</th>
+                <td>  @Html.DisplayFor(model => model.UpdateBy)</td>
+            </tr>
+            <tr>
+                <th> Updated  Date</th>
+                <td>  @Html.DisplayFor(model => model.UpdatedDate)</td>
+            </tr>
+        </table>
+
+        <p style="float:right;">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+            @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+        </p>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#AGMaster').DataTable({
+            dom: 'Bfrtip',
+
+            buttons: [
+                'copy',
+                {
+                    extend: 'excel',
+                    title: function () {
+                        var printTitle = 'New Title';
+                        return printTitle
+                    }
+                   // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                },
+                {
+                    extend: 'pdf',
+                  //  messageBottom: null
+                },
+                {
+                    extend: 'print',
+                }
+
+            ]
+        });
+
+    });
+</script>
+

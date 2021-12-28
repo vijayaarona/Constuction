@@ -62,6 +62,8 @@
     <Compile Include="DTOs\DesignationMasterDTOs.cs" />
     <Compile Include="DTOs\EmployeeMasterDTOs.cs" />
     <Compile Include="DTOs\ErrorlogDTOs.cs" />
+    <Compile Include="DTOs\MasterTblDTOs.cs" />
+    <Compile Include="DTOs\paymentEntryDTOs.cs" />
     <Compile Include="DTOs\ProductMasterDTOs.cs" />
     <Compile Include="DTOs\PurchaseEntryDTOs.cs" />
     <Compile Include="DTOs\PurchaseEntryTableDTOs.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="DTOs\PurchaseOrderTableDTOs.cs" />
     <Compile Include="DTOs\PurchaseRequestDTOs.cs" />
     <Compile Include="DTOs\PurchaseRequestTableDTOs.cs" />
+    <Compile Include="DTOs\receiptEntryDTOs.cs" />
     <Compile Include="DTOs\SiteDetailsDTOs.cs" />
     <Compile Include="DTOs\SupplierMasterDTOs.cs" />
     <Compile Include="DTOs\ToolsMasterDTOs.cs" />
@@ -80,6 +83,9 @@
     <Compile Include="Models\DesignationMaster.cs" />
     <Compile Include="Models\EmployeeMaster.cs" />
     <Compile Include="Models\Errorlog.cs" />
+    <Compile Include="Models\LoginView.cs" />
+    <Compile Include="Models\masterTbl.cs" />
+    <Compile Include="Models\paymentEntry.cs" />
     <Compile Include="Models\ProductMaster.cs" />
     <Compile Include="Models\PurchaseEntry.cs" />
     <Compile Include="Models\PurchaseEntryTable.cs" />
@@ -87,6 +93,7 @@
     <Compile Include="Models\PurchaseOrderTable.cs" />
     <Compile Include="Models\PurchaseRequest.cs" />
     <Compile Include="Models\PurchaseRequestTable.cs" />
+    <Compile Include="Models\receiptEntry.cs" />
     <Compile Include="Models\SiteDetails.cs" />
     <Compile Include="Models\ToolsMaster.cs" />
     <Compile Include="Models\Users.cs" />

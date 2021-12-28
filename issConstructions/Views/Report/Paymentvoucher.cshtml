@@ -1,0 +1,112 @@
+﻿@model IEnumerable<issDomain.Models.paymentEntry>
+
+@{
+    ViewBag.Title = "Paymentvoucher";
+}
+
+<style>
+    table {
+        width: 100%;
+    }
+    th {
+        text-align: left!important;
+
+    }
+
+    .line {
+        background-color: white;
+        border: 0.5px solid black;
+        margin-top: 2px;
+    }
+
+    body {
+        width: 100%;
+        height: 75%;
+        font-family: Cambria;
+    }
+</style>
+<body>
+    <div class="panel" style="background-color:#ebcece">
+        <div class="panel-heading">
+            <button class="btn-default" id="printReceipt" style="float:right;margin-top:0%;width:10%;background-color:#FF5F04 ">
+                Print
+            </button>
+        </div>
+        <div class="" id="receipt">
+            <div class="container" style="background-color:white">
+
+                <h4 style="text-align:center;color:orangered;font-weight:500">Payment Voucher</h4>
+                <hr style="border: 0.5px solid black"/>
+
+                <table class="tbl1">
+                    <tr>
+                        <th width="15%">Voucher No</th>
+                        <th width="2%">:</th>
+                    </tr>
+                    <tr>
+                        <th width="18%">Date</th>
+                        <th width="2%">:</th>
+                        <th id=""></th>
+                        <th width="18%">Project Name</th>
+                        <th width="2%">:</th>
+                        <th></th>
+                    </tr>
+                </table>
+                <hr class="line" />
+
+                <table>
+                    <tr>
+                        <th width="18%">Site Name</th>
+                        <th width="2%">:</th>
+                        <th></th>
+                        <th width="18%">Amount Paid</th>
+                        <th width="2%">:</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th width="18%">Paid to</th>
+                        <th width="2%">:</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th width="18%">On Account of</th>
+                        <th width="2%">:</th>
+                        <th></th>
+                    </tr>
+                </table>
+                <hr class="line" />
+                <table>
+                    <tr>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Prepared By</th>
+                        <th colspan="10">Approved by</th>
+                        <th colspan="10">Given By</th>
+                        <th colspan="10">Received By</th>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(function () {
+        $('#printReceipt').click(function () {
+            $('#printReceipt').hide();
+            $('footer').hide();
+            window.print();
+            $('#printReceipt').show();
+            $('footer').show();
+        });
+    });
+</script>
+

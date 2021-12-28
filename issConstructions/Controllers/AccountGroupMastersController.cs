@@ -1,4 +1,5 @@
-﻿using issConstructions.Models;
+﻿using issConstructions.Custom;
+using issConstructions.Models;
 using issDomain.Models;
 using System;
 using System.Data;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace issConstructions.Controllers
 {
+   // [CustomAuthorize(Roles = "Admin,Manager")]
     public class AccountGroupMastersController : Controller
     {
         private issDB db = new issDB();
@@ -37,6 +39,7 @@ namespace issConstructions.Controllers
         // GET: AccountGroupMasters/Create
         public ActionResult Create()
         {
+            ViewBag.GroupName = "";
             return View();
         }
 
@@ -49,11 +52,20 @@ namespace issConstructions.Controllers
         {
             if (ModelState.IsValid)
             {
-                accountGroupMaster.CreatedDate = DateTime.UtcNow;
-                accountGroupMaster.UpdatedDate = DateTime.UtcNow;
-                db.accountGroupMasters.Add(accountGroupMaster);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var duplicate = db.accountGroupMasters.Where(x => x.GroupName == accountGroupMaster.GroupName).FirstOrDefault();
+                if (duplicate == null)
+                {
+                    accountGroupMaster.CreatedDate = DateTime.UtcNow;
+                
+                    db.accountGroupMasters.Add(accountGroupMaster);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.GroupName = "Already Exists....!";
+                }
+                
             }
 
             return View(accountGroupMaster);

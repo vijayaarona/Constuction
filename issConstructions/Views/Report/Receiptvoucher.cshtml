@@ -1,0 +1,139 @@
+﻿@model IEnumerable<issDomain.Models.receiptEntry>
+@{
+    ViewBag.Title = "Receiptvoucher";
+}
+
+<style>
+    table {
+        width: 100%;
+    }
+
+    .line {
+        background-color: white;
+        border: 0.2px solid black;
+        margin-top: 2px;
+    }
+
+    th {
+        text-align: left;
+    }
+
+    body {
+        width: 100%;
+        height: 72%;
+        font-family: Cambria;
+    }
+</style>
+<body>
+    <div class="panel" style="background-color:#ebcece">
+        <div class="panel-heading">
+            <button class="btn-default" id="printReceipt" style="float:right;margin-top:0%;width:10%;background-color:#FF2F04 ">
+                Print
+            </button>
+        </div>
+        <div class="" id="receipt">
+            <div class="container" style="background-color:white">
+
+                <h4 style="text-align:center;color:orangered;font-weight:200">Receipt Voucher</h4>
+                <hr style="border: 0.5px solid black" />
+                <table>
+                    <tr>
+                        <th width="18%">Voucher No</th>
+                        <th width="2%">:</th>
+                        <th id:voucherNo></th>
+                    </tr>
+                    <tr>
+                        <th width="18%">Date</th>
+                        <th width="2%">:</th>
+                        <th id="receiptDate"></th>
+                        <th width="18%">Project Name</th>
+                        <th width="2%">:</th>
+                        <th id="projectNameId"></th>
+                    </tr>
+                </table>
+                <hr class="line" />
+
+                <table>
+                    <tr>
+                        <th width="18%">Site Name</th>
+                        <th width="2%">:</th>
+                        <th id="siteNameId"></th>
+                    </tr>
+                    <tr>
+                        <th width="18%">Amount Paid</th>
+                        <th width="2%">:</th>
+                        <th id="amount"></th>
+                    </tr>
+                    <tr>
+                        <th width="18%">On Account of</th>
+                        <th width="2%">:</th>
+                        <th id="accountLedgerNameId"></th>
+                    </tr>
+                </table>
+                <hr class="line" />
+                <table>
+                    <tr>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                    </tr>
+                    <tr style="text-align:center">
+                        <th width="25%" id="preparedBy"></th>
+                        <th width="25%" id="approvedBy"></th>
+                        <th width="25%" id="givenBy"></th>
+                        <th width="25%" id="collectBy"></th>
+                    </tr>
+                    <tr>
+                        <th width="25%">Prepared By</th>
+                        <th width="25%">Approved by</th>
+                        <th width="25%">Given By</th>
+                        <th width="25%">Received By</th>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+
+<script>
+    $(function () {
+        loadData();
+        $('#btnprint').click(function () {
+            $('#header').hide();
+            $(this).hide();
+            $('#settings').hide();
+            $('#Sidemenus').hide();
+            $('footer').hide();
+            window.print();
+            $('#header').show();
+            $('#settings').show();
+            $('#Sidemenus').show();
+            $(this).show();
+            $('footer').show();
+        });
+    });
+
+    function loadData()
+    {
+        $.ajax({
+           type: 'POST',
+           url: '@Url.Content("~/Report/receiptdata")',
+            success: function (result)
+            {
+                Console.log(result);
+                //$('#receiptDate').html(result);
+           },
+           error: function (err) {
+               console.log(err);
+           }
+       });
+    }
+   
+</script>
+
+
