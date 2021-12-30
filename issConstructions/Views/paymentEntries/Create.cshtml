@@ -26,7 +26,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 @using (Html.BeginForm())
 {
@@ -43,24 +44,24 @@
                     <label>Payment Date</label>
                     @Html.TextBoxFor(m => m.paymenttDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-5">
                     <label>Payment Type</label>
-                    @Html.DropDownList("accountLedgerId", null, htmlAttributes: new { @class = "form-control", @id = "groupNameID" })
+                    @Html.DropDownList("accountLedgerId", null, htmlAttributes: new { @class = "form-control js-example-basic-single", @id = "groupNameID" })
                     @Html.ValidationMessageFor(model => model.accountLedgerId, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-5">
                     <label>Project</label>
-                    @Html.DropDownList("projectNameId", null, htmlAttributes: new { @class = "form-control", @id= "projectNameId" })
+                    @Html.DropDownList("projectNameId", null, htmlAttributes: new { @class = "form-control js-example-basic-single", @id= "projectNameId" })
                     @Html.ValidationMessageFor(model => model.siteDetails, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site Name</label>
-                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control", @id= "siteNameId" })
+                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control js-example-basic-single", @id= "siteNameId" })
                     @Html.ValidationMessageFor(model => model.siteDetailsId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Account Ledger Name</label>
-                    @Html.DropDownList("accountLedgerNameId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("accountLedgerNameId", null, htmlAttributes: new { @class = "form-control js-example-basic-single" })
                     @Html.ValidationMessageFor(model => model.accountLedgerId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
@@ -123,7 +124,9 @@
             }
         });
     };
-
+    $(document).ready(function () {
+        $('.js-example-basic-single').select2();
+    });
 </script>
 
 

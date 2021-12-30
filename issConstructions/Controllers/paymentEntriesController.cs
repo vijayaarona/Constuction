@@ -84,10 +84,10 @@ namespace issConstructions.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.groupNameID = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
+            ViewBag.accountLedgerId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.siteDetails.ProjectName);
-            ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails.SiteName);
+            ViewBag.siteDetailsId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails.SiteName);
            // ViewBag.accountGroupId = new SelectList(db.accountLedgerMasters, "ID", "AccountGroupID", paymentEntry.accountGroupId);
             return View(paymentEntry);
         }
@@ -116,10 +116,10 @@ namespace issConstructions.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.groupNameID = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
+            ViewBag.accountLedgerId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
-            ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.siteDetails);
-            ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails);
+            ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.siteDetails.ProjectName);
+            ViewBag.siteDetailsId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails.SiteName);
             return View(paymentEntry);
         }
 
@@ -139,10 +139,10 @@ namespace issConstructions.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.groupNameID = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
+                ViewBag.accountLedgerId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
                 ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
                 ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.siteDetails.ProjectName);
-                ViewBag.siteNameId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails.SiteName);
+                ViewBag.siteDetailsId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails.SiteName);
                 return View(paymentEntry);
             }
         }

@@ -18,6 +18,9 @@
         color: white;
     }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 
 @using (Html.BeginForm())
 {
@@ -36,22 +39,22 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label>Payment Type</label>
-                    @Html.DropDownList("accountGroupId", null, htmlAttributes: new { @class = "form-control", @id = "groupNameID" })
-                    @Html.ValidationMessageFor(model => model.accountGroupId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("accountLedgerId", null, htmlAttributes: new { @class = "form-control", @id = "groupNameID" })
+                    @Html.ValidationMessageFor(model => model.accountLedgerId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Project</label>
-                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.siteDetailsId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("projectNameId", null, htmlAttributes: new { @class = "form-control", @id = "projectNameId" })
+                    @Html.ValidationMessageFor(model => model.siteDetails, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site Name</label>
-                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control", @id = "siteNameId" })
                     @Html.ValidationMessageFor(model => model.siteDetailsId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Account Ledger Name</label>
-                    @Html.DropDownList("accountLedgerId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("accountLedgerNameId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.accountLedgerId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
@@ -83,7 +86,38 @@
     </div>
 
 }
+<script>
+    $(document).ready(function () {
 
+        $("#projectNameId").change(function () {
+            var pnameId = $(this).find('option:selected').val();
+            siteNameId(pnameId);
+        })
+    });
+
+
+    function siteNameId(pnameId)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/paymentEntries/siteNameId")',
+            dataType: 'json',
+                  data: { site_Name_Id: pnameId },
+                  success: function (result) {
+                      var data = result;
+                      $("#siteNameId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                          $("#siteNameId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    };
+
+</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
