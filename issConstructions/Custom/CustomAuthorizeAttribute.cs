@@ -10,6 +10,8 @@ namespace issConstructions.Custom
 {
     public static class Display
     {
+        internal static int accountGroupId;
+
         public static string Name
         {
             get

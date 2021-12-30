@@ -14,13 +14,11 @@ namespace issConstructions.Controllers
     public class AccountLedgerMastersController : Controller
     {
         private issDB db = new issDB();
-
         // GET: AccountLedgerMasters
         public ActionResult Index()
         {
             return View(db.accountLedgerMasters.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: AccountLedgerMasters/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,17 +33,13 @@ namespace issConstructions.Controllers
             }
             return View(accountLedgerMaster);
         }
-
         // GET: AccountLedgerMasters/Create
         public ActionResult Create()
         {
-
             ViewBag.AccountGroupID = new SelectList(db.accountGroupMasters.Where(x => x.isDeleted == false), "ID", "GroupName");
             ViewBag.AccountLedger = "";
             return View();
-
         }
-
         // POST: AccountLedgerMasters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -58,7 +52,6 @@ namespace issConstructions.Controllers
                 var duplicate = db.accountLedgerMasters.Where(x => x.AccountLedger == accountLedgerMaster.AccountLedger).FirstOrDefault();
                 if (duplicate == null)
                 {
-
                     accountLedgerMaster.CreatedDate = DateTime.UtcNow;
                     accountLedgerMaster.UpdatedDate = DateTime.UtcNow;
                     db.accountLedgerMasters.Add(accountLedgerMaster);
@@ -69,12 +62,9 @@ namespace issConstructions.Controllers
                     ViewBag.AccountLedger = "Already Exists....!";
                 }
             }
-            
             ViewBag.AccountGroupID = new SelectList(db.accountGroupMasters, "ID", "GroupName", accountLedgerMaster.AccountGroupID);
-
             return View(accountLedgerMaster);
         }
-
         // GET: AccountLedgerMasters/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -88,10 +78,8 @@ namespace issConstructions.Controllers
                 return HttpNotFound();
             }
             ViewBag.AccountGroupID = new SelectList(db.accountGroupMasters, "ID", "GroupName", accountLedgerMaster.AccountGroupID);
-
             return View(accountLedgerMaster);
         }
-
         // POST: AccountLedgerMasters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -108,10 +96,8 @@ namespace issConstructions.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.AccountGroupID = new SelectList(db.accountGroupMasters, "ID", "GroupName", accountLedgerMaster.AccountGroupID);
-
             return View(accountLedgerMaster);
         }
-
         // GET: AccountLedgerMasters/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -126,7 +112,6 @@ namespace issConstructions.Controllers
             }
             return View(accountLedgerMaster);
         }
-
         // POST: AccountLedgerMasters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -138,7 +123,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

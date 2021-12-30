@@ -16,13 +16,11 @@ namespace issConstructions.Controllers
     public class DesignationMastersController : Controller
     {
         private issDB db = new issDB();
-
         // GET: DesignationMasters
         public ActionResult Index()
         {
             return View(db.designationMasters.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: DesignationMasters/Details/5
         public ActionResult Details(int? id)
         {
@@ -37,14 +35,12 @@ namespace issConstructions.Controllers
             }
             return View(designationMaster);
         }
-
         // GET: DesignationMasters/Create
         public ActionResult Create()
         {
             ViewBag.DesignationName = "";
             return View();
         }
-
         // POST: DesignationMasters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -68,10 +64,8 @@ namespace issConstructions.Controllers
                     ViewBag.DesignationName = "Already Exists....!";
                 }
             }
-
             return View(designationMaster);
         }
-
         // GET: DesignationMasters/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -86,7 +80,6 @@ namespace issConstructions.Controllers
             }
             return View(designationMaster);
         }
-
         // POST: DesignationMasters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -104,7 +97,6 @@ namespace issConstructions.Controllers
             }
             return View(designationMaster);
         }
-
         // GET: DesignationMasters/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -119,7 +111,6 @@ namespace issConstructions.Controllers
             }
             return View(designationMaster);
         }
-
         // POST: DesignationMasters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -131,7 +122,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

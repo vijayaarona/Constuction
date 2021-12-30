@@ -14,13 +14,11 @@ namespace issConstructions.Controllers
     public class paymentEntriesController : Controller
     {
         private issDB db = new issDB();
-
         // GET: paymentEntries
         public ActionResult Index()
         {
             return View(db.paymentEntries.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: paymentEntries/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,7 +33,6 @@ namespace issConstructions.Controllers
             }
             return View(paymentEntry);
         }
-
         // GET: paymentEntries/Create
         public ActionResult Create()
         {
@@ -45,7 +42,6 @@ namespace issConstructions.Controllers
             ViewBag.siteDetailsId = new SelectList(db.siteDetails, "ID", "SiteName");
             return View();
         }
-
         // POST: paymentEntries/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -56,17 +52,15 @@ namespace issConstructions.Controllers
             if (ModelState.IsValid)
             {
                 var groupid = db.accountLedgerMasters.Where(x => x.ID == paymentEntry.accountLedgerId).FirstOrDefault();
-                //var parentid = db.accountGroupMasters.Where(x => x.ID == paymentEntry.accountGroupId).FirstOrDefault();
-               // var data = db.accountLedgerMasters.Where(x => x.ID == paymentEntry.accountLedgerId).FirstOrDefault();
                 paymentEntry.CreatedDate = DateTime.Now;
                 db.paymentEntries.Add(paymentEntry);
                 masterTbl masterTbl = new masterTbl();
                 masterTbl.entryDate = paymentEntry.paymenttDate;
-                masterTbl.payType = Convert.ToString(paymentEntry.accountLedgerId);
-                masterTbl.AccountID = groupid.AccountLedger;
-                 //masterTbl.underGroup = paymentEntry.accountGroup.ParentGroup;
+                masterTbl.payType = groupid.AccountLedger;
+                masterTbl.AccountID = Convert.ToString(paymentEntry.accountLedgerId);
+                masterTbl.parentGroup = groupid.AccountGroup.ParentGroup;
                 masterTbl.GroupID = Convert.ToString(groupid.AccountGroupID);
-                masterTbl.description = paymentEntry.remarks;
+                masterTbl.remarks = paymentEntry.remarks;
                 masterTbl.expense = paymentEntry.amount;
                 masterTbl.income = '0';
                 if (paymentEntry.siteDetailsId != 0)
@@ -88,10 +82,8 @@ namespace issConstructions.Controllers
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.siteDetails.ProjectName);
             ViewBag.siteDetailsId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails.SiteName);
-           // ViewBag.accountGroupId = new SelectList(db.accountLedgerMasters, "ID", "AccountGroupID", paymentEntry.accountGroupId);
             return View(paymentEntry);
         }
-
         [HttpPost]
         public JsonResult siteNameId(int site_Name_Id)
         {
@@ -102,7 +94,6 @@ namespace issConstructions.Controllers
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
-
         // GET: paymentEntries/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -115,14 +106,12 @@ namespace issConstructions.Controllers
             {
                 return HttpNotFound();
             }
-
             ViewBag.accountLedgerId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", paymentEntry.siteDetails.ProjectName);
             ViewBag.siteDetailsId = new SelectList(db.siteDetails, "ID", "SiteName", paymentEntry.siteDetails.SiteName);
             return View(paymentEntry);
         }
-
         // POST: paymentEntries/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -160,7 +149,6 @@ namespace issConstructions.Controllers
             }
             return View(paymentEntry);
         }
-
         // POST: paymentEntries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -172,7 +160,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

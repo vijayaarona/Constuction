@@ -33,7 +33,6 @@
 {
     @Html.AntiForgeryToken()
 
-
     <div class="panel-group">
         <div class="panel panel-heading header">
             Payment Entry - Add Page
@@ -44,24 +43,24 @@
                     <label>Payment Date</label>
                     @Html.TextBoxFor(m => m.paymenttDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                 </div>
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-6">
                     <label>Payment Type</label>
-                    @Html.DropDownList("accountLedgerId", null, htmlAttributes: new { @class = "form-control js-example-basic-single", @id = "groupNameID" })
+                    @Html.DropDownList("accountLedgerId", null, htmlAttributes: new { @class = "form-control", @id = "groupNameID" })
                     @Html.ValidationMessageFor(model => model.accountLedgerId, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-6">
                     <label>Project</label>
-                    @Html.DropDownList("projectNameId", null, htmlAttributes: new { @class = "form-control js-example-basic-single", @id= "projectNameId" })
+                    @Html.DropDownList("projectNameId", null, htmlAttributes: new { @class = "form-control", @id= "projectNameId" })
                     @Html.ValidationMessageFor(model => model.siteDetails, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site Name</label>
-                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control js-example-basic-single", @id= "siteNameId" })
+                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control", @id= "siteNameId" })
                     @Html.ValidationMessageFor(model => model.siteDetailsId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Account Ledger Name</label>
-                    @Html.DropDownList("accountLedgerNameId", null, htmlAttributes: new { @class = "form-control js-example-basic-single" })
+                    @Html.DropDownList("accountLedgerNameId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.accountLedgerId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">

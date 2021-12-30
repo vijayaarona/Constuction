@@ -16,13 +16,11 @@ namespace issConstructions.Controllers
     public class SiteDetailsController : Controller
     {
         private issDB db = new issDB();
-
         // GET: SiteDetails
         public ActionResult Index()
         {
             return View(db.siteDetails.Where (x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: SiteDetails/Details/5
         public ActionResult Details(int? id)
         {
@@ -37,14 +35,12 @@ namespace issConstructions.Controllers
             }
             return View(siteDetails);
         }
-
         // GET: SiteDetails/Create
         public ActionResult Create()
         {
             ViewBag.ProjectName = "";
             return View();
         }
-
         // POST: SiteDetails/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -56,7 +52,6 @@ namespace issConstructions.Controllers
             {
                 //var duplicate = db.siteDetails.Where(x => x.ProjectName == siteDetails.SiteName).FirstOrDefault();
                 var duplicate = db.siteDetails.Where(x => x.ProjectName == siteDetails.SiteName).FirstOrDefault();
-
                 if (duplicate != null)
                 {
                     siteDetails.CreatedDate = DateTime.UtcNow;
@@ -70,10 +65,8 @@ namespace issConstructions.Controllers
                     ViewBag.ProjectName = "Site alredy exists....!";
                 }
             }
-
             return View(siteDetails);
         }
-
         // GET: SiteDetails/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -88,7 +81,6 @@ namespace issConstructions.Controllers
             }
             return View(siteDetails);
         }
-
         // POST: SiteDetails/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -106,7 +98,6 @@ namespace issConstructions.Controllers
             }
             return View(siteDetails);
         }
-
         // GET: SiteDetails/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -121,7 +112,6 @@ namespace issConstructions.Controllers
             }
             return View(siteDetails);
         }
-
         // POST: SiteDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -133,7 +123,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
