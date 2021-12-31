@@ -1,4 +1,5 @@
-﻿using issConstructions.Models;
+﻿using issConstructions.Custom;
+using issConstructions.Models;
 using issDomain.Models;
 using System;
 using System.Data;
@@ -12,15 +13,12 @@ namespace issConstructions.Controllers
     public class receiptEntriesController : Controller
     {
         private issDB db = new issDB();
-
         public object Custom { get; private set; }
-
         // GET: receiptEntries
         public ActionResult Index()
         {
             return View(db.receiptEntries.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: receiptEntries/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,7 +33,6 @@ namespace issConstructions.Controllers
             }
             return View(receiptEntry);
         }
-
         // GET: receiptEntries/Create
         public ActionResult Create()
         {
@@ -46,7 +43,6 @@ namespace issConstructions.Controllers
             //ViewBag.accountGroupId = new SelectList(db.accountLedgerMasters, "ID", "AccountGroupID");
             return View();
         }
-
         // POST: receiptEntries/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -57,19 +53,17 @@ namespace issConstructions.Controllers
             if (ModelState.IsValid)
             {
                 var groupid = db.accountLedgerMasters.Where(x => x.ID == receiptEntry.accountLedgerId).FirstOrDefault();
-                //var parentid = db.accountGroupMasters.Where(x => x.ID == receiptEntry.accountGroupId).FirstOrDefault();
-                // var data = db.accountLedgerMasters.Where(x => x.ID == receiptEntry.accountLedgerId).FirstOrDefault();
                 receiptEntry.CreatedDate = DateTime.Now;
                 db.receiptEntries.Add(receiptEntry);
                 masterTbl masterTbl = new masterTbl();
                 masterTbl.entryDate = receiptEntry.receiptDate;
-                masterTbl.payType = Convert.ToString(receiptEntry.accountLedgerId);
-                masterTbl.AccountID = groupid.AccountLedger;
-                //masterTbl.underGroup = receiptEntry.accountGroup.ParentGroup;
-                masterTbl.GroupID = Convert.ToString(groupid.AccountGroupID);
-                masterTbl.description = receiptEntry.remarks;
-                masterTbl.expense = receiptEntry.amount;
-                masterTbl.income = '0';
+                masterTbl.payType = groupid.AccountLedger;
+                masterTbl.AccountID = (receiptEntry.accountLedgerId).ToString();
+                masterTbl.parentGroup = groupid.AccountGroup.ParentGroup;
+                masterTbl.GroupID = (groupid.AccountGroupID).ToString();
+                masterTbl.remarks = receiptEntry.remarks;
+                masterTbl.income = receiptEntry.amount;
+                masterTbl.expense = '0';
                 if (receiptEntry.siteDetailsId != 0)
                 {
                     var sdetails = db.siteDetails.Where(x => x.ID == receiptEntry.siteDetailsId).FirstOrDefault();
@@ -81,20 +75,15 @@ namespace issConstructions.Controllers
                 masterTbl.CreatedDate = DateTime.UtcNow;
                 masterTbl.UpdatedDate = DateTime.UtcNow;
                 db.masterTbls.Add(masterTbl);
-
-
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-           
             ViewBag.accountLedgerId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", receiptEntry.siteDetails.ProjectName);
             ViewBag.siteDetailsId = new SelectList(db.siteDetails, "ID", "SiteName", receiptEntry.siteDetails.SiteName);
-            //ViewBag.accountGroupId = new SelectList(db.accountLedgerMasters, "ID", "AccountGroupID", receiptEntry.accountGroupId);
             return View(receiptEntry);
         }
-
         public JsonResult siteNameId(int site_Name_Id)
         {
             if (site_Name_Id > 0)
@@ -120,10 +109,8 @@ namespace issConstructions.Controllers
             ViewBag.accountLedgerNameId = new SelectList(db.accountLedgerMasters.Where(x => x.AccountGroup.GroupName != "Cash in Hand" || x.AccountGroup.GroupName != "Bank Accounts").ToList(), "ID", "AccountLedger");
             ViewBag.projectNameId = new SelectList(db.siteDetails, "ID", "ProjectName", receiptEntry.siteDetails.ProjectName);
             ViewBag.siteDetailsId = new SelectList(db.siteDetails, "ID", "SiteName", receiptEntry.siteDetails.SiteName);
-
             return View(receiptEntry);
         }
-
         // POST: receiptEntries/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -143,7 +130,6 @@ namespace issConstructions.Controllers
             ViewBag.siteDetailsId = new SelectList(db.siteDetails, "ID", "SiteName", receiptEntry.siteDetails.SiteName);
             return View(receiptEntry);
         }
-
         // GET: receiptEntries/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -158,7 +144,6 @@ namespace issConstructions.Controllers
             }
             return View(receiptEntry);
         }
-
         // POST: receiptEntries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -169,7 +154,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

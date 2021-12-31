@@ -42,16 +42,8 @@
         background-color: transparent;
     }
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-
+<link rel="stylesheet" type="text/css" href=@Url.Content("https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css")>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -63,7 +55,7 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label>Request ID</label>
-                    @Html.DropDownList("RequestID", null, htmlAttributes: new { @class = "js-example-placeholder-multiple js-states form-control", @multiple = "multiple", @id = "purchaseRequestId" })
+                    @Html.DropDownList("RequestID", null, htmlAttributes: new { @class = "js-states form-control", @id = "purchaseRequestId" })
                     @Html.ValidationMessageFor(model => model.RequestID, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
@@ -213,6 +205,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+    <script src=@Url.Content("https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")></script>
 
 <script>
     let sNo = 1;
@@ -220,6 +213,7 @@
     var ntAmt;
     $(document).ready(function ()
     {
+        $("#purchaseRequestId").select2();
         $("#purchaseRequestId").change(function () {
             var requestId = $(this).find('option:selected').val();
             categoryOrderId(requestId);
@@ -366,7 +360,5 @@
                   }
               });
     };
-    $(".js-example-placeholder-multiple").select2({
-        placeholder: "Select a state"
-    });
-</script>
+   // $("#purchaseRequestId").select2();
+    </script>

@@ -16,14 +16,12 @@ namespace issConstructions.Controllers
     public class ProductMastersController : Controller
     {
         private issDB db = new issDB();
-
         // GET: ProductMasters
         public ActionResult Index()
         {
             var productMasters = db.productMasters.Include(p => p.Category);
             return View(productMasters.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: ProductMasters/Details/5
         public ActionResult Details(int? id)
         {
@@ -38,7 +36,6 @@ namespace issConstructions.Controllers
             }
             return View(productMaster);
         }
-
         // GET: ProductMasters/Create
         public ActionResult Create()
         {
@@ -46,7 +43,6 @@ namespace issConstructions.Controllers
             ViewBag.ProductName = "";
             return View();
         }
-
         // POST: ProductMasters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -70,11 +66,9 @@ namespace issConstructions.Controllers
                     ViewBag.ProductName = "Already Exists....!";
                 }
             }
-
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", productMaster.CategoryId);
             return View(productMaster);
         }
-
         // GET: ProductMasters/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -90,7 +84,6 @@ namespace issConstructions.Controllers
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", productMaster.CategoryId);
             return View(productMaster);
         }
-
         // POST: ProductMasters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -109,7 +102,6 @@ namespace issConstructions.Controllers
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", productMaster.CategoryId);
             return View(productMaster);
         }
-
         // GET: ProductMasters/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -124,7 +116,6 @@ namespace issConstructions.Controllers
             }
             return View(productMaster);
         }
-
         // POST: ProductMasters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -136,7 +127,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

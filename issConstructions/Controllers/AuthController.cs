@@ -13,7 +13,6 @@ namespace issConstructions.Controllers
     public class AuthController : Controller
     {
         private issDB db = new issDB();
-
         // GET: Auth
         //public ActionResult Index()
         //{
@@ -30,7 +29,6 @@ namespace issConstructions.Controllers
             ViewBag.Error = "";
             return View();
         }
-
         [HttpPost]
         public ActionResult Index(LoginView loginView, string ReturnUrl = "")
         {
@@ -52,7 +50,6 @@ namespace issConstructions.Controllers
                     string userData = JsonConvert.SerializeObject(userModel);
                     FormsAuthenticationTicket authTicket =
                         new FormsAuthenticationTicket(1, loginView.username, DateTime.Now, DateTime.Now.AddMinutes(30), false, userData);
-
                     string enTicket = FormsAuthentication.Encrypt(authTicket);
                     HttpCookie faCookie = new HttpCookie("issContrucations", enTicket);
                     Response.Cookies.Add(faCookie);
@@ -74,17 +71,14 @@ namespace issConstructions.Controllers
             //ModelState.AddModelError("Something Wrong : Username or Password invalid ^_^ ");
             return View(loginView);
         }
-
         public ActionResult LogOut()
         {
             HttpCookie cookie = new HttpCookie("issContrucations", "");
             cookie.Expires = DateTime.Now.AddYears(-1);
             Response.Cookies.Add(cookie);
-
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Auth", null);
         }
-
         public ActionResult AccessDenied()
         {
             return View();

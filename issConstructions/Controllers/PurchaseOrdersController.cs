@@ -16,14 +16,12 @@ namespace issConstructions.Controllers
     public class PurchaseOrdersController : Controller
     {
         private issDB db = new issDB();
-
         // GET: PurchaseOrders
         public ActionResult Index()
         {
             var purchaseOrders = db.PurchaseOrders.Include(p => p.Category).Include(p => p.Supplier).Include(p => p.SiteDetails);
             return View(purchaseOrders.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: PurchaseOrders/Details/5
         public ActionResult Details(int? id)
         {
@@ -47,16 +45,20 @@ namespace issConstructions.Controllers
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName");
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName");
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress");
-            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID");
+            List<SelectListItem> Request = new List<SelectListItem>();
+            Request.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.purchaseRequest.ToList())
+            {
+                Request.Add(new SelectListItem { Text = item.ID.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.RequestID = Request;
             //Product
-            var listItems = new SelectList(db.productMasters, "ID", "ProductName");
-            List<SelectListItem> Product = new List<SelectListItem>();
+            List <SelectListItem> Product = new List<SelectListItem>();
             foreach (var item in db.productMasters.ToList())
             {
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
             }
             ViewBag.ProductId = Product;
-
             //Tax
             var listsItem = new SelectList(db.productMasters, "ID", "Tax");
             List<SelectListItem> Tax = new List<SelectListItem>();
@@ -67,7 +69,6 @@ namespace issConstructions.Controllers
             ViewBag.ProductTax = Tax;
             return View();
         }
-
         // POST: PurchaseOrders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -83,7 +84,6 @@ namespace issConstructions.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseOrder.CategoryId);
             ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseOrder.SupplierId);
             ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseOrder.SupplierAddressId);
@@ -91,10 +91,8 @@ namespace issConstructions.Controllers
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
             ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID",purchaseOrder.PurchaseRequest);
-
             return View(purchaseOrder);
         }
-
         [HttpPost]
         public JsonResult purchaseReqOrders(int purchaseRequestOrderId)
         {
@@ -105,7 +103,6 @@ namespace issConstructions.Controllers
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
-
         // GET: PurchaseOrders/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -127,7 +124,6 @@ namespace issConstructions.Controllers
             ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID", purchaseOrder.PurchaseRequest);
             return View(purchaseOrder);
         }
-
         // POST: PurchaseOrders/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -152,7 +148,6 @@ namespace issConstructions.Controllers
             ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID", purchaseOrder.PurchaseRequest);
             return View(purchaseOrder);
         }
-
         // GET: PurchaseOrders/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -167,7 +162,6 @@ namespace issConstructions.Controllers
             }
             return View(purchaseOrder);
         }
-
         // POST: PurchaseOrders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -179,7 +173,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -12,7 +12,7 @@ namespace issDomain.Models
         public int ID { get; set; }
         public int receiptID { get; set; }
         public DateTime? receiptDate { get; set; }
-        //public int accountGroupId { get; set; }
+        //public int accountGroupId { get; set; } 
         //public virtual AccountGroupMaster accountGroup { get; set; }
         public int accountLedgerId { get; set; }
         public virtual AccountLedgerMaster accountLedger { get; set; }

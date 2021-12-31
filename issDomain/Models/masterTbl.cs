@@ -13,10 +13,10 @@ namespace issDomain.Models
         public string payType { get; set; }
         public string AccountID { get; set; }
         public string GroupID { get; set; }
-        public string description { get; set; }
+        public string remarks { get; set; }
         public decimal expense { get; set; }
         public decimal income { get; set; }
-        public string underGroup { get; set; }
+        public string parentGroup { get; set; }
         public string type { get; set; }
         public string financialYear { get; set; }
         public string projectName { get; set; }

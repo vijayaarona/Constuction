@@ -16,7 +16,6 @@ namespace issConstructions.Controllers
     public class ReportController : Controller
     {
         private issDB db = new issDB();
-
         // GET: Report
         public ActionResult Paymentvoucher(int? id)
         {
@@ -27,8 +26,6 @@ namespace issConstructions.Controllers
         public JsonResult paymentdata(int id)
         {
             var RawData = db.paymentEntries.Where(x => x.ID == id).FirstOrDefault();
-
-
             return Json(RawData, JsonRequestBehavior.AllowGet);
         }
         // GET: Receipt Voucher
@@ -41,8 +38,6 @@ namespace issConstructions.Controllers
         public JsonResult receiptdata(int id)
         {
             var RawData = db.receiptEntries.Where(x => x.ID == id).FirstOrDefault();
-
-
             return Json(RawData, JsonRequestBehavior.AllowGet);
         }
     }
