@@ -58,9 +58,9 @@ namespace issConstructions.Controllers
                 masterTbl masterTbl = new masterTbl();
                 masterTbl.entryDate = receiptEntry.receiptDate;
                 masterTbl.payType = groupid.AccountLedger;
-                masterTbl.AccountID = Convert.ToString(receiptEntry.accountLedgerId);
+                masterTbl.AccountID = (receiptEntry.accountLedgerId).ToString();
                 masterTbl.parentGroup = groupid.AccountGroup.ParentGroup;
-                masterTbl.GroupID = Convert.ToString(groupid.AccountGroupID);
+                masterTbl.GroupID = (groupid.AccountGroupID).ToString();
                 masterTbl.remarks = receiptEntry.remarks;
                 masterTbl.income = receiptEntry.amount;
                 masterTbl.expense = '0';
