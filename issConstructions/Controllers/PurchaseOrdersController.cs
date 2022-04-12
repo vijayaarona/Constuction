@@ -39,21 +39,51 @@ namespace issConstructions.Controllers
         // GET: PurchaseOrders/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName");
-            ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername");
-            ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address");
-            ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName");
-            ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName");
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress");
-            List<SelectListItem> Request = new List<SelectListItem>();
-            Request.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.purchaseRequest.ToList())
+            List<SelectListItem> Category = new List<SelectListItem>();
+            Category.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.categoryMasters.ToList())
             {
-                Request.Add(new SelectListItem { Text = item.ID.ToString(), Value = item.ID.ToString() });
+                Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.RequestID = Request;
+            ViewBag.CategoryId = Category;
+            List<SelectListItem> Supplier = new List<SelectListItem>();
+            Supplier.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.supplierMasters.ToList())
+            {
+                Supplier.Add(new SelectListItem { Text = item.Suppliername.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.SupplierId = Supplier;
+            List<SelectListItem> SupplierAddress = new List<SelectListItem>();
+            SupplierAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.supplierMasters.ToList())
+            {
+                SupplierAddress.Add(new SelectListItem { Text = item.address.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.SupplierAddressId = SupplierAddress;
+            List<SelectListItem> Project = new List<SelectListItem>();
+            Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.siteDetails.ToList())
+            {
+                Project.Add(new SelectListItem { Text = item.ProjectName.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.ProjectId = Project;
+            List<SelectListItem> Site = new List<SelectListItem>();
+            Site.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.siteDetails.ToList())
+            {
+                Site.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.SiteId = Site;
+            List<SelectListItem> SiteAddress = new List<SelectListItem>();
+            SiteAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.siteDetails.ToList())
+            {
+                SiteAddress.Add(new SelectListItem { Text = item.SiteAddress.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.SiteAddressId = SiteAddress;
             //Product
-            List <SelectListItem> Product = new List<SelectListItem>();
+            var listItems = new SelectList(db.productMasters, "ID", "ProductName");
+            List<SelectListItem> Product = new List<SelectListItem>();
             foreach (var item in db.productMasters.ToList())
             {
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
@@ -67,6 +97,14 @@ namespace issConstructions.Controllers
                 Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
             }
             ViewBag.ProductTax = Tax;
+            List<SelectListItem> Request = new List<SelectListItem>();
+            Request.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.purchaseRequest.ToList())
+            {
+                Request.Add(new SelectListItem { Text = item.ID.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.RequestID = Request;
+
             return View();
         }
         // POST: PurchaseOrders/Create
@@ -99,6 +137,17 @@ namespace issConstructions.Controllers
             if (purchaseRequestOrderId > 0)
             {
                 var resp = db.purchaseRequest.Where(x => x.ID == purchaseRequestOrderId).FirstOrDefault();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+       
+        [HttpPost]
+        public JsonResult TaxId(int tax_Amount)
+        {
+            if (tax_Amount > 0)
+            {
+                var resp = db.productMasters.Where(x => x.ID == tax_Amount).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
@@ -181,5 +230,57 @@ namespace issConstructions.Controllers
             }
             base.Dispose(disposing);
         }
+        [HttpPost]
+        public JsonResult savePurchages(PurchaseRequestTable PurchaseRequestTable)
+        {
+            try
+            {
+                //PurchaseTable purchaseTable = new PurchaseTable();
+                // purchaseTable.ProductId = Guid.Parse(pId);
+                //PurchaseRequestTable.ID = Guid.NewGuid();
+                PurchaseRequestTable.CreatedDate = DateTime.UtcNow;
+                PurchaseRequestTable.UpdatedDate = DateTime.UtcNow;
+                PurchaseRequestTable.UpdateBy = Display.Name;
+                db.purchaseRequestTables.Add(PurchaseRequestTable);
+                db.SaveChanges();
+                var id = db.purchaseRequestTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+                return Json(id.ID, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult removePurchages(string Id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Id))
+                {
+                    int pId = int.Parse(Id);
+
+                    var p = db.purchaseRequestTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
+                    if (p != null)
+                    {
+                        int inNo = p.purchaseRequestId;
+                        db.purchaseRequestTables.Remove(p);
+                        db.SaveChanges();
+                        var resp = db.purchaseRequestTables.Where(x => x.purchaseRequestId == inNo).ToList();
+                        return Json(resp, JsonRequestBehavior.AllowGet);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return Json("data", JsonRequestBehavior.AllowGet);
+            }
+            return Json("data", JsonRequestBehavior.AllowGet);
+        }
     }
 }
+

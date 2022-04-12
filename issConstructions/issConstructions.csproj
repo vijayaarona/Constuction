@@ -179,6 +179,10 @@
     <Compile Include="Migrations\202112301320322_m3.designer.cs">
       <DependentUpon>202112301320322_m3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202220804377_m4.cs" />
+    <Compile Include="Migrations\202202220804377_m4.designer.cs">
+      <DependentUpon>202202220804377_m4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -305,6 +309,7 @@
     <Content Include="Views\paymentEntries\Index.cshtml" />
     <Content Include="Views\Report\Paymentvoucher.cshtml" />
     <Content Include="Views\Report\Receiptvoucher.cshtml" />
+    <Content Include="Views\Auth\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -348,6 +353,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112301320322_m3.resx">
       <DependentUpon>202112301320322_m3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202220804377_m4.resx">
+      <DependentUpon>202202220804377_m4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

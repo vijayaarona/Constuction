@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using issConstructions.Custom;
 using System.Web.Mvc;
 
 namespace issConstructions.Controllers
@@ -234,6 +235,57 @@ namespace issConstructions.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        [HttpPost]
+        public JsonResult savePurchages(PurchaseRequestTable PurchaseRequestTable)
+        {
+            try
+            {
+                //PurchaseTable purchaseTable = new PurchaseTable();
+                // purchaseTable.ProductId = Guid.Parse(pId);
+                //PurchaseRequestTable.ID = Guid.NewGuid();
+                PurchaseRequestTable.CreatedDate = DateTime.UtcNow;
+                PurchaseRequestTable.UpdatedDate = DateTime.UtcNow;
+                PurchaseRequestTable.UpdateBy = Display.Name;
+                db.purchaseRequestTables.Add(PurchaseRequestTable);
+                db.SaveChanges();
+                var id = db.purchaseRequestTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+                return Json(id.ID, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult removePurchages(string Id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Id))
+                {
+                    int pId = int.Parse(Id);
+
+                    var p = db.purchaseRequestTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
+                    if (p != null)
+                    {
+                        int inNo = p.purchaseRequestId;
+                        db.purchaseRequestTables.Remove(p);
+                        db.SaveChanges();
+                        var resp = db.purchaseRequestTables.Where(x => x.purchaseRequestId == inNo).ToList();
+                        return Json(resp, JsonRequestBehavior.AllowGet);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                return Json("data", JsonRequestBehavior.AllowGet);
+            }
+            return Json("data", JsonRequestBehavior.AllowGet);
         }
     }
 }
