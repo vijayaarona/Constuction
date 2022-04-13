@@ -23,7 +23,10 @@ namespace issDomain.Models
         public int SiteAddressId { get; set; }
         public virtual SiteDetails SiteDetails { get; set; }
         public string mobileno { get; set; }
-        public decimal netAmount { get; set; }
+        public decimal NetAmount { get; set; }
+        public decimal grandTotal { get; set; }
+        public decimal discountPercentage { get; set; }
+        public decimal dicountAmount { get; set; }
         public string remarks { get; set; }
         public string requestBy { get; set; }
         public string orderby { get; set; }
