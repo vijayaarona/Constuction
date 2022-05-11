@@ -6,22 +6,22 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using issConstructions.Custom;
 using issConstructions.Models;
 using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
+   // [CustomAuthorize(Roles = "Admin,Manager")]
     public class PurchaseEntriesController : Controller
     {
         private issDB db = new issDB();
-
         // GET: PurchaseEntries
         public ActionResult Index()
         {
             var purchaseEntries = db.purchaseEntries.Include(p => p.Category).Include(p => p.Supplier);
             return View(purchaseEntries.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: PurchaseEntries/Details/5
         public ActionResult Details(int? id)
         {
@@ -36,7 +36,6 @@ namespace issConstructions.Controllers
             }
             return View(purchaseEntry);
         }
-
         // GET: PurchaseEntries/Create
         public ActionResult Create()
         {
@@ -55,7 +54,6 @@ namespace issConstructions.Controllers
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
             }
             ViewBag.ProductId = Product;
-
             //Tax
             var listsItem = new SelectList(db.productMasters, "ID", "Tax");
             List<SelectListItem> Tax = new List<SelectListItem>();
@@ -76,7 +74,6 @@ namespace issConstructions.Controllers
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
-
         [HttpPost]
         public JsonResult SupplierAddressId(int supplier_Address)
         {
@@ -87,7 +84,6 @@ namespace issConstructions.Controllers
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
-
         [HttpPost]
         public JsonResult SiteId(int site_Name)
         {
@@ -98,7 +94,6 @@ namespace issConstructions.Controllers
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
-
         [HttpPost]
         public JsonResult TaxId(int tax_Amount)
         {
@@ -109,13 +104,12 @@ namespace issConstructions.Controllers
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
-
         // POST: PurchaseEntries/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,OrderId,purchaseId,purchaseDate,CategoryId,SupplierId,SupplierAddressId,ProjectId,SiteId,SiteAddressId,mobileno,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseEntry purchaseEntry)
+        public ActionResult Create([Bind(Include = "ID,OrderId,PurchaseOrder,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,ProjectId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseEntry purchaseEntry)
         {
             if (ModelState.IsValid)
             {
@@ -125,7 +119,6 @@ namespace issConstructions.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseEntry.CategoryId);
             ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseEntry.SupplierId);
             ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseEntry.SupplierAddressId);
@@ -133,10 +126,8 @@ namespace issConstructions.Controllers
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseEntry.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseEntry.SiteAddressId);
             ViewBag.OrderId = new SelectList(db.PurchaseOrders, "ID", "OrderId", purchaseEntry.OrderId);
-
             return View(purchaseEntry);
         }
-
         // GET: PurchaseEntries/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -158,13 +149,12 @@ namespace issConstructions.Controllers
             ViewBag.OrderId = new SelectList(db.PurchaseOrders, "ID", "SiteAddress", purchaseEntry.OrderId);
             return View(purchaseEntry);
         }
-
         // POST: PurchaseEntries/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,OrderId,purchaseId,purchaseDate,CategoryId,SupplierId,SupplierAddressId,ProjectId,SiteId,SiteAddressId,mobileno,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseEntry purchaseEntry)
+        public ActionResult Edit([Bind(Include = "ID,OrderId,PurchaseOrder,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,ProjectId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseEntry purchaseEntry)
         {
             if (ModelState.IsValid)
             {
@@ -183,7 +173,6 @@ namespace issConstructions.Controllers
             ViewBag.OrderId = new SelectList(db.PurchaseOrders, "ID", "OrderId", purchaseEntry.OrderId);
             return View(purchaseEntry);
         }
-
         // GET: PurchaseEntries/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -198,7 +187,6 @@ namespace issConstructions.Controllers
             }
             return View(purchaseEntry);
         }
-
         // POST: PurchaseEntries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -210,7 +198,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

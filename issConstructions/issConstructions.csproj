@@ -56,12 +56,27 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -127,6 +142,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountGroupMastersController.cs" />
     <Compile Include="Controllers\AccountLedgerMastersController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -141,44 +157,31 @@
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\PurchaseRequestsController.cs" />
     <Compile Include="Controllers\receiptEntriesController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SiteDetailsController.cs" />
     <Compile Include="Controllers\SupplierMastersController.cs" />
     <Compile Include="Controllers\ToolsMastersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Custom\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Custom\CustomPrincipal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111260812425_m1.cs" />
-    <Compile Include="Migrations\202111260812425_m1.designer.cs">
-      <DependentUpon>202111260812425_m1.cs</DependentUpon>
+    <Compile Include="Migrations\202112280532449_m1.cs" />
+    <Compile Include="Migrations\202112280532449_m1.designer.cs">
+      <DependentUpon>202112280532449_m1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111261124343_m2.cs" />
-    <Compile Include="Migrations\202111261124343_m2.designer.cs">
-      <DependentUpon>202111261124343_m2.cs</DependentUpon>
+    <Compile Include="Migrations\202112301253041_m2.cs" />
+    <Compile Include="Migrations\202112301253041_m2.designer.cs">
+      <DependentUpon>202112301253041_m2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112080530171_m5.cs" />
-    <Compile Include="Migrations\202112080530171_m5.designer.cs">
-      <DependentUpon>202112080530171_m5.cs</DependentUpon>
+    <Compile Include="Migrations\202112301320322_m3.cs" />
+    <Compile Include="Migrations\202112301320322_m3.designer.cs">
+      <DependentUpon>202112301320322_m3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112080535367_m6.cs" />
-    <Compile Include="Migrations\202112080535367_m6.designer.cs">
-      <DependentUpon>202112080535367_m6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112090813508_m7.cs" />
-    <Compile Include="Migrations\202112090813508_m7.designer.cs">
-      <DependentUpon>202112090813508_m7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112090951353_m8.cs" />
-    <Compile Include="Migrations\202112090951353_m8.designer.cs">
-      <DependentUpon>202112090951353_m8.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112151355581_m9.cs" />
-    <Compile Include="Migrations\202112151355581_m9.designer.cs">
-      <DependentUpon>202112151355581_m9.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112161312461_m10.cs" />
-    <Compile Include="Migrations\202112161312461_m10.designer.cs">
-      <DependentUpon>202112161312461_m10.cs</DependentUpon>
+    <Compile Include="Migrations\202204120638467_m4.cs" />
+    <Compile Include="Migrations\202204120638467_m4.designer.cs">
+      <DependentUpon>202204120638467_m4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
@@ -304,6 +307,9 @@
     <Content Include="Views\paymentEntries\Details.cshtml" />
     <Content Include="Views\paymentEntries\Edit.cshtml" />
     <Content Include="Views\paymentEntries\Index.cshtml" />
+    <Content Include="Views\Report\Paymentvoucher.cshtml" />
+    <Content Include="Views\Report\Receiptvoucher.cshtml" />
+    <Content Include="Views\Auth\AccessDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -318,7 +324,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
@@ -337,29 +345,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111260812425_m1.resx">
-      <DependentUpon>202111260812425_m1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112280532449_m1.resx">
+      <DependentUpon>202112280532449_m1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111261124343_m2.resx">
-      <DependentUpon>202111261124343_m2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112301253041_m2.resx">
+      <DependentUpon>202112301253041_m2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112080530171_m5.resx">
-      <DependentUpon>202112080530171_m5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112301320322_m3.resx">
+      <DependentUpon>202112301320322_m3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112080535367_m6.resx">
-      <DependentUpon>202112080535367_m6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112090813508_m7.resx">
-      <DependentUpon>202112090813508_m7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112090951353_m8.resx">
-      <DependentUpon>202112090951353_m8.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112151355581_m9.resx">
-      <DependentUpon>202112151355581_m9.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112161312461_m10.resx">
-      <DependentUpon>202112161312461_m10.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202204120638467_m4.resx">
+      <DependentUpon>202204120638467_m4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

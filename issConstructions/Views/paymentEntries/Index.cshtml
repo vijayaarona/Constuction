@@ -34,6 +34,9 @@
             <thead>
                 <tr>
                     <th>
+                        <label>Payment Date</label>
+                    </th>
+                    <th>
                         <label>Payment Type</label>
                     </th>
                     <th>
@@ -73,17 +76,28 @@
                 @foreach (var item in Model)
                 {
                 <tr>
+                    @if (@item.paymenttDate != null)
+                    {
+                        <td>
+                            @item.paymenttDate.Value.ToShortDateString()
+
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
                     <td>
-                        @Html.DisplayFor(modelItem => item.paymentTypeId)
+                        @Html.DisplayFor(modelItem => item.accountLedger.AccountLedger)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.projectNameId)
+                        @Html.DisplayFor(modelItem => item.siteDetails.ProjectName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.siteNameId)
+                        @Html.DisplayFor(modelItem => item.siteDetails.SiteAddress)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.accountLedgerNameId)
+                        @Html.DisplayFor(modelItem => item.accountLedger.AccountLedger)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.givenBy)
@@ -109,7 +123,8 @@
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+                        <a href="~/Report/Paymentvoucher/@item.ID">Voucher</a>
                     </td>
                 </tr>
 

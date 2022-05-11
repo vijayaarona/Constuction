@@ -13,7 +13,7 @@ namespace issConstructions.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202111261124343_m2"; }
+            get { return "202112281206209_m2"; }
         }
         
         string IMigrationMetadata.Source

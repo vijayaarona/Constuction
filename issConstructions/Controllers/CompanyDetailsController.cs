@@ -6,21 +6,21 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using issConstructions.Custom;
 using issConstructions.Models;
 using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
+    [CustomAuthorize(Roles = "Admin,Manager")]
     public class CompanyDetailsController : Controller
     {
         private issDB db = new issDB();
-
         // GET: CompanyDetails
         public ActionResult Index()
         {
             return View(db.companyDetails.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: CompanyDetails/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,14 +35,12 @@ namespace issConstructions.Controllers
             }
             return View(companyDetails);
         }
-
         // GET: CompanyDetails/Create
         public ActionResult Create()
         {
             ViewBag.NameoftheCompany = "";
             return View();
         }
-
         // POST: CompanyDetails/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -66,10 +64,8 @@ namespace issConstructions.Controllers
                     ViewBag.NameoftheCompany = "Already Exists....!";
                 }
             }
-
             return View(companyDetails);
         }
-
         // GET: CompanyDetails/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -84,7 +80,6 @@ namespace issConstructions.Controllers
             }
             return View(companyDetails);
         }
-
         // POST: CompanyDetails/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -102,7 +97,6 @@ namespace issConstructions.Controllers
             }
             return View(companyDetails);
         }
-
         // GET: CompanyDetails/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -117,7 +111,6 @@ namespace issConstructions.Controllers
             }
             return View(companyDetails);
         }
-
         // POST: CompanyDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -129,7 +122,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

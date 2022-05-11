@@ -6,21 +6,21 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using issConstructions.Custom;
 using issConstructions.Models;
 using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
+    [CustomAuthorize(Roles = "Admin,Manager")]
     public class UsersController : Controller
     {
         private issDB db = new issDB();
-
         // GET: Users
         public ActionResult Index()
         {
             return View(db.users.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,13 +35,11 @@ namespace issConstructions.Controllers
             }
             return View(users);
         }
-
         // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
-
         // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -51,16 +49,13 @@ namespace issConstructions.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 users.CreatedDate = DateTime.UtcNow;
                 users.UpdatedDate = DateTime.UtcNow; db.users.Add(users);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(users);
         }
-
         // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -75,7 +70,6 @@ namespace issConstructions.Controllers
             }
             return View(users);
         }
-
         // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -93,7 +87,6 @@ namespace issConstructions.Controllers
             }
             return View(users);
         }
-
         // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -108,7 +101,6 @@ namespace issConstructions.Controllers
             }
             return View(users);
         }
-
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -120,7 +112,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

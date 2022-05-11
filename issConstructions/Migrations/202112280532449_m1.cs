@@ -36,7 +36,7 @@
                         UpdatedDate = c.DateTime(),
                     })
                 .PrimaryKey(t => t.ID)
-                //.ForeignKey("dbo.AccountGroupMasters", t => t.AccountGroupID, cascadeDelete: true)
+                .ForeignKey("dbo.AccountGroupMasters", t => t.AccountGroupID, cascadeDelete: true)
                 .Index(t => t.AccountGroupID);
             
             CreateTable(
@@ -110,8 +110,8 @@
                         UpdatedDate = c.DateTime(),
                     })
                 .PrimaryKey(t => t.ID)
-                //.ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
-                //.ForeignKey("dbo.DesignationMasters", t => t.DesignationId, cascadeDelete: true)
+                .ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
+                .ForeignKey("dbo.DesignationMasters", t => t.DesignationId, cascadeDelete: true)
                 .Index(t => t.DesignationId)
                 .Index(t => t.CategoryId);
             
@@ -128,115 +128,57 @@
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.ProductMasters",
+                "dbo.masterTbls",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        ProductName = c.String(),
-                        UOM = c.String(),
-                        CategoryId = c.Int(nullable: false),
-                        Tax = c.String(),
+                        entryDate = c.DateTime(),
+                        payType = c.String(),
+                        AccountID = c.String(),
+                        GroupID = c.String(),
+                        description = c.String(),
+                        expense = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        income = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        underGroup = c.String(),
+                        type = c.String(),
+                        financialYear = c.String(),
+                        projectName = c.String(),
+                        siteName = c.String(),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
                         UpdatedDate = c.DateTime(),
                     })
-                .PrimaryKey(t => t.ID)
-                //.ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
-                .Index(t => t.CategoryId);
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.PurchaseEntries",
+                "dbo.paymentEntries",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        OrderId = c.Int(nullable: false),
-                        Invoice = c.String(),
-                        purchaseId = c.String(),
-                        purchaseDate = c.DateTime(),
-                        CategoryId = c.Int(nullable: false),
-                        SupplierId = c.Int(nullable: false),
-                        SupplierAddressId = c.Int(nullable: false),
-                        ProjectId = c.Int(nullable: false),
-                        SiteId = c.Int(nullable: false),
-                        SiteAddressId = c.Int(nullable: false),
-                        mobileno = c.String(),
+                        paymentID = c.Int(nullable: false),
+                        paymenttDate = c.DateTime(),
+                        accountGroupId = c.Int(nullable: false),
+                        accountLedgerId = c.Int(nullable: false),
+                        siteDetailsId = c.Int(nullable: false),
+                        givenBy = c.String(),
+                        collectBy = c.String(),
+                        approvedBy = c.String(),
+                        preparedBy = c.String(),
+                        amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        remarks = c.String(),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
                         UpdatedDate = c.DateTime(),
-                        PurchaseOrder_ID = c.Int(),
-                        SiteDetails_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
-                //.ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
-                //.ForeignKey("dbo.PurchaseOrders", t => t.PurchaseOrder_ID)
-                //.ForeignKey("dbo.SiteDetails", t => t.SiteDetails_ID)
-                //.ForeignKey("dbo.SupplierMasters", t => t.SupplierId, cascadeDelete: true)
-                .Index(t => t.CategoryId)
-                .Index(t => t.SupplierId)
-                .Index(t => t.PurchaseOrder_ID)
-                .Index(t => t.SiteDetails_ID);
-            
-            CreateTable(
-                "dbo.PurchaseOrders",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        RequestID = c.Int(nullable: false),
-                        OrderId = c.String(),
-                        OrderDate = c.DateTime(),
-                        CategoryId = c.Int(nullable: false),
-                        SupplierId = c.Int(nullable: false),
-                        SupplierAddressId = c.Int(nullable: false),
-                        ProjectId = c.Int(nullable: false),
-                        SiteId = c.Int(nullable: false),
-                        SiteAddressId = c.Int(nullable: false),
-                        mobileno = c.String(),
-                        isDeleted = c.Boolean(nullable: false),
-                        CreatedDate = c.DateTime(),
-                        UpdateBy = c.String(),
-                        UpdatedDate = c.DateTime(),
-                        PurchaseRequest_ID = c.Int(),
-                        SiteDetails_ID = c.Int(),
-                    })
-                .PrimaryKey(t => t.ID)
-                //.ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
-                //.ForeignKey("dbo.PurchaseRequests", t => t.PurchaseRequest_ID)
-                //.ForeignKey("dbo.SiteDetails", t => t.SiteDetails_ID)
-                //.ForeignKey("dbo.SupplierMasters", t => t.SupplierId, cascadeDelete: true)
-                .Index(t => t.CategoryId)
-                .Index(t => t.SupplierId)
-                .Index(t => t.PurchaseRequest_ID)
-                .Index(t => t.SiteDetails_ID);
-            
-            CreateTable(
-                "dbo.PurchaseRequests",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                        RequestID = c.String(),
-                        RequestDate = c.DateTime(),
-                        CategoryId = c.Int(nullable: false),
-                        SupplierId = c.Int(nullable: false),
-                        SupplierAddressId = c.Int(nullable: false),
-                        ProjectId = c.Int(nullable: false),
-                        SiteId = c.Int(nullable: false),
-                        SiteAddressId = c.Int(nullable: false),
-                        mobileno = c.String(),
-                        isDeleted = c.Boolean(nullable: false),
-                        CreatedDate = c.DateTime(),
-                        UpdateBy = c.String(),
-                        UpdatedDate = c.DateTime(),
-                        SiteDetails_ID = c.Int(),
-                    })
-                .PrimaryKey(t => t.ID)
-                //.ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
-                //.ForeignKey("dbo.SiteDetails", t => t.SiteDetails_ID)
-                //.ForeignKey("dbo.SupplierMasters", t => t.SupplierId, cascadeDelete: true)
-                .Index(t => t.CategoryId)
-                .Index(t => t.SupplierId)
-                .Index(t => t.SiteDetails_ID);
+                //.ForeignKey("dbo.AccountGroupMasters", t => t.accountGroupId, cascadeDelete: true)
+                //.ForeignKey("dbo.AccountLedgerMasters", t => t.accountLedgerId, cascadeDelete: true)
+                .ForeignKey("dbo.SiteDetails", t => t.siteDetailsId, cascadeDelete: true)
+                .Index(t => t.accountGroupId)
+                .Index(t => t.accountLedgerId)
+                .Index(t => t.siteDetailsId);
             
             CreateTable(
                 "dbo.SiteDetails",
@@ -309,6 +251,132 @@
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
+                "dbo.ProductMasters",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        ProductName = c.String(),
+                        UOM = c.String(),
+                        CategoryId = c.Int(nullable: false),
+                        Tax = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        isDeleted = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        UpdateBy = c.String(),
+                        UpdatedDate = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
+                .Index(t => t.CategoryId);
+            
+            CreateTable(
+                "dbo.PurchaseEntries",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        OrderId = c.Int(nullable: false),
+                        Invoice = c.String(),
+                        purchaseId = c.Int(nullable: false),
+                        purchaseDate = c.DateTime(),
+                        CategoryId = c.Int(nullable: false),
+                        SupplierId = c.Int(nullable: false),
+                        SupplierAddressId = c.Int(nullable: false),
+                        ProjectId = c.Int(nullable: false),
+                        SiteId = c.Int(nullable: false),
+                        SiteAddressId = c.Int(nullable: false),
+                        mobileno = c.String(),
+                        ReceivedBy = c.String(),
+                        Remarks = c.String(),
+                        ReffBillNo = c.String(),
+                        DeliveryNo = c.String(),
+                        totalDiscount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        totalTax = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        freightCharges = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        netAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        isDeleted = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        UpdateBy = c.String(),
+                        UpdatedDate = c.DateTime(),
+                        PurchaseOrder_ID = c.Int(),
+                        SiteDetails_ID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
+                .ForeignKey("dbo.PurchaseOrders", t => t.PurchaseOrder_ID)
+                .ForeignKey("dbo.SiteDetails", t => t.SiteDetails_ID)
+                .ForeignKey("dbo.SupplierMasters", t => t.SupplierId, cascadeDelete: true)
+                .Index(t => t.CategoryId)
+                .Index(t => t.SupplierId)
+                .Index(t => t.PurchaseOrder_ID)
+                .Index(t => t.SiteDetails_ID);
+            
+            CreateTable(
+                "dbo.PurchaseOrders",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        RequestID = c.Int(nullable: false),
+                        OrderId = c.Int(nullable: false),
+                        OrderDate = c.DateTime(),
+                        CategoryId = c.Int(nullable: false),
+                        SupplierId = c.Int(nullable: false),
+                        SupplierAddressId = c.Int(nullable: false),
+                        ProjectId = c.Int(nullable: false),
+                        SiteId = c.Int(nullable: false),
+                        SiteAddressId = c.Int(nullable: false),
+                        mobileno = c.String(),
+                        netAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        remarks = c.String(),
+                        requestBy = c.String(),
+                        orderby = c.String(),
+                        isDeleted = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        UpdateBy = c.String(),
+                        UpdatedDate = c.DateTime(),
+                        PurchaseRequest_ID = c.Int(),
+                        SiteDetails_ID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
+                .ForeignKey("dbo.PurchaseRequests", t => t.PurchaseRequest_ID)
+                .ForeignKey("dbo.SiteDetails", t => t.SiteDetails_ID)
+                .ForeignKey("dbo.SupplierMasters", t => t.SupplierId, cascadeDelete: true)
+                .Index(t => t.CategoryId)
+                .Index(t => t.SupplierId)
+                .Index(t => t.PurchaseRequest_ID)
+                .Index(t => t.SiteDetails_ID);
+            
+            CreateTable(
+                "dbo.PurchaseRequests",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        RequestID = c.Int(nullable: false),
+                        RequestDate = c.DateTime(),
+                        CategoryId = c.Int(nullable: false),
+                        SupplierId = c.Int(nullable: false),
+                        SupplierAddressId = c.Int(nullable: false),
+                        ProjectId = c.Int(nullable: false),
+                        SiteId = c.Int(nullable: false),
+                        SiteAddressId = c.Int(nullable: false),
+                        mobileno = c.String(),
+                        NetAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        RequestBy = c.String(),
+                        Remarks = c.String(),
+                        isDeleted = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        UpdateBy = c.String(),
+                        UpdatedDate = c.DateTime(),
+                        SiteDetails_ID = c.Int(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
+                .ForeignKey("dbo.SiteDetails", t => t.SiteDetails_ID)
+                .ForeignKey("dbo.SupplierMasters", t => t.SupplierId, cascadeDelete: true)
+                .Index(t => t.CategoryId)
+                .Index(t => t.SupplierId)
+                .Index(t => t.SiteDetails_ID);
+            
+            CreateTable(
                 "dbo.SupplierMasters",
                 c => new
                     {
@@ -331,6 +399,7 @@
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
                         UpdatedDate = c.DateTime(),
+                        SupplierId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
                 //.ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
@@ -344,20 +413,13 @@
                         purchaseRequestId = c.Int(nullable: false),
                         productId = c.Int(nullable: false),
                         Description = c.String(),
-                        Rate = c.String(),
-                        Quantity = c.String(),
-                        Tax = c.String(),
-                        Amount = c.String(),
-                        TotalAmount = c.String(),
-                        ReceivedBy = c.String(),
-                        ReffBillNo = c.String(),
-                        DeliveryNo = c.String(),
-                        Remarks = c.String(),
-                        RequestBy = c.String(),
-                        Discount = c.String(),
-                        TotalTax = c.String(),
-                        freightCharges = c.String(),
-                        NetAmount = c.String(),
+                        Tax = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Rate = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Quantity = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        TaxAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        discount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
@@ -375,13 +437,12 @@
                         purchaseRequestId = c.Int(nullable: false),
                         productId = c.Int(nullable: false),
                         Description = c.String(),
-                        Rate = c.String(),
-                        Quantity = c.String(),
-                        Tax = c.String(),
-                        Amount = c.String(),
-                        TotalAmount = c.String(),
-                        OrderBy = c.String(),
-                        Remarks = c.String(),
+                        Tax = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Rate = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Quantity = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        TaxAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
@@ -399,13 +460,12 @@
                         purchaseRequestId = c.Int(nullable: false),
                         productId = c.Int(nullable: false),
                         Description = c.String(),
-                        Rate = c.String(),
-                        Quantity = c.String(),
-                        Tax = c.String(),
-                        Amount = c.String(),
-                        TotalAmount = c.String(),
-                        RequestBy = c.String(),
-                        Remarks = c.String(),
+                        Tax = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Rate = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Quantity = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        TaxAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
@@ -414,6 +474,35 @@
                 .PrimaryKey(t => t.ID)
                 .ForeignKey("dbo.ProductMasters", t => t.productId, cascadeDelete: true)
                 .Index(t => t.productId);
+            
+            CreateTable(
+                "dbo.receiptEntries",
+                c => new
+                    {
+                        ID = c.Int(nullable: false, identity: true),
+                        receiptID = c.Int(nullable: false),
+                        receiptDate = c.DateTime(),
+                        accountGroupId = c.Int(nullable: false),
+                        accountLedgerId = c.Int(nullable: false),
+                        siteDetailsId = c.Int(nullable: false),
+                        givenBy = c.String(),
+                        collectBy = c.String(),
+                        approvedBy = c.String(),
+                        preparedBy = c.String(),
+                        amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        remarks = c.String(),
+                        isDeleted = c.Boolean(nullable: false),
+                        CreatedDate = c.DateTime(),
+                        UpdateBy = c.String(),
+                        UpdatedDate = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.AccountGroupMasters", t => t.accountGroupId, cascadeDelete: true)
+               // .ForeignKey("dbo.AccountLedgerMasters", t => t.accountLedgerId, cascadeDelete: true)
+                .ForeignKey("dbo.SiteDetails", t => t.siteDetailsId, cascadeDelete: true)
+                .Index(t => t.accountGroupId)
+                .Index(t => t.accountLedgerId)
+                .Index(t => t.siteDetailsId);
             
             CreateTable(
                 "dbo.ToolsMasters",
@@ -453,6 +542,9 @@
         public override void Down()
         {
             DropForeignKey("dbo.ToolsMasters", "CategoryId", "dbo.CategoryMasters");
+            DropForeignKey("dbo.receiptEntries", "siteDetailsId", "dbo.SiteDetails");
+            DropForeignKey("dbo.receiptEntries", "accountLedgerId", "dbo.AccountLedgerMasters");
+            DropForeignKey("dbo.receiptEntries", "accountGroupId", "dbo.AccountGroupMasters");
             DropForeignKey("dbo.PurchaseRequestTables", "productId", "dbo.ProductMasters");
             DropForeignKey("dbo.PurchaseOrderTables", "productId", "dbo.ProductMasters");
             DropForeignKey("dbo.PurchaseEntryTables", "productId", "dbo.ProductMasters");
@@ -469,10 +561,16 @@
             DropForeignKey("dbo.PurchaseOrders", "CategoryId", "dbo.CategoryMasters");
             DropForeignKey("dbo.PurchaseEntries", "CategoryId", "dbo.CategoryMasters");
             DropForeignKey("dbo.ProductMasters", "CategoryId", "dbo.CategoryMasters");
+            DropForeignKey("dbo.paymentEntries", "siteDetailsId", "dbo.SiteDetails");
+            DropForeignKey("dbo.paymentEntries", "accountLedgerId", "dbo.AccountLedgerMasters");
+            DropForeignKey("dbo.paymentEntries", "accountGroupId", "dbo.AccountGroupMasters");
             DropForeignKey("dbo.EmployeeMasters", "DesignationId", "dbo.DesignationMasters");
             DropForeignKey("dbo.EmployeeMasters", "CategoryId", "dbo.CategoryMasters");
             DropForeignKey("dbo.AccountLedgerMasters", "AccountGroupID", "dbo.AccountGroupMasters");
             DropIndex("dbo.ToolsMasters", new[] { "CategoryId" });
+            DropIndex("dbo.receiptEntries", new[] { "siteDetailsId" });
+            DropIndex("dbo.receiptEntries", new[] { "accountLedgerId" });
+            DropIndex("dbo.receiptEntries", new[] { "accountGroupId" });
             DropIndex("dbo.PurchaseRequestTables", new[] { "productId" });
             DropIndex("dbo.PurchaseOrderTables", new[] { "productId" });
             DropIndex("dbo.PurchaseEntryTables", new[] { "productId" });
@@ -489,20 +587,26 @@
             DropIndex("dbo.PurchaseEntries", new[] { "SupplierId" });
             DropIndex("dbo.PurchaseEntries", new[] { "CategoryId" });
             DropIndex("dbo.ProductMasters", new[] { "CategoryId" });
+            DropIndex("dbo.paymentEntries", new[] { "siteDetailsId" });
+            DropIndex("dbo.paymentEntries", new[] { "accountLedgerId" });
+            DropIndex("dbo.paymentEntries", new[] { "accountGroupId" });
             DropIndex("dbo.EmployeeMasters", new[] { "CategoryId" });
             DropIndex("dbo.EmployeeMasters", new[] { "DesignationId" });
             DropIndex("dbo.AccountLedgerMasters", new[] { "AccountGroupID" });
             DropTable("dbo.Users");
             DropTable("dbo.ToolsMasters");
+            DropTable("dbo.receiptEntries");
             DropTable("dbo.PurchaseRequestTables");
             DropTable("dbo.PurchaseOrderTables");
             DropTable("dbo.PurchaseEntryTables");
             DropTable("dbo.SupplierMasters");
-            DropTable("dbo.SiteDetails");
             DropTable("dbo.PurchaseRequests");
             DropTable("dbo.PurchaseOrders");
             DropTable("dbo.PurchaseEntries");
             DropTable("dbo.ProductMasters");
+            DropTable("dbo.SiteDetails");
+            DropTable("dbo.paymentEntries");
+            DropTable("dbo.masterTbls");
             DropTable("dbo.Errorlogs");
             DropTable("dbo.EmployeeMasters");
             DropTable("dbo.DesignationMasters");
