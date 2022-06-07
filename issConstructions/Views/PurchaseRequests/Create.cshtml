@@ -57,8 +57,8 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label>Purchase Request Date</label>
-                    @Html.TextBoxFor(model => model.RequestDate, new { @Value = @DateTime.Now.ToShortDateString(), @class = "form-control" })
-
+                    @Html.TextBoxFor(m => m.RequestDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @*@Html.TextBoxFor(model => model.RequestDate, new { htmlAttributes = new { @class = "form-control" } })*@
                 </div>
                 <div class="form-group col-md-6">
                     <label>Category</label>
@@ -94,6 +94,11 @@
                     <label>Mobile No</label>
                     @Html.EditorFor(model => model.mobileno, new { htmlAttributes = new { @class = "form-control", @id = "mobileno" } })
                     @Html.ValidationMessageFor(model => model.mobileno, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6" hidden>
+                    <label>Product No</label>
+                    @Html.EditorFor(model => model.ProductNo, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ProductNo } })
+                    @Html.ValidationMessageFor(model => model.ProductNo, "", new { @class = "text-danger" })
                 </div>
             </div>
             <button type="button" style="float:right" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Item</button>
@@ -251,6 +256,8 @@
     var ntAmt;
     $(document).ready(function ()
     {
+  
+
         $("#categoryId").change(function ()
         {
             var supNameId = $(this).find('option:selected').val();
@@ -300,6 +307,7 @@
             }
 
         })
+
     });
 
     $(document).keydown(function (event) {
@@ -440,6 +448,7 @@
          list.discountAmount = $('#discountAmount').val();
          list.TaxAmount = $('#TaxAmt').val();;
          list.TotalAmount = $('#TotalAmt').val();;
+         list.ProductNo = $('#ProductNo').val();;
        
         list.sNo = sNo;
 
@@ -491,12 +500,12 @@
                     + `<td>${lstItems[i].Rate}</td>`
                     + `<td>${lstItems[i].Quantity}</td>`
                     + `<td>${lstItems[i].Amount}</td>`
-                    + `<td>${lstItems[i].dicountAmount}</td>`
+                    + `<td>${lstItems[i].discountAmount}</td>`
                     + `<td>${lstItems[i].TaxAmount}</td>`
                     + `<td>${lstItems[i].TotalAmount}</td>`
                     + `<td>
 
-                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].ID}')">Remove</button>
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
                         </td>`
                     + "</tr>";
 
@@ -527,10 +536,73 @@
         }
     }
 
-      function removeTR(item)
+
+    function removeTR(item)
+    {
+        debugger
+        let inNo = $('#ProductNo').val();
+        $.ajax({
+            url: '@Url.Content("~/PurchaseRequests/removePurchages")',
+            type: 'POST',
+            dataType: 'json',
+            data: { Id: item, InNo: inNo },
+            success: function (result)
+            {
+                console.log(result);
+                if (result != null)
+                {
+                    lstItems = result;
+                    $('#tblpurchaserequest').empty();
+                    if (lstItems.length > 0) {
+                        debugger
+                        let sNo = 1;
+                        let grandTotal = 0;
+                        for (var i = 0; i < lstItems.length; i++) {
+                            var row = `<tr id=rm${sNo}>`
+                                + `<td>${sNo}</td>`
+                                + `<td>${lstItems[i].Product.ProductName}</td>`
+                                + `<td>${lstItems[i].Tax}</td>`
+                                + `<td>${lstItems[i].Description}</td>`
+                                + `<td>${lstItems[i].Rate}</td>`
+                                + `<td>${lstItems[i].Quantity}</td>`
+                                + `<td>${lstItems[i].Amount}</td>`
+                                + `<td>${lstItems[i].discountAmount}</td>`
+                                + `<td>${lstItems[i].TaxAmount}</td>`
+                                + `<td>${lstItems[i].TotalAmount}</td>`
+                                + `<td>
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].id}')">Remove</button>
+                        </td>`
+                                + "</tr>";
+                            let amount = 0;
+
+                            lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
+                            grandTotal += amount;
+
+                            $('#tblpurchaserequest').append(row);
+                            sNo++;
+                        }
+                        console.log(grandTotal);
+                        $('#ProGrandTotal').val(grandTotal.toFixed());
+
+                        $("#disPercent").blur(function () {
+                            debugger
+
+                            var disPercentage = $('#disPercent').val();
+                            var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+                            $('#disAmount').val(calProPer.toFixed());
+                            var netAmount = parseFloat(grandTotal + calProPer);
+                            $('#netAmt').val(netAmount.toFixed());
+                        });
+                            
+                   }
+                }
+            }
+        });
+    }
+      @*function removeTR(item)
     {
         $.ajax({
-            url: '@Url.Content("~/Purchases/removePurchages")',
+            url: '@Url.Content("~/PurchaseRequests/removePurchages")',
             type: 'POST',
             dataType: 'json',
             data: { Id: item },
@@ -547,13 +619,13 @@
                         for (var i = 0; i < lstItems.length; i++) {
                             var row = `<tr id=rm${sNo}>`
                                 + `<td>${sNo}</td>`
-                                + `<td>${lstItems[i].ProductText}</td>`
+                                + `<td>${lstItems[i].productText}</td>`
                                 + `<td>${lstItems[i].Tax}</td>`
                                 + `<td>${lstItems[i].Description}</td>`
                                 + `<td>${lstItems[i].Rate}</td>`
                                 + `<td>${lstItems[i].Quantity}</td>`
                                 + `<td>${lstItems[i].Amount}</td>`
-                                + `<td>${lstItems[i].disAmount}</td>`
+                                + `<td>${lstItems[i].discountAmount}</td>`
                                 + `<td>${lstItems[i].TaxAmount}</td>`
                                 + `<td>${lstItems[i].TotalAmount}</td>`
                                 + `<td>
@@ -586,5 +658,5 @@
                 }
             }
         });
-    }
+    }*@
 </script>

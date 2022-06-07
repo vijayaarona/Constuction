@@ -41,43 +41,28 @@
                         <label>Request Date</label>
                     </th>
                     <th>
-                        <label>Category</label>
+                        <label>Request Id</label>
                     </th>
                     <th>
                         <label>Supplier Name</label>
                     </th>
                     <th>
-                        <label>Supplier Address</label>
-                    </th>
-                    <th>
                         <label>Project Name</label>
                     </th>
                     <th>
-                        <label>Site Name</label>
+                        <label>Grand Total</label>
                     </th>
                     <th>
-                        <label>Site Address</label>
+                        <label>Net Amount</label>
                     </th>
-                    <th>
-                        <label>Mobile No</label>
-                    </th>
-                    <th>
-                        <label>Created Date</label>
-                    </th>
-                    <th>
-                        <label>Updated By</label>
-                    </th>
-                    <th>
-                        <label>Updated Date</label>
-                    </th>
-                    <th></th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                 <tr>
-                   
+
                     @if (@item.RequestDate != null)
                     {
                         <td>
@@ -89,42 +74,19 @@
                         <td></td>
                     }
                     <td>
-                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                        @Html.DisplayFor(modelItem => item.ID)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Supplier.address)
+                        @Html.DisplayFor(modelItem => item.SiteDetails.ProjectName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ProjectId)
+                        @Html.DisplayFor(modelItem => item.grandTotal)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SiteId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteAddressId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.mobileno)
-                    </td>
-
-                    
-                    @if (@item.CreatedDate != null)
-                    {
-                        <td>
-                            @item.CreatedDate.Value.ToShortDateString()
-                        </td>
-                    }
-                    else
-                    {
-                        <td></td>}
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdateBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdatedDate)
+                        @Html.DisplayFor(modelItem => item.NetAmount)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |

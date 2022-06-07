@@ -95,6 +95,17 @@ namespace issConstructions.Controllers
                 Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
             }
             ViewBag.ProductTax = Tax;
+
+            //product No
+            int proNo = 0;
+            var productNo = db.purchaseRequest.Where(p => p.ProductNo != null).ToList();
+
+            if (productNo.Count > 0)
+            {
+                proNo = productNo.Max(x => x.ProductNo);
+            }
+            else proNo = 1;
+            ViewBag.ProductNo = proNo;
             return View();
         }
         // POST: PurchaseRequests/Create
@@ -102,7 +113,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
+        public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,ProductNo,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
         {
             if (ModelState.IsValid)
             {
@@ -185,7 +196,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,RequestID,RequestDate,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
+        public ActionResult Edit([Bind(Include = "ID,RequestID,RequestDate,ProductNo,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
         {
             if (ModelState.IsValid)
             {
@@ -260,25 +271,30 @@ namespace issConstructions.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult removePurchages(string Id)
+        public JsonResult removePurchages(string Id, int? InNo)
         {
             try
             {
                 if (!string.IsNullOrEmpty(Id))
                 {
                     int pId = int.Parse(Id);
-
                     var p = db.purchaseRequestTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
+                    int inNo = p.purchaseRequestId;
                     if (p != null)
                     {
-                        int inNo = p.purchaseRequestId;
+
                         db.purchaseRequestTables.Remove(p);
                         db.SaveChanges();
+                        var resp = db.purchaseRequestTables.Where(x => x.purchaseRequestId == inNo && x.isDeleted == false).ToList();
+                        return Json(resp, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
                         var resp = db.purchaseRequestTables.Where(x => x.purchaseRequestId == inNo).ToList();
                         return Json(resp, JsonRequestBehavior.AllowGet);
                     }
-                }
 
+                }
             }
             catch (Exception ex)
             {
