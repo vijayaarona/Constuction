@@ -21,6 +21,7 @@ namespace issDomain.Models
         public decimal TotalAmount { get; set; }
         public decimal discountPercent { get; set; }
         public decimal discountAmount { get; set; }
+        public int ProductNo { get; set; }
         public bool isDeleted { get; set; } = false;
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }
