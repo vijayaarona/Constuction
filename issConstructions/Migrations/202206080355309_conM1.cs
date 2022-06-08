@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class m1 : DbMigration
+    public partial class conM1 : DbMigration
     {
         public override void Up()
         {
@@ -136,10 +136,10 @@
                         payType = c.String(),
                         AccountID = c.String(),
                         GroupID = c.String(),
-                        description = c.String(),
+                        remarks = c.String(),
                         expense = c.Decimal(nullable: false, precision: 18, scale: 2),
                         income = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        underGroup = c.String(),
+                        parentGroup = c.String(),
                         type = c.String(),
                         financialYear = c.String(),
                         projectName = c.String(),
@@ -158,7 +158,6 @@
                         ID = c.Int(nullable: false, identity: true),
                         paymentID = c.Int(nullable: false),
                         paymenttDate = c.DateTime(),
-                        accountGroupId = c.Int(nullable: false),
                         accountLedgerId = c.Int(nullable: false),
                         siteDetailsId = c.Int(nullable: false),
                         givenBy = c.String(),
@@ -173,10 +172,8 @@
                         UpdatedDate = c.DateTime(),
                     })
                 .PrimaryKey(t => t.ID)
-                //.ForeignKey("dbo.AccountGroupMasters", t => t.accountGroupId, cascadeDelete: true)
-                //.ForeignKey("dbo.AccountLedgerMasters", t => t.accountLedgerId, cascadeDelete: true)
+                .ForeignKey("dbo.AccountLedgerMasters", t => t.accountLedgerId, cascadeDelete: true)
                 .ForeignKey("dbo.SiteDetails", t => t.siteDetailsId, cascadeDelete: true)
-                .Index(t => t.accountGroupId)
                 .Index(t => t.accountLedgerId)
                 .Index(t => t.siteDetailsId);
             
@@ -291,7 +288,10 @@
                         totalDiscount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         totalTax = c.Decimal(nullable: false, precision: 18, scale: 2),
                         freightCharges = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        netAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        NetAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        grandTotal = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        discountPercentage = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        ProductNo = c.Int(nullable: false),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
@@ -300,10 +300,10 @@
                         SiteDetails_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
+                
                 .ForeignKey("dbo.PurchaseOrders", t => t.PurchaseOrder_ID)
                 .ForeignKey("dbo.SiteDetails", t => t.SiteDetails_ID)
-                .ForeignKey("dbo.SupplierMasters", t => t.SupplierId, cascadeDelete: true)
+                
                 .Index(t => t.CategoryId)
                 .Index(t => t.SupplierId)
                 .Index(t => t.PurchaseOrder_ID)
@@ -324,10 +324,14 @@
                         SiteId = c.Int(nullable: false),
                         SiteAddressId = c.Int(nullable: false),
                         mobileno = c.String(),
-                        netAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        NetAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        grandTotal = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        discountPercentage = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        dicountAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         remarks = c.String(),
                         requestBy = c.String(),
                         orderby = c.String(),
+                        ProductNo = c.Int(nullable: false),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
@@ -336,10 +340,10 @@
                         SiteDetails_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
+        
                 .ForeignKey("dbo.PurchaseRequests", t => t.PurchaseRequest_ID)
                 .ForeignKey("dbo.SiteDetails", t => t.SiteDetails_ID)
-                .ForeignKey("dbo.SupplierMasters", t => t.SupplierId, cascadeDelete: true)
+        
                 .Index(t => t.CategoryId)
                 .Index(t => t.SupplierId)
                 .Index(t => t.PurchaseRequest_ID)
@@ -360,8 +364,12 @@
                         SiteAddressId = c.Int(nullable: false),
                         mobileno = c.String(),
                         NetAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        grandTotal = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        discountPercentage = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        dicountAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         RequestBy = c.String(),
                         Remarks = c.String(),
+                        ProductNo = c.Int(nullable: false),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
@@ -369,9 +377,9 @@
                         SiteDetails_ID = c.Int(),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
+               
                 .ForeignKey("dbo.SiteDetails", t => t.SiteDetails_ID)
-                .ForeignKey("dbo.SupplierMasters", t => t.SupplierId, cascadeDelete: true)
+               
                 .Index(t => t.CategoryId)
                 .Index(t => t.SupplierId)
                 .Index(t => t.SiteDetails_ID);
@@ -402,7 +410,7 @@
                         SupplierId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
-                //.ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
+                .ForeignKey("dbo.CategoryMasters", t => t.CategoryId, cascadeDelete: true)
                 .Index(t => t.CategoryId);
             
             CreateTable(
@@ -419,7 +427,9 @@
                         Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TaxAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        discount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        discountPercent = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        discountAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        ProductNo = c.Int(nullable: false),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
@@ -443,6 +453,9 @@
                         Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TaxAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        discountPercent = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        discountAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        ProductNo = c.Int(nullable: false),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
@@ -466,6 +479,9 @@
                         Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TaxAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        discountPercent = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        discountAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        ProductNo = c.Int(nullable: false),
                         isDeleted = c.Boolean(nullable: false),
                         CreatedDate = c.DateTime(),
                         UpdateBy = c.String(),
@@ -482,7 +498,6 @@
                         ID = c.Int(nullable: false, identity: true),
                         receiptID = c.Int(nullable: false),
                         receiptDate = c.DateTime(),
-                        accountGroupId = c.Int(nullable: false),
                         accountLedgerId = c.Int(nullable: false),
                         siteDetailsId = c.Int(nullable: false),
                         givenBy = c.String(),
@@ -497,10 +512,8 @@
                         UpdatedDate = c.DateTime(),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AccountGroupMasters", t => t.accountGroupId, cascadeDelete: true)
-               // .ForeignKey("dbo.AccountLedgerMasters", t => t.accountLedgerId, cascadeDelete: true)
+                .ForeignKey("dbo.AccountLedgerMasters", t => t.accountLedgerId, cascadeDelete: true)
                 .ForeignKey("dbo.SiteDetails", t => t.siteDetailsId, cascadeDelete: true)
-                .Index(t => t.accountGroupId)
                 .Index(t => t.accountLedgerId)
                 .Index(t => t.siteDetailsId);
             
@@ -544,7 +557,6 @@
             DropForeignKey("dbo.ToolsMasters", "CategoryId", "dbo.CategoryMasters");
             DropForeignKey("dbo.receiptEntries", "siteDetailsId", "dbo.SiteDetails");
             DropForeignKey("dbo.receiptEntries", "accountLedgerId", "dbo.AccountLedgerMasters");
-            DropForeignKey("dbo.receiptEntries", "accountGroupId", "dbo.AccountGroupMasters");
             DropForeignKey("dbo.PurchaseRequestTables", "productId", "dbo.ProductMasters");
             DropForeignKey("dbo.PurchaseOrderTables", "productId", "dbo.ProductMasters");
             DropForeignKey("dbo.PurchaseEntryTables", "productId", "dbo.ProductMasters");
@@ -563,14 +575,12 @@
             DropForeignKey("dbo.ProductMasters", "CategoryId", "dbo.CategoryMasters");
             DropForeignKey("dbo.paymentEntries", "siteDetailsId", "dbo.SiteDetails");
             DropForeignKey("dbo.paymentEntries", "accountLedgerId", "dbo.AccountLedgerMasters");
-            DropForeignKey("dbo.paymentEntries", "accountGroupId", "dbo.AccountGroupMasters");
             DropForeignKey("dbo.EmployeeMasters", "DesignationId", "dbo.DesignationMasters");
             DropForeignKey("dbo.EmployeeMasters", "CategoryId", "dbo.CategoryMasters");
             DropForeignKey("dbo.AccountLedgerMasters", "AccountGroupID", "dbo.AccountGroupMasters");
             DropIndex("dbo.ToolsMasters", new[] { "CategoryId" });
             DropIndex("dbo.receiptEntries", new[] { "siteDetailsId" });
             DropIndex("dbo.receiptEntries", new[] { "accountLedgerId" });
-            DropIndex("dbo.receiptEntries", new[] { "accountGroupId" });
             DropIndex("dbo.PurchaseRequestTables", new[] { "productId" });
             DropIndex("dbo.PurchaseOrderTables", new[] { "productId" });
             DropIndex("dbo.PurchaseEntryTables", new[] { "productId" });
@@ -589,7 +599,6 @@
             DropIndex("dbo.ProductMasters", new[] { "CategoryId" });
             DropIndex("dbo.paymentEntries", new[] { "siteDetailsId" });
             DropIndex("dbo.paymentEntries", new[] { "accountLedgerId" });
-            DropIndex("dbo.paymentEntries", new[] { "accountGroupId" });
             DropIndex("dbo.EmployeeMasters", new[] { "CategoryId" });
             DropIndex("dbo.EmployeeMasters", new[] { "DesignationId" });
             DropIndex("dbo.AccountLedgerMasters", new[] { "AccountGroupID" });
