@@ -529,7 +529,7 @@
                 var disPercentage = $('#disPercent').val();
                 var calProPer = parseFloat((disPercentage / 100) * grandTotal);
                 $('#disAmount').val(calProPer.toFixed());
-                var netAmount = parseFloat(grandTotal + calProPer);
+                var netAmount = parseFloat(grandTotal - calProPer);
                 $('#netAmt').val(netAmount.toFixed());
             });
           
