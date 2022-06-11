@@ -129,19 +129,60 @@ namespace issConstructions.Controllers
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
             ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID",purchaseOrder.PurchaseRequest);
+           // ViewBag.ProductId = new SelectList(db.purchaseOrderTables, "ID", "ID");
             return View(purchaseOrder);
         }
+        //[HttpPost]
+        //public JsonResult purchaseReqOrders(int purchaseRequestOrderId)
+        //{
+        //    if (purchaseRequestOrderId > 0)
+        //    {
+        //        var resp = db.purchaseRequest.Where(x => x.ID == purchaseRequestOrderId).FirstOrDefault();
+        //        return Json(resp, JsonRequestBehavior.AllowGet);
+        //    }
+        //    else return Json("NoData", JsonRequestBehavior.AllowGet);
+        //}
+
+        //[HttpPost]
+        //public JsonResult TaxId(int tax_Amount)
+        //{
+        //    if (tax_Amount > 0)
+        //    {
+        //        var resp = db.productMasters.Where(x => x.ID == tax_Amount).ToList();
+        //        return Json(resp, JsonRequestBehavior.AllowGet);
+        //    }
+        //    else return Json("NoData", JsonRequestBehavior.AllowGet);
+        //}
         [HttpPost]
-        public JsonResult purchaseReqOrders(int purchaseRequestOrderId)
+        public JsonResult SupplierId(int supplier_NameId)
         {
-            if (purchaseRequestOrderId > 0)
+            if (supplier_NameId > 0)
             {
-                var resp = db.purchaseRequest.Where(x => x.ID == purchaseRequestOrderId).FirstOrDefault();
+                var resp = db.supplierMasters.Where(x => x.CategoryId == supplier_NameId).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
-       
+        [HttpPost]
+        public JsonResult SupplierAddressId(int supplier_AddressId)
+        {
+            if (supplier_AddressId > 0)
+            {
+                var resp = db.supplierMasters.Where(x => x.ID == supplier_AddressId).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult SiteId(int site_NameId)
+        {
+            if (site_NameId > 0)
+            {
+                var resp = db.siteDetails.Where(x => x.ID == site_NameId).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public JsonResult TaxId(int tax_Amount)
         {
@@ -231,17 +272,17 @@ namespace issConstructions.Controllers
             base.Dispose(disposing);
         }
         [HttpPost]
-        public JsonResult savePurchages(PurchaseRequestTable PurchaseRequestTable)
+        public JsonResult savePurchages(PurchaseOrderTable purchaseOrder)
         {
             try
             {
                 //PurchaseTable purchaseTable = new PurchaseTable();
                 // purchaseTable.ProductId = Guid.Parse(pId);
                 //PurchaseRequestTable.ID = Guid.NewGuid();
-                PurchaseRequestTable.CreatedDate = DateTime.UtcNow;
-                PurchaseRequestTable.UpdatedDate = DateTime.UtcNow;
-                PurchaseRequestTable.UpdateBy = Display.Name;
-                db.purchaseRequestTables.Add(PurchaseRequestTable);
+                purchaseOrder.CreatedDate = DateTime.UtcNow;
+                purchaseOrder.UpdatedDate = DateTime.UtcNow;
+                purchaseOrder.UpdateBy = Display.Name;
+                db.purchaseOrderTables.Add(purchaseOrder);
                 db.SaveChanges();
                 var id = db.purchaseRequestTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
                 return Json(id.ID, JsonRequestBehavior.AllowGet);
@@ -261,16 +302,22 @@ namespace issConstructions.Controllers
                 if (!string.IsNullOrEmpty(Id))
                 {
                     int pId = int.Parse(Id);
-
-                    var p = db.purchaseRequestTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
+                    var p = db.purchaseOrderTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
+                    int inNo = p.productId;
                     if (p != null)
                     {
-                        int inNo = p.purchaseRequestId;
-                        db.purchaseRequestTables.Remove(p);
+
+                        db.purchaseOrderTables.Remove(p);
                         db.SaveChanges();
+                        var resp = db.purchaseOrderTables.Where(x => x.productId == inNo && x.isDeleted == false).ToList();
+                        return Json(resp, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
                         var resp = db.purchaseRequestTables.Where(x => x.purchaseRequestId == inNo).ToList();
                         return Json(resp, JsonRequestBehavior.AllowGet);
                     }
+
                 }
 
             }

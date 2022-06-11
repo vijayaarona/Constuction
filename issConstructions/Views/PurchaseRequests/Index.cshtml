@@ -53,6 +53,9 @@
                         <label>Grand Total</label>
                     </th>
                     <th>
+                        <label>Discount Amount</label>
+                    </th>
+                    <th>
                         <label>Net Amount</label>
                     </th>
                     <th>Action</th>
@@ -74,16 +77,19 @@
                         <td></td>
                     }
                     <td>
-                        @Html.DisplayFor(modelItem => item.ID)
+                        @Html.DisplayFor(modelItem => item.RequestID)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SiteDetails.ProjectName)
+                        @Html.DisplayFor(modelItem => item.SiteDetails.ProjectId)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.grandTotal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dicountAmount)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NetAmount)
