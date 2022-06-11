@@ -46,31 +46,23 @@
                     <th>
                         <label>Supplier Name</label>
                     </th>
-                    <th>
-                        <label>Supplier Address</label>
-                    </th>
+
                     <th>
                         <label>Project Name</label>
                     </th>
                     <th>
                         <label>Site Name</label>
                     </th>
+
                     <th>
-                        <label>Site Address</label>
+                        <label>Grand Total</label>
                     </th>
+                  
                     <th>
-                        <label>Mobile No</label>
+                        <label>Net Amount</label>
                     </th>
-                    <th>
-                        <label>Created Date</label>
-                    </th>
-                    <th>
-                        <label>Updated By</label>
-                    </th>
-                    <th>
-                        <label>Updated Date</label>
-                    </th>
-                    <th></th>
+
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,30 +78,19 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Supplier.address)
-                    </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.SiteDetails.ProjectName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SiteDetails.SiteName)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteDetails.SiteAddress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.mobileno)
-                    </td>
 
                     <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                        @Html.DisplayFor(modelItem => item.grandTotal)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.UpdateBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdatedDate)
+                        @Html.DisplayFor(modelItem => item.NetAmount)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
@@ -125,6 +106,8 @@
 
     </div>
 </div>
+
+
 <script type="text/javascript">
     $(function () {
         $('#AGMaster').DataTable({

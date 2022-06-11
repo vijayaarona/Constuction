@@ -51,199 +51,561 @@
     @Html.AntiForgeryToken()
 
 
-    <div class="panel-group">
-        <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
-
-            Purchase Entry - Add Page
+<div class="panel-group">
+    <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
+        Purchase Request - Add Page
+    </div>
+    <div class="panel panel-body" style="overflow:auto">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Purchase Entry Date</label>
+                @Html.TextBoxFor(m => m.purchaseDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                @*@Html.TextBoxFor(model => model.RequestDate, new { htmlAttributes = new { @class = "form-control" } })*@
+            </div>
+            <div class="form-group col-md-6">
+                <label>Category</label>
+                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", @id = "categoryId" })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                <label>Supplier Name</label>
+                @Html.DropDownList("SupplierId", null, htmlAttributes: new { @class = "form-control", @id = "SupplierId" })
+                @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                <label>Supplier Address</label>
+                @Html.DropDownList("SupplierAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SupplierAddressId" })
+                @Html.ValidationMessageFor(model => model.SupplierAddressId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                <label>Project Name</label>
+                @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
+                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                <label>Site Name</label>
+                @Html.DropDownList("SiteId", null, htmlAttributes: new { @class = "form-control", @id = "SiteId" })
+                @Html.ValidationMessageFor(model => model.SiteId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                <label>Site Address</label>
+                @Html.DropDownList("SiteAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SiteAddressId" })
+                @Html.ValidationMessageFor(model => model.SiteAddressId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                <label>Mobile No</label>
+                @Html.EditorFor(model => model.mobileno, new { htmlAttributes = new { @class = "form-control", @id = "mobileno" } })
+                @Html.ValidationMessageFor(model => model.mobileno, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6" hidden>
+                <label>Product No</label>
+                @Html.EditorFor(model => model.ProductNo, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ProductNo } })
+                @Html.ValidationMessageFor(model => model.ProductNo, "", new { @class = "text-danger" })
+            </div>
         </div>
-        <div class="panel panel-body" style="overflow:auto">
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label>Order ID</label>
-                    @Html.DropDownList("OrderId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.OrderId, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-6">
-                    <label>Purchase Date</label>
-                    @Html.TextBoxFor(m => m.purchaseDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", id = "purchaseDate" })
-                </div>
-                <div class="form-group col-md-6">
-                    <label>Category</label>
-                    @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", @id = "categoryId" })
-                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-6">
-                    <label>Supplier Name</label>
-                    @Html.DropDownList("SupplierId", null, htmlAttributes: new { @class = "form-control", @id = "SupplierId" })
-                    @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-6">
-                    <label>Supplier Address</label>
-                    @Html.DropDownList("SupplierAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SupplierAddressId" })
-                    @Html.ValidationMessageFor(model => model.SupplierAddressId, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-6">
-                    <label>Project Name</label>
-                    @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
-                    @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-6">
-                    <label>Site Name</label>
-                    @Html.DropDownList("SiteId", null, htmlAttributes: new { @class = "form-control", @id = "SiteId" })
-                    @Html.ValidationMessageFor(model => model.SiteId, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-6">
-                    <label>Site Address</label>
-                    @Html.DropDownList("SiteAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SiteAddressId" })
-                    @Html.ValidationMessageFor(model => model.SiteAddressId, "", new { @class = "text-danger" })
-                </div>
-                <div class="form-group col-md-6">
-                    <label>Mobile No</label>
-                    @Html.EditorFor(model => model.mobileno, new { htmlAttributes = new { @class = "form-control", @id = "mobileno" } })
-                    @Html.ValidationMessageFor(model => model.mobileno, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <button type="button" style="float:right" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Item</button>
+        <button type="button" style="float:right" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Item</button>
+        <br /><br />
+        <div class="itemtable">
+            <table class="create" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Sl.No</th>
+                        <th>Item Name</th>
+                        <th>Rate Of Tax</th>
+                        <th>Description</th>
+                        <th>Rate</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                        <th>Discount Amount</th>
+                        <th>Tax Amount</th>
+                        <th>Total Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tblpurchaserequest"></tbody>
+            </table>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="background-color:#ebcece">
+                    <div class="modal-body">
+                        <div class="panel-group">
+                            <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
+                                Add Item
+                            </div>
+                            <div class="panel panel-body" style="font-size:15px;font-family:Calibri">
+                                <div class="row">
+                                    <form action="createitem">
+                                        <div class="form-group col-md-6">
+                                            <label>Product Name</label><br />
+                                            <select id="Product" name="" style="width:352px; height:27px">
+                                                <option value="0">Please Select</option>
+                                                @foreach (var item in @ViewBag.ProductId)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label style="width:352px; height:27px">Rate of Tax</label><br />
+                                            <input type="text" readonly="readonly" id="TaxId" name="description" size="50" />
+                                        </div>
+                                        <div class="form-group col-md-6" style="min-height:58px">
+                                            <label style="width:352px; height:27px">Description</label><br />
+                                            <input type="text" id="Description" name="description" size="50" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label style="width:352px; height:27px">Rate</label><br />
+                                            <input type="text" id="Rate" name="Rate" size="50" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label style="width:352px; height:27px">Quantity</label><br />
+                                            <input type="text" id="Quantity" name="Quantity" size="50" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label style="width:352px; height:27px">Discount Percent</label><br />
+                                            <input type="text" id="discountPercent" name="discountPercent" size="50" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label style="width:352px; height:27px">Amount</label><br />
+                                            <input type="text" readonly="readonly" id="Amount" name="Amount" size="50" />
+                                        </div>
 
-            <br /><br />
-            <div class="itemtable">
-                <table class="create" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Sl.No</th>
-                            <th>Item Name</th>
-                            <th>Rate Of Tax</th>
-                            <th>Description</th>
-                            <th>Rate</th>
-                            <th>Quantity</th>
-                            <th>Amount</th>
-                            <th>Discount</th>
-                            <th>Tax Amount</th>
-                            <th>Total Amount</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tblpurchaserequest"></tbody>
-                </table>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content" style="background-color:#ebcece">
-                        <div class="modal-body">
-                            <div class="panel-group">
-                                <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
-                                    Add Item
-                                </div>
-                                <div class="panel panel-body" style="font-size:15px;font-family:Calibri">
-                                    <div class="row">
-                                        <form action="createitem">
-                                            <div class="form-group col-md-6">
-                                                <label>Product Name</label><br />
-                                                <select id="Product" name="" style="width:352px; height:27px">
-                                                    <option value="0">Please Select</option>
-                                                    @foreach (var item in @ViewBag.ProductId)
-                                                    {
-                                                        <option value="@item.Value">@item.Text</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Rate of Tax</label><br />
-                                                <input type="text" readonly="readonly" id="TaxId" name="description" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6" style="min-height:58px">
-                                                <label style="width:352px; height:27px">Description</label><br />
-                                                <input type="text" id="Description" name="description" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Rate</label><br />
-                                                <input type="text" id="Rate" name="Rate" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Quantity</label><br />
-                                                <input type="text" id="Quantity" name="Quantity" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Amount</label><br />
-                                                <input type="text" readonly="readonly" id="Amount" name="Amount" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Discount</label><br />
-                                                <input type="text" id="discount" name="discount" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Tax Amount</label><br />
-                                                <input type="text" id="TaxAmt" name="TaxAmt" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Total Amount</label><br />
-                                                <input type="text" id="TotalAmt" readonly="readonly" name="TotalAmt" size="50" />
-                                            </div>
-                                        </form>
-                                    </div>
+                                        <div class="form-group col-md-6">
+                                            <label style="width:352px; height:27px">Discount Amount</label><br />
+                                            <input type="text" id="discountAmount" name="discountAmount" size="50" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label style="width:352px; height:27px">Tax Amount</label><br />
+                                            <input type="text" id="TaxAmt" name="TaxAmt" size="50" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label style="width:352px; height:27px">Total Amount</label><br />
+                                            <input type="text" id="TotalAmt" readonly="readonly" name="TotalAmt" size="50" />
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-save="modal" id="btnSave" data-dismiss="modal">Add</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancel()">Close</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-save="modal" id="btnSave" data-dismiss="modal">Add</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancel()">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <br />
-
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <label>Received By</label>
-
-                </div>
-                <div class="form-group col-md-4">
-                    <label>Remarks</label>
-
-                </div>
-                <div class="form-group col-md-4">
-                    <label>Reff Bill No</label>
-
-                </div>
-                <div class="form-group col-md-4">
-                    <label>Delivery No</label>
-
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label>Discount</label>
-
-                </div>
-                <div class="form-group col-md-4">
-                    <label>Tax</label>
-
-                </div>
-                <div class="form-group col-md-4">
-                    <label>Freight Charges</label>
-
-                </div>
-                <div class="form-group col-md-4">
-                    <label>Net Amount</label>
-
-                </div>
-                <div class="form-group" style="float:right">
-                    <input type="submit" value="Submit" class="btn btn-default" />
-                    @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
-                </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label>Grand Total : </label>
+            </div>
+            <div class="form-group col-md-3">
+                @Html.EditorFor(model => model.grandTotal, new { htmlAttributes = new { @class = "form-control", @id = "ProGrandTotal" } })
+                @Html.ValidationMessageFor(model => model.grandTotal, "", new { @class = "text-danger" })
+                @*<input type="text" id="ProGrandTotal" name="ProGrandTotal" size="50" />*@
+            </div>
+            @*<label id="ProGrandTotal"></label>*@
+        </div>
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label>Discount Percent : </label>
+            </div>
+            <div class="form-group col-md-3">
+                @Html.EditorFor(model => model.discountPercentage, new { htmlAttributes = new { @class = "form-control", @id = "disPercent" } })
+                @Html.ValidationMessageFor(model => model.discountPercentage, "", new { @class = "text-danger" })
+                @*<input type="text" id="disPercent" name="disPercent" size="50" />*@
+            </div>
+            @*<label id="disPercent"></label>*@
+        </div>
+        @*<div class="row">
+            <div class="form-group col-md-2">
+                <label>Discount Amount : </label>
+            </div>
+            <div class="form-group col-md-3">
+                @Html.EditorFor(model => model.dis, new { htmlAttributes = new { @class = "form-control", @id = "disAmount" } })
+                @Html.ValidationMessageFor(model => model.dicountAmount, "", new { @class = "text-danger" })
+          
+            </div>
+        </div>*@
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label>Net Amount : </label>
+                @*<label id="netAmt"></label>*@
+            </div>
+            <div class="form-group col-md-3">
+                @Html.EditorFor(model => model.NetAmount, new { htmlAttributes = new { @class = "form-control", @id = "netAmt" } })
+                @Html.ValidationMessageFor(model => model.NetAmount, "", new { @class = "text-danger" })
+                @*<input type="text" id="netAmt" name="netAmt" size="50" />*@
             </div>
         </div>
 
+        <div class="form-group" style="float:right">
+            <input type="submit" value="Submit" class="btn btn-default" />
+            @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+        </div>
     </div>
+</div>
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
 
 <script>
+    let sNo = 1;
+    var lstItems = [];
+    var ntAmt;
+    $(document).ready(function ()
+    {
+
+
+        $("#categoryId").change(function ()
+        {
+            var supNameId = $(this).find('option:selected').val();
+            SupplierId(supNameId);
+        })
+        $("#SupplierId").change(function ()
+        {
+            var supAddressId = $(this).find('option:selected').val();
+            SupplierAddressId(supAddressId);
+        })
+        $("#ProjectId").change(function ()
+        {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+        $("#Product").change(function () {
+            var taxAmount = $(this).find('option:selected').val();
+            TaxId(taxAmount);
+        })
+
+
+        $("#discountPercent").blur(function ()
+        {
+            debugger
+            var productRate = parseFloat($('#Rate').val());
+            var Amt = parseFloat($('#Quantity').val() * productRate);
+            $("#Amount").val(Amt.toFixed(2));
+
+            //Discount Calculation
+            var productDisPer = parseFloat($('#discountPercent').val());
+
+            var disAmt = parseFloat((productDisPer / 100) * Amt);
+            $('#discountAmount').val(disAmt.toFixed(2));
+
+            var productAmount = parseFloat(Amt - disAmt);
+
+            if ($('#discountPercent').val() != '')
+            {
+                //Tax Calcualtion
+                var TaxPer = $("#TaxId").val();
+                var taxTotal = parseFloat((TaxPer / 100) * productAmount);
+
+                //Total Calculation
+                var totalAmount = parseFloat(productAmount + taxTotal);
+                $("#TaxAmt").val(taxTotal.toFixed(2));
+                $("#TotalAmt").val(totalAmount.toFixed(2));
+            }
+
+        })
+
+    });
+
+    $(document).keydown(function (event) {
+        if (event.altKey && event.which === 65) {
+            $('#myModal').modal('show');
+        }
+    });
+    $('#myModal').on('show.bs.modal', function (e)
+    {
+        $('body').addClass("example-open");
+    }).on('hide.bs.modal', function (e) {
+        $('body').removeClass("example-open");
+    })
+
+    function editBTN(item) {
+        debugger
+        var tempTR = $('#rm' + item).children();
+        console.log(tempTR);
+
+        var column = [9];
+        for (var i = 0; i < tempTR.length; i++)
+        {
+           //console.log(tempTR[i].innerText);
+            column[i] = tempTR[i].innerText;
+           //Array for store the value
+        }
+        $('#myModal').modal('show');
+        $("#Product option:contains(" + column[1] + ")").prop('selected', 'selected');
+        $('#TaxId').val(column[2]);
+        $('#Description').val(column[3]);
+        $('#Rate').val(column[4]);
+        $('#Quantity').val(column[5]);
+        $('#Amount').val(column[6]);
+        $('#discountAmount').val(column[7]);
+        $('#TaxAmt').val(column[8]);
+        $('#TotalAmt').val(column[9]);
+        $('#btnSave').text("Update");
+
+    }
+    function SupplierId(supNameId)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/PurchaseEntries/SupplierId")',
+            dataType: 'json',
+                  data: { supplier_NameId: supNameId },
+                  success: function (result)
+                  {
+                   var data = result;
+                      $("#SupplierId").empty();
+
+                for (var i = 0; i < data.length; i++) {
+                    $("#SupplierId").append("<option value='" + data[i].ID + "'>" + data[i].Suppliername + "</option>");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    };
+    function SupplierAddressId(supAddressId)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/PurchaseEntries/SupplierAddressId")',
+            dataType: 'json',
+                  data: { supplier_AddressId: supAddressId },
+                  success: function (result) {
+                     var data = result;
+
+                      $("#SupplierAddressId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                          $("#SupplierAddressId").append("<option value='" + data[i].ID + "'>" + data[i].address + "</option>");
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+    function SiteId(projectSite)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/PurchaseEntries/SiteId")',
+            dataType: 'json',
+                  data: { site_NameId: projectSite },
+                  success: function (result) {
+                      var data = result;
+                      $("#SiteId").empty();
+                      $("#SiteAddressId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                    $("#SiteId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
+                    $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    };
+     function TaxId(taxAmount)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/PurchaseEntries/TaxId")',
+                  dataType: 'json',
+                  data: { tax_Amount: taxAmount },
+                  success: function (result) {
+                     var data = result;
+                      $("#TaxId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                    $("#TaxId").val(data[i].Tax)
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+     $('#btnSave').click(function ()
+    {
+        debugger
+        let list = {};
+         list.productId = $('#Product').val();
+         list.productText = $('#Product option:selected').text();
+         list.Description = $('#Description').val();
+         list.Tax = $('#TaxId').val();
+         list.Rate = $('#Rate').val();
+         list.Quantity = $('#Quantity').val();
+         list.Amount = $('#Amount').val();
+         list.discountPercent = $('#discountPercent').val();
+         list.discountAmount = $('#discountAmount').val();
+         list.TaxAmount = $('#TaxAmt').val();;
+         list.TotalAmount = $('#TotalAmt').val();;
+         list.ProductNo = $('#ProductNo').val();;
+
+        list.sNo = sNo;
+
+        $.ajax({
+                url: '@Url.Content("~/PurchaseEntries/savePurchages")',
+                type: 'POST',
+                  dataType: 'json',
+            data: { purchaseEntryTable: list },
+                success: function (result)
+                {
+                    debugger
+                    console.log(result);
+                    list.Id = result;
+                    lstItems.push(list);
+                    console.log(lstItems);
+                    bindItems();
+                    $('#productId').val(0);
+                    $('#Description').val('');
+                    $('#Rate').val('');
+                    $('#Quantity').val('');
+                    $('#TaxId').val('');
+                    $('#Amount').val('');
+                    $('#TaxAmt').val('');
+                    $('#TotalAmt').val('');
+                    $('#discountAmount').val('');
+                    $('#discountPercent').val('');
+                    $('#gstAmount').val('');
+            },
+
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+    function bindItems() {
+        $('#tblpurchaserequest').empty();
+        if (lstItems.length > 0) {
+            debugger
+            let sNo = 1;
+            let grandTotal = 0;
+           // let calProPer = 0;
+            for (var i = 0; i < lstItems.length; i++)
+            {
+                var row = `<tr id=rm${sNo}>`
+                    + `<td>${sNo}</td>`
+                    + `<td>${lstItems[i].productText}</td>`
+                    + `<td>${lstItems[i].Tax}</td>`
+                    + `<td>${lstItems[i].Description}</td>`
+                    + `<td>${lstItems[i].Rate}</td>`
+                    + `<td>${lstItems[i].Quantity}</td>`
+                    + `<td>${lstItems[i].Amount}</td>`
+                    + `<td>${lstItems[i].discountAmount}</td>`
+                    + `<td>${lstItems[i].TaxAmount}</td>`
+                    + `<td>${lstItems[i].TotalAmount}</td>`
+                    + `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
+                        </td>`
+                    + "</tr>";
+
+                let amount = 0;
+
+
+
+                lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
+                grandTotal += amount;
+
+                $('#tblpurchaserequest').append(row);
+                sNo++;
+            }
+            console.log(grandTotal);
+            $('#ProGrandTotal').val(grandTotal.toFixed());
+
+            $("#disPercent").blur(function ()
+            {
+                debugger
+
+                var disPercentage = $('#disPercent').val();
+                var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+                $('#disAmount').val(calProPer.toFixed());
+                var netAmount = parseFloat(grandTotal - calProPer);
+                $('#netAmt').val(netAmount.toFixed());
+            });
+
+        }
+    }
+
+
+    function removeTR(item)
+    {
+        debugger
+        //let inNo = $('#ProductNo').val();
+        let productId = $('#Product').val();
+        $.ajax({
+            url: '@Url.Content("~/PurchaseEntries/removePurchages")',
+            type: 'POST',
+            dataType: 'json',
+            data: { Id: item, InNo: productId },
+            success: function (result)
+            {
+                console.log(result);
+                if (result != null)
+                {
+                    lstItems = result;
+                    $('#tblpurchaserequest').empty();
+                    if (lstItems.length > 0) {
+                        debugger
+                        let sNo = 1;
+                        let grandTotal = 0;
+                        for (var i = 0; i < lstItems.length; i++) {
+                            var row = `<tr id=rm${sNo}>`
+                                + `<td>${sNo}</td>`
+                                + `<td>${lstItems[i].Product.ProductName}</td>`
+                                + `<td>${lstItems[i].Tax}</td>`
+                                + `<td>${lstItems[i].Description}</td>`
+                                + `<td>${lstItems[i].Rate}</td>`
+                                + `<td>${lstItems[i].Quantity}</td>`
+                                + `<td>${lstItems[i].Amount}</td>`
+                                + `<td>${lstItems[i].discountAmount}</td>`
+                                + `<td>${lstItems[i].TaxAmount}</td>`
+                                + `<td>${lstItems[i].TotalAmount}</td>`
+                                + `<td>
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].id}')">Remove</button>
+                        </td>`
+                                + "</tr>";
+                            let amount = 0;
+
+                            lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
+                            grandTotal += amount;
+
+                            $('#tblpurchaserequest').append(row);
+                            sNo++;
+                        }
+                        console.log(grandTotal);
+                        $('#ProGrandTotal').val(grandTotal.toFixed());
+
+                        $("#disPercent").blur(function () {
+                            debugger
+
+                            var disPercentage = $('#disPercent').val();
+                            var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+                            $('#disAmount').val(calProPer.toFixed());
+                            var netAmount = parseFloat(grandTotal - calProPer);
+                            $('#netAmt').val(netAmount.toFixed());
+                        });
+
+                   }
+                }
+            }
+        });
+    }
+      
+</script>
+
+@*<script>
     let sNo = 1;
     var lstItems = [];
     var ntAmt;
@@ -465,4 +827,4 @@
                   }
               });
      };
-</script>
+</script>*@

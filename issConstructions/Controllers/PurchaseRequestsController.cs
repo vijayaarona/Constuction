@@ -115,20 +115,39 @@ namespace issConstructions.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,ProductNo,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
         {
+            int invoiceNo = 1;
             if (ModelState.IsValid)
             {
                 purchaseRequest.CreatedDate = DateTime.UtcNow;
                 purchaseRequest.UpdatedDate = DateTime.UtcNow;
-                db.purchaseRequest.Add(purchaseRequest);
+               
+                var purchase = db.purchaseRequest.Where(x => x.isDeleted == false).ToList();
+                if (purchase != null && purchase.Count > 0)
+                {
+                    invoiceNo = purchase.Max(x => x.RequestID);
+                    if (invoiceNo != 0)
+                    {
+                        invoiceNo = invoiceNo + 1;
+                    }
+                }
+                    purchaseRequest.RequestID = invoiceNo;
+                    db.purchaseRequest.Add(purchaseRequest);
+                
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+           
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseRequest.CategoryId);
             ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseRequest.SupplierId);
             ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseRequest.SupplierAddressId);
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseRequest.ProjectId);
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseRequest.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseRequest.SiteAddressId);
+
+            PurchaseRequestTable purchaseRequestTable = new PurchaseRequestTable();
+            purchaseRequestTable.purchaseRequestId = purchaseRequest.RequestID;
+            db.purchaseRequestTables.Add(purchaseRequestTable);
             return View(purchaseRequest);
         }
         [HttpPost]
@@ -252,13 +271,27 @@ namespace issConstructions.Controllers
         {
             try
             {
+                
                 //PurchaseTable purchaseTable = new PurchaseTable();
                 // purchaseTable.ProductId = Guid.Parse(pId);
                 //PurchaseRequestTable.ID = Guid.NewGuid();
+                PurchaseRequest purchaseRequest = new PurchaseRequest();
+                PurchaseRequestTable.purchaseRequestId = purchaseRequest.ID;
+                db.purchaseRequest.Add(purchaseRequest);
                 PurchaseRequestTable.CreatedDate = DateTime.UtcNow;
                 PurchaseRequestTable.UpdatedDate = DateTime.UtcNow;
                 PurchaseRequestTable.UpdateBy = Display.Name;
-                db.purchaseRequestTables.Add(PurchaseRequestTable);
+
+                // var purchasere = db.purchaseRequest.Where(x => x.isDeleted == false).Select(x => x.ID).ToList();
+                //if (purchasere != null)
+                //{
+                //    PurchaseRequestTable.purchaseRequestId = Convert.ToInt16(purchasere);
+                //    PurchaseRequestTable.ProductNo = Convert.ToInt16(purchasere); 
+                   
+                //}
+                //PurchaseRequestTable.purchaseRequestId = invoiceNo;
+                db.purchaseRequestTables.Add(PurchaseRequestTable);                
+                db.purchaseRequest.Add(purchaseRequest);
                 db.SaveChanges();
                 var id = db.purchaseRequestTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
                 return Json(id.ID, JsonRequestBehavior.AllowGet);
@@ -279,13 +312,13 @@ namespace issConstructions.Controllers
                 {
                     int pId = int.Parse(Id);
                     var p = db.purchaseRequestTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
-                    int inNo = p.purchaseRequestId;
+                    int inNo = p.productId;
                     if (p != null)
                     {
 
                         db.purchaseRequestTables.Remove(p);
                         db.SaveChanges();
-                        var resp = db.purchaseRequestTables.Where(x => x.purchaseRequestId == inNo && x.isDeleted == false).ToList();
+                        var resp = db.purchaseRequestTables.Where(x => x.productId == inNo && x.isDeleted == false).ToList();
                         return Json(resp, JsonRequestBehavior.AllowGet);
                     }
                     else

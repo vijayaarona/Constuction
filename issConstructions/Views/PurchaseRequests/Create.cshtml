@@ -439,6 +439,7 @@
         let list = {};
          list.productId = $('#Product').val();
          list.productText = $('#Product option:selected').text();
+         list.purchaseRequestId = $('#RequestID').val();
          list.Description = $('#Description').val();
          list.Tax = $('#TaxId').val();
          list.Rate = $('#Rate').val();
@@ -540,12 +541,13 @@
     function removeTR(item)
     {
         debugger
-        let inNo = $('#ProductNo').val();
+        //let inNo = $('#ProductNo').val();
+        let productId = $('#Product').val();
         $.ajax({
             url: '@Url.Content("~/PurchaseRequests/removePurchages")',
             type: 'POST',
             dataType: 'json',
-            data: { Id: item, InNo: inNo },
+            data: { Id: item, InNo: productId },
             success: function (result)
             {
                 console.log(result);
@@ -590,7 +592,7 @@
                             var disPercentage = $('#disPercent').val();
                             var calProPer = parseFloat((disPercentage / 100) * grandTotal);
                             $('#disAmount').val(calProPer.toFixed());
-                            var netAmount = parseFloat(grandTotal + calProPer);
+                            var netAmount = parseFloat(grandTotal - calProPer);
                             $('#netAmt').val(netAmount.toFixed());
                         });
                             
