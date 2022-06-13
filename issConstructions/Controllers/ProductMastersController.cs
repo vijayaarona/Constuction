@@ -12,7 +12,7 @@ using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
-    [CustomAuthorize(Roles = "Admin,Manager")]
+    //[CustomAuthorize(Roles = "Admin,Manager")]
     public class ProductMastersController : Controller
     {
         private issDB db = new issDB();

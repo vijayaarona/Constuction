@@ -1,0 +1,106 @@
+﻿@model issDomain.Models.Issues
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Issues</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Category.CategoryName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.IssuesDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.IssuesDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ProjectId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ProjectId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.SiteId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.SiteId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.SiteAddressId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.SiteAddressId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.netAmount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.netAmount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.isDeleted)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.isDeleted)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdateBy)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.UpdateBy)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.UpdatedDate)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

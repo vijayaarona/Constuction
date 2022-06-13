@@ -1,4 +1,4 @@
-﻿@model IEnumerable<issDomain.Models.PurchaseRequest>
+﻿@model IEnumerable<issDomain.Models.Issues>
 
 @{
     ViewBag.Title = "Index";
@@ -30,7 +30,7 @@
 </style>
 <div class="panel-group">
     <div class="panel panel-heading header">
-        Purchase Request - Index Page
+        Issues - Index Page
     </div>
     <div class="panel panel-body">
         @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
@@ -38,23 +38,18 @@
             <thead>
                 <tr>
                     <th>
-                        <label>Request Date</label>
+                        <label>Issue Date</label>
                     </th>
                     <th>
-                        <label>Request Id</label>
-                    </th>
-                    <th>
-                        <label>Supplier Name</label>
+                        <label>Category</label>
                     </th>
                     <th>
                         <label>Project Name</label>
                     </th>
                     <th>
-                        <label>Grand Total</label>
+                        <label>Site Name</label>
                     </th>
-                    <th>
-                        <label>Discount Amount</label>
-                    </th>
+
                     <th>
                         <label>Net Amount</label>
                     </th>
@@ -64,42 +59,38 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
+                    <tr>
 
-                    @if (@item.RequestDate != null)
-                    {
+                        @if (@item.IssuesDate != null)
+                        {
+                            <td>
+                                @item.IssuesDate.Value.ToShortDateString()
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
                         <td>
-                            @item.RequestDate.Value.ToShortDateString()
+                            @Html.DisplayFor(modelItem => item.Category.CategoryName)
                         </td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequestID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteDetails.ProjectId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.grandTotal)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.dicountAmount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NetAmount)
-                    </td>
-                    <td>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |*@
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                    </td>
-                </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SiteDetails.ProjectId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SiteDetails.SiteId)
+                        </td>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.netAmount)
+                        </td>
+                        <td>
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |*@
+                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        </td>
+                    </tr>
 
                 }
             </tbody>
@@ -121,11 +112,11 @@
                         var printTitle = 'New Title';
                         return printTitle
                     }
-                   // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
                 },
                 {
                     extend: 'pdf',
-                  //  messageBottom: null
+                    //  messageBottom: null
                 },
                 {
                     extend: 'print',

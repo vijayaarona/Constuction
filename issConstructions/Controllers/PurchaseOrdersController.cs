@@ -193,6 +193,33 @@ namespace issConstructions.Controllers
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult purchaseReqOrders(int purchaseRequestOrderId)
+        {
+            if (purchaseRequestOrderId > 0)
+            {
+                var res = from rep in db.purchaseRequest
+                          join cat in db.categoryMasters on rep.CategoryId equals cat.ID 
+                          join site in db.siteDetails on rep.SiteId equals site.ID 
+                          join sup in db.supplierMasters on rep.SupplierId equals sup.ID 
+                          where rep.ID == purchaseRequestOrderId && rep.isDeleted == false
+                          select new
+                          {
+
+                              category_Name = cat.CategoryName,
+                              project_Name = site.ProjectName,
+                              Site_Name = site.SiteName,
+                              Site_Address = site.SiteAddress,
+                              supplier_name = sup.Suppliername,
+                              supplier_Address = sup.address,
+                          };
+
+                //var resp = db.purchaseRequest.Where(x => x.ID == purchaseRequestOrderId).ToList();
+
+                return Json("res", JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
         // GET: PurchaseOrders/Edit/5
         public ActionResult Edit(int? id)
         {

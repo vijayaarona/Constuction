@@ -58,6 +58,7 @@ namespace issConstructions.Controllers
                 SupplierAddress.Add(new SelectListItem { Text = item.address.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SupplierAddressId = SupplierAddress;
+
             List<SelectListItem> Project = new List<SelectListItem>();
             Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
@@ -106,6 +107,9 @@ namespace issConstructions.Controllers
             }
             else proNo = 1;
             ViewBag.ProductNo = proNo;
+
+         
+
             return View();
         }
         // POST: PurchaseRequests/Create
@@ -190,6 +194,8 @@ namespace issConstructions.Controllers
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
+
+       
         // GET: PurchaseRequests/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -272,9 +278,6 @@ namespace issConstructions.Controllers
             try
             {
                 
-                //PurchaseTable purchaseTable = new PurchaseTable();
-                // purchaseTable.ProductId = Guid.Parse(pId);
-                //PurchaseRequestTable.ID = Guid.NewGuid();
                 PurchaseRequest purchaseRequest = new PurchaseRequest();
                 PurchaseRequestTable.purchaseRequestId = purchaseRequest.ID;
                 db.purchaseRequest.Add(purchaseRequest);
@@ -282,14 +285,6 @@ namespace issConstructions.Controllers
                 PurchaseRequestTable.UpdatedDate = DateTime.UtcNow;
                 PurchaseRequestTable.UpdateBy = Display.Name;
 
-                // var purchasere = db.purchaseRequest.Where(x => x.isDeleted == false).Select(x => x.ID).ToList();
-                //if (purchasere != null)
-                //{
-                //    PurchaseRequestTable.purchaseRequestId = Convert.ToInt16(purchasere);
-                //    PurchaseRequestTable.ProductNo = Convert.ToInt16(purchasere); 
-                   
-                //}
-                //PurchaseRequestTable.purchaseRequestId = invoiceNo;
                 db.purchaseRequestTables.Add(PurchaseRequestTable);                
                 db.purchaseRequest.Add(purchaseRequest);
                 db.SaveChanges();
