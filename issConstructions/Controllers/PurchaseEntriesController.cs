@@ -60,6 +60,7 @@ namespace issConstructions.Controllers
                 SupplierAddress.Add(new SelectListItem { Text = item.address.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SupplierAddressId = SupplierAddress;
+
             List<SelectListItem> Project = new List<SelectListItem>();
             Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
@@ -89,6 +90,14 @@ namespace issConstructions.Controllers
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
             }
             ViewBag.ProductId = Product;
+            //Purchase Type
+
+            List<SelectListItem> type = new List<SelectListItem>();
+            type.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            type.Add(new SelectListItem { Text = "Godown", Value = "1" });
+            type.Add(new SelectListItem { Text = "Site", Value = "2" });
+            ViewBag.type = type;
+
             //Tax
             var listsItem = new SelectList(db.productMasters, "ID", "Tax");
             List<SelectListItem> Tax = new List<SelectListItem>();
@@ -108,6 +117,7 @@ namespace issConstructions.Controllers
             }
             else proNo = 1;
             ViewBag.ProductNo = proNo;
+            //ViewBag.type = new SelectList(db.siteDetails.Where(x => x. == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
             return View();
         }
         [HttpPost]
@@ -146,6 +156,15 @@ namespace issConstructions.Controllers
             if (tax_Amount > 0)
             {
                 var resp = db.productMasters.Where(x => x.ID == tax_Amount).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult purchaseType(int purchase_type)
+        {
+            if (purchase_type > 0)
+            {
+                var resp = db.siteDetails.Where(x => x.ID == purchase_type).ToList();
                 return Json(resp, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
@@ -257,9 +276,7 @@ namespace issConstructions.Controllers
         {
             try
             {
-                //PurchaseTable purchaseTable = new PurchaseTable();
-                // purchaseTable.ProductId = Guid.Parse(pId);
-                //PurchaseRequestTable.ID = Guid.NewGuid();
+                
                 purchaseEntryTable.CreatedDate = DateTime.UtcNow;
                 purchaseEntryTable.UpdatedDate = DateTime.UtcNow;
                 purchaseEntryTable.UpdateBy = Display.Name;

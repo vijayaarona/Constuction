@@ -53,7 +53,7 @@
 
 <div class="panel-group">
     <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
-        Purchase Request - Add Page
+        Purchase Entry - Add Page
     </div>
     <div class="panel panel-body" style="overflow:auto">
         <div class="row">
@@ -78,6 +78,11 @@
                 @Html.ValidationMessageFor(model => model.SupplierAddressId, "", new { @class = "text-danger" })
             </div>
             <div class="form-group col-md-6">
+                <label>Purchase Type</label>
+                @Html.DropDownList("type", null, htmlAttributes: new { @class = "form-control", @id = "Purchasetype" })
+                @Html.ValidationMessageFor(model => model.mobileno, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
                 <label>Project Name</label>
                 @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
                 @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
@@ -92,11 +97,7 @@
                 @Html.DropDownList("SiteAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SiteAddressId" })
                 @Html.ValidationMessageFor(model => model.SiteAddressId, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group col-md-6">
-                <label>Mobile No</label>
-                @Html.EditorFor(model => model.mobileno, new { htmlAttributes = new { @class = "form-control", @id = "mobileno" } })
-                @Html.ValidationMessageFor(model => model.mobileno, "", new { @class = "text-danger" })
-            </div>
+
             <div class="form-group col-md-6" hidden>
                 <label>Product No</label>
                 @Html.EditorFor(model => model.ProductNo, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ProductNo } })
@@ -280,6 +281,11 @@
             TaxId(taxAmount);
         })
 
+        //purchase type
+        $("#Purchasetype").change(function () {
+            var PurchaseType = $(this).find('option:selected').val();
+            PurType(PurchaseType);
+        })
 
         $("#discountPercent").blur(function ()
         {
@@ -399,7 +405,8 @@
             url: '@Url.Content("~/PurchaseEntries/SiteId")',
             dataType: 'json',
                   data: { site_NameId: projectSite },
-                  success: function (result) {
+                  success: function (result)
+                  {
                       var data = result;
                       $("#SiteId").empty();
                       $("#SiteAddressId").empty();
@@ -427,6 +434,33 @@
                       for (var i = 0; i < data.length; i++)
                       {
                     $("#TaxId").val(data[i].Tax)
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+  
+    function PurType(PurchaseType)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/PurchaseEntries/purchaseType")',
+                  dataType: 'json',
+                  data: { purchase_type: PurchaseType },
+                  success: function (result)
+                  {
+                      var data = result;
+                      $("#ProjectId").empty();
+                      $("#SiteId").empty();
+                      $("#SiteAddressId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                          $("#ProjectId").append("<option value='" + data[i].ID + "'>" + data[i].ProjectName + "</option>");
+                          $("#SiteId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
+                          $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
                       }
                   },
                   error: function (err)

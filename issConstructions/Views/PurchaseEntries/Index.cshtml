@@ -44,16 +44,13 @@
                         <label>Category</label>
                     </th>
                     <th>
-                        <label>Supplier Name</label>
+                        <label>Purchase Type</label>
                     </th>
 
                     <th>
                         <label>Project Name</label>
                     </th>
-                    <th>
-                        <label>Site Name</label>
-                    </th>
-
+                  
                     <th>
                         <label>Grand Total</label>
                     </th>
@@ -76,16 +73,13 @@
                         @Html.DisplayFor(modelItem => item.Category.CategoryName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
+                        @Html.DisplayFor(modelItem => item.mobileno)
                     </td>
 
                     <td>
                         @Html.DisplayFor(modelItem => item.SiteDetails.ProjectName)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteDetails.SiteName)
-                    </td>
-
+                  
                     <td>
                         @Html.DisplayFor(modelItem => item.grandTotal)
                     </td>
@@ -93,7 +87,7 @@
                         @Html.DisplayFor(modelItem => item.NetAmount)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |*@
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                     </td>
