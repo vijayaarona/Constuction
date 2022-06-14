@@ -354,23 +354,28 @@
                   success: function (result) {
                       debugger
                       console.log(result)
-                      var data = result;
+                      var data = result.res;
 
-                      $('#categoryId').empty();
-                      $('#SupplierId').empty();
-                      $('#SupplierAddressId').empty();
-                      $('#ProjectId').empty();
-                      $('#SiteId').empty();
-                      $('#SiteAddressId').empty();
-                      $('#mobileno').empty();
+                      //$('#categoryId').empty();
+                      //$('#SupplierId').empty();
+                      //$('#SupplierAddressId').empty();
+                      //$('#ProjectId').empty();
+                      //$('#SiteId').empty();
+                      //$('#SiteAddressId').empty();
+                      //$('#mobileno').empty();
 
-                      $("#categoryId").append("<option value='" + data.ID + "'>" + data.category_Name + "</option>");
-                      $("#SupplierId").append("<option value='" + data.ID + "'>" + data.supplier_name + "</option>");
-                      $("#SupplierAddressId").append("<option value='" + data.ID + "'>" + data.supplier_Address + "</option>");
-                      $("#ProjectId").append("<option value='" + data.ID + "'>" + data.project_Name + "</option>");
-                      $("#SiteId").append("<option value='" + data.ID + "'>" + data.Site_Name + "</option>");
-                      $("#SiteAddressId").append("<option value='" + data.ID + "'>" + data.Site_Address + "</option>");
+
+                      $('#categoryId option[value=' + data.ID + ']').attr("selected", "selected");
+                      //$("#categoryId").append("<option selected value='" + data.ID + "'>" + data.category_Name + "</option>");
+                      //$("#SupplierId").append("<option selected value='" + data.ID + "'>" + data.supplier_name + "</option>");
+                      //$("#SupplierAddressId").append("<option selected value='" + data.ID + "'>" + data.supplier_Address + "</option>");
+                      //$("#ProjectId").append("<option selected value='" + data.ID + "'>" + data.project_Name + "</option>");
+                      //$("#SiteId").append("<option selected value='" + data.ID + "'>" + data.Site_Name + "</option>");
+                      //$("#SiteAddressId").append("<option selected value='" + data.ID + "'>" + data.Site_Address + "</option>");
                       $("#mobileno").val(data.mobileno);
+
+
+                      console.log(result.req);
                   },
                   error: function (err)
                   {

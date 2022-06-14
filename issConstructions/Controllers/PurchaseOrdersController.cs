@@ -12,7 +12,7 @@ using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
-  //  [CustomAuthorize(Roles = "Admin,Manager")]
+    //  [CustomAuthorize(Roles = "Admin,Manager")]
     public class PurchaseOrdersController : Controller
     {
         private issDB db = new issDB();
@@ -101,7 +101,8 @@ namespace issConstructions.Controllers
             Request.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.purchaseRequest.ToList())
             {
-                Request.Add(new SelectListItem { Text = item.ID.ToString(), Value = item.ID.ToString() });
+                if (item.RequestID != 0)
+                    Request.Add(new SelectListItem { Text = item.RequestID.ToString(), Value = item.RequestID.ToString() });
             }
             ViewBag.RequestID = Request;
 
@@ -128,8 +129,8 @@ namespace issConstructions.Controllers
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseOrder.ProjectId);
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
-            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID",purchaseOrder.PurchaseRequest);
-           // ViewBag.ProductId = new SelectList(db.purchaseOrderTables, "ID", "ID");
+            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID", purchaseOrder.PurchaseRequest);
+            // ViewBag.ProductId = new SelectList(db.purchaseOrderTables, "ID", "ID");
             return View(purchaseOrder);
         }
         //[HttpPost]
@@ -198,25 +199,10 @@ namespace issConstructions.Controllers
         {
             if (purchaseRequestOrderId > 0)
             {
-                var res = from rep in db.purchaseRequest
-                          join cat in db.categoryMasters on rep.CategoryId equals cat.ID 
-                          join site in db.siteDetails on rep.SiteId equals site.ID 
-                          join sup in db.supplierMasters on rep.SupplierId equals sup.ID 
-                          where rep.ID == purchaseRequestOrderId && rep.isDeleted == false
-                          select new
-                          {
-
-                              category_Name = cat.CategoryName,
-                              project_Name = site.ProjectName,
-                              Site_Name = site.SiteName,
-                              Site_Address = site.SiteAddress,
-                              supplier_name = sup.Suppliername,
-                              supplier_Address = sup.address,
-                          };
-
-                //var resp = db.purchaseRequest.Where(x => x.ID == purchaseRequestOrderId).ToList();
-
-                return Json("res", JsonRequestBehavior.AllowGet);
+                var res = db.purchaseRequest.Where(x => x.RequestID == purchaseRequestOrderId).FirstOrDefault();
+                var req = db.purchaseRequestTables.Where(x => x.purchaseRequestId == res.ID).ToList();
+                var result = new { res, req };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }

@@ -108,7 +108,7 @@ namespace issConstructions.Controllers
             else proNo = 1;
             ViewBag.ProductNo = proNo;
 
-         
+
 
             return View();
         }
@@ -124,7 +124,7 @@ namespace issConstructions.Controllers
             {
                 purchaseRequest.CreatedDate = DateTime.UtcNow;
                 purchaseRequest.UpdatedDate = DateTime.UtcNow;
-               
+
                 var purchase = db.purchaseRequest.Where(x => x.isDeleted == false).ToList();
                 if (purchase != null && purchase.Count > 0)
                 {
@@ -134,14 +134,14 @@ namespace issConstructions.Controllers
                         invoiceNo = invoiceNo + 1;
                     }
                 }
-                    purchaseRequest.RequestID = invoiceNo;
-                    db.purchaseRequest.Add(purchaseRequest);
-                
+                purchaseRequest.RequestID = invoiceNo;
+                db.purchaseRequest.Add(purchaseRequest);
+
 
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-           
+
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseRequest.CategoryId);
             ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseRequest.SupplierId);
             ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseRequest.SupplierAddressId);
@@ -195,7 +195,7 @@ namespace issConstructions.Controllers
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
-       
+
         // GET: PurchaseRequests/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -277,16 +277,21 @@ namespace issConstructions.Controllers
         {
             try
             {
-                
-                PurchaseRequest purchaseRequest = new PurchaseRequest();
-                PurchaseRequestTable.purchaseRequestId = purchaseRequest.ID;
-                db.purchaseRequest.Add(purchaseRequest);
+
+                //PurchaseRequest purchaseRequest = new PurchaseRequest();
+                int maxId = db.purchaseRequest.Max(x => x.ID);
+                if (maxId != null && maxId == 0)
+                {
+                    maxId = 1;
+                }
+                else maxId += 1;
+                PurchaseRequestTable.purchaseRequestId = maxId;
                 PurchaseRequestTable.CreatedDate = DateTime.UtcNow;
                 PurchaseRequestTable.UpdatedDate = DateTime.UtcNow;
                 PurchaseRequestTable.UpdateBy = Display.Name;
 
-                db.purchaseRequestTables.Add(PurchaseRequestTable);                
-                db.purchaseRequest.Add(purchaseRequest);
+                db.purchaseRequestTables.Add(PurchaseRequestTable);
+                // db.purchaseRequest.Add(purchaseRequest);
                 db.SaveChanges();
                 var id = db.purchaseRequestTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
                 return Json(id.ID, JsonRequestBehavior.AllowGet);
@@ -303,24 +308,21 @@ namespace issConstructions.Controllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(Id))
+
+                if (!string.IsNullOrEmpty(Id)&&Id!= "undefined")
                 {
+                    int maxId = db.purchaseRequest.Max(x => x.ID);
+                    if (maxId != null && maxId == 0)
+                    {
+                        maxId = 1;
+                    }
+                    else maxId += 1;
                     int pId = int.Parse(Id);
                     var p = db.purchaseRequestTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
-                    int inNo = p.productId;
-                    if (p != null)
-                    {
-
-                        db.purchaseRequestTables.Remove(p);
-                        db.SaveChanges();
-                        var resp = db.purchaseRequestTables.Where(x => x.productId == inNo && x.isDeleted == false).ToList();
-                        return Json(resp, JsonRequestBehavior.AllowGet);
-                    }
-                    else
-                    {
-                        var resp = db.purchaseRequestTables.Where(x => x.purchaseRequestId == inNo).ToList();
-                        return Json(resp, JsonRequestBehavior.AllowGet);
-                    }
+                    db.purchaseRequestTables.Remove(p);
+                    db.SaveChanges();
+                    var resp = db.purchaseRequestTables.Where(x => x.purchaseRequestId == maxId && x.isDeleted == false).ToList();
+                    return Json(resp, JsonRequestBehavior.AllowGet);
 
                 }
             }
