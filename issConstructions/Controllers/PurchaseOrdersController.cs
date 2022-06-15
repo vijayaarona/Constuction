@@ -88,7 +88,7 @@ namespace issConstructions.Controllers
             {
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
             }
-            ViewBag.ProductId = Product;
+            ViewBag.productId = Product;
             //Tax
             var listsItem = new SelectList(db.productMasters, "ID", "Tax");
             List<SelectListItem> Tax = new List<SelectListItem>();
@@ -289,6 +289,13 @@ namespace issConstructions.Controllers
         {
             try
             {
+                int maxId = db.PurchaseOrders.Max(x => x.ID);
+                if (maxId != null && maxId == 0)
+                {
+                    maxId = 1;
+                }
+                else maxId += 1;
+                purchaseOrder.purchaseRequestId = maxId;
                 //PurchaseTable purchaseTable = new PurchaseTable();
                 // purchaseTable.ProductId = Guid.Parse(pId);
                 //PurchaseRequestTable.ID = Guid.NewGuid();
@@ -297,7 +304,7 @@ namespace issConstructions.Controllers
                 purchaseOrder.UpdateBy = Display.Name;
                 db.purchaseOrderTables.Add(purchaseOrder);
                 db.SaveChanges();
-                var id = db.purchaseRequestTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+                var id = db.purchaseOrderTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
                 return Json(id.ID, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -312,7 +319,7 @@ namespace issConstructions.Controllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(Id))
+                if (!string.IsNullOrEmpty(Id) && Id != "undefined")
                 {
                     int pId = int.Parse(Id);
                     var p = db.purchaseOrderTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
@@ -340,6 +347,23 @@ namespace issConstructions.Controllers
                 return Json("data", JsonRequestBehavior.AllowGet);
             }
             return Json("data", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult getListOfPurchaes(int invoice)
+        {
+            try
+            {
+
+                List<PurchaseOrderTable> purchaseOrderTables = db.purchaseOrderTables.Where(x => x.purchaseRequestId == invoice).ToList();
+                return Json(purchaseOrderTables, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json("data", JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }

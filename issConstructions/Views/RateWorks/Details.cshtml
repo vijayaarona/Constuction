@@ -1,0 +1,146 @@
+﻿@model issDomain.Models.RateWork
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>RateWork</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.projectId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.projectId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.siteNoId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.siteNoId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.siteNameId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.siteNameId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.siteAddressId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.siteAddressId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.headName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.headName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.totalAmount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.totalAmount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.deduction)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.deduction)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.netAmount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.netAmount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.passedBy)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.passedBy)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.remark)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.remark)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.isDeleted)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.isDeleted)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdateBy)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.UpdateBy)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.UpdatedDate)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

@@ -96,28 +96,85 @@
                 <td> @Html.DisplayFor(model => model.mobileno) </td>
             </tr>
             <tr>
-                <th> Created Date</th>
-                <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
-            </tr>
-
-            <tr>
-                <th> Updated By</th>
-                <td>  @Html.DisplayFor(model => model.UpdateBy)</td>
-            </tr>
-            <tr>
-                <th> Updated  Date</th>
-                <td>  @Html.DisplayFor(model => model.UpdatedDate)</td>
+                <th>Net Amount</th>
+                <td> @Html.DisplayFor(model => model.NetAmount) </td>
             </tr>
 
         </table>
+        <br />
+        <div class="">
+            <table id="tblpurchase" class="table-bordered" style="width:95%;text-align:center">
+                <thead>
+                    <tr>
+                        <th>Sl.No</th>
+                        <th>Item Name</th>
+                        <th>Rate Of Tax</th>
+                        <th>Description</th>
+                        <th>Rate</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                        <th>Discount Amount</th>
+                        <th>Tax Amount</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="tblPurchaseRequest"></tbody>
+            </table>
+        </div>
 
         <p style="float:right;">
-            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })*@
             @*<button type="button" class = "btn btn-default" id="btn-edit"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </button>*@
             @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
         </p>
     </div>
 </div>
+
+<script>
+    $(document).ready(function ()
+    {
+            debugger
+            let id =@Model.ID;
+            get(id);
+           
+            function get(id) {
+                $.ajax({
+                    url: '@Url.Content("~/PurchaseRequests/getListOfPurchaes")',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { invoice: id },
+                    success: function (result) {
+                        
+                        console.log(result)
+                        var row = "";
+                        if (result != null)
+                        {
+                            let sNo = 1;
+                            for (var i = 0; i < result.length; i++)
+                            {
+                                row = `<tr>`
+                                row +=    `<td>${sNo}</td>`
+                                row += `<td>${result[i].Product.ProductName}</td>`
+                                row +=    `<td>${result[i].Tax}</td>`
+                                row += `<td>${result[i].Description}</td>`
+                                row += `<td>${result[i].Rate}</td>`
+                                row += `<td>${result[i].Quantity}</td>`
+                                row +=     `<td>${result[i].Amount}</td>`
+                                row += `<td>${result[i].discountAmount}</td>`
+                                row += `<td>${result[i].TaxAmount}</td>`
+                                row += `<td>${result[i].TotalAmount}</td>`
+                                row +=     `</tr>`;
+                                sNo++;
+                                $('#tblPurchaseRequest').append(row);
+                            }
+                            
+                        }
+
+                    }
+                });
+            }
+    });
+</script>
 
 @*<h2>Details</h2>
 

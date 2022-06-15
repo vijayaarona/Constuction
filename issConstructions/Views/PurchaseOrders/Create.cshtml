@@ -143,7 +143,7 @@
                                                 <label>Product Name</label><br />
                                                 <select id="Product" name="" style="width:352px; height:27px">
                                                     <option value="0">Please Select</option>
-                                                    @foreach (var item in @ViewBag.ProductId)
+                                                    @foreach (var item in @ViewBag.productId)
                                                     {
                                                         <option value="@item.Value">@item.Text</option>
                                                     }
@@ -302,7 +302,7 @@
 
         $("#discountPercent").blur(function ()
         {
-            debugger
+            
             var productRate = parseFloat($('#Rate').val());
             var Amt = parseFloat($('#Quantity').val() * productRate);
             $("#Amount").val(Amt.toFixed(2));
@@ -361,11 +361,17 @@
                       //$('#SupplierAddressId').empty();
                       //$('#ProjectId').empty();
                       //$('#SiteId').empty();
-                      //$('#SiteAddressId').empty();
+                      //$('#SiteAddressId').empty();                                                                                        
                       //$('#mobileno').empty();
 
 
                       $('#categoryId option[value=' + data.ID + ']').attr("selected", "selected");
+                      $('#SupplierId option[value=' + data.SupplierId + ']').attr("selected", "selected");
+                      $('#SupplierAddressId option[value=' + data.SupplierAddressId + ']').attr("selected", "selected");
+                      $('#ProjectId option[value=' + data.ProjectId + ']').attr("selected", "selected");
+                      $('#SiteId option[value=' + data.SiteId + ']').attr("selected", "selected");
+                      $('#SiteAddressId option[value=' + data.SiteAddressId + ']').attr("selected", "selected");
+
                       //$("#categoryId").append("<option selected value='" + data.ID + "'>" + data.category_Name + "</option>");
                       //$("#SupplierId").append("<option selected value='" + data.ID + "'>" + data.supplier_name + "</option>");
                       //$("#SupplierAddressId").append("<option selected value='" + data.ID + "'>" + data.supplier_Address + "</option>");
@@ -495,7 +501,62 @@
                   }
               });
     };
+
      $('#btnSave').click(function ()
+    {
+        debugger
+        let list = {};
+         list.productId = $('#Product').val();
+         list.productText = $('#Product option:selected').text();
+         list.purchaseRequestId = $('#RequestID').val();
+         list.Description = $('#Description').val();
+         list.Tax = $('#TaxId').val();
+         list.Rate = $('#Rate').val();
+         list.Quantity = $('#Quantity').val();
+         list.Amount = $('#Amount').val();
+         list.discountPercent = $('#discountPercent').val();
+         list.discountAmount = $('#discountAmount').val();
+         list.TaxAmount = $('#TaxAmt').val();;
+         list.TotalAmount = $('#TotalAmt').val();;
+         list.ProductNo = $('#ProductNo').val();;
+       
+        list.sNo = sNo;
+
+        $.ajax({
+                url: '@Url.Content("~/PurchaseOrders/savePurchages")',
+                type: 'POST',
+                  dataType: 'json',
+            data: { purchaseOrder: list },
+                success: function (result)
+                {
+                    debugger
+                    console.log(result);
+                    list.Id = result;
+                    lstItems.push(list);
+                    console.log(lstItems);
+                    bindItems();
+                    $('#productId').val(0);
+                    $('#Description').val('');
+                    $('#Rate').val('');
+                    $('#Quantity').val('');
+                    $('#TaxId').val('');
+                    $('#Amount').val('');
+                    $('#TaxAmt').val('');
+                    $('#TotalAmt').val('');
+                    $('#discountAmount').val('');
+                    $('#discountPercent').val('');
+                    $('#gstAmount').val('');
+                    $('#myModal').modal('show');
+            },
+
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        //$('#myModal').modal('show');
+    });
+
+    @*$('#btnSave').click(function ()
     {
         debugger
         let list = {};
@@ -538,13 +599,17 @@
                     $('#discountAmount').val('');
                     $('#discountPercent').val('');
                     $('#gstAmount').val('');
+                    $('#myModal').modal('show');
             },
 
             error: function (err) {
                 console.log(err);
             }
         });
-    });
+    });*@
+
+
+
     function bindItems() {
         $('#tblpurchaserequest').empty();
         if (lstItems.length > 0) {

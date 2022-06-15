@@ -1,0 +1,132 @@
+﻿@model IEnumerable<issDomain.Models.ExtraWork>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    .addNew {
+        padding: 5px;
+        background-color: #FF5F04;
+        color: white;
+        float: right;
+        margin: 10px;
+        border-radius: 3px;
+        text-decoration: none;
+    }
+
+        .addNew:hover {
+            text-decoration: none;
+        }
+</style>
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Extra Work - Index Page
+    </div>
+    <div class="panel panel-body">
+        @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+        <table class="table" id="AGMaster">
+            <thead>
+                <tr>
+                    <th>
+                        <label> Date</label>
+                    </th>
+                    <th>
+                        <label>Project Name</label>
+                    </th>
+                    <th>
+                        <label>Site No</label>
+                    </th>
+                    <th>
+                        <label>Site Name</label>
+                    </th>
+                    <th>
+                        <label>Site Address</label>
+                    </th>
+                    <th>
+                        <label>Net Amount</label>
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        @if (@item.date != null)
+                        {
+                            <td>
+                                @item.date.Value.ToShortDateString()
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SiteDetails.ProjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SiteDetails.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SiteDetails.SiteName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SiteDetails.SiteAddress)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.totalAmt)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#AGMaster').DataTable({
+            dom: 'Bfrtip',
+
+            buttons: [
+                'copy',
+                {
+                    extend: 'excel',
+                    title: function () {
+                        var printTitle = 'New Title';
+                        return printTitle
+                    }
+                   // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                },
+                {
+                    extend: 'pdf',
+                  //  messageBottom: null
+                },
+                {
+                    extend: 'print',
+                }
+
+            ]
+        });
+
+    });
+</script>
