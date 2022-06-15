@@ -85,6 +85,8 @@
     <Compile Include="Models\DesignationMaster.cs" />
     <Compile Include="Models\EmployeeMaster.cs" />
     <Compile Include="Models\Errorlog.cs" />
+    <Compile Include="Models\ExtraWork.cs" />
+    <Compile Include="Models\ExtraWorkTable.cs" />
     <Compile Include="Models\Issues.cs" />
     <Compile Include="Models\IssueTable.cs" />
     <Compile Include="Models\LoginView.cs" />
@@ -97,6 +99,8 @@
     <Compile Include="Models\PurchaseOrderTable.cs" />
     <Compile Include="Models\PurchaseRequest.cs" />
     <Compile Include="Models\PurchaseRequestTable.cs" />
+    <Compile Include="Models\RateWork.cs" />
+    <Compile Include="Models\RateWorkTable.cs" />
     <Compile Include="Models\receiptEntry.cs" />
     <Compile Include="Models\SiteDetails.cs" />
     <Compile Include="Models\tblStock.cs" />

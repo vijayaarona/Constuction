@@ -58,6 +58,11 @@
     <div class="panel panel-body" style="overflow:auto">
         <div class="row">
             <div class="form-group col-md-6">
+                <label>Order ID</label>
+                @Html.DropDownList("OrderId", null, htmlAttributes: new { @class = "js-states form-control", @id = "purchaseRequestId" })
+                @Html.ValidationMessageFor(model => model.OrderId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
                 <label>Purchase Entry Date</label>
                 @Html.TextBoxFor(m => m.purchaseDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                 @*@Html.TextBoxFor(model => model.RequestDate, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -355,6 +360,9 @@
         $('#btnSave').text("Update");
 
     }
+
+
+
     function SupplierId(supNameId)
     {
               $.ajax({
@@ -469,6 +477,39 @@
                   }
               });
     };
+
+    function purchaseReqOrders(OrderId)
+    {
+        debugger
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/PurchaseEntries/purchaseReqOrders")',
+            dataType: 'json',
+                  data: { purEntry: OrderId },
+                  success: function (result) {
+                      debugger
+                      console.log(result)
+                      var data = result.res;                 
+                      $('#categoryId option[value=' + data.ID + ']').attr("selected", "selected");
+                      $('#SupplierId option[value=' + data.SupplierId + ']').attr("selected", "selected");
+                      $('#SupplierAddressId option[value=' + data.SupplierAddressId + ']').attr("selected", "selected");
+                      $('#ProjectId option[value=' + data.ProjectId + ']').attr("selected", "selected");
+                      $('#SiteId option[value=' + data.SiteId + ']').attr("selected", "selected");
+                      $('#SiteAddressId option[value=' + data.SiteAddressId + ']').attr("selected", "selected");
+                      
+                      $("#mobileno").val(data.mobileno);
+
+
+                      console.log(result.req);
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+
+
      $('#btnSave').click(function ()
     {
         debugger
@@ -512,6 +553,7 @@
                     $('#discountAmount').val('');
                     $('#discountPercent').val('');
                     $('#gstAmount').val('');
+                    $('#myModal').modal('show');
             },
 
             error: function (err) {

@@ -150,6 +150,7 @@
     <Compile Include="Controllers\CompanyDetailsController.cs" />
     <Compile Include="Controllers\DesignationMastersController.cs" />
     <Compile Include="Controllers\EmployeeMastersController.cs" />
+    <Compile Include="Controllers\ExtraWorksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\MyModel.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Controllers\PurchaseEntriesController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\PurchaseRequestsController.cs" />
+    <Compile Include="Controllers\RateWorksController.cs" />
     <Compile Include="Controllers\receiptEntriesController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SiteDetailsController.cs" />
@@ -180,6 +182,14 @@
     <Compile Include="Migrations\202206130629156_conM3.cs" />
     <Compile Include="Migrations\202206130629156_conM3.designer.cs">
       <DependentUpon>202206130629156_conM3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206150944378_conM4.cs" />
+    <Compile Include="Migrations\202206150944378_conM4.designer.cs">
+      <DependentUpon>202206150944378_conM4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206151140537_conM5.cs" />
+    <Compile Include="Migrations\202206151140537_conM5.designer.cs">
+      <DependentUpon>202206151140537_conM5.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
@@ -313,6 +323,16 @@
     <Content Include="Views\Issues\Details.cshtml" />
     <Content Include="Views\Issues\Edit.cshtml" />
     <Content Include="Views\Issues\Index.cshtml" />
+    <Content Include="Views\RateWorks\Create.cshtml" />
+    <Content Include="Views\RateWorks\Delete.cshtml" />
+    <Content Include="Views\RateWorks\Details.cshtml" />
+    <Content Include="Views\RateWorks\Edit.cshtml" />
+    <Content Include="Views\RateWorks\Index.cshtml" />
+    <Content Include="Views\ExtraWorks\Create.cshtml" />
+    <Content Include="Views\ExtraWorks\Delete.cshtml" />
+    <Content Include="Views\ExtraWorks\Details.cshtml" />
+    <Content Include="Views\ExtraWorks\Edit.cshtml" />
+    <Content Include="Views\ExtraWorks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -356,6 +376,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206130629156_conM3.resx">
       <DependentUpon>202206130629156_conM3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206150944378_conM4.resx">
+      <DependentUpon>202206150944378_conM4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206151140537_conM5.resx">
+      <DependentUpon>202206151140537_conM5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

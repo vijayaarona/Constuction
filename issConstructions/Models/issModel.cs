@@ -37,5 +37,11 @@ namespace issConstructions.Models
         public System.Data.Entity.DbSet<Issues> issues { get; set; }
         public System.Data.Entity.DbSet<IssueTable> issueTables { get; set; }
         public System.Data.Entity.DbSet<tblStock> tblStocks { get; set; }
+        public System.Data.Entity.DbSet<RateWork> rateWorks { get; set; }
+        public System.Data.Entity.DbSet<RateWorkTable> rateWorkTables { get; set; }
+        public System.Data.Entity.DbSet<ExtraWork> extraWorks { get; set; }
+        public System.Data.Entity.DbSet<ExtraWorkTable> extraWorkTables { get; set; }
+       
+
     }
 }

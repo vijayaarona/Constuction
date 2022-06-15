@@ -117,6 +117,14 @@ namespace issConstructions.Controllers
             }
             else proNo = 1;
             ViewBag.ProductNo = proNo;
+            List<SelectListItem> order = new List<SelectListItem>();
+            order.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.PurchaseOrders.ToList())
+            {
+                if (item.OrderId != 0)
+                    order.Add(new SelectListItem { Text = item.OrderId.ToString(), Value = item.OrderId.ToString() });
+            }
+            ViewBag.OrderId = order;
             //ViewBag.type = new SelectList(db.siteDetails.Where(x => x. == "Cash in Hand" || x.AccountGroup.GroupName == "Bank Accounts").ToList(), "ID", "AccountLedger");
             return View();
         }
@@ -325,6 +333,24 @@ namespace issConstructions.Controllers
                 return Json("data", JsonRequestBehavior.AllowGet);
             }
             return Json("data", JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public JsonResult getListOfPurchaes(int purEntry)
+        {
+            try
+            {
+
+                List<PurchaseEntryTable> purchaseEntryTables = db.purchaseEntryTables.Where(x => x.purchaseRequestId == purEntry).ToList();
+                return Json(purchaseEntryTables, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json("data", JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }

@@ -348,6 +348,7 @@
         $('#TaxAmt').val(column[8]);
         $('#TotalAmt').val(column[9]);
         $('#btnSave').text("Update");
+      
 
     }
     function SupplierId(supNameId)
@@ -482,12 +483,14 @@
                     $('#discountAmount').val('');
                     $('#discountPercent').val('');
                     $('#gstAmount').val('');
+                    $('#myModal').modal('show');
             },
 
             error: function (err) {
                 console.log(err);
             }
         });
+        //$('#myModal').modal('show');
     });
     function bindItems() {
         $('#tblpurchaserequest').empty();

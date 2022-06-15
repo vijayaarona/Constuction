@@ -333,5 +333,21 @@ namespace issConstructions.Controllers
             }
             return Json("data", JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult getListOfPurchaes(int invoice)
+        {
+            try
+            {
+
+                List<PurchaseRequestTable> purchaseRequestTables = db.purchaseRequestTables.Where(x => x.purchaseRequestId == invoice).ToList();
+                return Json(purchaseRequestTables, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json("data", JsonRequestBehavior.AllowGet);
+            }
+
+        }
     }
 }
