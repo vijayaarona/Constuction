@@ -178,13 +178,19 @@ namespace issConstructions.Controllers
             {
 
 
-                int maxid = db.extraWorks.Max(x => x.Id);
-                if ( maxid == 0)
+                int maxValue = 0;
+                var isnull = db.purchaseRequest.Where(x => x.ID != null).ToList();
+                if (isnull.Count > 0)
                 {
-                    maxid = 1;
+                    maxValue = 1;
                 }
-                else maxid += 1;
-                extraWorkTable.extraWorkId = maxid;
+                else
+                {
+                    maxValue = db.purchaseRequest.Max(x => x.ID);
+                    maxValue += 1;
+
+                }   
+                extraWorkTable.extraWorkId = maxValue;
                 extraWorkTable.CreatedDate = DateTime.UtcNow;
                 extraWorkTable.UpdatedDate = DateTime.UtcNow;
                 extraWorkTable.UpdateBy = Display.Name;
@@ -210,6 +216,23 @@ namespace issConstructions.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [HttpPost]
+        public JsonResult getListOfExtraWork(int ID)
+        {
+            try
+            {
+
+                List<ExtraWorkTable>  extraWorkTables= db.extraWorkTables.Where(x => x.extraWorkId == ID).ToList();
+                return Json(extraWorkTables, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json("data", JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }

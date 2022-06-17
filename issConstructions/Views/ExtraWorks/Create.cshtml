@@ -105,7 +105,7 @@
                             <th>Quantity</th>
                             <th>Unit Price</th>
                             <th>Amount</th>
-                            <th>UMO</th>
+                            <th>UOM</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -159,9 +159,8 @@
                                                 <input type="text" id="amount" name="amount" size="50" />
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label>UMO</label><br />
+                                                <label>UOM</label><br />
                                                 <select id="umoId" name="" style="width:352px; height:27px">
-                                                    @*<option value="0">Please Select</option>*@
                                                     @foreach (var item in @ViewBag.UmoId)
                                                     {
                                                         <option value="@item.Value">@item.Text</option>
