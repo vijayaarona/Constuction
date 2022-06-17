@@ -105,7 +105,7 @@
                             <th>Quantity</th>
                             <th>Unit Price</th>
                             <th>Amount</th>
-                            <th>UMO</th>
+                            <th>UOM</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -159,7 +159,7 @@
                                                 <input type="text" id="amount" name="amount" size="50" />
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label>UMO</label><br />
+                                                <label>UOM</label><br />
                                                 <select id="umoId" name="" style="width:352px; height:27px">
                                                     @*<option value="0">Please Select</option>*@
                                                    @foreach (var item in @ViewBag.UmoId)
@@ -312,13 +312,13 @@
         let list = {};
 
          list.Description = $('#description').val();
-         list.Length = $('#length').val();
+         list.length = $('#length').val();
          list.Breath = $('#breath').val();
-         list.Depth = $('#depth').val();
+         list.Deapth = $('#depth').val();
          list.Quantity = $('#Quantity').val();
          list.Nos = $('#Nos').val();
-         list.UnitPrice = $('#unitPrice').val();
-         list.Amount = $('#amount').val();;
+         list.unitPrice = $('#unitPrice').val();
+         list.amount = $('#amount').val();;
          list.UMOId = $('#umoId').val();
          list.UMOText = $('#umoId option:selected').text();
        
@@ -367,13 +367,13 @@
                 var row = `<tr id=rm${sNo}>`
                     + `<td>${sNo}</td>`
                     + `<td>${lstItems[i].Description}</td>`
-                    + `<td>${lstItems[i].Length}</td>`
+                    + `<td>${lstItems[i].length}</td>`
                     + `<td>${lstItems[i].Breath}</td>`
-                    + `<td>${lstItems[i].Depth}</td>`
+                    + `<td>${lstItems[i].Deapth}</td>`
                     + `<td>${lstItems[i].Quantity}</td>`
                     + `<td>${lstItems[i].Nos}</td>`
-                    + `<td>${lstItems[i].UnitPrice}</td>`
-                    + `<td>${lstItems[i].Amount}</td>`
+                    + `<td>${lstItems[i].unitPrice}</td>`
+                    + `<td>${lstItems[i].amount}</td>`
                     + `<td>${lstItems[i].UMOText}</td>`
                     + `<td>
 
@@ -419,6 +419,7 @@
             success: function (result)
             {
                 console.log(result);
+                debugger
                 if (result != null)
                 {
                     lstItems = result;
@@ -431,13 +432,13 @@
                             var row = `<tr id=rm${sNo}>`
                                 + `<td>${sNo}</td>`
                                 + `<td>${lstItems[i].Description}</td>`
-                                + `<td>${lstItems[i].Length}</td>`
+                                + `<td>${lstItems[i].length}</td>`
                                 + `<td>${lstItems[i].Breath}</td>`
-                                + `<td>${lstItems[i].Depth}</td>`
+                                + `<td>${lstItems[i].Deapth}</td>`
                                 + `<td>${lstItems[i].Quantity}</td>`
                                 + `<td>${lstItems[i].Nos}</td>`
-                                + `<td>${lstItems[i].UnitPrice}</td>`
-                                + `<td>${lstItems[i].Amount}</td>`
+                                + `<td>${lstItems[i].unitPrice}</td>`
+                                + `<td>${lstItems[i].amount}</td>`
                                 + `<td>${lstItems[i].UMOText}</td>`
                                 + `<td>
 

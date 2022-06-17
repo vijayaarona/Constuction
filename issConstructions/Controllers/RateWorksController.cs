@@ -176,14 +176,19 @@ namespace issConstructions.Controllers
             try
             {
 
-                RateWork rateWork = new RateWork();
-                int maxId = db.rateWorks.Max(x => x.Id);
-                if ( maxId == 0)
+                int maxValue = 0;
+                var isnull = db.purchaseRequest.Where(x => x.ID != null).ToList();
+                if (isnull.Count == 0)
                 {
-                    maxId = 1;
+                    maxValue = 1;
                 }
-                else maxId += 1;
-                rateWorkTable.rateId = maxId;
+                else
+                {
+                    maxValue = db.purchaseRequest.Max(x => x.ID);
+                    maxValue += 1;
+
+                }
+                rateWorkTable.rateId = maxValue;
                 rateWorkTable.CreatedDate = DateTime.UtcNow;
                 rateWorkTable.UpdatedDate = DateTime.UtcNow;
                 rateWorkTable.UpdateBy = Display.Name;
@@ -192,6 +197,7 @@ namespace issConstructions.Controllers
                 db.SaveChanges();
                 var id = db.rateWorkTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
                 return Json(id.Id, JsonRequestBehavior.AllowGet);
+
             }
             catch (Exception ex)
             {
@@ -239,6 +245,23 @@ namespace issConstructions.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [HttpPost]
+        public JsonResult getListOfRateWork(int ID)
+        {
+            try
+            {
+
+                List<RateWorkTable> rateWorkTables = db.rateWorkTables.Where(x => x.rateId == ID).ToList();
+                return Json(rateWorkTables, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json("data", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
     }

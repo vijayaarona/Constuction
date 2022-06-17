@@ -1,4 +1,4 @@
-﻿@model IEnumerable<issDomain.Models.DesignationMaster>
+﻿@model IEnumerable<issDomain.Models.Godown>
 
 @{
     ViewBag.Title = "Index";
@@ -31,7 +31,7 @@
 </style>
 <div class="panel-group">
     <div class="panel panel-heading header">
-        Designation - Index Page
+        Godown - Index Page
     </div>
     <div class="panel panel-body" style="overflow:auto">
         @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
@@ -39,22 +39,17 @@
             <thead>
                 <tr>
                     <th>
-                        <label>Designation</label>
+                        <label>Godown Name</label>
                     </th>
                     <th>
-                        <label>Remarks</label>
+                        <label>Address</label>
                     </th>
 
                     <th>
-                       <label>Created Date</label>
+                        <label>Authority Person</label>
                     </th>
-                    <th>
-                        <label>Updated By</label>
-                    </th>
-                    <th>
-                        <label>Updated Date</label>
-                    </th>
-                    <th></th>
+                  
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,25 +57,20 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DesignationName)
+                            @Html.DisplayFor(modelItem => item.godownName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Remarks)
+                            @Html.DisplayFor(modelItem => item.address)
                         </td>
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                            @Html.DisplayFor(modelItem => item.authPerson)
                         </td>
+                        
                         <td>
-                            @Html.DisplayFor(modelItem => item.UpdateBy)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UpdatedDate)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                         </td>
                     </tr>
 
@@ -119,3 +109,5 @@
 
     });
 </script>
+
+

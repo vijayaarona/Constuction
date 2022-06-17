@@ -87,6 +87,7 @@
     <Compile Include="Models\Errorlog.cs" />
     <Compile Include="Models\ExtraWork.cs" />
     <Compile Include="Models\ExtraWorkTable.cs" />
+    <Compile Include="Models\Godown.cs" />
     <Compile Include="Models\Issues.cs" />
     <Compile Include="Models\IssueTable.cs" />
     <Compile Include="Models\LoginView.cs" />
