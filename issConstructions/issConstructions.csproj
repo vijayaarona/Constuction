@@ -196,6 +196,10 @@
     <Compile Include="Migrations\202206170458263_conM6.designer.cs">
       <DependentUpon>202206170458263_conM6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206170940199_conM7.cs" />
+    <Compile Include="Migrations\202206170940199_conM7.designer.cs">
+      <DependentUpon>202206170940199_conM7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -395,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206170458263_conM6.resx">
       <DependentUpon>202206170458263_conM6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206170940199_conM7.resx">
+      <DependentUpon>202206170940199_conM7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

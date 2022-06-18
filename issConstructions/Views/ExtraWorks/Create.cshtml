@@ -384,5 +384,71 @@
         }
     }
     
+     function removeTR(item)
+    {
+        debugger
+       
+        $.ajax({
+            url: '@Url.Content("~/ExtraWorks/removeExtraWorks")',
+            type: 'POST',
+            dataType: 'json',
+            data: { Id: item },
+            success: function (result)
+            {
+                console.log(result);
+                debugger
+                if (result != null)
+                {
+                    lstItems = result;
+                    $('#tblExtraWork').empty();
+                    if (lstItems.length > 0) {
+                        debugger
+                        let sNo = 1;
+                       
+                        for (var i = 0; i < lstItems.length; i++) {
+                            var row = `<tr id=rm${sNo}>`
+                                + `<td>${sNo}</td>`
+                                + `<td>${lstItems[i].Description}</td>`
+                                + `<td>${lstItems[i].length}</td>`
+                                + `<td>${lstItems[i].Breath}</td>`
+                                + `<td>${lstItems[i].Deapth}</td>`
+                                + `<td>${lstItems[i].Quantity}</td>`
+                                + `<td>${lstItems[i].Nos}</td>`
+                                + `<td>${lstItems[i].unitPrice}</td>`
+                                + `<td>${lstItems[i].amount}</td>`
+                                + `<td>${lstItems[i].UMOText}</td>`
+                                + `<td>
 
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
+                        </td>`
+                                + "</tr>";
+
+                            let amt = 0;
+
+
+
+                            lstItems[i].Amount != null ? amt = parseFloat(lstItems[i].Amount) : amt = 0;
+                            totalAmount += amt;
+
+                            $('#tblExtraWork').append(row);
+                            sNo++;
+                        }
+                        console.log(totalAmount);
+                        $('#totalAmount').val(totalAmount.toFixed());
+
+                        //$("#deduction").blur(function () {
+                        //    debugger
+
+                        //    var deduction = $('#deduction').val();
+                        //    var totalAmt = $('#totalAmount').val();
+                        //    var netAmount = parseFloat(totalAmt - deduction);
+                        //    $('#netAmount').val(netAmount.toFixed());
+                        //});
+                            
+                   }
+                }
+            }
+        });
+    }
+    
 </script>

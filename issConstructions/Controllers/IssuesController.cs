@@ -215,16 +215,27 @@ namespace issConstructions.Controllers
         {
             try
             {
-              
+                int maxValue = 0;
+                var isnull = db.issueTables.Where(x => x.ID != null).ToList();
+                if (isnull.Count == 0)
+                {
+                    maxValue = 1;
+                }
+                else
+                {
+                    maxValue = db.issueTables.Max(x => x.issueId);
+                    maxValue += 1;
 
+                }
+                issueTable.issueId = maxValue;
                 issueTable.CreatedDate = DateTime.UtcNow;
                 issueTable.UpdatedDate = DateTime.UtcNow;
                 issueTable.UpdateBy = Display.Name;
-
                 db.issueTables.Add(issueTable);
                 db.SaveChanges();
                 var id = db.issueTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
                 return Json(id.ID, JsonRequestBehavior.AllowGet);
+                
             }
             catch (Exception ex)
             {
@@ -238,24 +249,21 @@ namespace issConstructions.Controllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(Id))
-                {
-                    int pId = int.Parse(Id);
-                    var p = db.purchaseEntryTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
-                    int inNo = p.productId;
-                    if (p != null)
-                    {
 
-                        db.purchaseEntryTables.Remove(p);
-                        db.SaveChanges();
-                        var resp = db.purchaseEntryTables.Where(x => x.productId == inNo && x.isDeleted == false).ToList();
-                        return Json(resp, JsonRequestBehavior.AllowGet);
-                    }
-                    else
+                if (!string.IsNullOrEmpty(Id) && Id != "undefined")
+                {
+                    int maxId = db.issues.Max(x => x.ID);
+                    if (maxId != null && maxId == 0)
                     {
-                        var resp = db.purchaseEntryTables.Where(x => x.purchaseRequestId == inNo).ToList();
-                        return Json(resp, JsonRequestBehavior.AllowGet);
+                        maxId = 1;
                     }
+                    else maxId += 1;
+                    int pId = int.Parse(Id);
+                    var p = db.issueTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
+                    db.issueTables.Remove(p);
+                    db.SaveChanges();
+                    var resp = db.issueTables.Where(x => x.issueId == maxId && x.isDeleted == false).ToList();
+                    return Json(resp, JsonRequestBehavior.AllowGet);
 
                 }
             }

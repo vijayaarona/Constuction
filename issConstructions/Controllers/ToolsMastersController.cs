@@ -12,7 +12,7 @@ using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
-    [CustomAuthorize(Roles = "Admin,Manager")]
+    //[CustomAuthorize(Roles = "Admin,Manager")]
     public class ToolsMastersController : Controller
     {
         private issDB db = new issDB();
@@ -39,6 +39,7 @@ namespace issConstructions.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName");
+            ViewBag.godownId = new SelectList(db.godowns, "Id", "godownName");
             ViewBag.ToolsName = "";
             return View();
         }
@@ -47,7 +48,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ToolsName,UOM,CategoryId,openingStock,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ToolsMaster toolsMaster)
+        public ActionResult Create([Bind(Include = "ID,ToolsName,UOM,CategoryId,godownNameid,openingStock,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ToolsMaster toolsMaster)
         {
             if (ModelState.IsValid)
             {
@@ -66,6 +67,7 @@ namespace issConstructions.Controllers
                 }
             }
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", toolsMaster.CategoryId);
+            ViewBag.godownId = new SelectList(db.godowns, "Id", "godownName", toolsMaster.godownNameid);
             return View(toolsMaster);
         }
         // GET: ToolsMasters/Edit/5
@@ -81,6 +83,7 @@ namespace issConstructions.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", toolsMaster.CategoryId);
+            ViewBag.godownId = new SelectList(db.godowns, "Id", "godownName", toolsMaster.godownNameid);
             return View(toolsMaster);
         }
         // POST: ToolsMasters/Edit/5
@@ -88,7 +91,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ToolsName,UOM,CategoryId,openingStock,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ToolsMaster toolsMaster)
+        public ActionResult Edit([Bind(Include = "ID,ToolsName,UOM,CategoryId,openingStock,godownNameid,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ToolsMaster toolsMaster)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +102,7 @@ namespace issConstructions.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", toolsMaster.CategoryId);
+            ViewBag.godownId = new SelectList(db.godowns, "Id", "godownName", toolsMaster.godownNameid);
             return View(toolsMaster);
         }
         // GET: ToolsMasters/Delete/5

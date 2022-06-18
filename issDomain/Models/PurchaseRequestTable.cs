@@ -8,6 +8,8 @@ namespace issDomain.Models
 {
     public class PurchaseRequestTable
     {
+        public object rateId;
+
         public int ID { get; set; }
         public int purchaseRequestId { get; set; }
         public int productId { get; set; }

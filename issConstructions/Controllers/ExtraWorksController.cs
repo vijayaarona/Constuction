@@ -177,28 +177,28 @@ namespace issConstructions.Controllers
             try
             {
 
-
                 int maxValue = 0;
-                var isnull = db.purchaseRequest.Where(x => x.ID != null).ToList();
-                if (isnull.Count > 0)
+                var isnull = db.extraWorkTables.Where(x => x.Id != null).ToList();
+                if (isnull.Count == 0)
                 {
                     maxValue = 1;
                 }
                 else
                 {
-                    maxValue = db.purchaseRequest.Max(x => x.ID);
+                    maxValue = db.extraWorkTables.Max(x => x.extraWorkId);
                     maxValue += 1;
 
-                }   
+                }
                 extraWorkTable.extraWorkId = maxValue;
                 extraWorkTable.CreatedDate = DateTime.UtcNow;
                 extraWorkTable.UpdatedDate = DateTime.UtcNow;
                 extraWorkTable.UpdateBy = Display.Name;
-
                 db.extraWorkTables.Add(extraWorkTable);
                 db.SaveChanges();
-                var id = db.rateWorkTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
-                return Json(id.Id, JsonRequestBehavior.AllowGet);
+                var id = db.purchaseRequestTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+                return Json(id.ID, JsonRequestBehavior.AllowGet);
+
+               
             }
             catch (Exception ex)
             {
@@ -234,5 +234,37 @@ namespace issConstructions.Controllers
             }
 
         }
+
+        [HttpPost]
+        public JsonResult removeExtraWorks(string Id)
+        {
+            try
+            {
+
+                if (!string.IsNullOrEmpty(Id) && Id != "undefined")
+                {
+                    int maxId = db.extraWorks.Max(x => x.Id);
+                    if (maxId != null && maxId == 0)
+                    {
+                        maxId = 1;
+                    }
+                    else maxId += 1;
+                    int pId = int.Parse(Id);
+                    var p = db.extraWorkTables.Where(x => x.Id == pId && x.isDeleted == false).FirstOrDefault();
+                    db.extraWorkTables.Remove(p);
+                    db.SaveChanges();
+                    var resp = db.extraWorkTables.Where(x => x.extraWorkId == maxId && x.isDeleted == false).ToList();
+                    return Json(resp, JsonRequestBehavior.AllowGet);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return Json("data", JsonRequestBehavior.AllowGet);
+            }
+            return Json("data", JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

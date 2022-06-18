@@ -175,16 +175,15 @@ namespace issConstructions.Controllers
         {
             try
             {
-
                 int maxValue = 0;
-                var isnull = db.purchaseRequest.Where(x => x.ID != null).ToList();
+                var isnull = db.rateWorkTables.Where(x => x.Id != null).ToList();
                 if (isnull.Count == 0)
                 {
                     maxValue = 1;
                 }
                 else
                 {
-                    maxValue = db.purchaseRequest.Max(x => x.ID);
+                    maxValue = db.rateWorkTables.Max(x => x.rateId);
                     maxValue += 1;
 
                 }
@@ -192,12 +191,10 @@ namespace issConstructions.Controllers
                 rateWorkTable.CreatedDate = DateTime.UtcNow;
                 rateWorkTable.UpdatedDate = DateTime.UtcNow;
                 rateWorkTable.UpdateBy = Display.Name;
-
                 db.rateWorkTables.Add(rateWorkTable);
                 db.SaveChanges();
-                var id = db.rateWorkTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
-                return Json(id.Id, JsonRequestBehavior.AllowGet);
-
+                var id = db.purchaseRequestTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+                return Json(id.ID, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -216,7 +213,7 @@ namespace issConstructions.Controllers
                 if (!string.IsNullOrEmpty(Id) && Id != "undefined")
                 {
                     int maxId = db.rateWorks.Max(x => x.Id);
-                    if (maxId == 0)
+                    if (maxId != null && maxId == 0)
                     {
                         maxId = 1;
                     }
