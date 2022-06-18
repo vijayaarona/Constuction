@@ -1,4 +1,5 @@
-﻿using issConstructions.Models;
+﻿using issConstructions.Custom;
+using issConstructions.Models;
 using issDomain.Models;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,6 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using issConstructions.Custom;
 using System.Web.Mvc;
 
 namespace issConstructions.Controllers
@@ -280,14 +280,14 @@ namespace issConstructions.Controllers
 
                 //PurchaseRequest purchaseRequest = new PurchaseRequest();
                 int maxValue = 0;
-                var isnull = db.purchaseRequest.Where(x => x.ID != null).ToList();
-            if (isnull.Count > 0)
+                var isnull = db.purchaseRequestTables.Where(x => x.ID != null).ToList();
+                if (isnull.Count == 0)
                 {
                     maxValue = 1;
                 }
-              else
+                else
                 {
-                     maxValue = db.purchaseRequest.Max(x => x.ID);
+                    maxValue = db.purchaseRequestTables.Max(x => x.purchaseRequestId);
                     maxValue += 1;
 
                 }
@@ -316,7 +316,7 @@ namespace issConstructions.Controllers
             try
             {
 
-                if (!string.IsNullOrEmpty(Id)&&Id!= "undefined")
+                if (!string.IsNullOrEmpty(Id) && Id != "undefined")
                 {
                     int maxId = db.purchaseRequest.Max(x => x.ID);
                     if (maxId != null && maxId == 0)
