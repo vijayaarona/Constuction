@@ -288,14 +288,15 @@
                   data: { category: categoryName },
                   success: function (result) {
                       var data = result;
-                      console.log(data);
-                      alert(result);
-                      debugger
                       $("#Product").empty();
+                      var op = "";
+                      op = "<option>---Please select ---</option>";
                       for (var i = 0; i < data.length; i++)
                       {
-                          $("#Product").val(data[i].ProductName)
+                          op += "<option value=" + data[i].ProductName + ">" + data[i].ProductName + "</option>";
                       }
+                      $("#Product").append(op);
+
                   },
                   error: function (err)
                   {

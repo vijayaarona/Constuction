@@ -39,7 +39,7 @@ namespace issConstructions.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName");
-            ViewBag.godownId = new SelectList(db.godowns, "Id", "godownName");
+            ViewBag.godownNameid = new SelectList(db.godowns, "Id", "godownName");
             ViewBag.ToolsName = "";
             return View();
         }
@@ -56,7 +56,7 @@ namespace issConstructions.Controllers
                 if (duplicate == null)
                 {
                     toolsMaster.CreatedDate = DateTime.UtcNow;
-                    toolsMaster.UpdatedDate = DateTime.UtcNow;
+                toolsMaster.UpdatedDate = DateTime.UtcNow;
                     db.toolsMasters.Add(toolsMaster);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -67,7 +67,7 @@ namespace issConstructions.Controllers
                 }
             }
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", toolsMaster.CategoryId);
-            ViewBag.godownId = new SelectList(db.godowns, "Id", "godownName", toolsMaster.godownNameid);
+            ViewBag.godownNameid = new SelectList(db.godowns, "Id", "godownName", toolsMaster.godownNameid);
             return View(toolsMaster);
         }
         // GET: ToolsMasters/Edit/5

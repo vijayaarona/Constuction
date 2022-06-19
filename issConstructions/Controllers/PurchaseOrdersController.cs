@@ -115,14 +115,13 @@ namespace issConstructions.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,RequestID,OrderId,ProductNo,OrderDate,CategoryId,SupplierId,SupplierAddressId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseOrder purchaseOrder)
         {
-            if (ModelState.IsValid)
-            {
+            
                 purchaseOrder.CreatedDate = DateTime.UtcNow;
                 purchaseOrder.UpdatedDate = DateTime.UtcNow;
                 db.PurchaseOrders.Add(purchaseOrder);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
+
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseOrder.CategoryId);
             ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseOrder.SupplierId);
             ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseOrder.SupplierAddressId);
