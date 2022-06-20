@@ -514,6 +514,8 @@
                     + `<td>${lstItems[i].TotalAmount}</td>`
                     + `<td>
 
+                        <button type="button" class="btn btn-default" onclick="Edit('${lstItems[i].Id}')">Edit</button>
+                       
                         <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
                         </td>`
                     + "</tr>";
@@ -544,7 +546,23 @@
           
         }
     }
-
+    function Edit(item) {
+        console.log('Edit', item);
+        var edit = lstItems.find(x => x.Id == item);
+        console.log(edit);
+        $('#productId').val(0);
+        $('#Description').val(edit.Description);
+        $('#Rate').val(edit.Rate);
+        $('#Quantity').val(edit.Quantity);
+        $('#TaxId').val(edit.Tax);
+        $('#Amount').val(edit.Amount);
+        $('#TaxAmt').val(edit.TaxAmount);
+        $('#TotalAmt').val(edit.TotalAmount);
+        $('#discountAmount').val(edit.discountAmount);
+        $('#discountPercent').val(edit.discountPercent);
+        //$('#gstAmount').val('');
+        $('#myModal').modal('show');
+    }
 
     function removeTR(item)
     {

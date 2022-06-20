@@ -149,9 +149,6 @@ namespace issConstructions.Controllers
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseRequest.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseRequest.SiteAddressId);
 
-            PurchaseRequestTable purchaseRequestTable = new PurchaseRequestTable();
-            purchaseRequestTable.purchaseRequestId = purchaseRequest.RequestID;
-            db.purchaseRequestTables.Add(purchaseRequestTable);
             return View(purchaseRequest);
         }
         [HttpPost]
@@ -280,14 +277,14 @@ namespace issConstructions.Controllers
 
                 //PurchaseRequest purchaseRequest = new PurchaseRequest();
                 int maxValue = 0;
-                var isnull = db.purchaseRequestTables.Where(x => x.ID != null).ToList();
+                var isnull = db.purchaseRequest.Where(x => x.ID != null).ToList();
                 if (isnull.Count == 0)
                 {
                     maxValue = 1;
                 }
                 else
                 {
-                    maxValue = db.purchaseRequestTables.Max(x => x.purchaseRequestId);
+                    maxValue = db.purchaseRequest.Max(x => x.ID);
                     maxValue += 1;
 
                 }
