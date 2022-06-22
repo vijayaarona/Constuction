@@ -83,7 +83,7 @@ namespace issConstructions.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", toolsMaster.CategoryId);
-            ViewBag.godownId = new SelectList(db.godowns, "Id", "godownName", toolsMaster.godownNameid);
+            ViewBag.godownNameid = new SelectList(db.godowns, "Id", "godownName", toolsMaster.godownNameid);
             return View(toolsMaster);
         }
         // POST: ToolsMasters/Edit/5
@@ -102,7 +102,7 @@ namespace issConstructions.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", toolsMaster.CategoryId);
-            ViewBag.godownId = new SelectList(db.godowns, "Id", "godownName", toolsMaster.godownNameid);
+            ViewBag.godownNameid = new SelectList(db.godowns, "Id", "godownName", toolsMaster.godownNameid);
             return View(toolsMaster);
         }
         // GET: ToolsMasters/Delete/5
