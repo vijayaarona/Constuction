@@ -7,13 +7,13 @@ namespace issConstructions.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class conM2 : IMigrationMetadata
+    public sealed partial class ConM1 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(conM2));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ConM1));
         
         string IMigrationMetadata.Id
         {
-            get { return "202206111028591_conM2"; }
+            get { return "202206220504011_ConM1"; }
         }
         
         string IMigrationMetadata.Source

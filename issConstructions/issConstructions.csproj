@@ -172,33 +172,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202206080355309_conM1.cs" />
-    <Compile Include="Migrations\202206080355309_conM1.designer.cs">
-      <DependentUpon>202206080355309_conM1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202206111028591_conM2.cs" />
-    <Compile Include="Migrations\202206111028591_conM2.designer.cs">
-      <DependentUpon>202206111028591_conM2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202206130629156_conM3.cs" />
-    <Compile Include="Migrations\202206130629156_conM3.designer.cs">
-      <DependentUpon>202206130629156_conM3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202206150944378_conM4.cs" />
-    <Compile Include="Migrations\202206150944378_conM4.designer.cs">
-      <DependentUpon>202206150944378_conM4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202206151140537_conM5.cs" />
-    <Compile Include="Migrations\202206151140537_conM5.designer.cs">
-      <DependentUpon>202206151140537_conM5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202206170458263_conM6.cs" />
-    <Compile Include="Migrations\202206170458263_conM6.designer.cs">
-      <DependentUpon>202206170458263_conM6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202206170940199_conM7.cs" />
-    <Compile Include="Migrations\202206170940199_conM7.designer.cs">
-      <DependentUpon>202206170940199_conM7.cs</DependentUpon>
+    <Compile Include="Migrations\202206220504011_ConM1.cs" />
+    <Compile Include="Migrations\202206220504011_ConM1.designer.cs">
+      <DependentUpon>202206220504011_ConM1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
@@ -382,26 +358,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202206080355309_conM1.resx">
-      <DependentUpon>202206080355309_conM1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202206111028591_conM2.resx">
-      <DependentUpon>202206111028591_conM2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202206130629156_conM3.resx">
-      <DependentUpon>202206130629156_conM3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202206150944378_conM4.resx">
-      <DependentUpon>202206150944378_conM4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202206151140537_conM5.resx">
-      <DependentUpon>202206151140537_conM5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202206170458263_conM6.resx">
-      <DependentUpon>202206170458263_conM6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202206170940199_conM7.resx">
-      <DependentUpon>202206170940199_conM7.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202206220504011_ConM1.resx">
+      <DependentUpon>202206220504011_ConM1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
