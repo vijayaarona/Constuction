@@ -1,7 +1,7 @@
 ﻿@model issDomain.Models.PurchaseRequest
 
 @{
-                ViewBag.Title = "Create";
+    ViewBag.Title = "Create";
 }
 
 <style>
@@ -51,7 +51,7 @@
     @Html.AntiForgeryToken()
     <div class="panel-group">
         <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
-            Purchase Request - Add Page
+            Purchase Request - Edit Page
         </div>
         <div class="panel panel-body" style="overflow:auto">
             <div class="row">
@@ -239,7 +239,7 @@
                     @*<input type="text" id="netAmt" name="netAmt" size="50" />*@
                 </div>
             </div>
-          
+
             <div class="form-group" style="float:right">
                 <input type="submit" value="Submit" class="btn btn-default" />
                 @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
@@ -257,7 +257,7 @@
     var ntAmt;
     $(document).ready(function ()
     {
-  
+
 
         $("#categoryId").change(function ()
         {
@@ -278,8 +278,8 @@
             var taxAmount = $(this).find('option:selected').val();
             TaxId(taxAmount);
         })
-       
-        
+
+
         $("#discountPercent").blur(function ()
         {
             debugger
@@ -287,14 +287,14 @@
             var Amt = parseFloat($('#Quantity').val() * productRate);
             $("#Amount").val(Amt.toFixed(2));
 
-            //Discount Calculation 
+            //Discount Calculation
             var productDisPer = parseFloat($('#discountPercent').val());
 
             var disAmt = parseFloat((productDisPer / 100) * Amt);
             $('#discountAmount').val(disAmt.toFixed(2));
 
             var productAmount = parseFloat(Amt - disAmt);
-           
+
             if ($('#discountPercent').val() != '')
             {
                 //Tax Calcualtion
@@ -324,18 +324,18 @@
     {
         $('body').removeClass("example-open");
     })
-   
+
     function editBTN(item) {
         debugger
         var tempTR = $('#rm' + item).children();
         console.log(tempTR);
-        
+
         var column = [9];
         for (var i = 0; i < tempTR.length; i++)
-        {  
+        {
            //console.log(tempTR[i].innerText);
-            column[i] = tempTR[i].innerText; 
-           //Array for store the value   
+            column[i] = tempTR[i].innerText;
+           //Array for store the value
         }
         $('#myModal').modal('show');
         $("#Product option:contains(" + column[1] + ")").prop('selected', 'selected');
@@ -348,7 +348,7 @@
         $('#TaxAmt').val(column[8]);
         $('#TotalAmt').val(column[9]);
         $('#btnSave').text("Update");
-      
+
 
     }
     function SupplierId(supNameId)
@@ -456,7 +456,7 @@
          list.TaxAmount = $('#TaxAmt').val();;
          list.TotalAmount = $('#TotalAmt').val();;
          list.ProductNo = $('#ProductNo').val();;
-       
+
         list.sNo = sNo;
 
         $.ajax({
@@ -519,7 +519,7 @@
                     + "</tr>";
 
                 let amount = 0;
-              
+
 
 
                 lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
@@ -541,7 +541,7 @@
                 var netAmount = parseFloat(grandTotal - calProPer);
                 $('#netAmt').val(netAmount.toFixed());
             });
-          
+
         }
     }
 
@@ -603,7 +603,7 @@
                             var netAmount = parseFloat(grandTotal - calProPer);
                             $('#netAmt').val(netAmount.toFixed());
                         });
-                            
+
                    }
                 }
             }

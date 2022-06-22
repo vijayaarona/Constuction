@@ -53,9 +53,7 @@
                     <th>
                         <label>Grand Total</label>
                     </th>
-                    <th>
-                        <label>Discount Amount</label>
-                    </th>
+                   
                     <th>
                         <label>Net Amount</label>
                     </th>
@@ -82,22 +80,18 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.SiteDetails.ProjectName)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteDetails.SiteName)
-                    </td>
+                   
                     <td>
                         @Html.DisplayFor(modelItem => item.grandTotal)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.dicountAmount)
-                    </td>
+                    
 
                     <td>
                         @Html.DisplayFor(modelItem => item.NetAmount)
                     </td>
                    
                     <td>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |*@
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                     </td>
