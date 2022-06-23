@@ -1,0 +1,78 @@
+﻿@model IEnumerable<issDomain.Models.ToolsTransfer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToolsId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthPerson)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FLocation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TLocation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ToolsId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.qty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthPerson)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>
