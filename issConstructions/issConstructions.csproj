@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -179,6 +180,10 @@
     <Compile Include="Migrations\202206230659291_ConM2.cs" />
     <Compile Include="Migrations\202206230659291_ConM2.Designer.cs">
       <DependentUpon>202206230659291_ConM2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206230903273_ConM3.cs" />
+    <Compile Include="Migrations\202206230903273_ConM3.Designer.cs">
+      <DependentUpon>202206230903273_ConM3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
@@ -372,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206230659291_ConM2.resx">
       <DependentUpon>202206230659291_ConM2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206230903273_ConM3.resx">
+      <DependentUpon>202206230903273_ConM3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

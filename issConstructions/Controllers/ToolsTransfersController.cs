@@ -18,6 +18,7 @@ namespace issConstructions.Controllers
         // GET: ToolsTransfers
         public ActionResult Index()
         {
+
             return View(db.toolsTransfers.ToList());
         }
 
@@ -39,15 +40,21 @@ namespace issConstructions.Controllers
         // GET: ToolsTransfers/Create
         public ActionResult Create()
         {
+
+            ViewBag.ToolsId = new SelectList(db.toolsMasters, "ID", "ToolsName");
+            
+            ViewBag.ToolsName = "";
             return View();
         }
+
+       
 
         // POST: ToolsTransfers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TDate,Type,FLocation,TLocation,ToolsId,qty,AuthPerson")] ToolsTransfer toolsTransfer)
+        public ActionResult Create([Bind(Include = "Id,TDate,Type,FLocation,TLocation,ToolsId,qty,AuthPerson,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ToolsTransfer toolsTransfer)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +86,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TDate,Type,FLocation,TLocation,ToolsId,qty,AuthPerson")] ToolsTransfer toolsTransfer)
+        public ActionResult Edit([Bind(Include = "Id,TDate,Type,FLocation,TLocation,ToolsId,qty,AuthPerson,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ToolsTransfer toolsTransfer)
         {
             if (ModelState.IsValid)
             {
@@ -124,5 +131,16 @@ namespace issConstructions.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //[HttpPost]
+        //public JsonResult FLocId(int From_Id)
+        //{
+        //    if (From_Id > 0)
+        //    {
+        //        //var resp = db.siteDetails.Where(x => x.ID == From_Id).ToList();
+        //        //return Json(resp, JsonRequestBehavior.AllowGet);
+        //    }
+        //    else return Json(" ", JsonRequestBehavior.AllowGet);
+        //}
     }
 }
