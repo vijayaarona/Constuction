@@ -1,0 +1,82 @@
+﻿@model issDomain.Models.ToolsTransfer
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>ToolsTransfer</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.FLocation)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.FLocation)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TLocation)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TLocation)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ToolsId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ToolsId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.qty)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.qty)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AuthPerson)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AuthPerson)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
