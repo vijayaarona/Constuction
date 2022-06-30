@@ -119,7 +119,7 @@
                         <th>Discount Amount</th>
                         <th>Tax Amount</th>
                         <th>Total Amount</th>
-                        <th>Actions</th>
+                        @*<th>Actions</th>*@
                     </tr>
                 </thead>
                 <tbody id="tblPurchaseRequest"></tbody>
@@ -190,20 +190,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        @*<div class="modal-footer">
                             <button type="button" class="btn btn-default" data-save="modal" id="btnSave" data-dismiss="modal">Update</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancel()">Close</button>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>
         </div>
         <p style="float:right;">
             @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })*@
-            @*<button type="button" class = "btn btn-default" id="btn-edit"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </button>*@
-            @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
-        </p>
-    </div>
+                    @*<button type="button" class = "btn btn-default" id="btn-edit"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </button>*@
+                    @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+                    </p>
+</div>
 </div>
 
 <script>
@@ -259,12 +259,12 @@
                                 row += `<td>${result[i].discountAmount}</td>`
                                 row += `<td>${result[i].TaxAmount}</td>`
                                 row += `<td>${result[i].TotalAmount}</td>`
-                                row += `<td>
+                               // row += `<td>
 
-                        <button type="button" class="btn btn-default" onclick="Edit('${result[i].ID}')">Edit</button>
+                      @*<button type="button" class="btn btn-default" onclick="Edit('${result[i].ID}')">Edit</button>
 
-                        <button type="button" class="btn btn-default" onclick="removeTR('${result[i].ID}')">Remove</button>
-                        </td>`
+                        <button type="button" class="btn btn-default" onclick="removeTR('${result[i].ID}')">Remove</button>*@
+                        //</td>`
                                 row +=     `</tr>`;
                                 sNo++;
                                 $('#tblPurchaseRequest').append(row);

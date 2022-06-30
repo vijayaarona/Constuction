@@ -346,12 +346,14 @@
     function purchaseReqOrders(requestId)
     {
         debugger
+       
               $.ajax({
             type: 'POST',
             url: '@Url.Content("~/PurchaseOrders/purchaseReqOrders")',
             dataType: 'json',
                   data: { purchaseRequestOrderId: requestId },
                   success: function (result) {
+                        $('#tblPurchaseRequest').empty();
                       debugger
                       console.log(result)
                       var data = result.res;
@@ -385,10 +387,11 @@
                       var row = "";
                       if (result.req.length > 0) {
                           for (var i = 0; i < result.req.length; i++) {
+
                               row += "<tr>"
                               row  += "<td>"+(i + 1)+"</td>"
                               row  += "<td>" + result.req[i].Product.ProductName +"</td>"
-                            
+
                             row  += "<td>" + result.req[i].Product.Tax +"</td>"
                             row  += "<td>" + result.req[i].Description +"</td>"
                             row  += "<td>" + result.req[i].Rate +"</td>"
@@ -397,8 +400,19 @@
                             row      += "<td>" + result.req[i].discountAmount +"</td>"
                             row  += "<td>" + result.req[i].TaxAmount +"</td>"
                             row  += "<td>" + result.req[i].TotalAmount +"</td>"
-                            row  += "<td></td>"
-                            row  += "</tr>";
+
+                              row += `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${result.req[i].ID}')">Remove</button>
+                        </td>`
+                              //row += "<td>"
+
+                              //    <button type="button" class="btn btn-default" onclick="Edit('${result.req[i].ID}')"></button>
+                              //+"</td >"
+
+                              row += "</tr>";
+                             // sNo++;
+                             // $('#tblPurchaseRequest').append(row);
                           }
                           $('#tblpurchaserequest').append(row);
                       }

@@ -266,6 +266,7 @@ namespace issConstructions.Controllers
         // GET: PurchaseRequests/Edit/5
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -281,31 +282,64 @@ namespace issConstructions.Controllers
             ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseRequest.ProjectId);
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseRequest.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseRequest.SiteAddressId);
+            
+           // return View(purchaseRequest);
+            //Product
+            var listItems = new SelectList(db.productMasters, "ID", "ProductName");
+            List<SelectListItem> Product = new List<SelectListItem>();
+            foreach (var item in db.productMasters.ToList())
+            {
+                Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
+            }
+            ViewBag.ProductId = Product;
+            //Tax
+            var listsItem = new SelectList(db.productMasters, "ID", "Tax");
+            List<SelectListItem> Tax = new List<SelectListItem>();
+            foreach (var items in db.productMasters.ToList())
+            {
+                Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
+            }
+            ViewBag.ProductTax = Tax;
+
+            //product No
+            int proNo = 0;
+            var productNo = db.purchaseRequest.Where(p => p.ProductNo != null).ToList();
+
+            if (productNo.Count > 0)
+            {
+                proNo = productNo.Max(x => x.ProductNo);
+            }
+            else proNo = 1;
+            ViewBag.ProductNo = proNo;
             return View(purchaseRequest);
         }
         // POST: PurchaseRequests/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,RequestID,RequestDate,ProductNo,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
-        {
-            if (ModelState.IsValid)
-            {
-                purchaseRequest.CreatedDate = DateTime.UtcNow;
-                purchaseRequest.UpdatedDate = DateTime.UtcNow;
-                db.Entry(purchaseRequest).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseRequest.CategoryId);
-            ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseRequest.SupplierId);
-            ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseRequest.SupplierAddressId);
-            ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseRequest.ProjectId);
-            ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseRequest.SiteId);
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseRequest.SiteAddressId);
-            return View(purchaseRequest);
-        }
+
+
+       [HttpPost]
+       [ValidateAntiForgeryToken]
+       public ActionResult Edit([Bind(Include = "ID,RequestID,RequestDate,ProductNo,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
+       {
+           if (ModelState.IsValid)
+           {
+               purchaseRequest.CreatedDate = DateTime.UtcNow;
+               purchaseRequest.UpdatedDate = DateTime.UtcNow;
+               db.Entry(purchaseRequest).State = EntityState.Modified;
+               db.SaveChanges();
+               return RedirectToAction("Index");
+           }
+           ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseRequest.CategoryId);
+           ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseRequest.SupplierId);
+           ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseRequest.SupplierAddressId);
+           ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseRequest.ProjectId);
+           ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseRequest.SiteId);
+           ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseRequest.SiteAddressId);
+           return View(purchaseRequest);
+       }
+
+
         // GET: PurchaseRequests/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -385,9 +419,10 @@ namespace issConstructions.Controllers
             {
 
                 //PurchaseRequest purchaseRequest = new PurchaseRequest();
-              
-              
+
+
                 //PurchaseRequestTable.CreatedDate = DateTime.UtcNow;
+
                 PurchaseRequestTable.UpdatedDate = DateTime.UtcNow;
                 PurchaseRequestTable.UpdateBy = Display.Name;
 
