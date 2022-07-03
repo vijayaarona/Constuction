@@ -159,7 +159,9 @@
     <Compile Include="Controllers\ProductMastersController.cs" />
     <Compile Include="Controllers\PurchaseEntriesController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
+    <Compile Include="Controllers\PurchaseOrderTablesController.cs" />
     <Compile Include="Controllers\PurchaseRequestsController.cs" />
+    <Compile Include="Controllers\PurchaseRequestTablesController.cs" />
     <Compile Include="Controllers\RateWorksController.cs" />
     <Compile Include="Controllers\receiptEntriesController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -341,6 +343,16 @@
     <Content Include="Views\ToolsTransfers\Details.cshtml" />
     <Content Include="Views\ToolsTransfers\Edit.cshtml" />
     <Content Include="Views\ToolsTransfers\Index.cshtml" />
+    <Content Include="Views\PurchaseOrderTables\Create.cshtml" />
+    <Content Include="Views\PurchaseOrderTables\Delete.cshtml" />
+    <Content Include="Views\PurchaseOrderTables\Details.cshtml" />
+    <Content Include="Views\PurchaseOrderTables\Edit.cshtml" />
+    <Content Include="Views\PurchaseOrderTables\Index.cshtml" />
+    <Content Include="Views\PurchaseRequestTables\Create.cshtml" />
+    <Content Include="Views\PurchaseRequestTables\Delete.cshtml" />
+    <Content Include="Views\PurchaseRequestTables\Details.cshtml" />
+    <Content Include="Views\PurchaseRequestTables\Edit.cshtml" />
+    <Content Include="Views\PurchaseRequestTables\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

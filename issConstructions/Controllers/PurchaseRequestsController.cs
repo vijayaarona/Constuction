@@ -290,7 +290,7 @@ namespace issConstructions.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,RequestID,RequestDate,ProductNo,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
         {
-            if (ModelState.IsValid)
+            try
             {
                 purchaseRequest.CreatedDate = DateTime.UtcNow;
                 purchaseRequest.UpdatedDate = DateTime.UtcNow;
@@ -298,13 +298,18 @@ namespace issConstructions.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseRequest.CategoryId);
-            ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseRequest.SupplierId);
-            ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseRequest.SupplierAddressId);
-            ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseRequest.ProjectId);
-            ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseRequest.SiteId);
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseRequest.SiteAddressId);
-            return View(purchaseRequest);
+            catch (Exception)
+            {
+                ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseRequest.CategoryId);
+                ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseRequest.SupplierId);
+                ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseRequest.SupplierAddressId);
+                ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseRequest.ProjectId);
+                ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseRequest.SiteId);
+                ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseRequest.SiteAddressId);
+                return View(purchaseRequest);
+
+            }
+            
         }
         // GET: PurchaseRequests/Delete/5
         public ActionResult Delete(int? id)
