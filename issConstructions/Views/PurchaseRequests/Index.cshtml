@@ -20,13 +20,24 @@
         color: white;
         float: right;
         margin: 10px;
-        border-radius: 3px;
+        border-radius: 10px;
         text-decoration: none;
+        
     }
 
         .addNew:hover {
             text-decoration: none;
+            
         }
+    table td {
+        font-size: 13px;
+        
+            }
+    table th {
+        font-size: 13px;
+        
+    }
+
 </style>
 <div class="panel-group">
     <div class="panel panel-heading header">
@@ -34,7 +45,7 @@
     </div>
     <div class="panel panel-body">
         @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
-        <table class="table" id="AGMaster">
+        <table class="table" id="AGMaster ">
             <thead>
                 <tr>
                     <th>
@@ -50,11 +61,18 @@
                         <label>Project Name</label>
                     </th>
                     <th>
-                        <label>Grand Total</label>
+                        <label>Total Amount</label>
                     </th>
                     <th>
                         <label>Discount Amount</label>
                     </th>
+                    <th>
+                        <label>Grand Total</label>
+                    </th>
+                    <th>
+                        <label>Tax Amount</label>
+                    </th>
+
                     <th>
                         <label>Net Amount</label>
                     </th>
@@ -86,10 +104,16 @@
                         @Html.DisplayFor(modelItem => item.ProjectId)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.grandTotal)
+                        @Html.DisplayFor(modelItem => item.TotalAmt)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.dicountAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.grandTotal)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaxAmt)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NetAmount)

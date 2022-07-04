@@ -3,20 +3,42 @@
 @{
     ViewBag.Title = "Create";
 }
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
 
-<h2>Create</h2>
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+
+    input, select, textarea {
+        max-width: 500px;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>PurchaseRequestTable</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.purchaseRequestId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.purchaseRequestId, "Request ID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.purchaseRequestId, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @value = ViewBag.Pid } })
                 @Html.ValidationMessageFor(model => model.purchaseRequestId, "", new { @class = "text-danger" })
@@ -24,7 +46,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.productId, "productId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.productId, "Product Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("productId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.productId, "", new { @class = "text-danger" })
@@ -40,10 +62,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Tax, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -56,18 +78,34 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.discountPercent,"Discount (%)", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.discountPercent, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.discountPercent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.discountAmount, "Discount Amount", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.discountAmount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.discountAmount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tax, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -87,75 +125,58 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.discountPercent, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.discountPercent, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.discountPercent, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.discountAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.discountAmount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.discountAmount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProductNo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProductNo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProductNo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.isDeleted)
-                    @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.ProductNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductNo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ProductNo, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.isDeleted)
+                        @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdateBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdateBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdateBy, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.UpdateBy, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UpdateBy, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UpdateBy, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+
     </div>
+
+    <p style="float:right;">
+        <input type="submit" value="Save" class="btn btn-default" />
+        @Html.ActionLink("Back to List", "Index", new { id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
+
+    </p>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index", new { id = ViewBag.PId })
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -164,4 +185,379 @@
     $(function () {
         $('#purchaseRequestId').val(@ViewBag.Pid);
     })
+</script>
+
+<script>
+    let sNo = 1;
+    var lstItems = [];
+    var ntAmt;
+    $(document).ready(function ()
+    {
+
+
+        $("#categoryId").change(function ()
+        {
+            var supNameId = $(this).find('option:selected').val();
+            SupplierId(supNameId);
+        })
+        $("#SupplierId").change(function ()
+        {
+            var supAddressId = $(this).find('option:selected').val();
+            SupplierAddressId(supAddressId);
+        })
+        $("#ProjectId").change(function ()
+        {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+        $("#Product").change(function () {
+            var taxAmount = $(this).find('option:selected').val();
+            TaxId(taxAmount);
+        })
+
+
+        $("#discountPercent").blur(function ()
+        {
+            debugger
+            var productRate = parseFloat($('#Rate').val());
+            var Amt = parseFloat($('#Quantity').val() * productRate);
+            $("#Amount").val(Amt.toFixed(2));
+
+            //Discount Calculation
+            var productDisPer = parseFloat($('#discountPercent').val());
+
+            var disAmt = parseFloat((productDisPer / 100) * Amt);
+            $('#discountAmount').val(disAmt.toFixed(2));
+
+            var productAmount = parseFloat(Amt - disAmt);
+
+            if ($('#discountPercent').val() != '')
+            {
+                //Tax Calcualtion
+                var TaxPer = $("#TaxId").val();
+                var taxTotal = parseFloat((TaxPer / 100) * productAmount);
+
+                //Total Calculation
+                var totalAmount = parseFloat(productAmount + taxTotal);
+                $("#TaxAmt").val(taxTotal.toFixed(2));
+                $("#TotalAmt").val(totalAmount.toFixed(2));
+            }
+
+        })
+
+    });
+
+    $(document).keydown(function (event) {
+        if (event.altKey && event.which === 65) {
+            $('#myModal').modal('show');
+        }
+    });
+
+    $('#myModal').on('show.bs.modal', function (e)
+    {
+        $('body').addClass("example-open");
+    }).on('hide.bs.modal', function (e)
+    {
+        $('body').removeClass("example-open");
+    })
+
+    function editBTN(item) {
+        debugger
+        var tempTR = $('#rm' + item).children();
+        console.log(tempTR);
+
+        var column = [9];
+        for (var i = 0; i < tempTR.length; i++)
+        {
+           //console.log(tempTR[i].innerText);
+            column[i] = tempTR[i].innerText;
+           //Array for store the value
+        }
+        $('#myModal').modal('show');
+        $("#Product option:contains(" + column[1] + ")").prop('selected', 'selected');
+        $('#TaxId').val(column[2]);
+        $('#Description').val(column[3]);
+        $('#Rate').val(column[4]);
+        $('#Quantity').val(column[5]);
+        $('#Amount').val(column[6]);
+        $('#discountAmount').val(column[7]);
+        $('#TaxAmt').val(column[8]);
+        $('#TotalAmt').val(column[9]);
+        $('#btnSave').text("Update");
+
+
+    }
+    function SupplierId(supNameId)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/PurchaseRequests/SupplierId")',
+            dataType: 'json',
+                  data: { supplier_NameId: supNameId },
+                  success: function (result)
+                  {
+                   var data = result;
+                      $("#SupplierId").empty();
+
+                for (var i = 0; i < data.length; i++) {
+                    $("#SupplierId").append("<option value='" + data[i].ID + "'>" + data[i].Suppliername + "</option>");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    };
+    function SupplierAddressId(supAddressId)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/PurchaseRequests/SupplierAddressId")',
+            dataType: 'json',
+                  data: { supplier_AddressId: supAddressId },
+                  success: function (result) {
+                     var data = result;
+
+                      $("#SupplierAddressId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                          $("#SupplierAddressId").append("<option value='" + data[i].ID + "'>" + data[i].address + "</option>");
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+    function SiteId(projectSite)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/PurchaseRequests/SiteId")',
+            dataType: 'json',
+                  data: { site_NameId: projectSite },
+                  success: function (result) {
+                      var data = result;
+                      $("#SiteId").empty();
+                      $("#SiteAddressId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                    $("#SiteId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
+                    $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    };
+     function TaxId(taxAmount)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/PurchaseRequests/TaxId")',
+                  dataType: 'json',
+                  data: { tax_Amount: taxAmount },
+                  success: function (result) {
+                     var data = result;
+                      $("#TaxId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                    $("#TaxId").val(data[i].Tax)
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+
+
+    $('#btnSave').click(function ()
+    {
+        debugger
+        let list = {};
+         list.productId = $('#Product').val();
+         list.productText = $('#Product option:selected').text();
+         list.purchaseRequestId = $('#RequestID').val();
+         list.Description = $('#Description').val();
+         list.Tax = $('#TaxId').val();
+         list.Rate = $('#Rate').val();
+         list.Quantity = $('#Quantity').val();
+         list.Amount = $('#Amount').val();
+         list.discountPercent = $('#discountPercent').val();
+         list.discountAmount = $('#discountAmount').val();
+         list.TaxAmount = $('#TaxAmt').val();;
+         list.TotalAmount = $('#TotalAmt').val();;
+         list.ProductNo = $('#ProductNo').val();;
+
+        list.sNo = sNo;
+
+        $.ajax({
+                url: '@Url.Content("~/PurchaseRequests/savePurchages")',
+                type: 'POST',
+                  dataType: 'json',
+            data: { PurchaseRequestTable: list },
+                success: function (result)
+                {
+                    debugger
+                    console.log(result);
+                    list.Id = result;
+                    lstItems.push(list);
+                    console.log(lstItems);
+                    bindItems();
+                    $('#productId').val(0);
+                    $('#Description').val('');
+                    $('#Rate').val('');
+                    $('#Quantity').val('');
+                    $('#TaxId').val('');
+                    $('#Amount').val('');
+                    $('#TaxAmt').val('');
+                    $('#TotalAmt').val('');
+                    $('#discountAmount').val('');
+                    $('#discountPercent').val('');
+                    $('#gstAmount').val('');
+                    $('#myModal').modal('show');
+            },
+
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        //$('#myModal').modal('show');
+    });
+    function bindItems() {
+        $('#tblpurchaserequest').empty();
+        if (lstItems.length > 0) {
+            debugger
+            let sNo = 1;
+            let grandTotal = 0;
+           // let calProPer = 0;
+            for (var i = 0; i < lstItems.length; i++)
+            {
+                var row = `<tr id=rm${sNo}>`
+                    + `<td>${sNo}</td>`
+                    + `<td>${lstItems[i].productText}</td>`
+                    + `<td>${lstItems[i].Tax}</td>`
+                    + `<td>${lstItems[i].Description}</td>`
+                    + `<td>${lstItems[i].Rate}</td>`
+                    + `<td>${lstItems[i].Quantity}</td>`
+                    + `<td>${lstItems[i].Amount}</td>`
+                    + `<td>${lstItems[i].discountAmount}</td>`
+                    + `<td>${lstItems[i].TaxAmount}</td>`
+                    + `<td>${lstItems[i].TotalAmount}</td>`
+                    + `<td>
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
+                        </td>`
+                    + "</tr>";
+
+                let amount = 0;
+
+
+
+                lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
+                grandTotal += amount;
+
+                $('#tblpurchaserequest').append(row);
+                sNo++;
+            }
+            console.log(grandTotal);
+            $('#ProGrandTotal').val(grandTotal.toFixed());
+
+            $("#disPercent").blur(function ()
+            {
+                debugger
+
+                var disPercentage = $('#disPercent').val();
+                var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+                $('#disAmount').val(calProPer.toFixed());
+                var netAmount = parseFloat(grandTotal - calProPer);
+                $('#netAmt').val(netAmount.toFixed());
+            });
+
+        }
+    }
+    function Edit(item) {
+        console.log('Edit', item);
+        var edit = lstItems.find(x => x.Id == item);
+        console.log(edit);
+        $('#productId').val(0);
+        $('#Description').val(edit.Description);
+        $('#Rate').val(edit.Rate);
+        $('#Quantity').val(edit.Quantity);
+        $('#TaxId').val(edit.Tax);
+        $('#Amount').val(edit.Amount);
+        $('#TaxAmt').val(edit.TaxAmount);
+        $('#TotalAmt').val(edit.TotalAmount);
+        $('#discountAmount').val(edit.discountAmount);
+        $('#discountPercent').val(edit.discountPercent);
+        //$('#gstAmount').val('');
+        $('#myModal').modal('show');
+    }
+
+    function removeTR(item)
+    {
+        debugger
+        //let inNo = $('#ProductNo').val();
+        let productId = $('#Product').val();
+        $.ajax({
+            url: '@Url.Content("~/PurchaseRequests/removePurchages")',
+            type: 'POST',
+            dataType: 'json',
+            data: { Id: item, InNo: productId },
+            success: function (result)
+            {
+                console.log(result);
+                if (result != null)
+                {
+                    lstItems = result;
+                    $('#tblpurchaserequest').empty();
+                    if (lstItems.length > 0) {
+                        debugger
+                        let sNo = 1;
+                        let grandTotal = 0;
+                        for (var i = 0; i < lstItems.length; i++) {
+                            var row = `<tr id=rm${sNo}>`
+                                + `<td>${sNo}</td>`
+                                + `<td>${lstItems[i].Product.ProductName}</td>`
+                                + `<td>${lstItems[i].Tax}</td>`
+                                + `<td>${lstItems[i].Description}</td>`
+                                + `<td>${lstItems[i].Rate}</td>`
+                                + `<td>${lstItems[i].Quantity}</td>`
+                                + `<td>${lstItems[i].Amount}</td>`
+                                + `<td>${lstItems[i].discountAmount}</td>`
+                                + `<td>${lstItems[i].TaxAmount}</td>`
+                                + `<td>${lstItems[i].TotalAmount}</td>`
+                                + `<td>
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].ID}')">Remove</button>
+                        </td>`
+                                + "</tr>";
+                            let amount = 0;
+
+                            lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
+                            grandTotal += amount;
+
+                            $('#tblpurchaserequest').append(row);
+                            sNo++;
+                        }
+                        console.log(grandTotal);
+                        $('#ProGrandTotal').val(grandTotal.toFixed());
+
+                        $("#disPercent").blur(function () {
+                            debugger
+
+                            var disPercentage = $('#disPercent').val();
+                            var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+                            $('#disAmount').val(calProPer.toFixed());
+                            var netAmount = parseFloat(grandTotal - calProPer);
+                            $('#netAmt').val(netAmount.toFixed());
+                        });
+
+                   }
+                }
+            }
+        });
+    }
 </script>

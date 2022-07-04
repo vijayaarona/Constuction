@@ -25,6 +25,9 @@ namespace issDomain.Models
         public decimal grandTotal { get; set; }
         public decimal discountPercentage { get; set; }
         public decimal dicountAmount { get; set; }
+        public decimal Tax { get; set; }
+        public decimal TaxAmt { get; set; }
+        public decimal TotalAmt { get; set; }
         public string RequestBy { get; set; }
         public string Remarks { get; set; }
         public int ProductNo { get; set; }
