@@ -17,8 +17,10 @@ namespace issConstructions.Controllers
         // GET: PurchaseRequests
         public ActionResult Index()
         {
+
             var purchaseRequest = db.purchaseRequest.Include(p => p.Category).Include(p => p.Supplier).Include(p => p.SiteDetails);
             return View(purchaseRequest.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
+
         }
         // GET: PurchaseRequests/Details/5
         public ActionResult Details(int? id)
@@ -187,7 +189,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,ProductNo,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
+        public ActionResult Create([Bind(Include = "ID,RequestID,RequestDate,ProductNo,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TaxAmt,TotalAmt")] PurchaseRequest purchaseRequest)
         {
             int invoiceNo = 1;
             if (ModelState.IsValid)
@@ -288,7 +290,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,RequestID,RequestDate,ProductNo,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequest purchaseRequest)
+        public ActionResult Edit([Bind(Include = "ID,RequestID,RequestDate,ProductNo,CategoryId,SupplierId,SupplierAddressId,SiteDetailsId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TaxAmt,TotalAmt")] PurchaseRequest purchaseRequest)
         {
             try
             {
