@@ -574,6 +574,7 @@
                 debugger
 
                 var taxPercentage = $('#TaxP').val();
+                var TotAmt = $('#ProTotal').val();
                 var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
                 $('#TaxPamt').val(calProPer1.toFixed());
                 var Netamt = parseFloat(TotAmt + calProPer1);
