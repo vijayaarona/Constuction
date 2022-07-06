@@ -35,5 +35,8 @@ namespace issDomain.Models
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public decimal Tax { get; set; }
+        public decimal TaxAmt { get; set; }
+        public decimal TotalAmt { get; set; }
     }
 }

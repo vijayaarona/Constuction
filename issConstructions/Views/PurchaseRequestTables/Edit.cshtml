@@ -4,29 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<style>
-    .header {
-        margin-top: 10px;
-        border-top-style: solid;
-        border-top-width: 5px;
-        border-top-color: #FF5F04;
-        font-family: Calibri;
-        font-size: 22px;
-    }
-
-    .btn-default {
-        background-color: #FF5F04;
-        color: white;
-    }
-
-    input, select, textarea {
-        max-width: 500px;
-    }
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
+ 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -172,10 +150,98 @@
         @Html.ActionLink("Back", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
 
     </p>
-    
+
 }
 
 <
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script>
+    let sNo = 1;
+    var lstItems = [];
+    var ntAmt;
+    $(document).ready(function () {
+        debugger
+
+        $("#categoryId").change(function () {
+            var supNameId = $(this).find('option:selected').val();
+            SupplierId(supNameId);
+        })
+        $("#SupplierId").change(function () {
+            var supAddressId = $(this).find('option:selected').val();
+            SupplierAddressId(supAddressId);
+        })
+        $("#ProjectId").change(function () {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+        $("#productId").change(function () {
+            var taxAmount = $(this).find('option:selected').val();
+            Tax(taxAmount);
+        })
+
+
+        $("#discountPercent").blur(function () {
+            debugger
+            var productRate = parseFloat($('#Rate').val());
+            var Amt = parseFloat($('#Quantity').val() * productRate);
+            $("#Amount").val(Amt.toFixed(2));
+
+            //Discount Calculation
+            var productDisPer = parseFloat($('#discountPercent').val());
+
+            var disAmt = parseFloat((productDisPer / 100) * Amt);
+            $('#discountAmount').val(disAmt.toFixed(2));
+
+            var productAmount = parseFloat(Amt - disAmt);
+
+            if ($('#discountPercent').val() != '') {
+                //Tax Calcualtion
+                var TaxPer = $("#TaxId").val();
+                var taxTotal = parseFloat((TaxPer / 100) * productAmount);
+
+                //Total Calculation
+                var totalAmount = parseFloat(productAmount + taxTotal);
+                $("#TaxAmt").val(taxTotal.toFixed(2));
+                $("#TotalAmt").val(totalAmount.toFixed(2));
+            }
+
+        })
+
+ 
+        $("#disPercent").blur(function () {
+            debugger
+
+            var disPercentage = $('#disPercent').val();
+            var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+            $('#disAmount').val(calProPer.toFixed());
+            var TotAmt = parseFloat(grandTotal - calProPer);
+            $('#ProGrandTotal').val(TotAmt.toFixed());
+        });
+
+        $("#TaxP").blur(function () {
+            debugger
+
+            var taxPercentage = $('#TaxP').val();
+            var TotAmt = $('#ProGrandTotal').val();
+            var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+            $('#TaxPamt').val(calProPer1.toFixed());
+            var Netamt = parseFloat(TotAmt + calProPer1);
+            $('#netAmt').val(Netamt.toFixed());
+
+        });
+        $("#TaxP").blur(function () {
+            debugger
+
+            var taxPercentage = $('#TaxP').val();
+            var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+            $('#TaxPamt').val(calProPer1.toFixed());
+            var Netamt = parseFloat(TotAmt + calProPer1);
+            $('#netAmt').val(Netamt.toFixed());
+        });
+
+    })
+
+});
+</script>

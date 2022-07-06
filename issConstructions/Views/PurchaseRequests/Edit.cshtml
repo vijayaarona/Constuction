@@ -191,7 +191,7 @@
             @section Scripts {
                 @Scripts.Render("~/bundles/jqueryval")
             }
-            <script>
+    <script>
                 let sNo = 1;
                 var lstItems = [];
                 var ntAmt;
@@ -226,6 +226,17 @@
                         $('#ProGrandTotal').val(TotAmt.toFixed());
                     });
 
+                    $("#TaxP").blur(function () {
+                        debugger
+
+                        var taxPercentage = $('#TaxP').val();
+                        var TotAmt = $('#ProGrandTotal').val();
+                        var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+                        $('#TaxPamt').val(calProPer1.toFixed());
+                        var Netamt = parseFloat(TotAmt + calProPer1);
+                        $('#netAmt').val(Netamt.toFixed());
+                        
+                    });
                     $("#TaxP").blur(function () {
                         debugger
 

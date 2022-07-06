@@ -531,6 +531,7 @@
             let sNo = 1;
             let grandTotal = 0;
             let TotAmt = 0;
+            let NetAmount = 0;
             // let calProPer = 0;
             for (var i = 0; i < lstItems.length; i++) {
                 var row = `<tr id=rm${sNo}>`
@@ -574,11 +575,12 @@
                 debugger
 
                 var taxPercentage = $('#TaxP').val();
-                var TotAmt = $('#ProTotal').val();
+                var TotAmt = $('#ProGrandTotal').val();
                 var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
                 $('#TaxPamt').val(calProPer1.toFixed());
-                var Netamt = parseFloat(TotAmt + calProPer1);
-                $('#netAmt').val(Netamt.toFixed());
+                var NetAmount = parseFloat(TotAmt) + parseFloat(calProPer1);
+                $('#netAmt').val(NetAmount.toFixed());
+                
             });
 
         }

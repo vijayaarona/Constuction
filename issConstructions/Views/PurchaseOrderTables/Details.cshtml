@@ -3,144 +3,261 @@
 @{
     ViewBag.Title = "Details";
 }
+<style>
+    #AccountGroupMaster {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-<h2>Details</h2>
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
 
-<div>
-    <h4>PurchaseOrderTable</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Product.ProductName)
-        </dt>
+    #AccountGroupMaster td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Product.ProductName)
-        </dd>
+    #AccountGroupMaster tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.purchaseRequestId)
-        </dt>
+    #AccountGroupMaster tr:hover {
+        background-color: #ddd;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.purchaseRequestId)
-        </dd>
+    #AccountGroupMaster th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+    #btn-edit a:hover {
+        text-decoration: none;
+        color: black;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+    #btn-edit a {
+        text-decoration: none;
+        color: black;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Tax)
-        </dt>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Tax)
-        </dd>
+    th {
+        width: 40% !important;
+    }
+</style>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Rate)
-        </dt>
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Purchase Order -  Details Page
+    </div>
+    <div class="panel panel-body">
 
-        <dd>
-            @Html.DisplayFor(model => model.Rate)
-        </dd>
+        <table id="AccountGroupMaster">
+            <tr>
+                <th>Purchase Order ID</th>
+                <td>  @Html.DisplayFor(model => model.purchaseRequestId)</td>
+            </tr>
+            <tr>
+                <th>Prioduct  Name</th>
+                <td> @Html.DisplayFor(model => model.Product.ProductName)</td>
+            </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
+            <tr>
+                <th>Description</th>
+                <td>  @Html.DisplayFor(model => model.Description)</td>
+            </tr>
+            <tr>
+                <th> Quantity</th>
+                <td>  @Html.DisplayFor(model => model.Quantity)</td>
+            </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
+            <tr>
+                <th> Rate</th>
+                <td>   @Html.DisplayFor(model => model.Rate)</td>
+            </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
+            <tr>
+                <th> Amount</th>
+                <td>  @Html.DisplayFor(model => model.Amount)</td>
+            </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
+            <tr>
+                <th> Discount (%)</th>
+                <td>  @Html.DisplayFor(model => model.discountPercent)</td>
+            </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TaxAmount)
-        </dt>
+            <tr>
+                <th> Discount Amount</th>
+                <td>  @Html.DisplayFor(model => model.discountAmount)</td>
+            </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.TaxAmount)
-        </dd>
+            <tr>
+                <th> Tax</th>
+                <td>  @Html.DisplayFor(model => model.Tax)</td>
+            </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalAmount)
-        </dt>
+            <tr>
+                <th> Tax Amount</th>
+                <td>  @Html.DisplayFor(model => model.TaxAmount)</td>
+            </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.TotalAmount)
-        </dd>
+            <tr>
+                <th> Total Amount</th>
+                <td>  @Html.DisplayFor(model => model.TotalAmount)</td>
+            </tr>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.discountPercent)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.discountPercent)
-        </dd>
+        </table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.discountAmount)
-        </dt>
+        @*<div>
+                <h4>PurchaseRequestTable</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Product.ProductName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.discountAmount)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Product.ProductName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductNo)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.purchaseRequestId)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ProductNo)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.purchaseRequestId)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.isDeleted)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.isDeleted)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Tax)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Tax)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdateBy)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Rate)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UpdateBy)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Rate)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedDate)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Quantity)
+                    </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Amount)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TaxAmount)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TaxAmount)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TotalAmount)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TotalAmount)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.discountPercent)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.discountPercent)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.discountAmount)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.discountAmount)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ProductNo)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductNo)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.isDeleted)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.isDeleted)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CreatedDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.CreatedDate)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UpdateBy)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UpdateBy)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UpdatedDate)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UpdatedDate)
+                    </dd>
+
+                </dl>
+            </div>*@
+    <p style="float:right;">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+        @Html.ActionLink("Back", "Index", "PurchaseOrderTables", new { id = Model.purchaseRequestId }, htmlAttributes: new { @class = "btn btn-default" })
+
+    </p>
+    </div>

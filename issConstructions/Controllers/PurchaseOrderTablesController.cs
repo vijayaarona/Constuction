@@ -18,6 +18,34 @@ namespace issConstructions.Controllers
         // GET: PurchaseOrderTables
         public ActionResult Index(int ID = 0)
         {
+             ViewBag.pId = ID;
+            var purchaseOrder = db.PurchaseOrders.Where(x => x.ID == ID).FirstOrDefault();
+            if (purchaseOrder != null)
+            {
+                ViewBag.ProjectName = db.siteDetails.Where(x => x.ID == purchaseOrder.ProjectId).FirstOrDefault();
+                if (ViewBag.ProjectName == null)
+                {
+                    ViewBag.ProjectName = "Project 1";
+
+                }
+                else ViewBag.ProjectName = ViewBag.ProjectName.SiteName;
+
+
+                ViewBag.supplierName = db.supplierMasters.Where(x => x.ID == purchaseOrder.SupplierId).FirstOrDefault();
+                if (ViewBag.supplierName == null)
+                {
+                    ViewBag.supplierName = "Supplier 1";
+
+                }
+                else ViewBag.supplierName = ViewBag.supplierName.Suppliername;
+
+            }
+            else
+            {
+                ViewBag.ProjectName = "Project 1";
+                ViewBag.supplierName = "Supplier 1";
+            }
+           
            
             var purchaseOrderTables = db.purchaseOrderTables.Include(p => p.Product).Where(p => p.purchaseRequestId == ID).ToList();
             return View(purchaseOrderTables.ToList());

@@ -4,13 +4,39 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+
+    input, select, textarea {
+        max-width: 500px;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>PurchaseOrderTable</h4>
         <hr />
@@ -18,16 +44,16 @@
         @Html.HiddenFor(model => model.ID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.purchaseRequestId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.purchaseRequestId, "Order ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.purchaseRequestId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.purchaseRequestId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.productId, "productId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.productId, "Product Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
                 @Html.DropDownList("productId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.productId, "", new { @class = "text-danger" })
             </div>
@@ -35,63 +61,55 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Rate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
             @Html.LabelFor(model => model.Tax, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Rate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.TaxAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.TaxAmount, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TaxAmount, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.discountPercent, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.discountPercent, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.discountPercent, "", new { @class = "text-danger" })
             </div>
@@ -99,66 +117,157 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.discountAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-6">
                 @Html.EditorFor(model => model.discountAmount, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.discountAmount, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.ProductNo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProductNo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProductNo, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.TotalAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.isDeleted)
-                    @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.ProductNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductNo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ProductNo, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.isDeleted)
+                        @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdateBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdateBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdateBy, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.UpdateBy, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UpdateBy, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UpdateBy, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
     </div>
+
+    <p style="float:right;">
+        <input type="submit" value="Save" class="btn btn-default" />
+        @Html.ActionLink("Back", "Index", "PurchaseOrderTables", new { id = Model.purchaseRequestId }, htmlAttributes: new { @class = "btn btn-default" })
+
+    </p>
+
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
+<
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script>
+    let sNo = 1;
+    var lstItems = [];
+    var ntAmt;
+    $(document).ready(function () {
+        debugger
+
+        $("#categoryId").change(function () {
+            var supNameId = $(this).find('option:selected').val();
+            SupplierId(supNameId);
+        })
+        $("#SupplierId").change(function () {
+            var supAddressId = $(this).find('option:selected').val();
+            SupplierAddressId(supAddressId);
+        })
+        $("#ProjectId").change(function () {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+        $("#productId").change(function () {
+            var taxAmount = $(this).find('option:selected').val();
+            Tax(taxAmount);
+        })
+
+
+        $("#discountPercent").blur(function () {
+            debugger
+            var productRate = parseFloat($('#Rate').val());
+            var Amt = parseFloat($('#Quantity').val() * productRate);
+            $("#Amount").val(Amt.toFixed(2));
+
+            //Discount Calculation
+            var productDisPer = parseFloat($('#discountPercent').val());
+
+            var disAmt = parseFloat((productDisPer / 100) * Amt);
+            $('#discountAmount').val(disAmt.toFixed(2));
+
+            var productAmount = parseFloat(Amt - disAmt);
+
+            if ($('#discountPercent').val() != '') {
+                //Tax Calcualtion
+                var TaxPer = $("#TaxId").val();
+                var taxTotal = parseFloat((TaxPer / 100) * productAmount);
+
+                //Total Calculation
+                var totalAmount = parseFloat(productAmount + taxTotal);
+                $("#TaxAmt").val(taxTotal.toFixed(2));
+                $("#TotalAmt").val(totalAmount.toFixed(2));
+            }
+
+        })
+
+
+        $("#disPercent").blur(function () {
+            debugger
+
+            var disPercentage = $('#disPercent').val();
+            var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+            $('#disAmount').val(calProPer.toFixed());
+            var TotAmt = parseFloat(grandTotal - calProPer);
+            $('#ProGrandTotal').val(TotAmt.toFixed());
+        });
+
+        $("#TaxP").blur(function () {
+            debugger
+
+            var taxPercentage = $('#TaxP').val();
+            var TotAmt = $('#ProGrandTotal').val();
+            var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+            $('#TaxPamt').val(calProPer1.toFixed());
+            var Netamt = parseFloat(TotAmt + calProPer1);
+            $('#netAmt').val(Netamt.toFixed());
+
+        });
+        $("#TaxP").blur(function () {
+            debugger
+
+            var taxPercentage = $('#TaxP').val();
+            var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+            $('#TaxPamt').val(calProPer1.toFixed());
+            var Netamt = parseFloat(TotAmt + calProPer1);
+            $('#netAmt').val(Netamt.toFixed());
+        });
+
+    });
+</script>
