@@ -158,6 +158,7 @@
     <Compile Include="Controllers\paymentEntriesController.cs" />
     <Compile Include="Controllers\ProductMastersController.cs" />
     <Compile Include="Controllers\PurchaseEntriesController.cs" />
+    <Compile Include="Controllers\PurchaseEntryTablesController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Controllers\PurchaseOrderTablesController.cs" />
     <Compile Include="Controllers\PurchaseRequestsController.cs" />
@@ -202,6 +203,14 @@
     <Compile Include="Migrations\202207060532161_ConM7.cs" />
     <Compile Include="Migrations\202207060532161_ConM7.Designer.cs">
       <DependentUpon>202207060532161_ConM7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207080429150_ConM8.cs" />
+    <Compile Include="Migrations\202207080429150_ConM8.Designer.cs">
+      <DependentUpon>202207080429150_ConM8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207080432213_ConM9.cs" />
+    <Compile Include="Migrations\202207080432213_ConM9.Designer.cs">
+      <DependentUpon>202207080432213_ConM9.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
@@ -365,6 +374,11 @@
     <Content Include="Views\PurchaseRequestTables\Details.cshtml" />
     <Content Include="Views\PurchaseRequestTables\Edit.cshtml" />
     <Content Include="Views\PurchaseRequestTables\Index.cshtml" />
+    <Content Include="Views\PurchaseEntryTables\Create.cshtml" />
+    <Content Include="Views\PurchaseEntryTables\Delete.cshtml" />
+    <Content Include="Views\PurchaseEntryTables\Details.cshtml" />
+    <Content Include="Views\PurchaseEntryTables\Edit.cshtml" />
+    <Content Include="Views\PurchaseEntryTables\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -420,6 +434,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207060532161_ConM7.resx">
       <DependentUpon>202207060532161_ConM7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207080429150_ConM8.resx">
+      <DependentUpon>202207080429150_ConM8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207080432213_ConM9.resx">
+      <DependentUpon>202207080432213_ConM9.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

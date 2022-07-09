@@ -1,8 +1,9 @@
-﻿@model issDomain.Models.PurchaseRequestTable
+﻿@model issDomain.Models.PurchaseEntryTable
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
+
 <style>
     .header {
         margin-top: 10px;
@@ -46,7 +47,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -57,7 +57,7 @@
 
     <div class="panel-group">
         <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
-            Purchase Request - Item Add
+            Purchase Entry - Item Edit
         </div>
         <div class="panel panel-body" style="overflow:auto">
             <div class="row">
@@ -142,82 +142,101 @@
 
     <p style="float:right;">
         <input type="submit" value="Save" class="btn btn-default" />
-        @Html.ActionLink("Back to List", "Index", new { id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
+        @Html.ActionLink("Back", "Index", new { Id = @Model.purchaseRequestId }, htmlAttributes: new { @class = "btn btn-default" })
 
     </p>
-}
 
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script>
-    $(function () {
-        $('#purchaseRequestId').val(@ViewBag.Pid);
-    })
-</script>
+                let sNo = 1;
+                var lstItems = [];
+                var ntAmt;
+                $(document).ready(function () {
+                    debugger
 
-<script>
-    let sNo = 1;
-    var lstItems = [];
-    var ntAmt;
-    $(document).ready(function ()
-    {
+                    $("#categoryId").change(function () {
+                        var supNameId = $(this).find('option:selected').val();
+                        SupplierId(supNameId);
+                    })
+                    $("#SupplierId").change(function () {
+                        var supAddressId = $(this).find('option:selected').val();
+                        SupplierAddressId(supAddressId);
+                    })
+                    $("#ProjectId").change(function () {
+                        var projectSite = $(this).find('option:selected').val();
+                        SiteId(projectSite);
+                    })
+                    $("#productId").change(function () {
+                        var taxAmount = $(this).find('option:selected').val();
+                        Tax(taxAmount);
+                    })
+
+                    $("#discountPercent").blur(function () {
+                        debugger
+                        var productRate = parseFloat($('#Rate').val());
+                        var Amt = parseFloat($('#Quantity').val() * productRate);
+                        $("#Amount").val(Amt.toFixed(2));
+
+                        //Discount Calculation
+                        var productDisPer = parseFloat($('#discountPercent').val());
+
+                        var disAmt = parseFloat((productDisPer / 100) * Amt);
+                        $('#discountAmount').val(disAmt.toFixed(2));
+
+                        var productAmount = parseFloat(Amt - disAmt);
+
+                        if ($('#discountPercent').val() != '') {
+                            //Tax Calcualtion
+                            var TaxPer = $("#Tax").val();
+                            var taxTotal = parseFloat((TaxPer / 100) * productAmount);
+
+                            //Total Calculation
+                            var totalAmount = parseFloat(productAmount + taxTotal);
+                            $("#TaxAmount").val(taxTotal.toFixed(2));
+                            $("#TotalAmount").val(totalAmount.toFixed(2));
+                        }
+
+                    })
 
 
-        $("#categoryId").change(function ()
-        {
-            var supNameId = $(this).find('option:selected').val();
-            SupplierId(supNameId);
-        })
-        $("#SupplierId").change(function ()
-        {
-            var supAddressId = $(this).find('option:selected').val();
-            SupplierAddressId(supAddressId);
-        })
-        $("#ProjectId").change(function ()
-        {
-            var projectSite = $(this).find('option:selected').val();
-            SiteId(projectSite);
-        })
-        $("#productId").change(function () {
-            var taxAmount = $(this).find('option:selected').val();
-            Tax(taxAmount);
-        })
+                    $("#disPercent").blur(function () {
+                        debugger
 
+                        var disPercentage = $('#disPercent').val();
+                        var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+                        $('#disAmount').val(calProPer.toFixed());
+                        var TotAmt = parseFloat(grandTotal - calProPer);
+                        $('#ProGrandTotal').val(TotAmt.toFixed());
+                    });
 
-        $("#discountPercent").blur(function ()
-        {
-            debugger
-            var productRate = parseFloat($('#Rate').val());
-            var Amt = parseFloat($('#Quantity').val() * productRate);
-            $("#Amount").val(Amt.toFixed(2));
+                    $("#TaxP").blur(function () {
+                        debugger
 
-            //Discount Calculation
-            var productDisPer = parseFloat($('#discountPercent').val());
+                        var taxPercentage = $('#TaxP').val();
+                        var TotAmt = $('#ProGrandTotal').val();
+                        var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+                        $('#TaxPamt').val(calProPer1.toFixed());
+                        var Netamt = parseFloat(TotAmt + calProPer1);
+                        $('#netAmt').val(Netamt.toFixed());
 
-            var disAmt = parseFloat((productDisPer / 100) * Amt);
-            $('#discountAmount').val(disAmt.toFixed(2));
+                    });
+                    $("#TaxP").blur(function () {
+                        debugger
 
-            var productAmount = parseFloat(Amt - disAmt);
+                        var taxPercentage = $('#TaxP').val();
+                        var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+                        $('#TaxPamt').val(calProPer1.toFixed());
+                        var Netamt = parseFloat(TotAmt + calProPer1);
+                        $('#netAmt').val(Netamt.toFixed());
+                    });
 
-            if ($('#discountPercent').val() != '')
-            {
-                //Tax Calcualtion
-                var TaxPer = $("#Tax").val();
-                var taxTotal = parseFloat((TaxPer / 100) * productAmount);
+                });
 
-                //Total Calculation
-                var totalAmount = parseFloat(productAmount + taxTotal);
-                $("#TaxAmount").val(taxTotal.toFixed(2));
-                $("#TotalAmount").val(totalAmount.toFixed(2));
-            }
-
-        })
-
-    });
-
-    $(document).keydown(function (event) {
+                 $(document).keydown(function (event) {
         if (event.altKey && event.which === 65) {
             $('#myModal').modal('show');
         }
@@ -322,19 +341,19 @@
             }
         });
     };
-     function TaxId(taxAmount)
+     function Tax(taxAmount)
     {
               $.ajax({
             type: 'POST',
-            url: '@Url.Content("~/PurchaseRequests/TaxId")',
+            url: '@Url.Content("~/PurchaseRequests/Tax")',
                   dataType: 'json',
                   data: { tax_Amount: taxAmount },
                   success: function (result) {
                      var data = result;
-                      $("#TaxId").empty();
+                      $("#Tax").empty();
                       for (var i = 0; i < data.length; i++)
                       {
-                    $("#TaxId").val(data[i].Tax)
+                    $("#Tax").val(data[i].Tax)
                       }
                   },
                   error: function (err)
@@ -404,9 +423,10 @@
             debugger
             let sNo = 1;
             let grandTotal = 0;
-           // let calProPer = 0;
-            for (var i = 0; i < lstItems.length; i++)
-            {
+            let TotAmt = 0;
+            let NetAmount = 0;
+            // let calProPer = 0;
+            for (var i = 0; i < lstItems.length; i++) {
                 var row = `<tr id=rm${sNo}>`
                     + `<td>${sNo}</td>`
                     + `<td>${lstItems[i].productText}</td>`
@@ -425,8 +445,6 @@
 
                 let amount = 0;
 
-
-
                 lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
                 grandTotal += amount;
 
@@ -434,17 +452,28 @@
                 sNo++;
             }
             console.log(grandTotal);
-            $('#ProGrandTotal').val(grandTotal.toFixed());
+            $('#ProTotal').val(grandTotal.toFixed());
 
-            $("#disPercent").blur(function ()
-            {
+            $("#disPercent").blur(function () {
                 debugger
 
                 var disPercentage = $('#disPercent').val();
                 var calProPer = parseFloat((disPercentage / 100) * grandTotal);
                 $('#disAmount').val(calProPer.toFixed());
-                var netAmount = parseFloat(grandTotal - calProPer);
-                $('#netAmt').val(netAmount.toFixed());
+                var TotAmt = parseFloat(grandTotal - calProPer);
+                $('#ProGrandTotal').val(TotAmt.toFixed());
+            });
+
+            $("#TaxP").blur(function () {
+                debugger
+
+                var taxPercentage = $('#TaxP').val();
+                var TotAmt = $('#ProGrandTotal').val();
+                var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+                $('#TaxPamt').val(calProPer1.toFixed());
+                var NetAmount = parseFloat(TotAmt) + parseFloat(calProPer1);
+                $('#netAmt').val(NetAmount.toFixed());
+
             });
 
         }
@@ -507,21 +536,21 @@
                             let amount = 0;
 
                             lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
-                            grandTotal += amount;
+                            TotalAmt += amount;
 
                             $('#tblpurchaserequest').append(row);
                             sNo++;
                         }
-                        console.log(grandTotal);
-                        $('#ProGrandTotal').val(grandTotal.toFixed());
+                        console.log(TotalAmt);
+                        $('#ProTotal').val(TotalAmt.toFixed());
 
                         $("#disPercent").blur(function () {
                             debugger
 
                             var disPercentage = $('#disPercent').val();
-                            var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+                            var calProPer = parseFloat((disPercentage / 100) * TotalAmt);
                             $('#disAmount').val(calProPer.toFixed());
-                            var netAmount = parseFloat(grandTotal - calProPer);
+                            var netAmount = parseFloat(TotalAmt - calProPer);
                             $('#netAmt').val(netAmount.toFixed());
                         });
 
@@ -530,4 +559,5 @@
             }
         });
     }
+
 </script>

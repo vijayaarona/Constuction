@@ -1,5 +1,4 @@
-﻿@model issDomain.Models.PurchaseOrderTable
-
+﻿@model issDomain.Models.PurchaseEntryTable
 @{
     ViewBag.Title = "Details";
 }
@@ -60,7 +59,7 @@
 
 <div class="panel-group">
     <div class="panel panel-heading header">
-        Purchase Order -  Item Details
+        Purchase Entry -  Item Details
     </div>
     <div class="panel panel-body">
 
@@ -121,11 +120,10 @@
 
         </table>
 
-      
-    <p style="float:right;">
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
-        @Html.ActionLink("Back", "Index", "PurchaseOrderTables", new { id = Model.purchaseRequestId }, htmlAttributes: new { @class = "btn btn-default" })
+        <p style="float:right;">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+            @Html.ActionLink("Back", "Index", "PurchaseEntryTables", new { id = Model.purchaseRequestId }, htmlAttributes: new { @class = "btn btn-default" })
 
-    </p>
+        </p>
     </div>
-    </div>
+</div>

@@ -20,14 +20,28 @@
         color: white;
         float: right;
         margin: 10px;
-        border-radius: 3px;
+        border-radius: 10px;
         text-decoration: none;
     }
 
         .addNew:hover {
             text-decoration: none;
         }
+
+    table td {
+        font-size: 13px;
+    }
+
+    table th {
+        font-size: 13px;
+    }
 </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <div class="panel-group">
     <div class="panel panel-heading header">
         Purchase Entry - Index Page
@@ -38,60 +52,83 @@
             <thead>
                 <tr>
                     <th>
+                        <label>Purchase ID</label>
+                    </th>
+                    <th>
                         <label>Purchase Date</label>
                     </th>
                     <th>
-                        <label>Category</label>
+                        <label>Supplier Name</label>
                     </th>
-                    <th>
-                        <label>Purchase Type</label>
-                    </th>
-
                     <th>
                         <label>Project Name</label>
                     </th>
-                  
+                    <th>
+                        <label>Total Amount</label>
+                    </th>
+                    <th>
+                        <label>Discount Amount</label>
+                    </th>
                     <th>
                         <label>Grand Total</label>
                     </th>
-                  
+                    <th>
+                        <label>Tax Amount</label>
+                    </th>
+
                     <th>
                         <label>Net Amount</label>
                     </th>
-
-                    <th>Actions</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.purchaseDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.mobileno)
-                    </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.purchaseId)
+                        </td>
+                        @if (@item.purchaseDate!= null)
+                        {
+                            <td>
+                                @item.purchaseDate.Value.ToShortDateString()
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteDetails.ProjectName)
-                    </td>
-                  
-                    <td>
-                        @Html.DisplayFor(modelItem => item.grandTotal)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NetAmount)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                    </td>
-                </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalAmt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.totalDiscount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.grandTotal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaxAmt)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NetAmount)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })|
+                            <a href="@Url.Content("~/PurchaseEntryTables/Index/"+item.ID)">Edit Items</a>
+
+                        </td>
+                    </tr>
 
                 }
             </tbody>
@@ -100,8 +137,6 @@
 
     </div>
 </div>
-
-
 <script type="text/javascript">
     $(function () {
         $('#AGMaster').DataTable({
@@ -115,11 +150,11 @@
                         var printTitle = 'New Title';
                         return printTitle
                     }
-                   // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
                 },
                 {
                     extend: 'pdf',
-                  //  messageBottom: null
+                    //  messageBottom: null
                 },
                 {
                     extend: 'print',
@@ -131,108 +166,3 @@
     });
 </script>
 
-@*<h2>Index</h2>
-
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Category.CategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Supplier.Suppliername)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.purchaseId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.purchaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupplierAddressId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SiteId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SiteAddressId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.mobileno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.isDeleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdateBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedDate)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.purchaseId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.purchaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierAddressId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SiteId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SiteAddressId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.mobileno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isDeleted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-
-    </table>*@

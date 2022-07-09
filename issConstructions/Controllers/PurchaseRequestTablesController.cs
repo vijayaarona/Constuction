@@ -16,7 +16,7 @@ namespace issConstructions.Controllers
         private issDB db = new issDB();
 
         // GET: PurchaseRequestTables
-        public ActionResult Index(int Id = 0)
+        public ActionResult Index(int Id)
         {
             ViewBag.pId = Id;
             var purchaseRequest = db.purchaseRequest.Where(x => x.ID == Id).FirstOrDefault();

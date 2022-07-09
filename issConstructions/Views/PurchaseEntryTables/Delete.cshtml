@@ -1,4 +1,5 @@
-﻿@model issDomain.Models.PurchaseOrderTable
+﻿@model issDomain.Models.PurchaseEntryTable
+
 
 @{
     ViewBag.Title = "Delete";
@@ -64,7 +65,7 @@
 <div class="panel-group">
 
     <div class="panel panel-heading header">
-        Purchase Order -  Item Delete 
+        Purchase Entry -  Item Delete
 
     </div>
     <div class="panel panel-body">
@@ -135,10 +136,10 @@
         {
             @Html.AntiForgeryToken()
 
-    <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-default" />
-        @Html.ActionLink("Back", "Index", "PurchaseOrderTables", new { id = Model.purchaseRequestId }, htmlAttributes: new { @class = "btn btn-default" })
-    </div>
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" />
+                @Html.ActionLink("Back", "Index", "PurchaseEntryTables", new { id = Model.purchaseRequestId }, htmlAttributes: new { @class = "btn btn-default" })
+            </div>
         }
 
     </div>

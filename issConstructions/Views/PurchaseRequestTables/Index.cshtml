@@ -4,9 +4,6 @@
     ViewBag.Title = "Index";
 }
 
-
-<h3>Project Name: @ViewBag.ProjectName</h3>
-<h3>Supplier Name: @ViewBag.Suppliername</h3>
 <style>
     #AccountGroupMaster {
         font-family: Arial, Helvetica, sans-serif;
@@ -87,149 +84,153 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<div class="panel panel-body" style="overflow:auto">
-    <p style="float:right;">
-        @Html.ActionLink("Add New", "Create", new { Id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
-        @Html.ActionLink("Back", "Index", "PurchaseRequests", new { id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        <h3>Project Name: @ViewBag.ProjectName</h3>
+        <h3>Supplier Name: @ViewBag.Suppliername</h3>
+    </div>
+    <div class="panel panel-body" style="overflow:auto">
+        <p style="float:right;">
+            @Html.ActionLink("Add New", "Create", new { Id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
+            @Html.ActionLink("Back", "Index", "PurchaseRequests", new { id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
+           
+        </p>
 
-
-    </p>
-
-    <table class="table">
-        <tr>
-            <th>
-                Req.ID
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                Dis(%)
-            </th>
-            <th>
-                Dis.Amt
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tax)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TaxAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalAmount)
-            </th>
-
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.purchaseRequestId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.ProductName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.discountPercent)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.discountAmount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tax)
-                </td>
+                <th>
+                    Req.ID
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.ProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    Dis(%)
+                </th>
+                <th>
+                    Dis.Amt
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tax)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaxAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalAmount)
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.TaxAmount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalAmount)
-                </td>
-
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.ProductNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.isDeleted)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdateBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdatedDate)
-                    </td>*@
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-
-                </td>
+                <th></th>
             </tr>
-        }
 
-    </table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.purchaseRequestId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.discountPercent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.discountAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tax)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaxAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalAmount)
+                    </td>
+
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.ProductNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.isDeleted)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UpdateBy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UpdatedDate)
+                        </td>*@
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
 </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#AGMaster').DataTable({
+                dom: 'Bfrtip',
 
-<script type="text/javascript">
-    $(function () {
-        $('#AGMaster').DataTable({
-            dom: 'Bfrtip',
-
-            buttons: [
-                'copy',
-                {
-                    extend: 'excel',
-                    title: function () {
-                        var printTitle = 'New Title';
-                        return printTitle
+                buttons: [
+                    'copy',
+                    {
+                        extend: 'excel',
+                        title: function () {
+                            var printTitle = 'New Title';
+                            return printTitle
+                        }
+                        // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                    },
+                    {
+                        extend: 'pdf',
+                        //  messageBottom: null
+                    },
+                    {
+                        extend: 'print',
                     }
-                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
-                },
-                {
-                    extend: 'pdf',
-                    //  messageBottom: null
-                },
-                {
-                    extend: 'print',
-                }
 
-            ]
+                ]
+            });
+
         });
+    </script>
 
-    });
-</script>
-
-<script>
+    <script>
     $(function () {
         $('#purchaseRequestId').val(@ViewBag.Pid);
     })
-</script>
+    </script>

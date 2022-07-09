@@ -212,7 +212,7 @@ namespace issConstructions.Controllers
 
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",purchaseRequest.RequestID);
             }
             catch (Exception ex)
             {

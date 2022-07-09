@@ -11,18 +11,18 @@ using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
-    public class PurchaseOrderTablesController : Controller
+    public class PurchaseEntryTablesController : Controller
     {
         private issDB db = new issDB();
 
-        // GET: PurchaseOrderTables
+        // GET: PurchaseEntryTables
         public ActionResult Index(int Id)
         {
-             ViewBag.pId = Id;
-            var purchaseOrder = db.PurchaseOrders.Where(x => x.ID == Id).FirstOrDefault();
-            if (purchaseOrder != null)
+            ViewBag.pId = Id;
+            var purchaseEntries = db.purchaseEntries.Where(x => x.ID == Id).FirstOrDefault();
+            if (purchaseEntries != null)
             {
-                ViewBag.ProjectName = db.siteDetails.Where(x => x.ID == purchaseOrder.ProjectId).FirstOrDefault();
+                ViewBag.ProjectName = db.siteDetails.Where(x => x.ID == purchaseEntries.ProjectId).FirstOrDefault();
                 if (ViewBag.ProjectName == null)
                 {
                     ViewBag.ProjectName = "Project 1";
@@ -31,7 +31,7 @@ namespace issConstructions.Controllers
                 else ViewBag.ProjectName = ViewBag.ProjectName.SiteName;
 
 
-                ViewBag.supplierName = db.supplierMasters.Where(x => x.ID == purchaseOrder.SupplierId).FirstOrDefault();
+                ViewBag.supplierName = db.supplierMasters.Where(x => x.ID == purchaseEntries.SupplierId).FirstOrDefault();
                 if (ViewBag.supplierName == null)
                 {
                     ViewBag.supplierName = "Supplier 1";
@@ -45,108 +45,109 @@ namespace issConstructions.Controllers
                 ViewBag.ProjectName = "Project 1";
                 ViewBag.supplierName = "Supplier 1";
             }
-           
-           
-            var purchaseOrderTables = db.purchaseOrderTables.Include(p => p.Product).Where(p => p.purchaseRequestId == Id);
-            return View(purchaseOrderTables.ToList());
+
+            var purchaseEntryTables = db.purchaseEntryTables.Include(p => p.Product).Where(p => p.purchaseRequestId == Id);
+            return View(purchaseEntryTables.ToList());
+
         }
 
-        // GET: PurchaseOrderTables/Details/5
+        // GET: PurchaseEntryTables/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PurchaseOrderTable purchaseOrderTable = db.purchaseOrderTables.Find(id);
-            if (purchaseOrderTable == null)
+            PurchaseEntryTable purchaseEntryTable = db.purchaseEntryTables.Find(id);
+            if (purchaseEntryTable == null)
             {
                 return HttpNotFound();
             }
-            return View(purchaseOrderTable);
+            return View(purchaseEntryTable);
         }
 
-        // GET: PurchaseOrderTables/Create
+        // GET: PurchaseEntryTables/Create
         public ActionResult Create(int id)
         {
             ViewBag.PId = id;
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName");
             return View();
+            
         }
 
-        // POST: PurchaseOrderTables/Create
+        // POST: PurchaseEntryTables/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,purchaseRequestId,productId,Description,Tax,Rate,Quantity,Amount,TaxAmount,TotalAmount,discountPercent,discountAmount,ProductNo,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseOrderTable purchaseOrderTable)
+        public ActionResult Create([Bind(Include = "ID,purchaseRequestId,productId,Description,Tax,Rate,Quantity,Amount,TaxAmount,TotalAmount,discountPercent,discountAmount,ProductNo,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseEntryTable purchaseEntryTable)
         {
             if (ModelState.IsValid)
             {
-                db.purchaseOrderTables.Add(purchaseOrderTable);
+                db.purchaseEntryTables.Add(purchaseEntryTable);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseOrderTable.productId);
-            return View(purchaseOrderTable);
+            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseEntryTable.productId);
+            return View(purchaseEntryTable);
         }
 
-        // GET: PurchaseOrderTables/Edit/5
+        // GET: PurchaseEntryTables/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PurchaseOrderTable purchaseOrderTable = db.purchaseOrderTables.Find(id);
-            if (purchaseOrderTable == null)
+            PurchaseEntryTable purchaseEntryTable = db.purchaseEntryTables.Find(id);
+            if (purchaseEntryTable == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseOrderTable.productId);
-            return View(purchaseOrderTable);
+            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseEntryTable.productId);
+            return View(purchaseEntryTable);
         }
 
-        // POST: PurchaseOrderTables/Edit/5
+        // POST: PurchaseEntryTables/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,purchaseRequestId,productId,Description,Tax,Rate,Quantity,Amount,TaxAmount,TotalAmount,discountPercent,discountAmount,ProductNo,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseOrderTable purchaseOrderTable)
+        public ActionResult Edit([Bind(Include = "ID,purchaseRequestId,productId,Description,Tax,Rate,Quantity,Amount,TaxAmount,TotalAmount,discountPercent,discountAmount,ProductNo,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseEntryTable purchaseEntryTable)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(purchaseOrderTable).State = EntityState.Modified;
+                db.Entry(purchaseEntryTable).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", purchaseOrderTable.purchaseRequestId );
+                return RedirectToAction("Index", purchaseEntryTable.purchaseRequestId);
             }
-            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseOrderTable.productId);
-            return View(purchaseOrderTable);
+            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseEntryTable.productId);
+            return View(purchaseEntryTable);
         }
 
-        // GET: PurchaseOrderTables/Delete/5
+        // GET: PurchaseEntryTables/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PurchaseOrderTable purchaseOrderTable = db.purchaseOrderTables.Find(id);
-            if (purchaseOrderTable == null)
+            PurchaseEntryTable purchaseEntryTable = db.purchaseEntryTables.Find(id);
+            if (purchaseEntryTable == null)
             {
                 return HttpNotFound();
             }
-            return View(purchaseOrderTable);
+            return View(purchaseEntryTable);
         }
 
-        // POST: PurchaseOrderTables/Delete/5
+        // POST: PurchaseEntryTables/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PurchaseOrderTable purchaseOrderTable = db.purchaseOrderTables.Find(id);
-            db.purchaseOrderTables.Remove(purchaseOrderTable);
+            PurchaseEntryTable purchaseEntryTable = db.purchaseEntryTables.Find(id);
+            db.purchaseEntryTables.Remove(purchaseEntryTable);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -215,10 +215,11 @@
                         TaxId(taxAmount);
                     })
 
+                   
 
                     $("#disPercent").blur(function () {
                         debugger
-
+                        var grandTotal = $('#ProTotal').val();
                         var disPercentage = $('#disPercent').val();
                         var calProPer = parseFloat((disPercentage / 100) * grandTotal);
                         $('#disAmount').val(calProPer.toFixed());
@@ -233,21 +234,11 @@
                         var TotAmt = $('#ProGrandTotal').val();
                         var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
                         $('#TaxPamt').val(calProPer1.toFixed());
-                        var Netamt = parseFloat(TotAmt + calProPer1);
+                        var Netamt = parseFloat(TotAmt) + parseFloat(calProPer1);
                         $('#netAmt').val(Netamt.toFixed());
                         
                     });
-                    $("#TaxP").blur(function () {
-                        debugger
-
-                        var taxPercentage = $('#TaxP').val();
-                        var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
-                        $('#TaxPamt').val(calProPer1.toFixed());
-                        var Netamt = parseFloat(TotAmt + calProPer1);
-                        $('#netAmt').val(Netamt.toFixed());
-                    });
-
-                })
-
+                  
+              
                 });
             </script>
