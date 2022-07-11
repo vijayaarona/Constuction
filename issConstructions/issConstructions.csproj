@@ -154,6 +154,7 @@
     <Compile Include="Controllers\GodownsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IssuesController.cs" />
+    <Compile Include="Controllers\IssueTablesController.cs" />
     <Compile Include="Controllers\MyModel.cs" />
     <Compile Include="Controllers\paymentEntriesController.cs" />
     <Compile Include="Controllers\ProductMastersController.cs" />
@@ -211,6 +212,22 @@
     <Compile Include="Migrations\202207080432213_ConM9.cs" />
     <Compile Include="Migrations\202207080432213_ConM9.Designer.cs">
       <DependentUpon>202207080432213_ConM9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110538074_ConM10.cs" />
+    <Compile Include="Migrations\202207110538074_ConM10.Designer.cs">
+      <DependentUpon>202207110538074_ConM10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110622277_ConM11.cs" />
+    <Compile Include="Migrations\202207110622277_ConM11.Designer.cs">
+      <DependentUpon>202207110622277_ConM11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110744549_ConM12.cs" />
+    <Compile Include="Migrations\202207110744549_ConM12.Designer.cs">
+      <DependentUpon>202207110744549_ConM12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110755481_ConM13.cs" />
+    <Compile Include="Migrations\202207110755481_ConM13.Designer.cs">
+      <DependentUpon>202207110755481_ConM13.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
@@ -379,6 +396,11 @@
     <Content Include="Views\PurchaseEntryTables\Details.cshtml" />
     <Content Include="Views\PurchaseEntryTables\Edit.cshtml" />
     <Content Include="Views\PurchaseEntryTables\Index.cshtml" />
+    <Content Include="Views\IssueTables\Create.cshtml" />
+    <Content Include="Views\IssueTables\Delete.cshtml" />
+    <Content Include="Views\IssueTables\Details.cshtml" />
+    <Content Include="Views\IssueTables\Edit.cshtml" />
+    <Content Include="Views\IssueTables\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -440,6 +462,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207080432213_ConM9.resx">
       <DependentUpon>202207080432213_ConM9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110538074_ConM10.resx">
+      <DependentUpon>202207110538074_ConM10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110622277_ConM11.resx">
+      <DependentUpon>202207110622277_ConM11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110744549_ConM12.resx">
+      <DependentUpon>202207110744549_ConM12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110755481_ConM13.resx">
+      <DependentUpon>202207110755481_ConM13.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -180,8 +180,6 @@ namespace issConstructions.Controllers
             else proNo = 1;
             ViewBag.ProductNo = proNo;
 
-
-
             return View();
         }
         // POST: PurchaseRequests/Create

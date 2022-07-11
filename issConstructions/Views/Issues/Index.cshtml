@@ -20,28 +20,49 @@
         color: white;
         float: right;
         margin: 10px;
-        border-radius: 3px;
+        border-radius: 10px;
         text-decoration: none;
     }
 
         .addNew:hover {
             text-decoration: none;
         }
+
+    table td {
+        font-size: 13px;
+    }
+
+    table th {
+        font-size: 13px;
+    }
 </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <div class="panel-group">
     <div class="panel panel-heading header">
-        Issues - Index Page
+        Issue Entry - Index Page
     </div>
-    <div class="panel panel-body">
+    <div class="panel panel-body" style="overflow:auto">
         @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
         <table class="table" id="AGMaster">
             <thead>
                 <tr>
                     <th>
-                        <label>Issue Date</label>
+                        <label>Issue ID</label>
                     </th>
                     <th>
-                        <label>Category</label>
+                        <label>Issue Date</label>
+                    </th>
+
+                    <th>
+                        <label>From Location</label>
+                    </th>
+                    <th>
+                        <label>To Location</label>
                     </th>
                     <th>
                         <label>Project Name</label>
@@ -49,48 +70,57 @@
                     <th>
                         <label>Site Name</label>
                     </th>
-
                     <th>
-                        <label>Net Amount</label>
+                        <label>Amount</label>
                     </th>
+                    
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IssueID)
+                    </td>
+                    @if (@item.IssuesDate != null)
+                    {
+                        <td>
+                            @item.IssuesDate.Value.ToShortDateString()
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
 
-                        @if (@item.IssuesDate != null)
-                        {
-                            <td>
-                                @item.IssuesDate.Value.ToShortDateString()
-                            </td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SiteDetails.ProjectId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SiteDetails.SiteId)
-                        </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GName.godownName)
+                    </td>
 
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteNameId)
+                    </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.netAmount)
-                        </td>
-                        <td>
-                            @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |*@
-                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                        </td>
-                    </tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.netAmount)
+                    </td>
+                    
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })|
+                        <a href="@Url.Content("~/IssueTables/Index/"+item.ID)">Edit Items</a>
+
+                    </td>
+                </tr>
 
                 }
             </tbody>

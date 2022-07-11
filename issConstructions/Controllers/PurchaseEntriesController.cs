@@ -46,6 +46,7 @@ namespace issConstructions.Controllers
                 Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.CategoryId = Category;
+
             List<SelectListItem> Supplier = new List<SelectListItem>();
             Supplier.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.supplierMasters.ToList())
@@ -53,6 +54,7 @@ namespace issConstructions.Controllers
                 Supplier.Add(new SelectListItem { Text = item.Suppliername.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SupplierId = Supplier;
+
             List<SelectListItem> SupplierAddress = new List<SelectListItem>();
             SupplierAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.supplierMasters.ToList())
@@ -60,6 +62,7 @@ namespace issConstructions.Controllers
                 SupplierAddress.Add(new SelectListItem { Text = item.address.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SupplierAddressId = SupplierAddress;
+
 
             List<SelectListItem> Project = new List<SelectListItem>();
             Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -75,6 +78,7 @@ namespace issConstructions.Controllers
                 Site.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteId = Site;
+
             List<SelectListItem> SiteAddress = new List<SelectListItem>();
             SiteAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
@@ -82,6 +86,7 @@ namespace issConstructions.Controllers
                 SiteAddress.Add(new SelectListItem { Text = item.SiteAddress.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteAddressId = SiteAddress;
+
             //Product
             var listItems = new SelectList(db.productMasters, "ID", "ProductName");
             List<SelectListItem> Product = new List<SelectListItem>();
@@ -90,6 +95,7 @@ namespace issConstructions.Controllers
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
             }
             ViewBag.ProductId = Product;
+
             //Purchase Type
 
             List<SelectListItem> type = new List<SelectListItem>();

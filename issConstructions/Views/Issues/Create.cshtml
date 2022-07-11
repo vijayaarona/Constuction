@@ -59,11 +59,31 @@
                     <label>Purchase Request Date</label>
                     @Html.TextBoxFor(x => x.IssuesDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
                 </div>
+
                 <div class="form-group col-md-6">
-                    <label>Category</label>
-                    @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", @id = "categoryId" })
-                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                    <label>Issue Type</label>
+                    <select class="form-control" id="TypeId" name="IssueType">
+                        <option>Godown To Site</option>
+                        <option>Site To Site</option>
+                        <option>Site To Godown</option>
+                    </select>
                 </div>
+                @*<div class="form-group col-md-6">
+            <label>Category</label>
+            @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", @id = "categoryId" })
+            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+        </div>*@
+                <div class="form-group col-md-6">
+                    <label>From Location</label>
+                    @Html.DropDownList("GNameId", null, htmlAttributes: new { @class = "form-control", @id = "GNameId" })
+                    @Html.ValidationMessageFor(model => model.GNameId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    <label>To Location</label>
+                    @Html.DropDownList("SiteNameId", null, htmlAttributes: new { @class = "form-control", @id = "SiteNameId" })
+                    @Html.ValidationMessageFor(model => model.SiteNameId, "", new { @class = "text-danger" })
+                </div>
+
                 <div class="form-group col-md-6">
                     <label>Project Name</label>
                     @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
@@ -137,7 +157,7 @@
 
                                             <div class="form-group col-md-6">
                                                 <label style="width:352px; height:27px">Rate of Tax</label><br />
-                                                <input type="text" readonly="readonly" id="TaxId" name="description" size="50" />
+                                                <input type="text" id="TaxId" name="description" size="50" />
                                             </div>
                                             <div class="form-group col-md-6" style="min-height:58px">
                                                 <label style="width:352px; height:27px">Description</label><br />
@@ -217,7 +237,7 @@
             ProductVal(categoryName);
         })
 
-        $("#Product").change(function () {
+        $("#ProductVal").change(function () {
             var taxAmount = $(this).find('option:selected').val();
             TaxId(taxAmount);
         })
@@ -332,12 +352,12 @@
         debugger
         let list = {};
          list.productId = $('#Product').val();
-        list.CategoryId = $('#Category').val();
+         list.CategoryId = $('#Category').val();
          list.productText = $('#Product option:selected').text();
-        list.CategoryText = $('#Category option:selected').text();
+         list.CategoryText = $('#Category option:selected').text();
          list.Description = $('#Description').val();
          list.Tax = $('#TaxId').val();
-        list.Rate = $('#ItemRate').val();
+         list.Rate = $('#ItemRate').val();
          list.Quantity = $('#Quantity').val();
          list.Amount = $('#Amount').val();
          list.TaxAmount = $('#TaxAmt').val();;
