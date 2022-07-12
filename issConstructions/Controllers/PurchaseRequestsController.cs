@@ -452,8 +452,8 @@ namespace issConstructions.Controllers
         {
             try
             {
-
-                List<PurchaseRequestTable> purchaseRequestTables = db.purchaseRequestTables.Where(x => x.purchaseRequestId == invoice).ToList();
+                var pr = db.purchaseRequest.Where(x => x.ID == invoice).FirstOrDefault();
+                List<PurchaseRequestTable> purchaseRequestTables = db.purchaseRequestTables.Where(x => x.purchaseRequestId == pr.RequestID).ToList();
                 return Json(purchaseRequestTables, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
