@@ -20,8 +20,9 @@ namespace issConstructions.Controllers
         public ActionResult Index()
         {
             
-            var issues = db.issues.Include(p => p.Category).Include(p => p.SiteDetails);
+            var issues = db.issues.Include(p => p.GName).Include(p => p.SiteDetails);
             return View(issues.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
+
         }
 
         // GET: Issues/Details/5
@@ -31,11 +32,86 @@ namespace issConstructions.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Issues issues = db.issues.Where(x => x.isDeleted == false && x.ID == id).FirstOrDefault();
+            Issues issues = db.issues .Where(x => x.isDeleted == false && x.ID == id).FirstOrDefault();
             if (issues == null)
             {
                 return HttpNotFound();
             }
+            //Category
+            List<SelectListItem> Category = new List<SelectListItem>();
+            Category.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.categoryMasters.ToList())
+            {
+                Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.CategoryId = Category;
+            //From Location
+            List<SelectListItem> GName = new List<SelectListItem>();
+            GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.godowns.ToList())
+            {
+                GName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
+            }
+            ViewBag.GNameId = GName;
+            //To Location
+            List<SelectListItem> SiteName = new List<SelectListItem>();
+            SiteName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.siteDetails.ToList())
+            {
+                SiteName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.SiteNameId = SiteName;
+            //Project
+            List<SelectListItem> Project = new List<SelectListItem>();
+            Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.siteDetails.ToList())
+            {
+                Project.Add(new SelectListItem { Text = item.ProjectName.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.ProjectId = Project;
+            //SiteName
+            List<SelectListItem> Site = new List<SelectListItem>();
+            Site.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.siteDetails.ToList())
+            {
+                Site.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.SiteId = Site;
+            //Site Address
+            List<SelectListItem> SiteAddress = new List<SelectListItem>();
+            SiteAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.siteDetails.ToList())
+            {
+                SiteAddress.Add(new SelectListItem { Text = item.SiteAddress.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.SiteAddressId = SiteAddress;
+            //Product
+            var listItems = new SelectList(db.productMasters, "ID", "ProductName");
+            List<SelectListItem> Product = new List<SelectListItem>();
+            foreach (var item in db.productMasters.ToList())
+            {
+                Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
+            }
+            ViewBag.ProductId = Product;
+            //Tax
+            var listsItem = new SelectList(db.productMasters, "ID", "Tax");
+            List<SelectListItem> Tax = new List<SelectListItem>();
+            foreach (var items in db.productMasters.ToList())
+            {
+                Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
+            }
+            ViewBag.ProductTax = Tax;
+
+            //product No
+            int proNo = 0;
+            var productNo = db.issues.Where(p => p.IssueID != null).ToList();
+
+            if (productNo.Count > 0)
+            {
+                proNo = productNo.Max(x => x.IssueID);
+            }
+            else proNo = 1;
+            ViewBag.ProductNo = proNo;
             return View(issues);
         }
 
@@ -49,6 +125,7 @@ namespace issConstructions.Controllers
                 Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.CategoryId = Category;
+
             List<SelectListItem> Project = new List<SelectListItem>();
             Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
@@ -77,8 +154,43 @@ namespace issConstructions.Controllers
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
             }
             ViewBag.ProductId = Product;
+
+            List<SelectListItem> GName= new List<SelectListItem>();
+            GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.godowns.ToList())
+            {
+                GName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
+            }
+            ViewBag.GNameId = GName;
            
-            //ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName");
+            List<SelectListItem> SiteDetails = new List<SelectListItem>();
+            SiteDetails.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.siteDetails.ToList())
+            {
+                SiteDetails.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.SiteNameId = SiteDetails;
+            return View();
+
+            //Tax
+            var listsItem = new SelectList(db.productMasters, "ID", "Tax");
+            List<SelectListItem> Tax = new List<SelectListItem>();
+            foreach (var items in db.productMasters.ToList())
+            {
+                Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
+            }
+            ViewBag.ProductTax = Tax;
+            //product No
+            int proNo = 0;
+            var productNo = db.issues.Where(p => p.IssueID != null).ToList();
+
+            if (productNo.Count > 0)
+            {
+                proNo = productNo.Max(x => x.IssueID);
+            }
+            else proNo = 1;
+            ViewBag.IssueID = proNo;
+            
             return View();
         }
 
@@ -87,25 +199,50 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,IssuesDate,CategoryId,ProjectId,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] Issues issues)
+        public ActionResult Create([Bind(Include = "ID,IssuesDate,ProjectId,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,GNameId,SiteNameId,IssueID")] Issues issues)
         {
-            if (ModelState.IsValid)
+
+            try
             {
+                int invoiceNo = 1;
+
                 issues.CreatedDate = DateTime.UtcNow;
-                
+                issues .UpdatedDate = DateTime.UtcNow;
+
+                var issue = db.issues.Where(x => x.isDeleted == false).ToList();
+                if (issue != null && issue.Count > 0)
+                {
+                    invoiceNo = issue.Max(x => x.IssueID );
+                    if (invoiceNo != 0)
+                    {
+                        invoiceNo = invoiceNo + 1;
+                    }
+                }
+                issues.IssueID  = invoiceNo;
                 db.issues.Add(issues);
+
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", issues .IssueID);
+            }
+            catch (Exception ex)
+            {
+
+
+                
+                ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
+                ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "SiteName",issues.SiteNameId );
+                ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.ProjectId);
+                ViewBag.ProductId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.ProjectId);
+                ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName",issues.SiteId);
+                ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", issues.SiteAddressId);
+
+                return View(issues);
+
             }
 
-            //ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issues.CategoryId);
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issues.CategoryId);
-            ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.ProjectId);
-            ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SiteId);
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", issues.SiteAddressId);
-            return View(issues);
         }
-
+            
         [HttpPost]
         public JsonResult SiteId(int site_NameId)
         {
@@ -117,6 +254,7 @@ namespace issConstructions.Controllers
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
+      
         [HttpPost]
         public JsonResult TaxId(int tax_Amount)
         {
@@ -152,7 +290,7 @@ namespace issConstructions.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issues.CategoryId);
+           // ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issues.CategoryId);
             return View(issues);
         }
 
@@ -161,7 +299,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,IssuesDate,CategoryId,ProjectId,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] Issues issues)
+        public ActionResult Edit([Bind(Include = "ID,IssuesDate,ProjectId,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,GNameId,SiteNameId,IssueID")] Issues issues)
         {
             if (ModelState.IsValid)
             {
@@ -171,7 +309,7 @@ namespace issConstructions.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issues.CategoryId);
+           // ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issues.CategoryId);
             return View(issues);
         }
 
@@ -216,14 +354,14 @@ namespace issConstructions.Controllers
             try
             {
                 int maxValue = 0;
-                var isnull = db.issueTables.Where(x => x.ID != null).ToList();
+                var isnull = db.issues.Where(x => x.ID != null).ToList();
                 if (isnull.Count == 0)
                 {
                     maxValue = 1;
                 }
                 else
                 {
-                    maxValue = db.issueTables.Max(x => x.issueId);
+                    maxValue = db.issues.Max(x => x.ID );
                     maxValue += 1;
 
                 }
@@ -273,6 +411,24 @@ namespace issConstructions.Controllers
                 return Json("data", JsonRequestBehavior.AllowGet);
             }
             return Json("data", JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public JsonResult getListOfPurchaes(int invoice)
+        {
+            try
+            {
+
+                List<IssueTable> issueTables = db.issueTables.Where(x => x.issueId == invoice).ToList();
+                return Json(issueTables, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json("data", JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }

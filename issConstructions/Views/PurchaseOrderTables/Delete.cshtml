@@ -4,149 +4,293 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>PurchaseOrderTable</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Product.ProductName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Product.ProductName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.purchaseRequestId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.purchaseRequestId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Tax)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tax)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Rate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TaxAmount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TaxAmount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalAmount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalAmount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.discountPercent)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.discountPercent)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.discountAmount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.discountAmount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ProductNo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProductNo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.isDeleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.isDeleted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdateBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdateBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedDate)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+<style>
+    #AccountGroupMaster {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
     }
+
+        #AccountGroupMaster td, #customers th {
+            border: 1px solid #ddd;
+            padding: 6px;
+        }
+
+        #AccountGroupMaster tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #AccountGroupMaster tr:hover {
+            background-color: #ddd;
+        }
+
+        #AccountGroupMaster th {
+            border: 1px solid #ddd;
+            padding: 6px;
+            text-align: center;
+        }
+
+    #btn-edit a:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+    #btn-edit a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+        float: right;
+    }
+
+    th {
+        width: 43% !important;
+    }
+</style>
+
+
+<div class="panel-group">
+
+    <div class="panel panel-heading header">
+        Purchase Order -  Item Delete 
+
+    </div>
+    <div class="panel panel-body">
+
+        <p style="font-weight:bold">Are you sure you want to delete this?</p>
+
+
+        <table id="AccountGroupMaster">
+
+            <tr>
+                <th style=width: 43%;">Request ID </th>
+                <td>@Html.DisplayFor(model => model.purchaseRequestId)</td>
+            </tr>
+
+            <tr>
+                <th style=width: 43%;"> Product Name </th>
+                <td>@Html.DisplayFor(model => model.Product.ProductName)</td>
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td> @Html.DisplayFor(model => model.Description)</td>
+            </tr>
+
+            <tr>
+                <th> Quantity</th>
+                <td>  @Html.DisplayFor(model => model.Quantity)</td>
+            </tr>
+
+            <tr>
+                <th> Rate</th>
+                <td>   @Html.DisplayFor(model => model.Rate)</td>
+            </tr>
+
+            <tr>
+                <th> Amount</th>
+                <td>  @Html.DisplayFor(model => model.Amount)</td>
+            </tr>
+
+            <tr>
+                <th> Discount (%)</th>
+                <td>  @Html.DisplayFor(model => model.discountPercent)</td>
+            </tr>
+
+            <tr>
+                <th> Discount Amount</th>
+                <td>  @Html.DisplayFor(model => model.discountAmount)</td>
+            </tr>
+
+            <tr>
+                <th> Tax</th>
+                <td>  @Html.DisplayFor(model => model.Tax)</td>
+            </tr>
+
+            <tr>
+                <th> Tax Amount</th>
+                <td>  @Html.DisplayFor(model => model.TaxAmount)</td>
+            </tr>
+
+            <tr>
+                <th> Total Amount</th>
+                <td>  @Html.DisplayFor(model => model.TotalAmount)</td>
+            </tr>
+
+        </table>
+        <hr style="text-decoration:none" />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" />
+        @Html.ActionLink("Back", "Index", "PurchaseOrderTables", new { id = Model.purchaseRequestId }, htmlAttributes: new { @class = "btn btn-default" })
+    </div>
+        }
+
+    </div>
+
+
+
 </div>
+
+@*<h2>Delete</h2>
+
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>PurchaseRequestTable</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Product.ProductName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Product.ProductName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.purchaseRequestId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.purchaseRequestId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Tax)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Tax)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Rate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Rate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Amount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Amount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TaxAmount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaxAmount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TotalAmount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.discountPercent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.discountPercent)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.discountAmount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.discountAmount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductNo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProductNo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.isDeleted)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.isDeleted)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdateBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UpdateBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UpdatedDate)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index", new { id = Model.purchaseRequestId })
+            </div>
+        }
+    </div>*@

@@ -103,109 +103,15 @@
                     @Html.ValidationMessageFor(model => model.ProductNo, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <button type="button" style="float:right" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Item</button>
-            <br /><br />
-            <div class="itemtable">
-                <div class="itemtable">
-                    <table class="create" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Sl.No</th>
-                                <th>Item Name</th>
-                                <th>Rate Of Tax</th>
-                                <th>Description</th>
-                                <th>Rate</th>
-                                <th>Quantity</th>
-                                <th>Amount</th>
-                                <th>Discount Amount</th>
-                                <th>Tax Amount</th>
-                                <th>Total Amount</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tblpurchaserequest"></tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content" style="background-color:#ebcece">
-                        <div class="modal-body">
-                            <div class="panel-group">
-                                <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
-                                    Add Item
-                                </div>
-                                <div class="panel panel-body" style="font-size:15px;font-family:Calibri">
-                                    <div class="row">
-                                        <form action="createitem">
-                                            <div class="form-group col-md-6">
-                                                <label>Product Name</label><br />
-                                                <select id="Product" name="" style="width:352px; height:27px">
-                                                    <option value="0">Please Select</option>
-                                                    @*@foreach (var item in @ViewBag.productId)
-                                                    {
-                                                        <option value="@item.Value">@item.Text</option>
-                                                    }*@
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Rate of Tax</label><br />
-                                                <input type="text" readonly="readonly" id="TaxId" name="description" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6" style="min-height:58px">
-                                                <label style="width:352px; height:27px">Description</label><br />
-                                                <input type="text" id="Description" name="description" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Rate</label><br />
-                                                <input type="text" id="Rate" name="Rate" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Quantity</label><br />
-                                                <input type="text" id="Quantity" name="Quantity" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Discount Percent</label><br />
-                                                <input type="text" id="discountPercent" name="discountPercent" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Amount</label><br />
-                                                <input type="text" readonly="readonly" id="Amount" name="Amount" size="50" />
-                                            </div>
 
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Discount Amount</label><br />
-                                                <input type="text" id="discountAmount" name="discountAmount" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Tax Amount</label><br />
-                                                <input type="text" id="TaxAmt" name="TaxAmt" size="50" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label style="width:352px; height:27px">Total Amount</label><br />
-                                                <input type="text" id="TotalAmt" readonly="readonly" name="TotalAmt" size="50" />
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-save="modal" id="btnSave" data-dismiss="modal">Add</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancel()">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br />
+
             <div class="row">
                 <div class="form-group col-md-2">
-                    <label>Grand Total : </label>
+                    <label>Total Amount : </label>
                 </div>
                 <div class="form-group col-md-3">
-                    @Html.EditorFor(model => model.grandTotal, new { htmlAttributes = new { @class = "form-control", @id = "ProGrandTotal" } })
-                    @Html.ValidationMessageFor(model => model.grandTotal, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control", @id = "ProTotal" } })
+                    @Html.ValidationMessageFor(model => model.TotalAmt, "", new { @class = "text-danger" })
                     @*<input type="text" id="ProGrandTotal" name="ProGrandTotal" size="50" />*@
                 </div>
                 @*<label id="ProGrandTotal"></label>*@
@@ -231,6 +137,39 @@
                     @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
                 </div>
             </div>
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Grand Total : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.grandTotal, new { htmlAttributes = new { @class = "form-control", @id = "ProGrandTotal" } })
+                    @Html.ValidationMessageFor(model => model.grandTotal, "", new { @class = "text-danger" })
+                    @*<input type="text" id="ProGrandTotal" name="ProGrandTotal" size="50" />*@
+                </div>
+                @*<label id="ProGrandTotal"></label>*@
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Tax (%) : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control", @id = "TaxP" } })
+                    @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Tax Amount : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.TaxAmt, new { htmlAttributes = new { @class = "form-control", @id = "TaxPamt" } })
+                    @Html.ValidationMessageFor(model => model.TaxAmt, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
+                </div>
+            </div>
+
             <div class="row">
                 <div class="form-group col-md-2">
                     <label>Net Amount : </label>
@@ -242,7 +181,7 @@
                     @*<input type="text" id="netAmt" name="netAmt" size="50" />*@
                 </div>
             </div>
-        
+
             <div class="form-group" style="float:right">
                 <input type="submit" value="Submit" class="btn btn-default" />
                 @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
@@ -254,5 +193,53 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script>
+    let sNo = 1;
+    var lstItems = [];
+    var ntAmt;
+    $(document).ready(function () {
 
-    <script src=@Url.Content("https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js")></script>
+
+        $("#categoryId").change(function () {
+            var supNameId = $(this).find('option:selected').val();
+            SupplierId(supNameId);
+        })
+        $("#SupplierId").change(function () {
+            var supAddressId = $(this).find('option:selected').val();
+            SupplierAddressId(supAddressId);
+        })
+        $("#ProjectId").change(function () {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+        $("#Product").change(function () {
+            var taxAmount = $(this).find('option:selected').val();
+            TaxId(taxAmount);
+        })
+        
+
+        $("#disPercent").blur(function () {
+            debugger
+            var grandTotal = $('#ProTotal').val();
+            var disPercentage = $('#disPercent').val();
+            var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+            $('#disAmount').val(calProPer.toFixed());
+            var TotAmt = parseFloat(grandTotal - calProPer);
+            $('#ProGrandTotal').val(TotAmt.toFixed());
+        });
+
+        $("#TaxP").blur(function () {
+            debugger
+
+            var taxPercentage = $('#TaxP').val();
+            var TotAmt = $('#ProGrandTotal').val();
+            var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+            $('#TaxPamt').val(calProPer1.toFixed());
+            var Netamt = parseFloat(TotAmt) + parseFloat(calProPer1);
+            $('#netAmt').val(Netamt.toFixed());
+
+        });
+
+
+ });
+</script>

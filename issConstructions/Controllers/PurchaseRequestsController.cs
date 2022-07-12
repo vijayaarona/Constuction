@@ -180,8 +180,6 @@ namespace issConstructions.Controllers
             else proNo = 1;
             ViewBag.ProductNo = proNo;
 
-
-
             return View();
         }
         // POST: PurchaseRequests/Create
@@ -212,7 +210,7 @@ namespace issConstructions.Controllers
 
 
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",purchaseRequest.RequestID);
             }
             catch (Exception ex)
             {

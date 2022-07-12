@@ -201,18 +201,18 @@
             <br />
             <div class="row">
                 <div class="form-group col-md-2">
-                    <label>Grand Total : </label>
+                    <label>Total Amount: </label>
                 </div>
                 <div class="form-group col-md-3">
-                    @Html.EditorFor(model => model.grandTotal, new { htmlAttributes = new { @class = "form-control", @id = "ProGrandTotal" } })
-                    @Html.ValidationMessageFor(model => model.grandTotal, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control", @id = "ProTotal" } })
+                    @Html.ValidationMessageFor(model => model.TotalAmt, "", new { @class = "text-danger" })
                     @*<input type="text" id="ProGrandTotal" name="ProGrandTotal" size="50" />*@
                 </div>
                 @*<label id="ProGrandTotal"></label>*@
             </div>
             <div class="row">
                 <div class="form-group col-md-2">
-                    <label>Discount Percent : </label>
+                    <label>Discount(%): </label>
                 </div>
                 <div class="form-group col-md-3">
                     @Html.EditorFor(model => model.discountPercentage, new { htmlAttributes = new { @class = "form-control", @id = "disPercent" } })
@@ -231,6 +231,38 @@
                     @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
                 </div>
             </div>
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Grand Total : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.grandTotal, new { htmlAttributes = new { @class = "form-control", @id = "ProGrandTotal" } })
+                    @Html.ValidationMessageFor(model => model.grandTotal, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Tax (%) : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control", @id = "TaxP" } })
+                    @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Tax Amount : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.TaxAmt, new { htmlAttributes = new { @class = "form-control", @id = "TaxPamt" } })
+                    @Html.ValidationMessageFor(model => model.TaxAmt, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
+                </div>
+            </div>
             <div class="row">
                 <div class="form-group col-md-2">
                     <label>Net Amount : </label>
@@ -242,19 +274,20 @@
                     @*<input type="text" id="netAmt" name="netAmt" size="50" />*@
                 </div>
             </div>
-            @*<div class="row">
-                    <div class="form-group col-md-4">
-                        <label>Net Amount    :</label>
-                        <label id="netAmt"></label>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Request By</label>
 
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Remarks</label>
-                    </div>
-                </div>*@
+            @*<div class="row">
+            <div class="form-group col-md-4">
+                <label>Net Amount    :</label>
+                <label id="netAmt"></label>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Request By</label>
+
+            </div>
+            <div class="form-group col-md-4">
+                <label>Remarks</label>
+            </div>
+        </div>*@
             <div class="form-group" style="float:right">
                 <input type="submit" value="Submit" class="btn btn-default" />
                 @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
@@ -372,13 +405,16 @@
                       $('#SiteId option[value=' + data.SiteId + ']').attr("selected", "selected");
                       $('#SiteAddressId option[value=' + data.SiteAddressId + ']').attr("selected", "selected");
 
-                      //$("#categoryId").append("<option selected value='" + data.ID + "'>" + data.category_Name + "</option>");
-                      //$("#SupplierId").append("<option selected value='" + data.ID + "'>" + data.supplier_name + "</option>");
-                      //$("#SupplierAddressId").append("<option selected value='" + data.ID + "'>" + data.supplier_Address + "</option>");
-                      //$("#ProjectId").append("<option selected value='" + data.ID + "'>" + data.project_Name + "</option>");
-                      //$("#SiteId").append("<option selected value='" + data.ID + "'>" + data.Site_Name + "</option>");
-                      //$("#SiteAddressId").append("<option selected value='" + data.ID + "'>" + data.Site_Address + "</option>");
                       $("#mobileno").val(data.mobileno);
+                      $("#mobileno").val(data.mobileno);
+                      $("#ProTotal").val(data.TotalAmt);
+                      $("#disPercent").val(data.discountPercentage);
+                      $("#disAmount").val(data.dicountAmount);
+                      $("#ProGrandTotal").val(data.grandTotal);
+                      $("#TaxP").val(data.Tax);
+                      $("#TaxPamt").val(data.TaxAmt);
+                      $("#netAmt").val(data.NetAmount);
+                      $("#orderDate").val(data.orderDate);
 
 
                       console.log(result.req);
@@ -388,7 +424,7 @@
                               row += "<tr>"
                               row  += "<td>"+(i + 1)+"</td>"
                               row  += "<td>" + result.req[i].Product.ProductName +"</td>"
-                            
+
                             row  += "<td>" + result.req[i].Product.Tax +"</td>"
                             row  += "<td>" + result.req[i].Description +"</td>"
                             row  += "<td>" + result.req[i].Rate +"</td>"
@@ -667,7 +703,7 @@
                 sNo++;
             }
             console.log(grandTotal);
-            $('#ProGrandTotal').val(grandTotal.toFixed());
+            $('#ProTotal').val(grandTotal.toFixed());
 
             $("#disPercent").blur(function ()
             {
@@ -678,6 +714,17 @@
                 $('#disAmount').val(calProPer.toFixed());
                 var netAmount = parseFloat(grandTotal - calProPer);
                 $('#netAmt').val(netAmount.toFixed());
+                var TotAmt = parseFloat(grandTotal - calProPer);
+                $('#ProGrandTotal').val(TotAmt.toFixed());
+            });
+            $("#TaxP").blur(function () {
+                debugger
+                var taxPercentage = $('#TaxP').val();
+                var TotAmt = $('#ProGrandTotal').val();
+                var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+                $('#TaxPamt').val(calProPer1.toFixed());
+                var NetAmount = parseFloat(TotAmt) + parseFloat(calProPer1);
+                $('#netAmt').val(NetAmount.toFixed());
             });
 
         }

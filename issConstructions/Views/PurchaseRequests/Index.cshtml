@@ -49,9 +49,12 @@
             <thead>
                 <tr>
                     <th>
+                        <label>Request ID</label>
+                    </th>
+                    <th>
                         <label>Request Date</label>
                     </th>
-                    
+
                     <th>
                         <label>Supplier Name</label>
                     </th>
@@ -81,6 +84,9 @@
                 @foreach (var item in Model)
                 {
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestID)
+                    </td>
 
                     @if (@item.RequestDate != null)
                     {
@@ -118,9 +124,8 @@
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID })|
-                        @*@Html.ActionLink("Edit Item", "Index", "PurchaseRequestTables", new { id = item.ID })*@
                         <a href="@Url.Content("~/PurchaseRequestTables/Index/"+item.ID)">Edit Items</a>
-                        @*@Html.ActionLink("Edit Items", "PurchaseRequestTables", "Index", new { id=item.ID})*@
+                       
                     </td>
                 </tr>
 

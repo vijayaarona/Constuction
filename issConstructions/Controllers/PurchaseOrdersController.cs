@@ -97,6 +97,7 @@ namespace issConstructions.Controllers
                 Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
             }
             ViewBag.ProductTax = Tax;
+
             List<SelectListItem> Request = new List<SelectListItem>();
             Request.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.purchaseRequest.ToList())
@@ -113,31 +114,50 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,RequestID,OrderId,ProductNo,OrderDate,CategoryId,SupplierId,SupplierAddressId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseOrder purchaseOrder)
+        public ActionResult Create([Bind(Include = "ID,RequestID,OrderId,ProductNo,OrderDate,CategoryId,SupplierId,SupplierAddressId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TaxAmt,TotalAmt")] PurchaseOrder purchaseOrder)
         {
-            
+            try
+            {
+                int invoiceNo = 1;
+
                 purchaseOrder.CreatedDate = DateTime.UtcNow;
                 purchaseOrder.UpdatedDate = DateTime.UtcNow;
+
+                var purchase = db.purchaseRequest.Where(x => x.isDeleted == false).ToList();
+                if (purchase != null && purchase.Count > 0)
+                {
+                    invoiceNo = purchase.Max(x => x.ID);
+                    if (invoiceNo != 0)
+                    {
+                        invoiceNo = invoiceNo + 1;
+                    }
+                }
+                purchaseOrder.OrderId = invoiceNo;
                 db.PurchaseOrders.Add(purchaseOrder);
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
 
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseOrder.CategoryId);
-            ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseOrder.SupplierId);
-            ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseOrder.SupplierAddressId);
-            ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseOrder.ProjectId);
-            ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
-            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID", purchaseOrder.PurchaseRequest);
-            // ViewBag.ProductId = new SelectList(db.purchaseOrderTables, "ID", "ID");
-            return View(purchaseOrder);
+                ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseOrder.CategoryId);
+                ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseOrder.SupplierId);
+                ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseOrder.SupplierAddressId);
+                ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseOrder.ProjectId);
+                ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
+                ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
+                ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID", purchaseOrder.PurchaseRequest);
+                // ViewBag.ProductId = new SelectList(db.purchaseOrderTables, "ID", "ID");
+                return View(purchaseOrder);
+            }
         }
         //[HttpPost]
         //public JsonResult purchaseReqOrders(int purchaseRequestOrderId)
         //{
         //    if (purchaseRequestOrderId > 0)
         //    {
-        //        var resp = db.purchaseRequest.Where(x => x.ID == purchaseRequestOrderId).FirstOrDefault();
+        //        var resp = db.PurchaseOrders.Where(x => x.ID == purchaseRequestOrderId).FirstOrDefault();
         //        return Json(resp, JsonRequestBehavior.AllowGet);
         //    }
         //    else return Json("NoData", JsonRequestBehavior.AllowGet);
@@ -231,9 +251,9 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,RequestID,OrderId,ProductNo,OrderDate,CategoryId,SupplierId,SupplierAddressId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseOrder purchaseOrder)
+        public ActionResult Edit([Bind(Include = "ID,RequestID,OrderId,ProductNo,OrderDate,CategoryId,SupplierId,SupplierAddressId,ProjectId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TaxAmt,TotalAmt")] PurchaseOrder purchaseOrder)
         {
-            if (ModelState.IsValid)
+            try
             {
                 purchaseOrder.CreatedDate = DateTime.UtcNow;
                 purchaseOrder.UpdatedDate = DateTime.UtcNow;
@@ -241,15 +261,36 @@ namespace issConstructions.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseOrder.CategoryId);
-            ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseOrder.SupplierId);
-            ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseOrder.SupplierAddressId);
-            ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseOrder.ProjectId);
-            ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
-            ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID", purchaseOrder.PurchaseRequest);
-            return View(purchaseOrder);
+            catch (Exception)
+            {
+                ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseOrder.CategoryId);
+                ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseOrder.SupplierId);
+                ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseOrder.SupplierAddressId);
+                ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseOrder.ProjectId);
+                ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
+                ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
+                return View(purchaseOrder);
+
+            }
+
         }
+        //    if (ModelState.IsValid)
+        //    {
+        //        purchaseOrder.CreatedDate = DateTime.UtcNow;
+        //        purchaseOrder.UpdatedDate = DateTime.UtcNow;
+        //        db.Entry(purchaseOrder).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseOrder.CategoryId);
+        //    ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseOrder.SupplierId);
+        //    ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseOrder.SupplierAddressId);
+        //    ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseOrder.ProjectId);
+        //    ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseOrder.SiteId);
+        //    ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseOrder.SiteAddressId);
+        //    ViewBag.RequestID = new SelectList(db.purchaseRequest, "ID", "ID", purchaseOrder.PurchaseRequest);
+        //    return View(purchaseOrder);
+        //}
         // GET: PurchaseOrders/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -295,6 +336,7 @@ namespace issConstructions.Controllers
                 }
                 else maxId += 1;
                 purchaseOrder.purchaseRequestId = maxId;
+                
                 //PurchaseTable purchaseTable = new PurchaseTable();
                 // purchaseTable.ProductId = Guid.Parse(pId);
                 //PurchaseRequestTable.ID = Guid.NewGuid();
@@ -306,7 +348,7 @@ namespace issConstructions.Controllers
                 var id = db.purchaseOrderTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
                 return Json(id.ID, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch (Exception  ex)
             {
 
 

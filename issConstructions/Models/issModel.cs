@@ -43,9 +43,6 @@ namespace issConstructions.Models
         public System.Data.Entity.DbSet<ExtraWorkTable> extraWorkTables { get; set; }
         public System.Data.Entity.DbSet<Godown> godowns { get; set; }
         public System.Data.Entity.DbSet<ToolsTransfer> toolsTransfers { get; set; }
-       
-
-
         
     }
 }

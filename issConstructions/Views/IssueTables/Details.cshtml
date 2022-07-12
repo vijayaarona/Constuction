@@ -1,0 +1,146 @@
+﻿@model issDomain.Models.IssueTable
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>IssueTable</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Category.CategoryName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Product.ProductName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Product.ProductName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.issueId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.issueId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Tax)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Tax)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Rate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Rate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Amount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Amount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TaxAmount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TaxAmount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TotalAmount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ProductNo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ProductNo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.isDeleted)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.isDeleted)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdateBy)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.UpdateBy)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.UpdatedDate)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

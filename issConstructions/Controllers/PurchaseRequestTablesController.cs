@@ -16,7 +16,7 @@ namespace issConstructions.Controllers
         private issDB db = new issDB();
 
         // GET: PurchaseRequestTables
-        public ActionResult Index(int Id = 0)
+        public ActionResult Index(int Id)
         {
             ViewBag.pId = Id;
             var purchaseRequest = db.purchaseRequest.Where(x => x.ID == Id).FirstOrDefault();
@@ -94,6 +94,15 @@ namespace issConstructions.Controllers
         // GET: PurchaseRequestTables/Edit/5
         public ActionResult Edit(int? id)
         {
+            //Tax
+            var listsItem = new SelectList(db.productMasters, "ID", "Tax");
+            List<SelectListItem> Tax = new List<SelectListItem>();
+            foreach (var items in db.productMasters.ToList())
+            {
+                Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
+            }
+            ViewBag.ProductTax = Tax;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

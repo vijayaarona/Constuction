@@ -16,10 +16,38 @@ namespace issConstructions.Controllers
         private issDB db = new issDB();
 
         // GET: PurchaseOrderTables
-        public ActionResult Index(int ID = 0)
+        public ActionResult Index(int Id)
         {
+             ViewBag.pId = Id;
+            var purchaseOrder = db.PurchaseOrders.Where(x => x.ID == Id).FirstOrDefault();
+            if (purchaseOrder != null)
+            {
+                ViewBag.ProjectName = db.siteDetails.Where(x => x.ID == purchaseOrder.ProjectId).FirstOrDefault();
+                if (ViewBag.ProjectName == null)
+                {
+                    ViewBag.ProjectName = "Project 1";
+
+                }
+                else ViewBag.ProjectName = ViewBag.ProjectName.SiteName;
+
+
+                ViewBag.supplierName = db.supplierMasters.Where(x => x.ID == purchaseOrder.SupplierId).FirstOrDefault();
+                if (ViewBag.supplierName == null)
+                {
+                    ViewBag.supplierName = "Supplier 1";
+
+                }
+                else ViewBag.supplierName = ViewBag.supplierName.Suppliername;
+
+            }
+            else
+            {
+                ViewBag.ProjectName = "Project 1";
+                ViewBag.supplierName = "Supplier 1";
+            }
            
-            var purchaseOrderTables = db.purchaseOrderTables.Include(p => p.Product).Where(p => p.purchaseRequestId == ID).ToList();
+           
+            var purchaseOrderTables = db.purchaseOrderTables.Include(p => p.Product).Where(p => p.purchaseRequestId == Id);
             return View(purchaseOrderTables.ToList());
         }
 
@@ -39,9 +67,9 @@ namespace issConstructions.Controllers
         }
 
         // GET: PurchaseOrderTables/Create
-        public ActionResult Create(int pId)
+        public ActionResult Create(int id)
         {
-            ViewBag.PId = pId;
+            ViewBag.PId = id;
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName");
             return View();
         }
@@ -91,7 +119,7 @@ namespace issConstructions.Controllers
             {
                 db.Entry(purchaseOrderTable).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", purchaseOrderTable.purchaseRequestId );
             }
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseOrderTable.productId);
             return View(purchaseOrderTable);

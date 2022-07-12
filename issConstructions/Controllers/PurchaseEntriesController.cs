@@ -46,6 +46,7 @@ namespace issConstructions.Controllers
                 Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.CategoryId = Category;
+
             List<SelectListItem> Supplier = new List<SelectListItem>();
             Supplier.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.supplierMasters.ToList())
@@ -53,6 +54,7 @@ namespace issConstructions.Controllers
                 Supplier.Add(new SelectListItem { Text = item.Suppliername.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SupplierId = Supplier;
+
             List<SelectListItem> SupplierAddress = new List<SelectListItem>();
             SupplierAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.supplierMasters.ToList())
@@ -60,6 +62,7 @@ namespace issConstructions.Controllers
                 SupplierAddress.Add(new SelectListItem { Text = item.address.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SupplierAddressId = SupplierAddress;
+
 
             List<SelectListItem> Project = new List<SelectListItem>();
             Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -75,6 +78,7 @@ namespace issConstructions.Controllers
                 Site.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteId = Site;
+
             List<SelectListItem> SiteAddress = new List<SelectListItem>();
             SiteAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
@@ -82,6 +86,7 @@ namespace issConstructions.Controllers
                 SiteAddress.Add(new SelectListItem { Text = item.SiteAddress.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteAddressId = SiteAddress;
+
             //Product
             var listItems = new SelectList(db.productMasters, "ID", "ProductName");
             List<SelectListItem> Product = new List<SelectListItem>();
@@ -90,6 +95,7 @@ namespace issConstructions.Controllers
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
             }
             ViewBag.ProductId = Product;
+
             //Purchase Type
 
             List<SelectListItem> type = new List<SelectListItem>();
@@ -117,6 +123,7 @@ namespace issConstructions.Controllers
             }
             else proNo = 1;
             ViewBag.ProductNo = proNo;
+
             List<SelectListItem> order = new List<SelectListItem>();
             order.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.PurchaseOrders.ToList())
@@ -182,24 +189,42 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,ProjectId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseEntry purchaseEntry)
+        public ActionResult Create([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,ProjectId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TaxAmt,TotalAmt,PurType")] PurchaseEntry purchaseEntry)
         {
-            if (ModelState.IsValid)
+            try
             {
+                int invoiceNo = 1;
+
                 purchaseEntry.CreatedDate = DateTime.UtcNow;
                 purchaseEntry.UpdatedDate = DateTime.UtcNow;
+
+                var purchase = db.purchaseEntries.Where(x => x.isDeleted == false).ToList();
+                if (purchase != null && purchase.Count > 0)
+                {
+                    invoiceNo = purchase.Max(x => x.ID);
+                    if (invoiceNo != 0)
+                    {
+                        invoiceNo = invoiceNo + 1;
+                    }
+                }
+                purchaseEntry.purchaseId = invoiceNo;
                 db.purchaseEntries.Add(purchaseEntry);
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseEntry.CategoryId);
-            ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseEntry.SupplierId);
-            ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseEntry.SupplierAddressId);
-            ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseEntry.ProjectId);
-            ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseEntry.SiteId);
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseEntry.SiteAddressId);
-            ViewBag.OrderId = new SelectList(db.PurchaseOrders, "ID", "OrderId", purchaseEntry.OrderId);
-            return View(purchaseEntry);
+            catch (Exception ex)
+            {
+
+                ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", purchaseEntry.CategoryId);
+                ViewBag.SupplierId = new SelectList(db.supplierMasters, "ID", "Suppliername", purchaseEntry.SupplierId);
+                ViewBag.SupplierAddressId = new SelectList(db.supplierMasters, "ID", "address", purchaseEntry.SupplierAddressId);
+                ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", purchaseEntry.ProjectId);
+                ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseEntry.SiteId);
+                ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseEntry.SiteAddressId);
+                ViewBag.OrderId = new SelectList(db.PurchaseOrders, "ID", "OrderId", purchaseEntry.OrderId);
+                return View(purchaseEntry);
+            }
         }
         // GET: PurchaseEntries/Edit/5
         public ActionResult Edit(int? id)
@@ -220,14 +245,28 @@ namespace issConstructions.Controllers
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseEntry.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseEntry.SiteAddressId);
             ViewBag.OrderId = new SelectList(db.PurchaseOrders, "ID", "SiteAddress", purchaseEntry.OrderId);
+            
             return View(purchaseEntry);
         }
+        [HttpPost]
+        public JsonResult purchaseReqOrders(int purchaseRequestOrderId)
+        {
+            if (purchaseRequestOrderId > 0)
+            {
+                var res = db.purchaseEntries.Where(x => x.OrderId == purchaseRequestOrderId).FirstOrDefault();
+                var req = db.purchaseEntryTables.Where(x => x.purchaseRequestId == res.ID).ToList();
+                var result = new { res, req };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
         // POST: PurchaseEntries/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,ProjectId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseEntry purchaseEntry)
+        public ActionResult Edit([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,ProjectId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TaxAmt,TotalAmt,PurType")] PurchaseEntry purchaseEntry)
         {
             if (ModelState.IsValid)
             {
@@ -284,10 +323,26 @@ namespace issConstructions.Controllers
         {
             try
             {
+
+                int maxValue = 0;
+                var isnull = db.purchaseEntries.Where(x => x.ID != null).ToList();
+                if (isnull.Count == 0)
+                {
+                    maxValue = 1;
+                }
+                else
+                {
+                    maxValue = db.purchaseEntries.Max(x => x.ID);
+                    maxValue += 1;
+
+                }
+
                 
+                purchaseEntryTable.purchaseRequestId = maxValue;
                 purchaseEntryTable.CreatedDate = DateTime.UtcNow;
                 purchaseEntryTable.UpdatedDate = DateTime.UtcNow;
                 purchaseEntryTable.UpdateBy = Display.Name;
+
 
                 db.purchaseEntryTables.Add(purchaseEntryTable);
                 db.SaveChanges();
