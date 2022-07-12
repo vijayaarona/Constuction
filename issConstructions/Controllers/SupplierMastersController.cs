@@ -6,22 +6,22 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using issConstructions.Custom;
 using issConstructions.Models;
 using issDomain;
 using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
+    //[CustomAuthorize(Roles = "Admin,Manager")]
     public class SupplierMastersController : Controller
     {
         private issDB db = new issDB();
-
         // GET: SupplierMasters
         public ActionResult Index()
         {
             return View(db.supplierMasters.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: SupplierMasters/Details/5
         public ActionResult Details(int? id)
         {
@@ -36,7 +36,6 @@ namespace issConstructions.Controllers
             }
             return View(supplierMaster);
         }
-
         // GET: SupplierMasters/Create
         public ActionResult Create()
         {
@@ -44,7 +43,6 @@ namespace issConstructions.Controllers
             ViewBag.Suppliername = "";
             return View();
         }
-
         // POST: SupplierMasters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -67,12 +65,10 @@ namespace issConstructions.Controllers
                 {
                     ViewBag.Suppliername = "Already Exists....!";
                 }
-                
             }
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", supplierMaster.CategoryId);
             return View(supplierMaster);
         }
-
         // GET: SupplierMasters/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -88,7 +84,6 @@ namespace issConstructions.Controllers
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", supplierMaster.CategoryId);
             return View(supplierMaster);
         }
-
         // POST: SupplierMasters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -106,7 +101,6 @@ namespace issConstructions.Controllers
             }
             return View(supplierMaster);
         }
-
         // GET: SupplierMasters/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -121,7 +115,6 @@ namespace issConstructions.Controllers
             }
             return View(supplierMaster);
         }
-
         // POST: SupplierMasters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -132,7 +125,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

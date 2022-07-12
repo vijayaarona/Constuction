@@ -6,21 +6,21 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using issConstructions.Custom;
 using issConstructions.Models;
 using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
+    //[CustomAuthorize(Roles = "Admin,Manager")]
     public class CategoryMastersController : Controller
     {
         private issDB db = new issDB();
-
         // GET: CategoryMasters
         public ActionResult Index()
         {
             return View(db.categoryMasters.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: CategoryMasters/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,14 +35,12 @@ namespace issConstructions.Controllers
             }
             return View(categoryMaster);
         }
-
         // GET: CategoryMasters/Create
         public ActionResult Create()
         {
             ViewBag.CategoryName = "";
             return View();
         }
-
         // POST: CategoryMasters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -63,13 +61,10 @@ namespace issConstructions.Controllers
                 }
                 else {
                     ViewBag.CategoryName = "Already Exists...!";
-                }
-                
+                }       
             }
-
             return View(categoryMaster);
         }
-
         // GET: CategoryMasters/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -84,7 +79,6 @@ namespace issConstructions.Controllers
             }
             return View(categoryMaster);
         }
-
         // POST: CategoryMasters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -102,7 +96,6 @@ namespace issConstructions.Controllers
             }
             return View(categoryMaster);
         }
-
         // GET: CategoryMasters/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -117,7 +110,6 @@ namespace issConstructions.Controllers
             }
             return View(categoryMaster);
         }
-
         // POST: CategoryMasters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -129,7 +121,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

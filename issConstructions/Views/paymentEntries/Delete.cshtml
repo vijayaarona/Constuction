@@ -70,20 +70,24 @@
 
         <table id="AccountGroupMaster">
             <tr>
-                <th>Payment Type</th>
-                <td>  @Html.DisplayFor(model => model.paymentTypeId)</td>
+                <th>Payment Date</th>
+                <td>@Html.DisplayFor(model => model.paymenttDate)</td>
             </tr>
             <tr>
-                <th>Project</th>
-                <td>  @Html.DisplayFor(model => model.projectNameId)</td>
+                <th>Payment Type</th>
+                <td>  @Html.DisplayFor(model => model.accountLedger.AccountLedger)</td>
+            </tr>
+            <tr>
+                <th>Project Name</th>
+                <td>  @Html.DisplayFor(model => model.siteDetails.ProjectName)</td>
             </tr>
             <tr>
                 <th>Site Name</th>
-                <td>  @Html.DisplayFor(model => model.siteNameId)</td>
+                <td>  @Html.DisplayFor(model => model.siteDetails.SiteName)</td>
             </tr>
             <tr>
                 <th>Account Ledger Name</th>
-                <td>  @Html.DisplayFor(model => model.accountLedgerNameId)</td>
+                <td>  @Html.DisplayFor(model => model.accountLedger.AccountLedger)</td>
             </tr>
             <tr>
                 <th>Given By</th>

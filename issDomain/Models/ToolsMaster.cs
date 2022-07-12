@@ -13,6 +13,8 @@ namespace issDomain.Models
         public string UOM { get; set; }
         public int CategoryId { get; set; }
         public virtual CategoryMaster Category { get; set; }
+        public int GNameId { get; set; }
+        public virtual Godown GName { get; set; }
         public string openingStock { get; set; }
         public bool isDeleted { get; set; } = false;
         public DateTime? CreatedDate { get; set; }

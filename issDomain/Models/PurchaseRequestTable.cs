@@ -8,6 +8,8 @@ namespace issDomain.Models
 {
     public class PurchaseRequestTable
     {
+        public object rateId;
+
         public int ID { get; set; }
         public int purchaseRequestId { get; set; }
         public int productId { get; set; }
@@ -19,6 +21,9 @@ namespace issDomain.Models
         public decimal Amount { get; set; }
         public decimal TaxAmount { get; set; }
         public decimal TotalAmount { get; set; }
+        public decimal discountPercent { get; set; }
+        public decimal discountAmount { get; set; }
+        public int ProductNo { get; set; }
         public bool isDeleted { get; set; } = false;
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }

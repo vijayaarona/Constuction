@@ -54,7 +54,10 @@
         font-size: 22px;
     }
 </style>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <div class="panel-group">
     <div class="panel panel-heading header">
         Purchase Request -  Details Page
@@ -96,214 +99,247 @@
                 <td> @Html.DisplayFor(model => model.mobileno) </td>
             </tr>
             <tr>
-                <th> Created Date</th>
-                <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
-            </tr>
-
-            <tr>
-                <th> Updated By</th>
-                <td>  @Html.DisplayFor(model => model.UpdateBy)</td>
-            </tr>
-            <tr>
-                <th> Updated  Date</th>
-                <td>  @Html.DisplayFor(model => model.UpdatedDate)</td>
+                <th>Net Amount</th>
+                <td> @Html.DisplayFor(model => model.NetAmount) </td>
             </tr>
 
         </table>
-
+        <br />
+        <div class="">
+            <table id="tblpurchase" class="table-bordered" style="width:95%;text-align:center">
+                <thead>
+                    <tr>
+                        <th>Sl.No</th>
+                        <th>Item Name</th>
+                        <th>Rate Of Tax</th>
+                        <th>Description</th>
+                        <th>Rate</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                        <th>Discount Amount</th>
+                        <th>Tax Amount</th>
+                        <th>Total Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tblPurchaseRequest"></tbody>
+            </table>
+        </div>
+        
         <p style="float:right;">
-            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })*@
             @*<button type="button" class = "btn btn-default" id="btn-edit"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </button>*@
+            @*@Html.ActionLink("Edit Item", "Index", null, htmlAttributes: new { @class = "btn btn-default" })*@
+            @Html.ActionLink("Edit Item", "Index","PurchaseRequestTables", new {id = Model.ID}, htmlAttributes: new { @class = "btn btn-default" })
             @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
         </p>
     </div>
 </div>
 
-@*<h2>Details</h2>
+<script>
+    var lstItems = [];
+    $(document).ready(function ()
+    {
+            debugger
+            let id =@Model.ID;
+            get(id);
 
-    <div>
-        <h4>PurchaseRequest</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Category.CategoryName)
-            </dt>
+            function get(id) {
+                $.ajax({
+                    url: '@Url.Content("~/PurchaseRequests/getListOfPurchaes")',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { invoice: id },
+                    success: function (result) {
+                        $('#tblPurchaseRequest').empty();
+                        console.log(result)
+                        var row = "";
+                        if (result != null && result!="data")
+                        {
+                            debugger
+                            let sNo = 1;
+                            for (var i = 0; i < result.length; i++)
+                            {
+                                let list = {};
+                                list.productId = result[i].Product.ProductName;
+                                list.productText = result[i].Tax;
+                                list.purchaseRequestId = result[i].purchaseRequestId;
+                                list.Id = result[i].ID;
+                                list.Description = result[i].Description;
+                                list.Tax = result[i].Tax;
+                                list.Rate = result[i].Rate;
+                                list.Quantity = result[i].Quantity;
+                                list.Amount = result[i].Amount;
+                                list.discountPercent = result[i].discountPercent;
+                                list.discountAmount = result[i].discountAmount;
+                                list.TaxAmount = result[i].TaxAmount;
+                                list.TotalAmount = result[i].TotalAmount;
+                                list.ProductNo = result[i].ProductNo;
 
-            <dd>
-                @Html.DisplayFor(model => model.Category.CategoryName)
-            </dd>
+                                list.sNo = sNo;
+                                lstItems.push(list);
+                                row = `<tr>`
+                                row +=    `<td>${sNo}</td>`
+                                row += `<td>${result[i].Product.ProductName}</td>`
+                                row +=    `<td>${result[i].Tax}</td>`
+                                row += `<td>${result[i].Description}</td>`
+                                row += `<td>${result[i].Rate}</td>`
+                                row += `<td>${result[i].Quantity}</td>`
+                                row +=     `<td>${result[i].Amount}</td>`
+                                row += `<td>${result[i].discountAmount}</td>`
+                                row += `<td>${result[i].TaxAmount}</td>`
+                                row += `<td>${result[i].TotalAmount}</td>`
+                                row += `<td>
 
-            @*<dt>
-                @Html.DisplayNameFor(model => model.Product.ProductName)
-            </dt>
+                        <button type="button" class="btn btn-default" onclick="removeTR('${result[i].ID}')">Remove</button>
+                        </td>`
+                                row +=     `</tr>`;
+                                sNo++;
+                                $('#tblPurchaseRequest').append(row);
+                            }
 
-            <dd>
-                @Html.DisplayFor(model => model.Product.ProductName)
-            </dd>
+                        }
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Supplier.Suppliername)
-            </dt>
+                    }
+                });
+        }
 
-            <dd>
-                @Html.DisplayFor(model => model.Supplier.Suppliername)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.RequestID)
-            </dt>
+    });
+    $("#categoryId").change(function () {
+        var supNameId = $(this).find('option:selected').val();
+        SupplierId(supNameId);
+    })
+    $("#SupplierId").change(function () {
+        var supAddressId = $(this).find('option:selected').val();
+        SupplierAddressId(supAddressId);
+    })
+    $("#ProjectId").change(function () {
+        var projectSite = $(this).find('option:selected').val();
+        SiteId(projectSite);
+    })
+    $("#Product").change(function () {
+        var taxAmount = $(this).find('option:selected').val();
+        TaxId(taxAmount);
+    })
 
-            <dd>
-                @Html.DisplayFor(model => model.RequestID)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.RequestDate)
-            </dt>
+    $("#discountPercent").blur(function () {
+        debugger
+        var productRate = parseFloat($('#Rate').val());
+        var Amt = parseFloat($('#Quantity').val() * productRate);
+        $("#Amount").val(Amt.toFixed(2));
 
-            <dd>
-                @Html.DisplayFor(model => model.RequestDate)
-            </dd>
+        //Discount Calculation
+        var productDisPer = parseFloat($('#discountPercent').val());
 
-            <dt>
-                @Html.DisplayNameFor(model => model.SupplierAddressId)
-            </dt>
+        var disAmt = parseFloat((productDisPer / 100) * Amt);
+        $('#discountAmount').val(disAmt.toFixed(2));
 
-            <dd>
-                @Html.DisplayFor(model => model.SupplierAddressId)
-            </dd>
+        var productAmount = parseFloat(Amt - disAmt);
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ProjectId)
-            </dt>
+        if ($('#discountPercent').val() != '') {
+            //Tax Calcualtion
+            var TaxPer = $("#TaxId").val();
+            var taxTotal = parseFloat((TaxPer / 100) * productAmount);
 
-            <dd>
-                @Html.DisplayFor(model => model.ProjectId)
-            </dd>
+            //Total Calculation
+            var totalAmount = parseFloat(productAmount + taxTotal);
+            $("#TaxAmt").val(taxTotal.toFixed(2));
+            $("#TotalAmt").val(totalAmount.toFixed(2));
+        }
 
-            <dt>
-                @Html.DisplayNameFor(model => model.SiteId)
-            </dt>
+    })
 
-            <dd>
-                @Html.DisplayFor(model => model.SiteId)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.SiteAddressId)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.SiteAddressId)
-            </dd>
+    $(document).keydown(function (event) {
+        if (event.altKey && event.which === 65) {
+            $('#myModal').modal('show');
+        }
+    });
 
-            <dt>
-                @Html.DisplayNameFor(model => model.mobileno)
-            </dt>
+    $('#myModal').on('show.bs.modal', function (e) {
+        $('body').addClass("example-open");
+    }).on('hide.bs.modal', function (e) {
+        $('body').removeClass("example-open");
+    })
+    function removeTR(item)
+    {
+        debugger
+        //let inNo = $('#ProductNo').val();
+        let productId = $('#Product').val();
+        $.ajax({
+            url: '@Url.Content("~/PurchaseRequests/removePurchages")',
+            type: 'POST',
+            dataType: 'json',
+            data: { Id: item, InNo: productId },
+            success: function (result)
+            {
+                console.log(result);
+                if (result != null)
+                {
+                      window.location.reload();
 
-            <dd>
-                @Html.DisplayFor(model => model.mobileno)
-            </dd>
+                }
+            }
+        });
+    }
 
-            <dt>
-                @Html.DisplayNameFor(model => model.sno)
-            </dt>
+    function Edit(item) {
+        var edit = lstItems.find(x => x.Id == item);
+        $('#productId').val(edit.Id);
+        $('#iD').val(item);
+        
+        $('#Description').val(edit.Description);
+        $('#Rate').val(edit.Rate);
+        $('#Quantity').val(edit.Quantity);
+        $('#TaxId').val(edit.Tax);
+        $('#Amount').val(edit.Amount);
+        $('#TaxAmt').val(edit.TaxAmount);
+        $('#TotalAmt').val(edit.TotalAmount);
+        $('#discountAmount').val(edit.discountAmount);
+        $('#discountPercent').val(edit.discountPercent);
+        $('#RequestID').val(edit.purchaseRequestId);
+        //$('#gstAmount').val('');
+        $('#myModal').modal('show');
+    }
+     $('#btnSave').click(function ()
+    {
+        debugger
+        let list = {};
+         list.productId = $('#Product').val();
+         list.productText = $('#Product option:selected').text();
+         list.purchaseRequestId = $('#RequestID').val();
+         list.Description = $('#Description').val();
+         list.Tax = $('#TaxId').val();
+         list.Rate = $('#Rate').val();
+         list.Quantity = $('#Quantity').val();
+         list.Amount = $('#Amount').val();
+         list.discountPercent = $('#discountPercent').val();
+         list.discountAmount = $('#discountAmount').val();
+         list.TaxAmount = $('#TaxAmt').val();;
+         list.TotalAmount = $('#TotalAmt').val();
+         list.ProductNo = $('#ProductNo').val();
+         list.ID = $('#iD').val();
 
-            <dd>
-                @Html.DisplayFor(model => model.sno)
-            </dd>
+        $.ajax({
+                url: '@Url.Content("~/PurchaseRequests/saveEditPurchages")',
+                type: 'POST',
+                  dataType: 'json',
+            data: { PurchaseRequestTable: list },
+                success: function (result)
+                {
+                    debugger
+                    console.log(result);
+                    window.location.reload();
+            },
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        //$('#myModal').modal('show');
+    });
+</script>
 
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Rate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Rate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Quality)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Quality)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Tax)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Tax)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.TotalAmount)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.TotalAmount)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.RequestBy)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.RequestBy)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Remarks)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Remarks)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.isDeleted)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.isDeleted)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CreatedDate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdateBy)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.UpdateBy)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdatedDate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.UpdatedDate)
-            </dd>
-
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>*@

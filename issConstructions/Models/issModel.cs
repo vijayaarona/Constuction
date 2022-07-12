@@ -33,6 +33,16 @@ namespace issConstructions.Models
         public System.Data.Entity.DbSet<PurchaseEntryTable> purchaseEntryTables { get; set; }
         public System.Data.Entity.DbSet<paymentEntry> paymentEntries { get; set; }
         public System.Data.Entity.DbSet<receiptEntry> receiptEntries { get; set; }
-
+        public System.Data.Entity.DbSet<masterTbl> masterTbls { get; set; }
+        public System.Data.Entity.DbSet<Issues> issues { get; set; }
+        public System.Data.Entity.DbSet<IssueTable> issueTables { get; set; }
+        public System.Data.Entity.DbSet<tblStock> tblStocks { get; set; }
+        public System.Data.Entity.DbSet<RateWork> rateWorks { get; set; }
+        public System.Data.Entity.DbSet<RateWorkTable> rateWorkTables { get; set; }
+        public System.Data.Entity.DbSet<ExtraWork> extraWorks { get; set; }
+        public System.Data.Entity.DbSet<ExtraWorkTable> extraWorkTables { get; set; }
+        public System.Data.Entity.DbSet<Godown> godowns { get; set; }
+        public System.Data.Entity.DbSet<ToolsTransfer> toolsTransfers { get; set; }
+        
     }
 }

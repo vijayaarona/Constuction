@@ -6,22 +6,22 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using issConstructions.Custom;
 using issConstructions.Models;
 using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
+    //[CustomAuthorize(Roles = "Admin,Manager")]
     public class EmployeeMastersController : Controller
     {
         private issDB db = new issDB();
-
         // GET: EmployeeMasters
         public ActionResult Index()
         {
             var employeeMaster = db.employeeMaster.Include(e => e.Category).Include(e => e.Designation);
             return View(employeeMaster.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: EmployeeMasters/Details/5
         public ActionResult Details(int? id)
         {
@@ -36,7 +36,6 @@ namespace issConstructions.Controllers
             }
             return View(employeeMaster);
         }
-
         // GET: EmployeeMasters/Create
         public ActionResult Create()
         {
@@ -45,7 +44,6 @@ namespace issConstructions.Controllers
             ViewBag.name = "";
             return View();
         }
-
         // POST: EmployeeMasters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -67,15 +65,12 @@ namespace issConstructions.Controllers
                 else
                 {
                     ViewBag.name = "Already Exists....!";
-                }
-               
+                }      
             }
-
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", employeeMaster.CategoryId);
             ViewBag.DesignationId = new SelectList(db.designationMasters, "ID", "DesignationName", employeeMaster.DesignationId);
             return View(employeeMaster);
         }
-
         // GET: EmployeeMasters/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -92,7 +87,6 @@ namespace issConstructions.Controllers
             ViewBag.DesignationId = new SelectList(db.designationMasters, "ID", "DesignationName", employeeMaster.DesignationId);
             return View(employeeMaster);
         }
-
         // POST: EmployeeMasters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -112,7 +106,6 @@ namespace issConstructions.Controllers
             ViewBag.DesignationId = new SelectList(db.designationMasters, "ID", "DesignationName", employeeMaster.DesignationId);
             return View(employeeMaster);
         }
-
         // GET: EmployeeMasters/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -127,7 +120,6 @@ namespace issConstructions.Controllers
             }
             return View(employeeMaster);
         }
-
         // POST: EmployeeMasters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -139,7 +131,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

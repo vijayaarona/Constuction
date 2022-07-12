@@ -38,6 +38,9 @@
             <thead>
                 <tr>
                     <th>
+                        <label>Receipt Date</label>
+                    </th>
+                    <th>
                         <label>Payment Type</label>
                     </th>
                     <th>
@@ -76,46 +79,59 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                <tr>
+
+                    @if (@item.receiptDate != null)
+                    {
                         <td>
-                            @Html.DisplayFor(modelItem => item.paymentTypeId)
+                            @item.receiptDate.Value.ToShortDateString()
+
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.projectNameId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.siteNameId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.accountLedgerNameId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.givenBy)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.collectBy)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.amount)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.remarks)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreatedDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UpdateBy)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UpdatedDate)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                        </td>
-                    </tr>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.accountLedger.AccountLedger)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.siteDetailsId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.siteDetailsId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.accountLedgerId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.givenBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.collectBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.remarks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdateBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdatedDate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
+                        <a href="~/Report/Receiptvoucher/@item.ID">Voucher</a>
+                    </td>
+                </tr>
 
                 }
             </tbody>

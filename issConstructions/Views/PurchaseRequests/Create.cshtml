@@ -1,7 +1,7 @@
 ﻿@model issDomain.Models.PurchaseRequest
 
 @{
-                ViewBag.Title = "Create";
+    ViewBag.Title = "Create";
 }
 
 <style>
@@ -56,6 +56,12 @@
         <div class="panel panel-body" style="overflow:auto">
             <div class="row">
                 <div class="form-group col-md-6">
+                    <label>Purchase Request Date</label>
+                    @Html.TextBoxFor(x => x.RequestDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                    @*@Html.TextBoxFor(m => m.RequestDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })*@
+                    @*@Html.TextBoxFor(model => model.RequestDate, new { htmlAttributes = new { @class = "form-control" } })*@
+                </div>
+                <div class="form-group col-md-6">
                     <label>Category</label>
                     @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", @id = "categoryId" })
                     @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
@@ -90,6 +96,11 @@
                     @Html.EditorFor(model => model.mobileno, new { htmlAttributes = new { @class = "form-control", @id = "mobileno" } })
                     @Html.ValidationMessageFor(model => model.mobileno, "", new { @class = "text-danger" })
                 </div>
+                <div class="form-group col-md-6" hidden>
+                    <label>Product No</label>
+                    @Html.EditorFor(model => model.ProductNo, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ProductNo } })
+                    @Html.ValidationMessageFor(model => model.ProductNo, "", new { @class = "text-danger" })
+                </div>
             </div>
             <button type="button" style="float:right" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Item</button>
             <br /><br />
@@ -104,6 +115,7 @@
                             <th>Rate</th>
                             <th>Quantity</th>
                             <th>Amount</th>
+                            <th>Discount Amount</th>
                             <th>Tax Amount</th>
                             <th>Total Amount</th>
                             <th>Actions</th>
@@ -151,8 +163,17 @@
                                                 <input type="text" id="Quantity" name="Quantity" size="50" />
                                             </div>
                                             <div class="form-group col-md-6">
+                                                <label style="width:352px; height:27px">Discount Percent</label><br />
+                                                <input type="text" id="discountPercent" name="discountPercent" size="50" />
+                                            </div>
+                                            <div class="form-group col-md-6">
                                                 <label style="width:352px; height:27px">Amount</label><br />
                                                 <input type="text" readonly="readonly" id="Amount" name="Amount" size="50" />
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label style="width:352px; height:27px">Discount Amount</label><br />
+                                                <input type="text" id="discountAmount" name="discountAmount" size="50" />
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label style="width:352px; height:27px">Tax Amount</label><br />
@@ -176,18 +197,81 @@
             </div>
             <br />
             <div class="row">
-                <div class="form-group col-md-4">
-                    <label>Net Amount : </label>
-                    <label id="netAmt"></label>
+                <div class="form-group col-md-2">
+                    <label>Total Amount: </label>
                 </div>
-                <div class="form-group col-md-4">
-                    <label>Request By</label>
-
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control", @id = "ProTotal" } })
+                    @Html.ValidationMessageFor(model => model.TotalAmt, "", new { @class = "text-danger" })
+                    @*<input type="text" id="ProGrandTotal" name="ProGrandTotal" size="50" />*@
                 </div>
-                <div class="form-group col-md-4">
-                    <label>Remarks</label>
+                @*<label id="ProGrandTotal"></label>*@
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Discount(%): </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.discountPercentage, new { htmlAttributes = new { @class = "form-control", @id = "disPercent" } })
+                    @Html.ValidationMessageFor(model => model.discountPercentage, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disPercent" name="disPercent" size="50" />*@
+                </div>
+                @*<label id="disPercent"></label>*@
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Discount Amount : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.dicountAmount, new { htmlAttributes = new { @class = "form-control", @id = "disAmount" } })
+                    @Html.ValidationMessageFor(model => model.dicountAmount, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
                 </div>
             </div>
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Grand Total : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.grandTotal, new { htmlAttributes = new { @class = "form-control", @id = "ProGrandTotal" } })
+                    @Html.ValidationMessageFor(model => model.grandTotal, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Tax (%) : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control", @id = "TaxP" } })
+                    @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Tax Amount : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.TaxAmt, new { htmlAttributes = new { @class = "form-control", @id = "TaxPamt" } })
+                    @Html.ValidationMessageFor(model => model.TaxAmt, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Net Amount : </label>
+                    @*<label id="netAmt"></label>*@
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.NetAmount, new { htmlAttributes = new { @class = "form-control", @id = "netAmt" } })
+                    @Html.ValidationMessageFor(model => model.NetAmount, "", new { @class = "text-danger" })
+                    @*<input type="text" id="netAmt" name="netAmt" size="50" />*@
+                </div>
+            </div>
+
             <div class="form-group" style="float:right">
                 <input type="submit" value="Submit" class="btn btn-default" />
                 @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
@@ -205,6 +289,8 @@
     var ntAmt;
     $(document).ready(function ()
     {
+
+
         $("#categoryId").change(function ()
         {
             var supNameId = $(this).find('option:selected').val();
@@ -224,94 +310,37 @@
             var taxAmount = $(this).find('option:selected').val();
             TaxId(taxAmount);
         })
-        $('#btnSave').click(function () {
-            let btntext = this.Text();
-
-            if (btntext == "Add") {
 
 
-                if ($('#Product').val() == '' || $('#TaxId').val() == '' || $('#Rate').val() == '' || $('#Quantity').val() == '' || $('#Amount').val() == '' || $('#TaxAmt').val() == '' || $('#TotalAmt').val() == '') {
-                    alert('Please fill required Fields');
+        $("#discountPercent").blur(function ()
+        {
+            debugger
+            var productRate = parseFloat($('#Rate').val());
+            var Amt = parseFloat($('#Quantity').val() * productRate);
+            $("#Amount").val(Amt.toFixed(2));
 
-                } else {
+            //Discount Calculation
+            var productDisPer = parseFloat($('#discountPercent').val());
 
-                    let newItem = {};
-                    newItem.Product = $('#Product').val();
-                    newItem.ProductText = $('#Product option:selected').text();
-                    newItem.TaxT = $('#TaxId').val();
-                    newItem.Taxtext = $('#TaxId option:selected').text();
-                    newItem.Description = $('#Description').val();
-                    newItem.Rate = $('#Rate').val();
-                    newItem.Quantity = $('#Quantity').val();
-                    newItem.Amount = $('#Amount').val();
-                    newItem.TaxAmt = $('#TaxAmt').val();
-                    newItem.TotalAmt = $('#TotalAmt').val();
-                    newItem.sNo = sNo;
-                    lstItems.push(newItem);
-                    console.log(lstItems);
-                    bindItems();
-                }
-                $('#Product').val(0);
-                $('#Description').val('');
-                $('#Rate').val('');
-                $('#TotalAmt').val('');
-            } else {
-                let produect = $('#Product').val();
-                var editItem = lstItems.filter(x => x.Product == produect);
-                //+editItem.sNo).remove();
-                //update query
-            }
-        });
-        function bindItems() {
+            var disAmt = parseFloat((productDisPer / 100) * Amt);
+            $('#discountAmount').val(disAmt.toFixed(2));
 
-            $("#tblpurchaserequest").empty();
-            if (lstItems.length > 0) {
-                let sNo = 1;
-                let ntTotal = 0;
-                for (var i = 0; i < lstItems.length; i++)
-                {
-                    var row = `<tr id=rm${sNo}>`
-                        + `<td>${sNo}</td>`
-                        + `<td>${lstItems[i].ProductText}</td>`
-                        + `<td>${lstItems[i].TaxT}</td>`
-                        + `<td>${lstItems[i].Description}</td>`
-                        + `<td>${lstItems[i].Rate}</td>`
-                        + `<td>${lstItems[i].Quantity}</td>`
-                        + `<td>${lstItems[i].Amount}</td>`
-                        + `<td>${lstItems[i].TaxAmt}</td>`
-                        + `<td>${lstItems[i].TotalAmt}</td>`
-                        + `<td>
-                                <button type="button" class="btn btn-default id="editbtn" onclick="editBTN(${sNo})">Edit</button>
-                                | <button type="button" class="btn btn-default" onclick="removeTR(${sNo})">Remove</button>
-                        </td>`
-                        + "</tr>";
-                   let amount = 0;
-                    lstItems[i].TotalAmt != null ? amount = parseFloat(lstItems[i].TotalAmt) : amount = 0;
-                    ntTotal += amount;
-                    $('#tblpurchaserequest').append(row);
-                    sNo++;
-                }
-                $('#netAmt').text(ntTotal.toFixed());
-            }
-            $("#Quantity, #TaxId, #Amount, #TaxAmt").val('');
-        }
-        ////Tax Calulation
-        
-        $("#Quantity, #TaxId").blur(function () {
-            var productRate = parseFloat($("#Rate").val());
-            var productamt = parseFloat($(this).val() * productRate);
-            //Tax Amount
-            var per = $("#TaxId").val();
-            var productQuantit = parseFloat((per / 100) * productamt).toFixed(2);
-            //Total Amount
-            var tamt = parseFloat(productamt) + parseFloat(productQuantit);
-            if ($("#Quantity").val()!='')
+            var productAmount = parseFloat(Amt - disAmt);
+
+            if ($('#discountPercent').val() != '')
             {
-                $("#TotalAmt").val(tamt.toFixed(2));
-                $("#Amount").val(productamt.toFixed(2));
-                $("#TaxAmt").val(productQuantit);
+                //Tax Calcualtion
+                var TaxPer = $("#TaxId").val();
+                var taxTotal = parseFloat((TaxPer / 100) * productAmount);
+
+                //Total Calculation
+                var totalAmount = parseFloat(productAmount + taxTotal);
+                $("#TaxAmt").val(taxTotal.toFixed(2));
+                $("#TotalAmt").val(totalAmount.toFixed(2));
             }
+
         })
+
     });
 
     $(document).keydown(function (event) {
@@ -319,26 +348,26 @@
             $('#myModal').modal('show');
         }
     });
+
     $('#myModal').on('show.bs.modal', function (e)
     {
         $('body').addClass("example-open");
-    }).on('hide.bs.modal', function (e) {
+    }).on('hide.bs.modal', function (e)
+    {
         $('body').removeClass("example-open");
     })
-    function removeTR(item) {
-        $('#rm' + item).remove();
-    }
+
     function editBTN(item) {
         debugger
         var tempTR = $('#rm' + item).children();
         console.log(tempTR);
-        
+
         var column = [9];
         for (var i = 0; i < tempTR.length; i++)
-        {  
+        {
            //console.log(tempTR[i].innerText);
-            column[i] = tempTR[i].innerText; 
-           //Array for store the value   
+            column[i] = tempTR[i].innerText;
+           //Array for store the value
         }
         $('#myModal').modal('show');
         $("#Product option:contains(" + column[1] + ")").prop('selected', 'selected');
@@ -347,9 +376,12 @@
         $('#Rate').val(column[4]);
         $('#Quantity').val(column[5]);
         $('#Amount').val(column[6]);
-        $('#TaxAmt').val(column[7]);
-        $('#TotalAmt').val(column[8]);
+        $('#discountAmount').val(column[7]);
+        $('#TaxAmt').val(column[8]);
+        $('#TotalAmt').val(column[9]);
         $('#btnSave').text("Update");
+
+
     }
     function SupplierId(supNameId)
     {
@@ -405,7 +437,8 @@
                       var data = result;
                       $("#SiteId").empty();
                       $("#SiteAddressId").empty();
-                      for (var i = 0; i < data.length; i++) {
+                      for (var i = 0; i < data.length; i++)
+                      {
                     $("#SiteId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
                     $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
                 }
@@ -437,4 +470,260 @@
               });
     };
 
+
+    $('#btnSave').click(function ()
+    {
+        debugger
+        let list = {};
+         list.productId = $('#Product').val();
+         list.productText = $('#Product option:selected').text();
+         list.purchaseRequestId = $('#RequestID').val();
+         list.Description = $('#Description').val();
+         list.Tax = $('#TaxId').val();
+         list.Rate = $('#Rate').val();
+         list.Quantity = $('#Quantity').val();
+         list.Amount = $('#Amount').val();
+         list.discountPercent = $('#discountPercent').val();
+         list.discountAmount = $('#discountAmount').val();
+         list.TaxAmount = $('#TaxAmt').val();;
+         list.TotalAmount = $('#TotalAmt').val();;
+         list.ProductNo = $('#ProductNo').val();;
+
+        list.sNo = sNo;
+
+        $.ajax({
+                url: '@Url.Content("~/PurchaseRequests/savePurchages")',
+                type: 'POST',
+                  dataType: 'json',
+            data: { PurchaseRequestTable: list },
+                success: function (result)
+                {
+                    debugger
+                    console.log(result);
+                    list.Id = result;
+                    lstItems.push(list);
+                    console.log(lstItems);
+                    bindItems();
+                    $('#productId').val(0);
+                    $('#Description').val('');
+                    $('#Rate').val('');
+                    $('#Quantity').val('');
+                    $('#TaxId').val('');
+                    $('#Amount').val('');
+                    $('#TaxAmt').val('');
+                    $('#TotalAmt').val('');
+                    $('#discountAmount').val('');
+                    $('#discountPercent').val('');
+                    $('#gstAmount').val('');
+                    $('#myModal').modal('show');
+            },
+
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        //$('#myModal').modal('show');
+    });
+    function bindItems() {
+        $('#tblpurchaserequest').empty();
+        if (lstItems.length > 0) {
+            debugger
+            let sNo = 1;
+            let grandTotal = 0;
+            let TotAmt = 0;
+            let NetAmount = 0;
+            // let calProPer = 0;
+            for (var i = 0; i < lstItems.length; i++) {
+                var row = `<tr id=rm${sNo}>`
+                    + `<td>${sNo}</td>`
+                    + `<td>${lstItems[i].productText}</td>`
+                    + `<td>${lstItems[i].Tax}</td>`
+                    + `<td>${lstItems[i].Description}</td>`
+                    + `<td>${lstItems[i].Rate}</td>`
+                    + `<td>${lstItems[i].Quantity}</td>`
+                    + `<td>${lstItems[i].Amount}</td>`
+                    + `<td>${lstItems[i].discountAmount}</td>`
+                    + `<td>${lstItems[i].TaxAmount}</td>`
+                    + `<td>${lstItems[i].TotalAmount}</td>`
+                    + `<td>
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
+                        </td>`
+                    + "</tr>";
+
+                let amount = 0;
+
+                lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
+                grandTotal += amount;
+
+                $('#tblpurchaserequest').append(row);
+                sNo++;
+            }
+            console.log(grandTotal);
+            $('#ProTotal').val(grandTotal.toFixed());
+
+            $("#disPercent").blur(function () {
+                debugger
+
+                var disPercentage = $('#disPercent').val();
+                var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+                $('#disAmount').val(calProPer.toFixed());
+                var TotAmt = parseFloat(grandTotal - calProPer);
+                $('#ProGrandTotal').val(TotAmt.toFixed());
+            });
+
+            $("#TaxP").blur(function () {
+                debugger
+
+                var taxPercentage = $('#TaxP').val();
+                var TotAmt = $('#ProGrandTotal').val();
+                var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+                $('#TaxPamt').val(calProPer1.toFixed());
+                var NetAmount = parseFloat(TotAmt) + parseFloat(calProPer1);
+                $('#netAmt').val(NetAmount.toFixed());
+                
+            });
+
+        }
+    }
+    function Edit(item) {
+        console.log('Edit', item);
+        var edit = lstItems.find(x => x.Id == item);
+        console.log(edit);
+        $('#productId').val(0);
+        $('#Description').val(edit.Description);
+        $('#Rate').val(edit.Rate);
+        $('#Quantity').val(edit.Quantity);
+        $('#TaxId').val(edit.Tax);
+        $('#Amount').val(edit.Amount);
+        $('#TaxAmt').val(edit.TaxAmount);
+        $('#TotalAmt').val(edit.TotalAmount);
+        $('#discountAmount').val(edit.discountAmount);
+        $('#discountPercent').val(edit.discountPercent);
+        //$('#gstAmount').val('');
+        $('#myModal').modal('show');
+    }
+
+    function removeTR(item)
+    {
+        debugger
+        //let inNo = $('#ProductNo').val();
+        let productId = $('#Product').val();
+        $.ajax({
+            url: '@Url.Content("~/PurchaseRequests/removePurchages")',
+            type: 'POST',
+            dataType: 'json',
+            data: { Id: item, InNo: productId },
+            success: function (result)
+            {
+                console.log(result);
+                if (result != null)
+                {
+                    lstItems = result;
+                    $('#tblpurchaserequest').empty();
+                    if (lstItems.length > 0) {
+                        debugger
+                        let sNo = 1;
+                        let grandTotal = 0;
+                        for (var i = 0; i < lstItems.length; i++) {
+                            var row = `<tr id=rm${sNo}>`
+                                + `<td>${sNo}</td>`
+                                + `<td>${lstItems[i].Product.ProductName}</td>`
+                                + `<td>${lstItems[i].Tax}</td>`
+                                + `<td>${lstItems[i].Description}</td>`
+                                + `<td>${lstItems[i].Rate}</td>`
+                                + `<td>${lstItems[i].Quantity}</td>`
+                                + `<td>${lstItems[i].Amount}</td>`
+                                + `<td>${lstItems[i].discountAmount}</td>`
+                                + `<td>${lstItems[i].TaxAmount}</td>`
+                                + `<td>${lstItems[i].TotalAmount}</td>`
+                                + `<td>
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].ID}')">Remove</button>
+                        </td>`
+                                + "</tr>";
+                            let amount = 0;
+
+                            lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
+                            TotalAmt += amount;
+
+                            $('#tblpurchaserequest').append(row);
+                            sNo++;
+                        }
+                        console.log(TotalAmt);
+                        $('#ProTotal').val(TotalAmt.toFixed());
+
+                        $("#disPercent").blur(function () {
+                            debugger
+
+                            var disPercentage = $('#disPercent').val();
+                            var calProPer = parseFloat((disPercentage / 100) * TotalAmt);
+                            $('#disAmount').val(calProPer.toFixed());
+                            var netAmount = parseFloat(TotalAmt - calProPer);
+                            $('#netAmt').val(netAmount.toFixed());
+                        });
+
+                   }
+                }
+            }
+        });
+    }
+      @*function removeTR(item)
+    {
+        $.ajax({
+            url: '@Url.Content("~/PurchaseRequests/removePurchages")',
+            type: 'POST',
+            dataType: 'json',
+            data: { Id: item },
+            success: function (result) {
+                console.log(result);
+                if (result != null) {
+                    lstItems = result;
+
+                    $('#tblpurchaserequest').empty();
+                    if (lstItems.length > 0) {
+                        debugger
+                        let sNo = 1;
+                        let grandTotal = 0;
+                        for (var i = 0; i < lstItems.length; i++) {
+                            var row = `<tr id=rm${sNo}>`
+                                + `<td>${sNo}</td>`
+                                + `<td>${lstItems[i].productText}</td>`
+                                + `<td>${lstItems[i].Tax}</td>`
+                                + `<td>${lstItems[i].Description}</td>`
+                                + `<td>${lstItems[i].Rate}</td>`
+                                + `<td>${lstItems[i].Quantity}</td>`
+                                + `<td>${lstItems[i].Amount}</td>`
+                                + `<td>${lstItems[i].discountAmount}</td>`
+                                + `<td>${lstItems[i].TaxAmount}</td>`
+                                + `<td>${lstItems[i].TotalAmount}</td>`
+                                + `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].ID}')">Remove</button>
+                        </td>`
+                                + "</tr>";
+
+                            let amount = 0;
+
+                            lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
+                            grandTotal += amount;
+
+                            $('#tblpurchaserequest').append(row);
+                            sNo++;
+                        }
+                        console.log(grandTotal);
+                        $('#ProGrandTotal').val(grandTotal.toFixed());
+
+                        $("#disPercent").blur(function () {
+                            debugger
+
+                            var disPercentage = $('#disPercent').val();
+                            var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+                            $('#disAmount').val(calProPer.toFixed());
+                            var netAmount = parseFloat(grandTotal + calProPer);
+                            $('#netAmt').val(netAmount.toFixed());
+                        });
+                    }
+                }
+            }
+        });
+    }*@
 </script>

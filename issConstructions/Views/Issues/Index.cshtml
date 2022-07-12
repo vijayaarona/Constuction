@@ -1,0 +1,160 @@
+﻿@model IEnumerable<issDomain.Models.Issues>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    .addNew {
+        padding: 5px;
+        background-color: #FF5F04;
+        color: white;
+        float: right;
+        margin: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+    }
+
+        .addNew:hover {
+            text-decoration: none;
+        }
+
+    table td {
+        font-size: 13px;
+    }
+
+    table th {
+        font-size: 13px;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Issue Entry - Index Page
+    </div>
+    <div class="panel panel-body" style="overflow:auto">
+        @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+        <table class="table" id="AGMaster">
+            <thead>
+                <tr>
+                    <th>
+                        <label>Issue ID</label>
+                    </th>
+                    <th>
+                        <label>Issue Date</label>
+                    </th>
+
+                    <th>
+                        <label>From Location</label>
+                    </th>
+                    <th>
+                        <label>To Location</label>
+                    </th>
+                    <th>
+                        <label>Project Name</label>
+                    </th>
+                    <th>
+                        <label>Site Name</label>
+                    </th>
+                    <th>
+                        <label>Amount</label>
+                    </th>
+                    
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IssueID)
+                    </td>
+                    @if (@item.IssuesDate != null)
+                    {
+                        <td>
+                            @item.IssuesDate.Value.ToShortDateString()
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GName.godownName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteNameId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.netAmount)
+                    </td>
+                    
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })|
+                        <a href="@Url.Content("~/IssueTables/Index/"+item.ID)">Edit Items</a>
+
+                    </td>
+                </tr>
+
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#AGMaster').DataTable({
+            dom: 'Bfrtip',
+
+            buttons: [
+                'copy',
+                {
+                    extend: 'excel',
+                    title: function () {
+                        var printTitle = 'New Title';
+                        return printTitle
+                    }
+                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                },
+                {
+                    extend: 'pdf',
+                    //  messageBottom: null
+                },
+                {
+                    extend: 'print',
+                }
+
+            ]
+        });
+
+    });
+</script>
+

@@ -31,10 +31,17 @@ namespace issDomain.Models
         public decimal totalDiscount { get; set; }
         public decimal totalTax { get; set; }
         public decimal freightCharges { get; set; }
-        public decimal netAmount { get; set; }
+        public decimal NetAmount { get; set; }
+        public decimal grandTotal { get; set; }
+        public decimal discountPercentage { get; set; }
+        public int ProductNo { get; set; }
         public bool isDeleted { get; set; } = false;
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public decimal Tax { get; set; }
+        public decimal TaxAmt { get; set; }
+        public decimal TotalAmt { get; set; }
+        public String  PurType { get; set; }
     }
 }

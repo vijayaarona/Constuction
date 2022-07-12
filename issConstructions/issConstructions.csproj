@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -18,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -47,21 +47,36 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -127,6 +142,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountGroupMastersController.cs" />
     <Compile Include="Controllers\AccountLedgerMastersController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -134,51 +150,84 @@
     <Compile Include="Controllers\CompanyDetailsController.cs" />
     <Compile Include="Controllers\DesignationMastersController.cs" />
     <Compile Include="Controllers\EmployeeMastersController.cs" />
+    <Compile Include="Controllers\ExtraWorksController.cs" />
+    <Compile Include="Controllers\GodownsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IssuesController.cs" />
+    <Compile Include="Controllers\IssueTablesController.cs" />
+    <Compile Include="Controllers\MyModel.cs" />
     <Compile Include="Controllers\paymentEntriesController.cs" />
     <Compile Include="Controllers\ProductMastersController.cs" />
     <Compile Include="Controllers\PurchaseEntriesController.cs" />
+    <Compile Include="Controllers\PurchaseEntryTablesController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
+    <Compile Include="Controllers\PurchaseOrderTablesController.cs" />
     <Compile Include="Controllers\PurchaseRequestsController.cs" />
+    <Compile Include="Controllers\PurchaseRequestTablesController.cs" />
+    <Compile Include="Controllers\RateWorksController.cs" />
     <Compile Include="Controllers\receiptEntriesController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SiteDetailsController.cs" />
     <Compile Include="Controllers\SupplierMastersController.cs" />
     <Compile Include="Controllers\ToolsMastersController.cs" />
+    <Compile Include="Controllers\ToolsTransfersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Custom\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Custom\CustomPrincipal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111260812425_m1.cs" />
-    <Compile Include="Migrations\202111260812425_m1.designer.cs">
-      <DependentUpon>202111260812425_m1.cs</DependentUpon>
+    <Compile Include="Migrations\202206220504011_ConM1.cs" />
+    <Compile Include="Migrations\202206220504011_ConM1.designer.cs">
+      <DependentUpon>202206220504011_ConM1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111261124343_m2.cs" />
-    <Compile Include="Migrations\202111261124343_m2.designer.cs">
-      <DependentUpon>202111261124343_m2.cs</DependentUpon>
+    <Compile Include="Migrations\202206230659291_ConM2.cs" />
+    <Compile Include="Migrations\202206230659291_ConM2.Designer.cs">
+      <DependentUpon>202206230659291_ConM2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112080530171_m5.cs" />
-    <Compile Include="Migrations\202112080530171_m5.designer.cs">
-      <DependentUpon>202112080530171_m5.cs</DependentUpon>
+    <Compile Include="Migrations\202206230903273_ConM3.cs" />
+    <Compile Include="Migrations\202206230903273_ConM3.Designer.cs">
+      <DependentUpon>202206230903273_ConM3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112080535367_m6.cs" />
-    <Compile Include="Migrations\202112080535367_m6.designer.cs">
-      <DependentUpon>202112080535367_m6.cs</DependentUpon>
+    <Compile Include="Migrations\202206231520349_ConM4.cs" />
+    <Compile Include="Migrations\202206231520349_ConM4.Designer.cs">
+      <DependentUpon>202206231520349_ConM4.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112090813508_m7.cs" />
-    <Compile Include="Migrations\202112090813508_m7.designer.cs">
-      <DependentUpon>202112090813508_m7.cs</DependentUpon>
+    <Compile Include="Migrations\202207040808517_ConM5.cs" />
+    <Compile Include="Migrations\202207040808517_ConM5.Designer.cs">
+      <DependentUpon>202207040808517_ConM5.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112090951353_m8.cs" />
-    <Compile Include="Migrations\202112090951353_m8.designer.cs">
-      <DependentUpon>202112090951353_m8.cs</DependentUpon>
+    <Compile Include="Migrations\202207040810111_ConM6.cs" />
+    <Compile Include="Migrations\202207040810111_ConM6.Designer.cs">
+      <DependentUpon>202207040810111_ConM6.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112151355581_m9.cs" />
-    <Compile Include="Migrations\202112151355581_m9.designer.cs">
-      <DependentUpon>202112151355581_m9.cs</DependentUpon>
+    <Compile Include="Migrations\202207060532161_ConM7.cs" />
+    <Compile Include="Migrations\202207060532161_ConM7.Designer.cs">
+      <DependentUpon>202207060532161_ConM7.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112161312461_m10.cs" />
-    <Compile Include="Migrations\202112161312461_m10.designer.cs">
-      <DependentUpon>202112161312461_m10.cs</DependentUpon>
+    <Compile Include="Migrations\202207080429150_ConM8.cs" />
+    <Compile Include="Migrations\202207080429150_ConM8.Designer.cs">
+      <DependentUpon>202207080429150_ConM8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207080432213_ConM9.cs" />
+    <Compile Include="Migrations\202207080432213_ConM9.Designer.cs">
+      <DependentUpon>202207080432213_ConM9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110538074_ConM10.cs" />
+    <Compile Include="Migrations\202207110538074_ConM10.Designer.cs">
+      <DependentUpon>202207110538074_ConM10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110622277_ConM11.cs" />
+    <Compile Include="Migrations\202207110622277_ConM11.Designer.cs">
+      <DependentUpon>202207110622277_ConM11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110744549_ConM12.cs" />
+    <Compile Include="Migrations\202207110744549_ConM12.Designer.cs">
+      <DependentUpon>202207110744549_ConM12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207110755481_ConM13.cs" />
+    <Compile Include="Migrations\202207110755481_ConM13.Designer.cs">
+      <DependentUpon>202207110755481_ConM13.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
@@ -304,6 +353,54 @@
     <Content Include="Views\paymentEntries\Details.cshtml" />
     <Content Include="Views\paymentEntries\Edit.cshtml" />
     <Content Include="Views\paymentEntries\Index.cshtml" />
+    <Content Include="Views\Report\Paymentvoucher.cshtml" />
+    <Content Include="Views\Report\Receiptvoucher.cshtml" />
+    <Content Include="Views\Auth\AccessDenied.cshtml" />
+    <Content Include="Views\Issues\Create.cshtml" />
+    <Content Include="Views\Issues\Delete.cshtml" />
+    <Content Include="Views\Issues\Details.cshtml" />
+    <Content Include="Views\Issues\Edit.cshtml" />
+    <Content Include="Views\Issues\Index.cshtml" />
+    <Content Include="Views\RateWorks\Create.cshtml" />
+    <Content Include="Views\RateWorks\Delete.cshtml" />
+    <Content Include="Views\RateWorks\Details.cshtml" />
+    <Content Include="Views\RateWorks\Edit.cshtml" />
+    <Content Include="Views\RateWorks\Index.cshtml" />
+    <Content Include="Views\ExtraWorks\Create.cshtml" />
+    <Content Include="Views\ExtraWorks\Delete.cshtml" />
+    <Content Include="Views\ExtraWorks\Details.cshtml" />
+    <Content Include="Views\ExtraWorks\Edit.cshtml" />
+    <Content Include="Views\ExtraWorks\Index.cshtml" />
+    <Content Include="Views\Godowns\Create.cshtml" />
+    <Content Include="Views\Godowns\Delete.cshtml" />
+    <Content Include="Views\Godowns\Details.cshtml" />
+    <Content Include="Views\Godowns\Edit.cshtml" />
+    <Content Include="Views\Godowns\Index.cshtml" />
+    <Content Include="Views\ToolsTransfers\Create.cshtml" />
+    <Content Include="Views\ToolsTransfers\Delete.cshtml" />
+    <Content Include="Views\ToolsTransfers\Details.cshtml" />
+    <Content Include="Views\ToolsTransfers\Edit.cshtml" />
+    <Content Include="Views\ToolsTransfers\Index.cshtml" />
+    <Content Include="Views\PurchaseOrderTables\Create.cshtml" />
+    <Content Include="Views\PurchaseOrderTables\Delete.cshtml" />
+    <Content Include="Views\PurchaseOrderTables\Details.cshtml" />
+    <Content Include="Views\PurchaseOrderTables\Edit.cshtml" />
+    <Content Include="Views\PurchaseOrderTables\Index.cshtml" />
+    <Content Include="Views\PurchaseRequestTables\Create.cshtml" />
+    <Content Include="Views\PurchaseRequestTables\Delete.cshtml" />
+    <Content Include="Views\PurchaseRequestTables\Details.cshtml" />
+    <Content Include="Views\PurchaseRequestTables\Edit.cshtml" />
+    <Content Include="Views\PurchaseRequestTables\Index.cshtml" />
+    <Content Include="Views\PurchaseEntryTables\Create.cshtml" />
+    <Content Include="Views\PurchaseEntryTables\Delete.cshtml" />
+    <Content Include="Views\PurchaseEntryTables\Details.cshtml" />
+    <Content Include="Views\PurchaseEntryTables\Edit.cshtml" />
+    <Content Include="Views\PurchaseEntryTables\Index.cshtml" />
+    <Content Include="Views\IssueTables\Create.cshtml" />
+    <Content Include="Views\IssueTables\Delete.cshtml" />
+    <Content Include="Views\IssueTables\Details.cshtml" />
+    <Content Include="Views\IssueTables\Edit.cshtml" />
+    <Content Include="Views\IssueTables\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -318,7 +415,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
@@ -337,29 +436,44 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111260812425_m1.resx">
-      <DependentUpon>202111260812425_m1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202206220504011_ConM1.resx">
+      <DependentUpon>202206220504011_ConM1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111261124343_m2.resx">
-      <DependentUpon>202111261124343_m2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202206230659291_ConM2.resx">
+      <DependentUpon>202206230659291_ConM2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112080530171_m5.resx">
-      <DependentUpon>202112080530171_m5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202206230903273_ConM3.resx">
+      <DependentUpon>202206230903273_ConM3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112080535367_m6.resx">
-      <DependentUpon>202112080535367_m6.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202206231520349_ConM4.resx">
+      <DependentUpon>202206231520349_ConM4.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112090813508_m7.resx">
-      <DependentUpon>202112090813508_m7.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202207040808517_ConM5.resx">
+      <DependentUpon>202207040808517_ConM5.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112090951353_m8.resx">
-      <DependentUpon>202112090951353_m8.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202207040810111_ConM6.resx">
+      <DependentUpon>202207040810111_ConM6.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112151355581_m9.resx">
-      <DependentUpon>202112151355581_m9.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202207060532161_ConM7.resx">
+      <DependentUpon>202207060532161_ConM7.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112161312461_m10.resx">
-      <DependentUpon>202112161312461_m10.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202207080429150_ConM8.resx">
+      <DependentUpon>202207080429150_ConM8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207080432213_ConM9.resx">
+      <DependentUpon>202207080432213_ConM9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110538074_ConM10.resx">
+      <DependentUpon>202207110538074_ConM10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110622277_ConM11.resx">
+      <DependentUpon>202207110622277_ConM11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110744549_ConM12.resx">
+      <DependentUpon>202207110744549_ConM12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207110755481_ConM13.resx">
+      <DependentUpon>202207110755481_ConM13.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -395,10 +509,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

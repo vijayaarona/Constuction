@@ -47,18 +47,13 @@
                         Category
                     </th>
                     <th>
+                        Godown Name
+                    </th>
+                    <th>
                         Opening Stock
                     </th>
-                    <th>
-                        Created Date
-                    </th>
-                    <th>
-                        Updated By
-                    </th>
-                    <th>
-                        Updated Date
-                    </th>
-                    <th></th>
+                    
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -75,9 +70,12 @@
                         @Html.DisplayFor(modelItem => item.Category.CategoryName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.openingStock)
+                        @Html.DisplayFor(modelItem => item.GName.godownName )
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.openingStock)
+                    </td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.CreatedDate)
                     </td>
                     <td>
@@ -85,7 +83,7 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.UpdatedDate)
-                    </td>
+                    </td>*@
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |

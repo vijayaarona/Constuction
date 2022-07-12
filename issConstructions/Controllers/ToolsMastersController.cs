@@ -6,21 +6,21 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using issConstructions.Custom;
 using issConstructions.Models;
 using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
+    //[CustomAuthorize(Roles = "Admin,Manager")]
     public class ToolsMastersController : Controller
     {
         private issDB db = new issDB();
-
         // GET: ToolsMasters
         public ActionResult Index()
         {
             return View(db.toolsMasters.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: ToolsMasters/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,21 +35,20 @@ namespace issConstructions.Controllers
             }
             return View(toolsMaster);
         }
-
         // GET: ToolsMasters/Create
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName");
+            ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName");
             ViewBag.ToolsName = "";
             return View();
         }
-
         // POST: ToolsMasters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ToolsName,UOM,CategoryId,openingStock,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ToolsMaster toolsMaster)
+        public ActionResult Create([Bind(Include = "ID,ToolsName,UOM,CategoryId,GNameId,openingStock,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ToolsMaster toolsMaster)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +56,7 @@ namespace issConstructions.Controllers
                 if (duplicate == null)
                 {
                     toolsMaster.CreatedDate = DateTime.UtcNow;
-                    toolsMaster.UpdatedDate = DateTime.UtcNow;
+                toolsMaster.UpdatedDate = DateTime.UtcNow;
                     db.toolsMasters.Add(toolsMaster);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -68,9 +67,9 @@ namespace issConstructions.Controllers
                 }
             }
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", toolsMaster.CategoryId);
+            ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", toolsMaster.GNameId);
             return View(toolsMaster);
         }
-
         // GET: ToolsMasters/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -84,15 +83,15 @@ namespace issConstructions.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", toolsMaster.CategoryId);
+            ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", toolsMaster.GNameId);
             return View(toolsMaster);
         }
-
         // POST: ToolsMasters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ToolsName,UOM,CategoryId,openingStock,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ToolsMaster toolsMaster)
+        public ActionResult Edit([Bind(Include = "ID,ToolsName,UOM,CategoryId,openingStock,GNameId,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ToolsMaster toolsMaster)
         {
             if (ModelState.IsValid)
             {
@@ -103,9 +102,9 @@ namespace issConstructions.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", toolsMaster.CategoryId);
+            ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", toolsMaster.GNameId);
             return View(toolsMaster);
         }
-
         // GET: ToolsMasters/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -120,7 +119,6 @@ namespace issConstructions.Controllers
             }
             return View(toolsMaster);
         }
-
         // POST: ToolsMasters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -132,7 +130,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

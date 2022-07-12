@@ -1,4 +1,5 @@
-﻿using issConstructions.Models;
+﻿using issConstructions.Custom;
+using issConstructions.Models;
 using issDomain.Models;
 using System;
 using System.Data;
@@ -9,16 +10,15 @@ using System.Web.Mvc;
 
 namespace issConstructions.Controllers
 {
+   // [CustomAuthorize(Roles = "Admin,Manager")]
     public class AccountGroupMastersController : Controller
     {
         private issDB db = new issDB();
-
         // GET: AccountGroupMasters
         public ActionResult Index()
         {
             return View(db.accountGroupMasters.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
         }
-
         // GET: AccountGroupMasters/Details/5
         public ActionResult Details(int? id)
         {
@@ -33,14 +33,12 @@ namespace issConstructions.Controllers
             }
             return View(accountGroupMaster);
         }
-
         // GET: AccountGroupMasters/Create
         public ActionResult Create()
         {
             ViewBag.GroupName = "";
             return View();
         }
-
         // POST: AccountGroupMasters/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -53,8 +51,7 @@ namespace issConstructions.Controllers
                 var duplicate = db.accountGroupMasters.Where(x => x.GroupName == accountGroupMaster.GroupName).FirstOrDefault();
                 if (duplicate == null)
                 {
-                    accountGroupMaster.CreatedDate = DateTime.UtcNow;
-                    accountGroupMaster.UpdatedDate = DateTime.UtcNow;
+                    accountGroupMaster.CreatedDate = DateTime.UtcNow;       
                     db.accountGroupMasters.Add(accountGroupMaster);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -63,12 +60,9 @@ namespace issConstructions.Controllers
                 {
                     ViewBag.GroupName = "Already Exists....!";
                 }
-                
             }
-
             return View(accountGroupMaster);
         }
-
         // GET: AccountGroupMasters/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -83,7 +77,6 @@ namespace issConstructions.Controllers
             }
             return View(accountGroupMaster);
         }
-
         // POST: AccountGroupMasters/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -101,7 +94,6 @@ namespace issConstructions.Controllers
             }
             return View(accountGroupMaster);
         }
-
         // GET: AccountGroupMasters/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -116,7 +108,6 @@ namespace issConstructions.Controllers
             }
             return View(accountGroupMaster);
         }
-
         // POST: AccountGroupMasters/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -128,7 +119,6 @@ namespace issConstructions.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

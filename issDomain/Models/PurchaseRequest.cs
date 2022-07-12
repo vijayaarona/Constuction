@@ -22,8 +22,15 @@ namespace issDomain.Models
         public virtual SiteDetails SiteDetails { get; set; }
         public string mobileno { get; set; }
         public decimal NetAmount { get; set; }
+        public decimal grandTotal { get; set; }
+        public decimal discountPercentage { get; set; }
+        public decimal dicountAmount { get; set; }
+        public decimal Tax { get; set; }
+        public decimal TaxAmt { get; set; }
+        public decimal TotalAmt { get; set; }
         public string RequestBy { get; set; }
         public string Remarks { get; set; }
+        public int ProductNo { get; set; }
         public bool isDeleted { get; set; } = false;
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }

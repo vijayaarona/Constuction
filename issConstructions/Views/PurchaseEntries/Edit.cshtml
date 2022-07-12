@@ -4,145 +4,234 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
 
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+
+    input, select, textarea {
+        max-width: 500px;
+    }
+
+    th, td {
+        border: 1px solid black;
+        text-align: center;
+        height: 50px;
+    }
+
+    .itemtable th {
+        text-align: center;
+    }
+
+    select #Product, #TaxId {
+        max-width: 500px;
+    }
+
+    .example-open .modal-backdrop {
+        background-color: transparent;
+    }
+</style>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>PurchaseEntry</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OrderId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OrderId, "", new { @class = "text-danger" })
-            </div>
+    <div class="panel-group">
+        <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
+            Purchase Entry - Edit Page
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.purchaseId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.purchaseId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.purchaseId, "", new { @class = "text-danger" })
+        <div class="panel panel-body" style="overflow:auto">
+            @* <div class="row">
+           <div class="form-group col-md-6">
+            <label>Order ID</label>
+            @Html.DropDownList("OrderId", null, htmlAttributes: new { @class = "js-states form-control", @id = "purchaseRequestId" })
+            @Html.ValidationMessageFor(model => model.OrderId, "", new { @class = "text-danger" })
+        </div>*@
+            <div class="form-group col-md-6">
+                <label>Purchase Date</label>
+                @Html.TextBoxFor(m => m.purchaseDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.purchaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.purchaseDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.purchaseDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+            <div class="form-group col-md-6">
+                <label>Category</label>
+                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", @id = "categoryId" })
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SupplierId, "SupplierId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("SupplierId", null, htmlAttributes: new { @class = "form-control" })
+            <div class="form-group col-md-6">
+                <label>Supplier Name</label>
+                @Html.DropDownList("SupplierId", null, htmlAttributes: new { @class = "form-control", @id = "SupplierId" })
                 @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SupplierAddressId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SupplierAddressId, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="form-group col-md-6">
+                <label>Supplier Address</label>
+                @Html.DropDownList("SupplierAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SupplierAddressId" })
                 @Html.ValidationMessageFor(model => model.SupplierAddressId, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProjectId, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="form-group col-md-6">
+                <label>Project Name</label>
+                @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
                 @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SiteId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SiteId, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="form-group col-md-6">
+                <label>Site Name</label>
+                @Html.DropDownList("SiteId", null, htmlAttributes: new { @class = "form-control", @id = "SiteId" })
                 @Html.ValidationMessageFor(model => model.SiteId, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SiteAddressId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SiteAddressId, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="form-group col-md-6">
+                <label>Site Address</label>
+                @Html.DropDownList("SiteAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SiteAddressId" })
                 @Html.ValidationMessageFor(model => model.SiteAddressId, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.mobileno, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mobileno, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="form-group col-md-6" hidden>
+                <label>Product No</label>
+                @Html.EditorFor(model => model.ProductNo, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ProductNo } })
+                @Html.ValidationMessageFor(model => model.ProductNo, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-6">
+                <label>Mobile No</label>
+                @Html.EditorFor(model => model.mobileno, new { htmlAttributes = new { @class = "form-control", @id = "mobileno" } })
                 @Html.ValidationMessageFor(model => model.mobileno, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.isDeleted)
-                    @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
+            @*<div class="form-group col-md-6">
+                <label>Purchase Type</label>
+                @Html.DropDownList("type", null, htmlAttributes: new { @class = "form-control", @id = "Purchasetype" })
+                @Html.ValidationMessageFor(model => model.PurType, "", new { @class = "text-danger" })
+            </div>*@
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Total Amount: </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control", @id = "ProTotal" } })
+                    @Html.ValidationMessageFor(model => model.TotalAmt, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Discount(%): </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.discountPercentage, new { htmlAttributes = new { @class = "form-control", @id = "disPercent" } })
+                    @Html.ValidationMessageFor(model => model.discountPercentage, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdateBy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdateBy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdateBy, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Discount Amount : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.totalDiscount, new { htmlAttributes = new { @class = "form-control", @id = "disAmount" } })
+                    @Html.ValidationMessageFor(model => model.totalDiscount, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Grand Total : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.grandTotal, new { htmlAttributes = new { @class = "form-control", @id = "ProGrandTotal" } })
+                    @Html.ValidationMessageFor(model => model.grandTotal, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Tax (%) : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control", @id = "TaxP" } })
+                    @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Tax Amount : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.TaxAmt, new { htmlAttributes = new { @class = "form-control", @id = "TaxPamt" } })
+                    @Html.ValidationMessageFor(model => model.TaxAmt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Net Amount : </label>
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.EditorFor(model => model.NetAmount, new { htmlAttributes = new { @class = "form-control", @id = "netAmt" } })
+                    @Html.ValidationMessageFor(model => model.NetAmount, "", new { @class = "text-danger" })
+                    @*<input type="text" id="netAmt" name="netAmt" size="50" />*@
+                </div>
+            </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group" style="float:right">
+                <input type="submit" value="Submit" class="btn btn-default" />
+                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
             </div>
         </div>
     </div>
+    
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script>
+    let sNo = 1;
+    var lstItems = [];
+    var ntAmt;
+    $(document).ready(function () {
+
+
+        $("#categoryId").change(function () {
+            var supNameId = $(this).find('option:selected').val();
+            SupplierId(supNameId);
+        })
+        $("#SupplierId").change(function () {
+            var supAddressId = $(this).find('option:selected').val();
+            SupplierAddressId(supAddressId);
+        })
+        $("#ProjectId").change(function () {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+        $("#Product").change(function () {
+            var taxAmount = $(this).find('option:selected').val();
+            TaxId(taxAmount);
+        })
+
+
+        $("#disPercent").blur(function () {
+            debugger
+            var grandTotal = $('#ProTotal').val();
+            var disPercentage = $('#disPercent').val();
+            var calProPer = parseFloat((disPercentage / 100) * grandTotal);
+            $('#disAmount').val(calProPer.toFixed());
+            var TotAmt = parseFloat(grandTotal - calProPer);
+            $('#ProGrandTotal').val(TotAmt.toFixed());
+        });
+
+        $("#TaxP").blur(function () {
+            debugger
+
+            var taxPercentage = $('#TaxP').val();
+            var TotAmt = $('#ProGrandTotal').val();
+            var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
+            $('#TaxPamt').val(calProPer1.toFixed());
+            var Netamt = parseFloat(TotAmt) + parseFloat(calProPer1);
+            $('#netAmt').val(Netamt.toFixed());
+
+        });
+
+
+    });
+</script>
