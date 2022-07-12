@@ -19,7 +19,7 @@ namespace issConstructions.Controllers
         public ActionResult Index(int Id)
         {
             ViewBag.pId = Id;
-            var purchaseRequest = db.purchaseRequest.Where(x => x.ID == Id).FirstOrDefault();
+            var purchaseRequest = db.purchaseRequest.Where(x => x.RequestID == Id).FirstOrDefault();
             if (purchaseRequest != null)
             {
                 ViewBag.ProjectName = db.siteDetails.Where(x => x.ID == purchaseRequest.ProjectId).FirstOrDefault();
@@ -45,8 +45,23 @@ namespace issConstructions.Controllers
                 ViewBag.ProjectName = "Project 1";
                 ViewBag.supplierName = "Supplier 1";
             }
-            
-            var purchaseRequestTables = db.purchaseRequestTables.Include(p => p.Product).Where(x => x.purchaseRequestId == Id);
+
+            var purchaseRequestTables = db.purchaseRequestTables.Include(p => p.Product).Where(x => x.purchaseRequestId == purchaseRequest.RequestID).ToList();
+            var totalAmunt = purchaseRequestTables.Sum(x => x.TotalAmount);
+            var DiscPercent = purchaseRequest.discountPercentage;
+            var TaxPercentage = purchaseRequest.Tax;
+            var disAmount = (totalAmunt * DiscPercent) / 100;
+            var TaxPercentageAmount = (totalAmunt - disAmount) * TaxPercentage / 100;
+            var NetAmount = (totalAmunt - disAmount) + TaxPercentageAmount;
+            var purch = db.purchaseRequest.Where(x => x.RequestID == Id).FirstOrDefault();
+
+            purch.dicountAmount = disAmount;
+            purch.TotalAmt = totalAmunt;
+            purch.TaxAmt = TaxPercentageAmount;
+            purch.grandTotal = totalAmunt-disAmount;
+            purch.NetAmount = (totalAmunt - disAmount) + TaxPercentageAmount;
+            db.Entry(purch).State = EntityState.Modified;
+            db.SaveChanges();
             return View(purchaseRequestTables.ToList());
         }
 
@@ -84,7 +99,7 @@ namespace issConstructions.Controllers
             {
                 db.purchaseRequestTables.Add(purchaseRequestTable);
                 db.SaveChanges();
-                return RedirectToAction("Index",purchaseRequestTable.purchaseRequestId);
+                return RedirectToAction("Index", purchaseRequestTable.purchaseRequestId);
             }
 
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseRequestTable.productId);
@@ -127,7 +142,7 @@ namespace issConstructions.Controllers
             {
                 db.Entry(purchaseRequestTable).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index",purchaseRequestTable.purchaseRequestId);
+                return RedirectToAction("Index", purchaseRequestTable.purchaseRequestId);
             }
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseRequestTable.productId);
             return View(purchaseRequestTable);
