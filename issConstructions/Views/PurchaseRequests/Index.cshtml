@@ -103,10 +103,10 @@
                         @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ProjectId)
+                        @Html.DisplayFor(modelItem => item.SiteName.ProjectName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TotalAmt)
+                        @Html.DisplayFor(modelItem => item.TotAmount)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.dicountAmount)
@@ -115,7 +115,7 @@
                         @Html.DisplayFor(modelItem => item.grandTotal)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TaxAmt)
+                        @Html.DisplayFor(modelItem => item.TotTax)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NetAmount)

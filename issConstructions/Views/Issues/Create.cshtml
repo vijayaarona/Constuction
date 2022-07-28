@@ -56,23 +56,15 @@
         <div class="panel panel-body" style="overflow:auto">
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label>Purchase Request Date</label>
+                    <label>Issue Date</label>
                     @Html.TextBoxFor(x => x.IssuesDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
                 </div>
 
                 <div class="form-group col-md-6">
                     <label>Issue Type</label>
-                    <select class="form-control" id="TypeId" name="IssueType">
-                        <option>Godown To Site</option>
-                        <option>Site To Site</option>
-                        <option>Site To Godown</option>
-                    </select>
+                    @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control", @id = "TypeId" })
+                    @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
                 </div>
-                @*<div class="form-group col-md-6">
-            <label>Category</label>
-            @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control", @id = "categoryId" })
-            @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-        </div>*@
                 <div class="form-group col-md-6">
                     <label>From Location</label>
                     @Html.DropDownList("GNameId", null, htmlAttributes: new { @class = "form-control", @id = "GNameId" })
@@ -81,13 +73,13 @@
                 <div class="form-group col-md-6">
                     <label>To Location</label>
                     @Html.DropDownList("SiteNameId", null, htmlAttributes: new { @class = "form-control", @id = "SiteNameId" })
-                    @Html.ValidationMessageFor(model => model.SiteNameId, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.SiteName1Id, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group col-md-6">
                     <label>Project Name</label>
-                    @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
-                    @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("SiteName1Id", null, htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
+                    @Html.ValidationMessageFor(model => model.SiteName1Id, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site Name</label>
@@ -99,6 +91,13 @@
                     @Html.DropDownList("SiteAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SiteAddressId" })
                     @Html.ValidationMessageFor(model => model.SiteAddressId, "", new { @class = "text-danger" })
                 </div>
+
+                <div class="form-group col-md-6"  hidden>
+                    <label>Product No</label>
+                    @Html.EditorFor(model => model.ProductNo, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.ProductNo } })
+                    @Html.ValidationMessageFor(model => model.ProductNo, "", new { @class = "text-danger" })
+                </div>
+
             </div>
             <button type="button" style="float:right" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Item</button>
             <br /><br />
@@ -138,7 +137,7 @@
                                                 <label>Category Name</label><br />
                                                 <select id="Category" name="" style="width:352px; height:27px">
 
-                                                    @foreach (var item in @ViewBag.CategoryId)
+                                                    @foreach (var item in @ViewBag.Category)
                                                     {
                                                         <option value="@item.Value">@item.Text</option>
                                                     }
@@ -227,6 +226,12 @@
     var ntAmt;
     $(document).ready(function ()
     {
+
+        $("#TypeId").change(function () {
+            var TypeName = $(this).find('option:selected').val();
+            TypeId(TypeName);
+        })
+
         $("#ProjectId").change(function () {
             var projectSite = $(this).find('option:selected').val();
             SiteId(projectSite);
@@ -237,11 +242,11 @@
             ProductVal(categoryName);
         })
 
-        $("#ProductVal").change(function () {
+        $("#Product").change(function () {
             var taxAmount = $(this).find('option:selected').val();
             TaxId(taxAmount);
         })
-       
+
         $("#Quantity").blur(function ()
         {
             debugger
@@ -249,7 +254,7 @@
             var amt = $('#Quantity').val() * productrate;
             $("#Amount").val(amt);
 
-                       
+
             if ($('#Amount').val() != '') {
                 //tax calcualtion
                 var taxper = $("#TaxId").val();
@@ -269,7 +274,7 @@
         $('body').addClass("example-open");
     }).on('hide.bs.modal', function (e) {
         $('body').removeClass("example-open");
-        })
+    });
 
      function SiteId(projectSite)
      {
@@ -283,12 +288,12 @@
                       var data = result;
                       $("#SiteId").empty();
                       $("#SiteAddressId").empty();
-                     
+
                       for (var i = 0; i < data.length; i++)
                       {
                           $("#SiteId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
                           $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
-                    
+
                 }
             },
             error: function (err) {
@@ -347,12 +352,35 @@
               });
     };
 
+      function TypeId(TypeName)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Issues/TypeId")',
+                  dataType: 'json',
+                  data: { type_name: TypeName},
+                  success: function (result) {
+                     var data = result;
+                      $("#TypeId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                    $("#TypeId").val(data[i].TypeName)
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+
     $('#btnSave').click(function ()
     {
         debugger
         let list = {};
-         list.productId = $('#Product').val();
+        
          list.CategoryId = $('#Category').val();
+         list.productId = $('#Product').val();
          list.productText = $('#Product option:selected').text();
          list.CategoryText = $('#Category option:selected').text();
          list.Description = $('#Description').val();
@@ -362,7 +390,7 @@
          list.Amount = $('#Amount').val();
          list.TaxAmount = $('#TaxAmt').val();;
          list.TotalAmount = $('#TotalAmt').val();;
-       
+
         list.sNo = sNo;
 
         $.ajax({
@@ -378,8 +406,8 @@
                     lstItems.push(list);
                     console.log(lstItems);
                     bindItems();
-                    $('#productId').val(0);
-                    $('#CategoryId').val(0);
+                    $('#product').val(0);
+                    $('#Category').val(0);
                     $('#Description').val('');
                     $('#ItemRate').val('');
                     $('#Quantity').val('');

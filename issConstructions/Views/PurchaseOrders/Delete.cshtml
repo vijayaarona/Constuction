@@ -67,7 +67,7 @@
 
         <table id="AccountGroupMaster">
             <tr>
-                <th>Request Date</th>
+                <th>Order Date</th>
                 <td>  @Html.DisplayFor(model => model.OrderDate) </td>
             </tr>
 
@@ -85,15 +85,15 @@
             </tr>
             <tr>
                 <th>Project Name</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.ProjectName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.ProjectName) </td>
             </tr>
             <tr>
                 <th>Site Name</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteName) </td>
             </tr>
             <tr>
                 <th>Site Address</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteAddress) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteAddress) </td>
             </tr>
             <tr>
                 <th>Mobile No</th>

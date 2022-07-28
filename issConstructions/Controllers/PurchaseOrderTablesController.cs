@@ -19,10 +19,10 @@ namespace issConstructions.Controllers
         public ActionResult Index(int Id)
         {
              ViewBag.pId = Id;
-            var purchaseOrder = db.PurchaseOrders.Where(x => x.ID == Id).FirstOrDefault();
+            var purchaseOrder = db.PurchaseOrders.Where(x => x.OrderId == Id).FirstOrDefault();
             if (purchaseOrder != null)
             {
-                ViewBag.ProjectName = db.siteDetails.Where(x => x.ID == purchaseOrder.ProjectId).FirstOrDefault();
+                ViewBag.ProjectName = db.siteDetails.Where(x => x.ID == purchaseOrder.SiteNameId).FirstOrDefault();
                 if (ViewBag.ProjectName == null)
                 {
                     ViewBag.ProjectName = "Project 1";
@@ -45,9 +45,23 @@ namespace issConstructions.Controllers
                 ViewBag.ProjectName = "Project 1";
                 ViewBag.supplierName = "Supplier 1";
             }
-           
-           
-            var purchaseOrderTables = db.purchaseOrderTables.Include(p => p.Product).Where(p => p.purchaseRequestId == Id);
+        
+            var purchaseOrderTables = db.purchaseOrderTables.Include(p => p.Product).Where(x => x.purchaseRequestId == purchaseOrder.OrderId).ToList();
+            var totalAmunt = purchaseOrderTables.Sum(x => x.TotalAmount);
+            var DiscPercent = purchaseOrder.discountPercentage;
+            var TaxPercentage = purchaseOrder.Tax;
+            var disAmount = (totalAmunt * DiscPercent) / 100;
+            var TaxPercentageAmount = (totalAmunt - disAmount) * TaxPercentage / 100;
+            var NetAmount = (totalAmunt - disAmount) + TaxPercentageAmount;
+            var purch = db.PurchaseOrders.Where(x => x.OrderId == Id).FirstOrDefault();
+
+            purch.dicountAmount = disAmount;
+            purch.TotAmount = totalAmunt;
+            purch.TotTax = TaxPercentageAmount;
+            purch.grandTotal = totalAmunt - disAmount;
+            purch.NetAmount = (totalAmunt - disAmount) + TaxPercentageAmount;
+            db.Entry(purch).State = EntityState.Modified;
+            db.SaveChanges();
             return View(purchaseOrderTables.ToList());
         }
 

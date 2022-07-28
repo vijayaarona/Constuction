@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -16,9 +16,39 @@ namespace issConstructions.Controllers
         private issDB db = new issDB();
 
         // GET: IssueTables
-        public ActionResult Index()
+        public ActionResult Index(int Id)
         {
-            var issueTables = db.issueTables.Include(i => i.Category).Include(i => i.Product);
+
+            ViewBag.pId = Id;
+            var issues = db.issues.Where(x => x.IssueID == Id).FirstOrDefault();
+            if (issues != null)
+            {
+                ViewBag.ProjectName = db.siteDetails.Where(x => x.ID == issues.SiteNameId).FirstOrDefault();
+                if (ViewBag.ProjectName == null)
+                {
+                    ViewBag.ProjectName = "Project 1";
+
+                }
+                else ViewBag.ProjectName = ViewBag.ProjectName.SiteName;
+
+            }
+            else
+            {
+                ViewBag.ProjectName = "Project 1";
+
+            }
+
+            //var issueTables = db.issueTables.Include(p => p.Product).Where(x => x.issueId == issues.IssueID).ToList();
+            //var totalAmunt = issueTables.Sum(x => x.TotalAmount);
+
+            //var NetAmount = (totalAmunt);
+            //var purch = db.issues.Where(x => x.OrderId == Id).FirstOrDefault();
+            //purch.NetAmount = (totalAmunt);
+            //db.Entry(purch).State = EntityState.Modified;
+            //db.SaveChanges();
+            //return View(pur.ToList());
+            var issueTables = db.issueTables.Include(p => p.Product).Where(x => x.issueId == issues.IssueID).ToList();
+            //var issueTables = db.issueTables.Include(i => i.Category).Include(i => i.Product);
             return View(issueTables.ToList());
         }
 
@@ -98,6 +128,41 @@ namespace issConstructions.Controllers
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", issueTable.productId);
             return View(issueTable);
         }
+
+        [HttpPost]
+        public JsonResult SiteId(int site_NameId)
+        {
+            if (site_NameId > 0)
+            {
+                var resp = db.siteDetails.Where(x => x.ID == site_NameId).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public JsonResult TaxId(int tax_Amount)
+        {
+            if (tax_Amount > 0)
+            {
+                var resp = db.productMasters.Where(x => x.ID == tax_Amount).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult ProductVal(int category)
+        {
+            if (category > 0)
+            {
+                var resp = db.productMasters.Where(x => x.CategoryId == category).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
 
         // GET: IssueTables/Delete/5
         public ActionResult Delete(int? id)

@@ -20,7 +20,7 @@ namespace issConstructions.Controllers
         public ActionResult Index()
         {
             
-            var issues = db.issues.Include(p => p.GName).Include(p => p.SiteDetails);
+            var issues = db.issues.Include(p => p.GName).Include(p => p.SiteName);
             return View(issues.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
 
         }
@@ -33,10 +33,12 @@ namespace issConstructions.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Issues issues = db.issues .Where(x => x.isDeleted == false && x.ID == id).FirstOrDefault();
+
             if (issues == null)
             {
                 return HttpNotFound();
             }
+
             //Category
             List<SelectListItem> Category = new List<SelectListItem>();
             Category.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -44,7 +46,8 @@ namespace issConstructions.Controllers
             {
                 Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.CategoryId = Category;
+            ViewBag.Category= Category;
+
             //From Location
             List<SelectListItem> GName = new List<SelectListItem>();
             GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -53,6 +56,7 @@ namespace issConstructions.Controllers
                 GName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
             }
             ViewBag.GNameId = GName;
+
             //To Location
             List<SelectListItem> SiteName = new List<SelectListItem>();
             SiteName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -61,6 +65,7 @@ namespace issConstructions.Controllers
                 SiteName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteNameId = SiteName;
+
             //Project
             List<SelectListItem> Project = new List<SelectListItem>();
             Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -68,7 +73,8 @@ namespace issConstructions.Controllers
             {
                 Project.Add(new SelectListItem { Text = item.ProjectName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.ProjectId = Project;
+            ViewBag.SiteName1Id = Project;
+
             //SiteName
             List<SelectListItem> Site = new List<SelectListItem>();
             Site.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -77,6 +83,7 @@ namespace issConstructions.Controllers
                 Site.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteId = Site;
+
             //Site Address
             List<SelectListItem> SiteAddress = new List<SelectListItem>();
             SiteAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -85,6 +92,7 @@ namespace issConstructions.Controllers
                 SiteAddress.Add(new SelectListItem { Text = item.SiteAddress.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteAddressId = SiteAddress;
+
             //Product
             var listItems = new SelectList(db.productMasters, "ID", "ProductName");
             List<SelectListItem> Product = new List<SelectListItem>();
@@ -93,6 +101,7 @@ namespace issConstructions.Controllers
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
             }
             ViewBag.ProductId = Product;
+
             //Tax
             var listsItem = new SelectList(db.productMasters, "ID", "Tax");
             List<SelectListItem> Tax = new List<SelectListItem>();
@@ -104,11 +113,11 @@ namespace issConstructions.Controllers
 
             //product No
             int proNo = 0;
-            var productNo = db.issues.Where(p => p.IssueID != null).ToList();
+            var productNo = db.issues.Where(p => p.ProductNo != null).ToList();
 
             if (productNo.Count > 0)
             {
-                proNo = productNo.Max(x => x.IssueID);
+                proNo = productNo.Max(x => x.ProductNo);
             }
             else proNo = 1;
             ViewBag.ProductNo = proNo;
@@ -124,7 +133,24 @@ namespace issConstructions.Controllers
             {
                 Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.CategoryId = Category;
+            ViewBag.Category= Category;
+
+            List<SelectListItem> Product = new List<SelectListItem>();
+            Product.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.productMasters.ToList())
+            {
+                Product.Add(new SelectListItem { Text = item.ProductName.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.ProductId = Product;
+
+
+            List<SelectListItem> Type = new List<SelectListItem>();
+            Type.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.tblTypes.ToList())
+            {
+                Type.Add(new SelectListItem { Text = item.TypeName.ToString(), Value = item.Id.ToString() });
+            }
+            ViewBag.TypeId = Type;
 
             List<SelectListItem> Project = new List<SelectListItem>();
             Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -132,7 +158,8 @@ namespace issConstructions.Controllers
             {
                 Project.Add(new SelectListItem { Text = item.ProjectName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.ProjectId = Project;
+            ViewBag.SiteName1Id = Project;
+
             List<SelectListItem> Site = new List<SelectListItem>();
             Site.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
@@ -140,6 +167,7 @@ namespace issConstructions.Controllers
                 Site.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteId = Site;
+
             List<SelectListItem> SiteAddress = new List<SelectListItem>();
             SiteAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
@@ -147,13 +175,6 @@ namespace issConstructions.Controllers
                 SiteAddress.Add(new SelectListItem { Text = item.SiteAddress.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteAddressId = SiteAddress;
-            var listItems = new SelectList(db.productMasters, "ID", "ProductName");
-            List<SelectListItem> Product = new List<SelectListItem>();
-            foreach (var item in db.productMasters.ToList())
-            {
-                Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
-            }
-            ViewBag.ProductId = Product;
 
             List<SelectListItem> GName= new List<SelectListItem>();
             GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -180,17 +201,19 @@ namespace issConstructions.Controllers
                 Tax.Add(new SelectListItem { Text = items.Tax.ToString(), Value = items.ID.ToString() });
             }
             ViewBag.ProductTax = Tax;
+
+
             //product No
             int proNo = 0;
-            var productNo = db.issues.Where(p => p.IssueID != null).ToList();
+            var productNo = db.issues.Where(p => p.ProductNo != null).ToList();
 
             if (productNo.Count > 0)
             {
-                proNo = productNo.Max(x => x.IssueID);
+                proNo = productNo.Max(x => x.ProductNo);
             }
             else proNo = 1;
-            ViewBag.IssueID = proNo;
-            
+            ViewBag.ProductNo = proNo;
+
             return View();
         }
 
@@ -199,7 +222,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,IssuesDate,ProjectId,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,GNameId,SiteNameId,IssueID")] Issues issues)
+        public ActionResult Create([Bind(Include = "ID,IssuesDate,SiteName1Id,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,GNameId,SiteNameId,IssueID,TypeId")] Issues issues)
         {
 
             try
@@ -229,11 +252,11 @@ namespace issConstructions.Controllers
             {
 
 
-                
+                ViewBag.TypeId = new SelectList(db.tblTypes, "Id", "TypeName", issues.TypeId);
                 ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
                 ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "SiteName",issues.SiteNameId );
-                ViewBag.ProjectId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.ProjectId);
-                ViewBag.ProductId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.ProjectId);
+                ViewBag.SiteName1Id = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SiteName1Id);
+                ViewBag.ProductId = new SelectList(db.siteDetails, "ID", "ProjectName",issues.ProductNo);
                 ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName",issues.SiteId);
                 ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", issues.SiteAddressId);
 
@@ -290,7 +313,12 @@ namespace issConstructions.Controllers
             {
                 return HttpNotFound();
             }
-           // ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issues.CategoryId);
+            ViewBag.TypeId = new SelectList(db.tblTypes, "Id", "TypeName", issues.TypeId);
+            ViewBag.GNameId = new SelectList(db.godowns , "Id", "godownName", issues.GNameId );
+            ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SiteNameId);
+            ViewBag.SiteName1Id = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SiteName1Id);
+            ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName",issues.SiteId);
+            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", issues.SiteAddressId);
             return View(issues);
         }
 
@@ -299,7 +327,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,IssuesDate,ProjectId,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,GNameId,SiteNameId,IssueID")] Issues issues)
+        public ActionResult Edit([Bind(Include = "ID,IssuesDate,SiteName1Id,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,GNameId,SiteNameId,IssueID,TypeId")] Issues issues)
         {
             if (ModelState.IsValid)
             {
@@ -333,7 +361,15 @@ namespace issConstructions.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Issues issues = db.issues.Find(id);
+            Issues issues  = db.issues.Find(id);
+            List<IssueTable> lstPR = db.issueTables.Where(x => x.issueId == issues.IssueID).ToList();
+            foreach (var item in lstPR)
+            {
+                db.issueTables.Remove(item);
+                db.SaveChanges();
+            }
+
+
             db.issues.Remove(issues);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -354,14 +390,14 @@ namespace issConstructions.Controllers
             try
             {
                 int maxValue = 0;
-                var isnull = db.issues.Where(x => x.ID != null).ToList();
+                var isnull = db.issues.Where(x => x.IssueID != null).ToList();
                 if (isnull.Count == 0)
                 {
                     maxValue = 1;
                 }
                 else
                 {
-                    maxValue = db.issues.Max(x => x.ID );
+                    maxValue = db.issues.Max(x => x.IssueID);
                     maxValue += 1;
 
                 }
@@ -397,7 +433,7 @@ namespace issConstructions.Controllers
                     }
                     else maxId += 1;
                     int pId = int.Parse(Id);
-                    var p = db.issueTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
+                    var p = db.issueTables.Where(x => x.issueId == pId && x.isDeleted == false).FirstOrDefault();
                     db.issueTables.Remove(p);
                     db.SaveChanges();
                     var resp = db.issueTables.Where(x => x.issueId == maxId && x.isDeleted == false).ToList();
@@ -419,9 +455,10 @@ namespace issConstructions.Controllers
         {
             try
             {
-
-                List<IssueTable> issueTables = db.issueTables.Where(x => x.issueId == invoice).ToList();
+                var pr = db.issues.Where(x => x.ID == invoice).FirstOrDefault();
+                List<IssueTable> issueTables = db.issueTables.Where(x => x.issueId == pr.IssueID).ToList();
                 return Json(issueTables, JsonRequestBehavior.AllowGet);
+
             }
             catch (Exception ex)
             {

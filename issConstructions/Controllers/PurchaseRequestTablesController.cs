@@ -22,7 +22,7 @@ namespace issConstructions.Controllers
             var purchaseRequest = db.purchaseRequest.Where(x => x.RequestID == Id).FirstOrDefault();
             if (purchaseRequest != null)
             {
-                ViewBag.ProjectName = db.siteDetails.Where(x => x.ID == purchaseRequest.ProjectId).FirstOrDefault();
+                ViewBag.ProjectName = db.siteDetails.Where(x => x.ID == purchaseRequest.SiteNameId).FirstOrDefault();
                 if (ViewBag.ProjectName == null)
                 {
                     ViewBag.ProjectName = "Project 1";
@@ -56,8 +56,8 @@ namespace issConstructions.Controllers
             var purch = db.purchaseRequest.Where(x => x.RequestID == Id).FirstOrDefault();
 
             purch.dicountAmount = disAmount;
-            purch.TotalAmt = totalAmunt;
-            purch.TaxAmt = TaxPercentageAmount;
+            purch.TotAmount = totalAmunt;
+            purch.TotTax = TaxPercentageAmount;
             purch.grandTotal = totalAmunt-disAmount;
             purch.NetAmount = (totalAmunt - disAmount) + TaxPercentageAmount;
             db.Entry(purch).State = EntityState.Modified;
@@ -77,7 +77,17 @@ namespace issConstructions.Controllers
             {
                 return HttpNotFound();
             }
+            //Product
+            var listItems = new SelectList(db.productMasters, "ID", "ProductName");
+            List<SelectListItem> Product = new List<SelectListItem>();
+            foreach (var item in db.productMasters.ToList())
+            {
+                Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
+            }
+            ViewBag.ProductId = Product;
+
             return View(purchaseRequestTable);
+            //return RedirectToAction("Index", purchaseRequestTable.purchaseRequestId);
         }
 
         // GET: PurchaseRequestTables/Create
@@ -95,15 +105,19 @@ namespace issConstructions.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,purchaseRequestId,productId,Description,Tax,Rate,Quantity,Amount,TaxAmount,TotalAmount,discountPercent,discountAmount,ProductNo,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] PurchaseRequestTable purchaseRequestTable)
         {
-            if (ModelState.IsValid)
+
+            try
             {
+
                 db.purchaseRequestTables.Add(purchaseRequestTable);
                 db.SaveChanges();
                 return RedirectToAction("Index", purchaseRequestTable.purchaseRequestId);
             }
-
-            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseRequestTable.productId);
-            return View(purchaseRequestTable);
+            catch (Exception ex)
+            {
+                ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseRequestTable.productId);
+                return View(purchaseRequestTable);
+            }
         }
 
         // GET: PurchaseRequestTables/Edit/5

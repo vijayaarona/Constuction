@@ -323,7 +323,7 @@
             }
         });
     };
-     function TaxId(taxAmount)
+     function Tax(taxAmount)
     {
               $.ajax({
             type: 'POST',
@@ -332,10 +332,10 @@
                   data: { tax_Amount: taxAmount },
                   success: function (result) {
                      var data = result;
-                      $("#TaxId").empty();
+                      $("#Tax").empty();
                       for (var i = 0; i < data.length; i++)
                       {
-                    $("#TaxId").val(data[i].Tax)
+                    $("#Tax").val(data[i].Tax)
                       }
                   },
                   error: function (err)

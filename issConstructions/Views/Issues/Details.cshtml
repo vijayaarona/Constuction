@@ -81,19 +81,19 @@
             </tr>
             <tr>
                 <th>To Location</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteName) </td>
             </tr>
             <tr>
                 <th>Project Name</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.ProjectName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.ProjectName) </td>
             </tr>
             <tr>
                 <th>Site Name</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteName) </td>
             </tr>
             <tr>
                 <th>Site Address</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteAddress) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteAddress) </td>
             </tr>
             <tr>
                 <th>Net Amount</th>
@@ -157,7 +157,7 @@
                                 let list = {};
                                 list.productId = result[i].Product.ProductName;
                                 list.productText = result[i].Tax;
-                                list.purchaseRequestId = result[i].purchaseRequestId;
+                                list.issueid = result[i].issueid ;
                                 list.Id = result[i].ID;
                                 list.Description = result[i].Description;
                                 list.Tax = result[i].Tax;
@@ -200,140 +200,356 @@
 
 
     });
-    $("#categoryId").change(function () {
-        var supNameId = $(this).find('option:selected').val();
-        SupplierId(supNameId);
-    })
-    $("#SupplierId").change(function () {
-        var supAddressId = $(this).find('option:selected').val();
-        SupplierAddressId(supAddressId);
-    })
-    $("#ProjectId").change(function () {
-        var projectSite = $(this).find('option:selected').val();
-        SiteId(projectSite);
-    })
-    $("#Product").change(function () {
-        var taxAmount = $(this).find('option:selected').val();
-        TaxId(taxAmount);
-    })
+    
+    $(document).ready(function ()
+    {
+
+        $("#TypeId").change(function () {
+            var TypeName = $(this).find('option:selected').val();
+            TypeId(TypeName);
+        })
+
+        $("#ProjectId").change(function () {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+
+        $("#Category").change(function () {
+            var categoryName = $(this).find('option:selected').val();
+            ProductVal(categoryName);
+        })
+
+        $("#Product").change(function () {
+            var taxAmount = $(this).find('option:selected').val();
+            TaxId(taxAmount);
+        })
+
+        $("#Quantity").blur(function ()
+        {
+            debugger
+            var productrate = $('#ItemRate').val();
+            var amt = $('#Quantity').val() * productrate;
+            $("#Amount").val(amt);
 
 
-    $("#discountPercent").blur(function () {
-        debugger
-        var productRate = parseFloat($('#Rate').val());
-        var Amt = parseFloat($('#Quantity').val() * productRate);
-        $("#Amount").val(Amt.toFixed(2));
+            if ($('#Amount').val() != '') {
+                //tax calcualtion
+                var taxper = $("#TaxId").val();
+                var taxtotal = (taxper / 100) * amt;
 
-        //Discount Calculation
-        var productDisPer = parseFloat($('#discountPercent').val());
+                //total calculation
+                var totalamount = amt + taxtotal;
+                $("#TaxAmt").val(taxtotal);
+                $("#TotalAmt").val(totalamount);
+            }
 
-        var disAmt = parseFloat((productDisPer / 100) * Amt);
-        $('#discountAmount').val(disAmt.toFixed(2));
+        })
 
-        var productAmount = parseFloat(Amt - disAmt);
-
-        if ($('#discountPercent').val() != '') {
-            //Tax Calcualtion
-            var TaxPer = $("#TaxId").val();
-            var taxTotal = parseFloat((TaxPer / 100) * productAmount);
-
-            //Total Calculation
-            var totalAmount = parseFloat(productAmount + taxTotal);
-            $("#TaxAmt").val(taxTotal.toFixed(2));
-            $("#TotalAmt").val(totalAmount.toFixed(2));
-        }
-
-    })
-
-
-
-    $(document).keydown(function (event) {
-        if (event.altKey && event.which === 65) {
-            $('#myModal').modal('show');
-        }
     });
 
     $('#myModal').on('show.bs.modal', function (e) {
         $('body').addClass("example-open");
     }).on('hide.bs.modal', function (e) {
         $('body').removeClass("example-open");
-    })
-    function removeTR(item)
-    {
-        debugger
-        //let inNo = $('#ProductNo').val();
-        let productId = $('#Product').val();
-        $.ajax({
-            url: '@Url.Content("~/PurchaseRequests/removePurchages")',
+    });
+
+     function SiteId(projectSite)
+     {
+         debugger
+              $.ajax({
             type: 'POST',
+            url: '@Url.Content("~/Issues/SiteId")',
             dataType: 'json',
-            data: { Id: item, InNo: productId },
-            success: function (result)
-            {
-                console.log(result);
-                if (result != null)
-                {
-                      window.location.reload();
+                  data: { site_NameId: projectSite },
+                  success: function (result) {
+                      var data = result;
+                      $("#SiteId").empty();
+                      $("#SiteAddressId").empty();
+
+                      for (var i = 0; i < data.length; i++)
+                      {
+                          $("#SiteId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
+                          $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
 
                 }
+            },
+            error: function (err) {
+                console.log(err);
             }
         });
-    }
+    };
 
-    function Edit(item) {
-        var edit = lstItems.find(x => x.Id == item);
-        $('#productId').val(edit.Id);
-        $('#iD').val(item);
 
-        $('#Description').val(edit.Description);
-        $('#Rate').val(edit.Rate);
-        $('#Quantity').val(edit.Quantity);
-        $('#TaxId').val(edit.Tax);
-        $('#Amount').val(edit.Amount);
-        $('#TaxAmt').val(edit.TaxAmount);
-        $('#TotalAmt').val(edit.TotalAmount);
-        $('#discountAmount').val(edit.discountAmount);
-        $('#discountPercent').val(edit.discountPercent);
-        $('#RequestID').val(edit.purchaseRequestId);
-        //$('#gstAmount').val('');
-        $('#myModal').modal('show');
-    }
-     $('#btnSave').click(function ()
+    function ProductVal(categoryName)
+    {
+        debugger
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Issues/ProductVal")',
+                  dataType: 'json',
+                  data: { category: categoryName },
+                  success: function (result) {
+                      var data = result;
+                      $("#Product").empty();
+                      var op = "";
+                      op = "<option>---Please select ---</option>";
+                      for (var i = 0; i < data.length; i++)
+                      {
+                          op += "<option value=" + data[i].ProductName + ">" + data[i].ProductName + "</option>";
+                      }
+                      $("#Product").append(op);
+
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+
+     function TaxId(taxAmount)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Issues/TaxId")',
+                  dataType: 'json',
+                  data: { tax_Amount: taxAmount },
+                  success: function (result) {
+                     var data = result;
+                      $("#TaxId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                    $("#TaxId").val(data[i].Tax)
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+
+      function TypeId(TypeName)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Issues/TypeId")',
+                  dataType: 'json',
+                  data: { type_name: TypeName},
+                  success: function (result) {
+                     var data = result;
+                      $("#TypeId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                    $("#TypeId").val(data[i].TypeName)
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+
+    $('#btnSave').click(function ()
     {
         debugger
         let list = {};
+
+         list.CategoryId = $('#Category').val();
          list.productId = $('#Product').val();
          list.productText = $('#Product option:selected').text();
-         list.purchaseRequestId = $('#RequestID').val();
+         list.CategoryText = $('#Category option:selected').text();
          list.Description = $('#Description').val();
          list.Tax = $('#TaxId').val();
-         list.Rate = $('#Rate').val();
+         list.Rate = $('#ItemRate').val();
          list.Quantity = $('#Quantity').val();
          list.Amount = $('#Amount').val();
-         list.discountPercent = $('#discountPercent').val();
-         list.discountAmount = $('#discountAmount').val();
          list.TaxAmount = $('#TaxAmt').val();;
-         list.TotalAmount = $('#TotalAmt').val();
-         list.ProductNo = $('#ProductNo').val();
-         list.ID = $('#iD').val();
+         list.TotalAmount = $('#TotalAmt').val();;
+
+        list.sNo = sNo;
 
         $.ajax({
-                url: '@Url.Content("~/PurchaseRequests/saveEditPurchages")',
+                url: '@Url.Content("~/Issues/savePurchages")',
                 type: 'POST',
                   dataType: 'json',
-            data: { PurchaseRequestTable: list },
+            data: { issueTable: list },
                 success: function (result)
                 {
                     debugger
                     console.log(result);
-                    window.location.reload();
+                    list.Id = result;
+                    lstItems.push(list);
+                    console.log(lstItems);
+                    bindItems();
+                    $('#product').val(0);
+                    $('#Category').val(0);
+                    $('#Description').val('');
+                    $('#ItemRate').val('');
+                    $('#Quantity').val('');
+                    $('#TaxId').val('');
+                    $('#Amount').val('');
+                    $('#TaxAmt').val('');
+                    $('#TotalAmt').val('');
+                    $('#gstAmount').val('');
             },
 
             error: function (err) {
                 console.log(err);
             }
         });
-        //$('#myModal').modal('show');
     });
+
+    function bindItems() {
+        $('#tblpurchaserequest').empty();
+        if (lstItems.length > 0) {
+            debugger
+            let sNo = 1;
+            let grandTotal = 0;
+            // let calProPer = 0;
+            for (var i = 0; i < lstItems.length; i++) {
+                var row = `<tr id=rm${sNo}>`
+                    + `<td>${sNo}</td>`
+                    + `<td>${lstItems[i].productText}</td>`
+                    + `<td>${lstItems[i].CategoryText}</td>`
+                    + `<td>${lstItems[i].Tax}</td>`
+                    + `<td>${lstItems[i].Description}</td>`
+                    + `<td>${lstItems[i].Rate}</td>`
+                    + `<td>${lstItems[i].Quantity}</td>`
+                    + `<td>${lstItems[i].Amount}</td>`
+                    + `<td>${lstItems[i].TaxAmount}</td>`
+                    + `<td>${lstItems[i].TotalAmount}</td>`
+                    + `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
+                        </td>`
+                    + "</tr>";
+
+                let amount = 0;
+
+
+
+                lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
+                grandTotal += amount;
+
+                $('#tblpurchaserequest').append(row);
+                sNo++;
+            }
+            console.log(grandTotal);
+            $('#netAmt').val(grandTotal.toFixed());
+        }
+    }
 </script>
 
+@*<!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Create</title>
+    </head>
+    <body>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Issues</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IssuesDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.IssuesDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IssuesDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProjectId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ProjectId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SiteId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SiteId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SiteId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SiteAddressId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SiteAddressId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SiteAddressId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.netAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.netAmount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.netAmount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.isDeleted)
+                            @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UpdateBy, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.UpdateBy, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.UpdateBy, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </body>
+    </html>*@

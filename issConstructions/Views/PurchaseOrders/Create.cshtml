@@ -43,6 +43,12 @@
     }
 </style>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
 <link rel="stylesheet" type="text/css" href=@Url.Content("https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css")>
 @using (Html.BeginForm())
 {
@@ -79,8 +85,8 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label>Project Name</label>
-                    @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
-                    @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("SiteNameId", null, htmlAttributes: new { @class = "form-control", @id = "ProjectId" })
+                    @Html.ValidationMessageFor(model => model.SiteNameId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site Name</label>
@@ -193,6 +199,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-save="modal" id="btnSave" data-dismiss="modal">Add</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancel()">Close</button>
+                                
                             </div>
                         </div>
                     </div>
@@ -204,8 +211,8 @@
                     <label>Total Amount: </label>
                 </div>
                 <div class="form-group col-md-3">
-                    @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control", @id = "ProTotal" } })
-                    @Html.ValidationMessageFor(model => model.TotalAmt, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.TotAmount, new { htmlAttributes = new { @class = "form-control", @id = "ProTotal" } })
+                    @Html.ValidationMessageFor(model => model.TotAmount, "", new { @class = "text-danger" })
                     @*<input type="text" id="ProGrandTotal" name="ProGrandTotal" size="50" />*@
                 </div>
                 @*<label id="ProGrandTotal"></label>*@
@@ -258,8 +265,8 @@
                     <label>Tax Amount : </label>
                 </div>
                 <div class="form-group col-md-3">
-                    @Html.EditorFor(model => model.TaxAmt, new { htmlAttributes = new { @class = "form-control", @id = "TaxPamt" } })
-                    @Html.ValidationMessageFor(model => model.TaxAmt, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.TotTax, new { htmlAttributes = new { @class = "form-control", @id = "TaxPamt" } })
+                    @Html.ValidationMessageFor(model => model.TotTax, "", new { @class = "text-danger" })
                     @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
                 </div>
             </div>
@@ -275,19 +282,6 @@
                 </div>
             </div>
 
-            @*<div class="row">
-            <div class="form-group col-md-4">
-                <label>Net Amount    :</label>
-                <label id="netAmt"></label>
-            </div>
-            <div class="form-group col-md-4">
-                <label>Request By</label>
-
-            </div>
-            <div class="form-group col-md-4">
-                <label>Remarks</label>
-            </div>
-        </div>*@
             <div class="form-group" style="float:right">
                 <input type="submit" value="Submit" class="btn btn-default" />
                 @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
@@ -385,59 +379,73 @@
             dataType: 'json',
                   data: { purchaseRequestOrderId: requestId },
                   success: function (result) {
-                      debugger
+
                       console.log(result)
                       var data = result.res;
 
-                      //$('#categoryId').empty();
-                      //$('#SupplierId').empty();
-                      //$('#SupplierAddressId').empty();
-                      //$('#ProjectId').empty();
-                      //$('#SiteId').empty();
-                      //$('#SiteAddressId').empty();
-                      //$('#mobileno').empty();
-
-
-                      $('#categoryId option[value=' + data.ID + ']').attr("selected", "selected");
+                      $('#categoryId option[value=' + data.CategoryId + ']').attr("selected", "selected");
                       $('#SupplierId option[value=' + data.SupplierId + ']').attr("selected", "selected");
                       $('#SupplierAddressId option[value=' + data.SupplierAddressId + ']').attr("selected", "selected");
-                      $('#ProjectId option[value=' + data.ProjectId + ']').attr("selected", "selected");
+                      $('#ProjectId option[value=' + data.SiteNameId  + ']').attr("selected", "selected");
                       $('#SiteId option[value=' + data.SiteId + ']').attr("selected", "selected");
                       $('#SiteAddressId option[value=' + data.SiteAddressId + ']').attr("selected", "selected");
 
                       $("#mobileno").val(data.mobileno);
-                      $("#mobileno").val(data.mobileno);
-                      $("#ProTotal").val(data.TotalAmt);
+                      $("#ProTotal").val(data.TotAmount);
                       $("#disPercent").val(data.discountPercentage);
                       $("#disAmount").val(data.dicountAmount);
                       $("#ProGrandTotal").val(data.grandTotal);
                       $("#TaxP").val(data.Tax);
-                      $("#TaxPamt").val(data.TaxAmt);
+                      $("#TaxPamt").val(data.TotTax);
                       $("#netAmt").val(data.NetAmount);
                       $("#orderDate").val(data.orderDate);
 
-
-                      console.log(result.req);
                       var row = "";
-                      if (result.req.length > 0) {
-                          for (var i = 0; i < result.req.length; i++) {
-                              row += "<tr>"
-                              row  += "<td>"+(i + 1)+"</td>"
-                              row  += "<td>" + result.req[i].Product.ProductName +"</td>"
+                      debugger
+                      if (result != null && result != "data") {
 
-                            row  += "<td>" + result.req[i].Product.Tax +"</td>"
-                            row  += "<td>" + result.req[i].Description +"</td>"
-                            row  += "<td>" + result.req[i].Rate +"</td>"
-                            row  += "<td>" + result.req[i].Quantity +"</td>"
-                            row  += "<td>" + result.req[i].Amount +"</td>"
-                            row      += "<td>" + result.req[i].discountAmount +"</td>"
-                            row  += "<td>" + result.req[i].TaxAmount +"</td>"
-                            row  += "<td>" + result.req[i].TotalAmount +"</td>"
-                            row  += "<td></td>"
-                            row  += "</tr>";
+                          let sNo = 1;
+                          for (var i = 0; i < result.req.length; i++) {
+                              let list = {};
+                              list.productId = result.req[i].Product.ProductName;
+                              list.productText = result.req[i].Product.ProductName;
+                              list.purchaseRequestId = result.req[i].purchaseRequestId;
+                              list.Id = result.req[i].ID;
+                              list.Description = result.req[i].Description;
+                              list.Tax = result.req[i].Tax;
+                              list.Rate = result.req[i].Rate;
+                              list.Quantity = result.req[i].Quantity;
+                              list.Amount = result.req[i].Amount;
+                              list.discountPercent = result.req[i].discountPercent;
+                              list.discountAmount = result.req[i].discountAmount;
+                              list.TaxAmount = result.req[i].TaxAmount;
+                              list.TotalAmount = result.req[i].TotalAmount;
+                              list.ProductNo = result.req[i].ProductNo;
+
+                              list.sNo = sNo;
+                              lstItems.push(list);
+                              row = `<tr>`
+                              row += `<td>${sNo}</td>`
+                              row += `<td>${result.req[i].Product.ProductName}</td>`
+                              row += `<td>${result.req[i].Tax}</td>`
+                              row += `<td>${result.req[i].Description}</td>`
+                              row += `<td>${result.req[i].Rate}</td>`
+                              row += `<td>${result.req[i].Quantity}</td>`
+                              row += `<td>${result.req[i].Amount}</td>`
+                              row += `<td>${result.req[i].discountAmount}</td>`
+                              row += `<td>${result.req[i].TaxAmount}</td>`
+                              row += `<td>${result.req[i].TotalAmount}</td>`
+                              row += `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${result.req[i].ID}')">Remove</button>
+                        </td>`
+                              row += `</tr>`;
+                              sNo++;
+
+                              $('#tblpurchaserequest').append(row);
                           }
-                          $('#tblpurchaserequest').append(row);
                       }
+
                   },
                   error: function (err)
                   {
@@ -558,7 +566,7 @@
               });
     };
 
-     $('#btnSave').click(function ()
+ $('#btnSave').click(function ()
     {
         debugger
         let list = {};
@@ -582,7 +590,7 @@
                 url: '@Url.Content("~/PurchaseOrders/savePurchages")',
                 type: 'POST',
                   dataType: 'json',
-            data: { purchaseOrder: list },
+            data: { PurchaseOrderTable: list },
                 success: function (result)
                 {
                     debugger
@@ -611,60 +619,6 @@
         });
         //$('#myModal').modal('show');
     });
-
-    @*$('#btnSave').click(function ()
-    {
-        debugger
-        let list = {};
-         list.Product = $('#Product').val();
-         list.productText = $('#Product option:selected').text();
-         list.Description = $('#Description').val();
-         list.Tax = $('#TaxId').val();
-         list.Rate = $('#Rate').val();
-         list.Quantity = $('#Quantity').val();
-         list.Amount = $('#Amount').val();
-         list.discountPercent = $('#discountPercent').val();
-         list.discountAmount = $('#discountAmount').val();
-         list.TaxAmount = $('#TaxAmt').val();;
-         list.TotalAmount = $('#TotalAmt').val();;
-         list.ProductNo = $('#ProductNo').val();;
-
-        list.sNo = sNo;
-
-        $.ajax({
-                url: '@Url.Content("~/PurchaseOrders/savePurchages")',
-                type: 'POST',
-                  dataType: 'json',
-            data: { purchaseOrder: list },
-                success: function (result)
-                {
-                    debugger
-                    console.log(result);
-                    list.Id = result;
-                    lstItems.push(list);
-                    console.log(lstItems);
-                    bindItems();
-                    $('#Product').val(0);
-                    $('#Description').val('');
-                    $('#Rate').val('');
-                    $('#Quantity').val('');
-                    $('#TaxId').val('');
-                    $('#Amount').val('');
-                    $('#TaxAmt').val('');
-                    $('#TotalAmt').val('');
-                    $('#discountAmount').val('');
-                    $('#discountPercent').val('');
-                    $('#gstAmount').val('');
-                    $('#myModal').modal('show');
-            },
-
-            error: function (err) {
-                console.log(err);
-            }
-        });
-    });*@
-
-
 
     function bindItems() {
         $('#tblpurchaserequest').empty();
@@ -793,234 +747,7 @@
                 }
             }
         });
-    }
+    };
 
 </script>
-
-@*<script>
-        let sNo = 1;
-        var lstItems = [];
-        var ntAmt;
-        $(document).ready(function ()
-        {
-            $("#purchaseRequestId").select2();
-            $("#purchaseRequestId").change(function () {
-                var requestId = $(this).find('option:selected').val();
-                categoryOrderId(requestId);
-            })
-            $("#Product").change(function () {
-                var taxAmount = $(this).find('option:selected').val();
-                TaxId(taxAmount);
-            })
-            $("#Quantity, #TaxId").blur(function () {
-                var productRate = parseFloat($("#Rate").val());
-                var productamt = parseFloat($(this).val() * productRate);
-                //Tax Amount
-                var per = $("#TaxId").val();
-                var productQuantit = parseFloat((per / 100) * productamt).toFixed(2);
-                //Total Amount
-                var tamt = parseFloat(productamt) + parseFloat(productQuantit);
-                if ($("#Quantity").val() != '') {
-                    $("#TotalAmt").val(tamt.toFixed(2));
-                    $("#Amount").val(productamt.toFixed(2));
-                    $("#TaxAmt").val(productQuantit);
-                }
-            })
-        });
-        $(document).keydown(function (event) {
-            if (event.altKey && event.which === 65) {
-                $('#myModal').modal('show');
-            }
-        });
-        $('#myModal').on('show.bs.modal', function (e) {
-            $('body').addClass("example-open");
-        }).on('hide.bs.modal', function (e) {
-            $('body').removeClass("example-open");
-        })
-        function categoryOrderId(requestId)
-        {
-                  $.ajax({
-                type: 'POST',
-                url: '@Url.Content("~/PurchaseOrders/purchaseReqOrders")',
-                dataType: 'json',
-                      data: { purchaseRequestOrderId: requestId },
-                      success: function (result) {
-                          console.log(result)
-                          var data = result;
-
-                          $('#categoryOrderId').empty();
-                          $('#SupplierOrderId').empty();
-                          $('#SupplierAddressOrderId').empty();
-                          $('#ProjectNameOrderId').empty();
-                          $('#SiteNameOrderId').empty();
-                          $('#SiteOrderAddressId').empty();
-                          $('#requestMobileNo').empty();
-
-                          $("#categoryOrderId").append("<option value='" + data.ID + "'>" + data.Category.CategoryName + "</option>");
-                          $("#SupplierOrderId").append("<option value='" + data.ID + "'>" + data.Supplier.Suppliername + "</option>");
-                          $("#SupplierAddressOrderId").append("<option value='" + data.ID + "'>" + data.Supplier.address + "</option>");
-                          $("#ProjectNameOrderId").append("<option value='" + data.ID + "'>" + data.ProjectId + "</option>");
-                          $("#SiteNameOrderId").append("<option value='" + data.ID + "'>" + data.SiteId + "</option>");
-                          $("#SiteOrderAddressId").append("<option value='" + data.ID + "'>" + data.SiteAddressId + "</option>");
-                          // $("#requestmobileno").append("<option value='" + data[i].id + "'>" + data[i].suppliername + "</option>");
-                          $("#requestMobileNo").val(data.mobileno);
-                      },
-                      error: function (err)
-                      {
-                    console.log(err);
-                      }
-                  });
-        };
-
-         function TaxId(taxAmount)
-        {
-                  $.ajax({
-                type: 'POST',
-                url: '@Url.Content("~/PurchaseOrders/TaxId")',
-                      dataType: 'json',
-                      data: { tax_Amount: taxAmount },
-                      success: function (result) {
-                         var data = result;
-                          $("#TaxId").empty();
-                          for (var i = 0; i < data.length; i++)
-                          {
-                        $("#TaxId").val(data[i].Tax)
-                          }
-                      },
-                      error: function (err)
-                      {
-                    console.log(err);
-                      }
-                  });
-        };
-     $('#btnSave').click(function ()
-        {
-            debugger
-            let list = {};
-             list.productId = $('#Product').val();
-             list.productText = $('#ProductId option:selected').text();
-             list.Description = $('#Description').val();
-             list.Tax = $('#TaxId').text();
-             list.Rate = $('#Rate').val();
-             list.Quantity = $('#Quantity').val();
-             list.Amount = $('#Amount').val();
-             list.TaxAmount = $('#TaxAmt').val();;
-             list.TotalAmount = $('#TotalAmt').val();;
-
-
-            list.sNo = sNo;
-
-            $.ajax({
-                    url: '@Url.Content("~/PurchaseOrders/savePurchages")',
-                    type: 'POST',
-                      dataType: 'json',
-                data: { PurchaseRequestTable: list },
-                    success: function (result)
-                    {
-                        debugger
-                        console.log(result);
-                        list.Id = result;
-            lstItems.push(list);
-            console.log(lstItems);
-            bindItems();
-                        $('#Product').val(0);
-                        $('#Description').val('');
-                        $('#Rate').val('');
-                        $('#Quantity').val('');
-                        $('#Amount').val('');
-                        $('#TaxAmt').val('');
-                        $('#TotalAmt').val('');
-                        $('#gstAmount').val('');
-                },
-
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-        });
-        function bindItems() {
-            $('#tblpurchaserequest').empty();
-            if (lstItems.length > 0) {
-                debugger
-                let sNo = 1;
-                let ntTotal = 0;
-                for (var i = 0; i < lstItems.length; i++) {
-                    var row = `<tr id=rm${sNo}>`
-                        + `<td>${sNo}</td>`
-                        + `<td>${lstItems[i].ProductText}</td>`
-                        + `<td>${lstItems[i].Tax}</td>`
-                        + `<td>${lstItems[i].Description}</td>`
-                        + `<td>${lstItems[i].Rate}</td>`
-                        + `<td>${lstItems[i].Quantity}</td>`
-                        + `<td>${lstItems[i].Amount}</td>`
-                        + `<td>${lstItems[i].TaxAmount}</td>`
-                        + `<td>${lstItems[i].TotalAmount}</td>`
-                        + `<td>
-
-                            <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].ID}')">Remove</button>
-                            </td>`
-                        + "</tr>";
-
-                    let amount = 0;
-                    lstItems[i].prograndTotal != null ? amount = parseFloat(lstItems[i].prograndTotal) : amount = 0;
-                    ntTotal += amount;
-
-                    $('#tblpurchaserequest').append(row);
-                    sNo++;
-                }
-
-                $('#totalAmount').val(ntTotal.toFixed());
-            }
-        }
-
-          function removeTR(item)
-        {
-            $.ajax({
-                url: '@Url.Content("~/PurchaseOrders/removePurchages")',
-                type: 'POST',
-                dataType: 'json',
-                data: { Id: item },
-                success: function (result) {
-                    console.log(result);
-                    if (result != null) {
-                        lstItems = result;
-
-                        $('#tblpurchaserequest').empty();
-                        if (lstItems.length > 0) {
-                            debugger
-                            let sNo = 1;
-                            let ntTotal = 0;
-                            for (var i = 0; i < lstItems.length; i++) {
-                                var row = `<tr id=rm${sNo}>`
-                                    + `<td>${sNo}</td>`
-                                    + `<td>${lstItems[i].ProductText}</td>`
-                                    + `<td>${lstItems[i].Tax}</td>`
-                                    + `<td>${lstItems[i].Description}</td>`
-                                    + `<td>${lstItems[i].Rate}</td>`
-                                    + `<td>${lstItems[i].Quantity}</td>`
-                                    + `<td>${lstItems[i].Amount}</td>`
-                                    + `<td>${lstItems[i].TaxAmount}</td>`
-                                    + `<td>${lstItems[i].TotalAmount}</td>`
-                                    + `<td>
-
-                            <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].ID}')">Remove</button>
-                            </td>`
-                                    + "</tr>";
-
-                                let amount = 0;
-                                lstItems[i].prograndTotal != null ? amount = parseFloat(lstItems[i].prograndTotal) : amount = 0;
-                                ntTotal += amount;
-
-                                $('#tblpurchaserequest').append(row);
-                                sNo++;
-                            }
-
-                            $('#totalAmount').val(ntTotal.toFixed());
-                        }
-                    }
-                }
-            });
-        }
-    </script>*@
-
 
