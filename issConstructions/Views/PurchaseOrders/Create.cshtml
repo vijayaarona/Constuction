@@ -373,6 +373,7 @@
     function purchaseReqOrders(requestId)
     {
         debugger
+        $('#tblpurchaserequest').empty();
               $.ajax({
             type: 'POST',
             url: '@Url.Content("~/PurchaseOrders/purchaseReqOrders")',

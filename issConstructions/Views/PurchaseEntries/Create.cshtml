@@ -368,11 +368,12 @@
     function purchaseReqOrders(requestId)
     {
         debugger
+        $('#tblpurchaserequest').empty();
               $.ajax({
             type: 'POST',
             url: '@Url.Content("~/PurchaseEntries/purchaseReqOrders")',
-            dataType: 'json',
-                  data: { purchaseRequestOrderId: requestId },
+                  dataType: 'json',
+                  data: { purchaseRequestOrderId: requestId},
                   success: function (result) {
 
                       console.log(result)

@@ -256,6 +256,37 @@ namespace issConstructions.Controllers
                 var res = db.PurchaseOrders.Where(x => x.OrderId == purchaseRequestOrderId).FirstOrDefault();
                 var req = db.purchaseOrderTables.Where(x => x.purchaseRequestId == res.OrderId).ToList();
                 var result = new { res, req };
+                int maxValue = 0;
+                var isnull = db.purchaseEntries.Where(x => x.purchaseId != null).ToList();
+                if (isnull.Count == 0)
+                {
+                    maxValue = 1;
+                }
+                else
+                {
+                    maxValue = db.purchaseEntries.Max(x => x.purchaseId);
+                    maxValue += 1;
+
+                }
+
+                foreach (var item in req)
+                {
+                    PurchaseEntryTable newItm = new PurchaseEntryTable();
+                    newItm.Amount = item.Amount;
+                    newItm.Description = item.Description;
+                    newItm.discountAmount = item.discountAmount;
+                    newItm.discountPercent = item.discountPercent;
+                    newItm.productId = item.productId;
+                    newItm.Rate = item.Rate;
+                    newItm.Quantity = item.Quantity;
+                    newItm.Tax = item.Tax;
+                    newItm.TaxAmount = item.TaxAmount;
+                    newItm.TotalAmount = item.TotalAmount;
+                    newItm.purchaseRequestId = maxValue; 
+
+                    db.purchaseEntryTables.Add(newItm);
+                    db.SaveChanges();
+                }
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
