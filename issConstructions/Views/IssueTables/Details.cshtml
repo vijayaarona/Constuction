@@ -1,146 +1,124 @@
 ﻿@model issDomain.Models.IssueTable
 
 @{
-    Layout = null;
+    ViewBag.Title = "Details";
 }
+<style>
+    #AccountGroupMaster {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-<!DOCTYPE html>
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>IssueTable</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Category.CategoryName)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Category.CategoryName)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Product.ProductName)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Product.ProductName)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.issueId)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.issueId)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Tax)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Tax)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Rate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Rate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Quantity)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Amount)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Amount)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.TaxAmount)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.TaxAmount)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.TotalAmount)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.TotalAmount)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.ProductNo)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.ProductNo)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.isDeleted)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.isDeleted)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CreatedDate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdateBy)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.UpdateBy)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdatedDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.UpdatedDate)
-            </dd>
-    
-        </dl>
+    #AccountGroupMaster td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #AccountGroupMaster tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #AccountGroupMaster tr:hover {
+        background-color: #ddd;
+    }
+
+    #AccountGroupMaster th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    #btn-edit a:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+    #btn-edit a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    th {
+        width: 40% !important;
+    }
+</style>
+
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Purchase Order -  Item Details
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+    <div class="panel panel-body">
+
+        <table id="AccountGroupMaster">
+            <tr>
+                <th>Issue ID</th>
+                <td>  @Html.DisplayFor(model => model.issueId)</td>
+            </tr>
+            <tr>
+                <th>Category Name</th>
+                <td>  @Html.DisplayFor(model => model.Category.CategoryName)</td>
+            </tr>
+            <tr>
+                <th>Prioduct  Name</th>
+                <td> @Html.DisplayFor(model => model.Product.ProductName)</td>
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td>  @Html.DisplayFor(model => model.Description)</td>
+            </tr>
+            <tr>
+                <th> Quantity</th>
+                <td>  @Html.DisplayFor(model => model.Quantity)</td>
+            </tr>
+
+            <tr>
+                <th> Rate</th>
+                <td>   @Html.DisplayFor(model => model.Rate)</td>
+            </tr>
+
+            <tr>
+                <th> Amount</th>
+                <td>  @Html.DisplayFor(model => model.Amount)</td>
+            </tr>
+            <tr>
+                <th> Tax</th>
+                <td>  @Html.DisplayFor(model => model.Tax)</td>
+            </tr>
+
+            <tr>
+                <th> Tax Amount</th>
+                <td>  @Html.DisplayFor(model => model.TaxAmount)</td>
+            </tr>
+
+            <tr>
+                <th> Total Amount</th>
+                <td>  @Html.DisplayFor(model => model.TotalAmount)</td>
+            </tr>
+
+
+        </table>
+
+
+        <p style="float:right;">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+            @Html.ActionLink("Back", "Index", "IssueTables", new { id = Model.issueId}, htmlAttributes: new { @class = "btn btn-default" })
+
+        </p>
+    </div>
+</div>

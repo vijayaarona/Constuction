@@ -19,10 +19,10 @@ namespace issDomain.Models
         public int SupplierId { get; set; }
         public int SupplierAddressId { get; set; }
         public virtual SupplierMaster Supplier { get; set; }
-        public int ProjectId { get; set; }
+        public int SiteNameId { get; set; }
         public int SiteId { get; set; }
         public int SiteAddressId { get; set; }
-        public virtual SiteDetails SiteDetails { get; set; }
+        public virtual SiteDetails SiteName { get; set; }
         public string mobileno { get; set; }
         public string ReceivedBy { get; set; }
         public string Remarks { get; set; }
@@ -40,8 +40,8 @@ namespace issDomain.Models
         public string UpdateBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public decimal Tax { get; set; }
-        public decimal TaxAmt { get; set; }
-        public decimal TotalAmt { get; set; }
+        public decimal TotTax { get; set; }
+        public decimal TotAmount { get; set; }
         public String  PurType { get; set; }
     }
 }

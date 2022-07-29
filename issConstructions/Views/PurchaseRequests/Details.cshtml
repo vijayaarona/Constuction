@@ -84,15 +84,15 @@
             </tr>
             <tr>
                 <th>Project Name</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.ProjectName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.ProjectName) </td>
             </tr>
             <tr>
                 <th>Site Name</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteName) </td>
             </tr>
             <tr>
                 <th>Site Address</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteAddress) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteAddress) </td>
             </tr>
             <tr>
                 <th>Mobile No</th>
@@ -130,7 +130,7 @@
             @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })*@
             @*<button type="button" class = "btn btn-default" id="btn-edit"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </button>*@
             @*@Html.ActionLink("Edit Item", "Index", null, htmlAttributes: new { @class = "btn btn-default" })*@
-            @Html.ActionLink("Edit Item", "Index","PurchaseRequestTables", new {id = Model.ID}, htmlAttributes: new { @class = "btn btn-default" })
+            @Html.ActionLink("Edit Item", "Index","PurchaseRequestTables", new {id = Model.RequestID}, htmlAttributes: new { @class = "btn btn-default" })
             @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
         </p>
     </div>
@@ -149,7 +149,7 @@
                     url: '@Url.Content("~/PurchaseRequests/getListOfPurchaes")',
                     type: 'POST',
                     dataType: 'json',
-                    data: { invoice: id },
+                    data: { invoice: id},
                     success: function (result) {
                         $('#tblPurchaseRequest').empty();
                         console.log(result)

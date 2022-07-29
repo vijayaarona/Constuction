@@ -152,91 +152,66 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script>
-                let sNo = 1;
-                var lstItems = [];
-                var ntAmt;
-                $(document).ready(function () {
-                    debugger
-
-                    $("#categoryId").change(function () {
-                        var supNameId = $(this).find('option:selected').val();
-                        SupplierId(supNameId);
-                    })
-                    $("#SupplierId").change(function () {
-                        var supAddressId = $(this).find('option:selected').val();
-                        SupplierAddressId(supAddressId);
-                    })
-                    $("#ProjectId").change(function () {
-                        var projectSite = $(this).find('option:selected').val();
-                        SiteId(projectSite);
-                    })
-                    $("#productId").change(function () {
-                        var taxAmount = $(this).find('option:selected').val();
-                        Tax(taxAmount);
-                    })
-
-                    $("#discountPercent").blur(function () {
-                        debugger
-                        var productRate = parseFloat($('#Rate').val());
-                        var Amt = parseFloat($('#Quantity').val() * productRate);
-                        $("#Amount").val(Amt.toFixed(2));
-
-                        //Discount Calculation
-                        var productDisPer = parseFloat($('#discountPercent').val());
-
-                        var disAmt = parseFloat((productDisPer / 100) * Amt);
-                        $('#discountAmount').val(disAmt.toFixed(2));
-
-                        var productAmount = parseFloat(Amt - disAmt);
-
-                        if ($('#discountPercent').val() != '') {
-                            //Tax Calcualtion
-                            var TaxPer = $("#Tax").val();
-                            var taxTotal = parseFloat((TaxPer / 100) * productAmount);
-
-                            //Total Calculation
-                            var totalAmount = parseFloat(productAmount + taxTotal);
-                            $("#TaxAmount").val(taxTotal.toFixed(2));
-                            $("#TotalAmount").val(totalAmount.toFixed(2));
-                        }
-
-                    })
+    let sNo = 1;
+    var lstItems = [];
+    var ntAmt;
+    $(document).ready(function ()
+    {
 
 
-                    $("#disPercent").blur(function () {
-                        debugger
+        $("#categoryId").change(function ()
+        {
+            var supNameId = $(this).find('option:selected').val();
+            SupplierId(supNameId);
+        })
+        $("#SupplierId").change(function ()
+        {
+            var supAddressId = $(this).find('option:selected').val();
+            SupplierAddressId(supAddressId);
+        })
+        $("#ProjectId").change(function ()
+        {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+        $("#productId").change(function () {
+            var taxAmount = $(this).find('option:selected').val();
+            Tax(taxAmount);
+        })
 
-                        var disPercentage = $('#disPercent').val();
-                        var calProPer = parseFloat((disPercentage / 100) * grandTotal);
-                        $('#disAmount').val(calProPer.toFixed());
-                        var TotAmt = parseFloat(grandTotal - calProPer);
-                        $('#ProGrandTotal').val(TotAmt.toFixed());
-                    });
 
-                    $("#TaxP").blur(function () {
-                        debugger
+        $("#discountPercent").blur(function ()
+        {
+            debugger
+            var productRate = parseFloat($('#Rate').val());
+            var Amt = parseFloat($('#Quantity').val() * productRate);
+            $("#Amount").val(Amt.toFixed(2));
 
-                        var taxPercentage = $('#TaxP').val();
-                        var TotAmt = $('#ProGrandTotal').val();
-                        var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
-                        $('#TaxPamt').val(calProPer1.toFixed());
-                        var Netamt = parseFloat(TotAmt + calProPer1);
-                        $('#netAmt').val(Netamt.toFixed());
+            //Discount Calculation
+            var productDisPer = parseFloat($('#discountPercent').val());
 
-                    });
-                    $("#TaxP").blur(function () {
-                        debugger
+            var disAmt = parseFloat((productDisPer / 100) * Amt);
+            $('#discountAmount').val(disAmt.toFixed(2));
 
-                        var taxPercentage = $('#TaxP').val();
-                        var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
-                        $('#TaxPamt').val(calProPer1.toFixed());
-                        var Netamt = parseFloat(TotAmt + calProPer1);
-                        $('#netAmt').val(Netamt.toFixed());
-                    });
+            var productAmount = parseFloat(Amt - disAmt);
 
-                });
+            if ($('#discountPercent').val() != '')
+            {
+                //Tax Calcualtion
+                var TaxPer = $("#Tax").val();
+                var taxTotal = parseFloat((TaxPer / 100) * productAmount);
 
-                 $(document).keydown(function (event) {
+                //Total Calculation
+                var totalAmount = parseFloat(productAmount + taxTotal);
+                $("#TaxAmount").val(taxTotal.toFixed(2));
+                $("#TotalAmount").val(totalAmount.toFixed(2));
+            }
+
+        })
+
+    });
+
+    $(document).keydown(function (event) {
         if (event.altKey && event.which === 65) {
             $('#myModal').modal('show');
         }
@@ -345,7 +320,7 @@
     {
               $.ajax({
             type: 'POST',
-            url: '@Url.Content("~/PurchaseRequests/Tax")',
+            url: '@Url.Content("~/PurchaseRequests/TaxId")',
                   dataType: 'json',
                   data: { tax_Amount: taxAmount },
                   success: function (result) {
@@ -423,10 +398,9 @@
             debugger
             let sNo = 1;
             let grandTotal = 0;
-            let TotAmt = 0;
-            let NetAmount = 0;
-            // let calProPer = 0;
-            for (var i = 0; i < lstItems.length; i++) {
+           // let calProPer = 0;
+            for (var i = 0; i < lstItems.length; i++)
+            {
                 var row = `<tr id=rm${sNo}>`
                     + `<td>${sNo}</td>`
                     + `<td>${lstItems[i].productText}</td>`
@@ -445,6 +419,8 @@
 
                 let amount = 0;
 
+
+
                 lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
                 grandTotal += amount;
 
@@ -452,28 +428,17 @@
                 sNo++;
             }
             console.log(grandTotal);
-            $('#ProTotal').val(grandTotal.toFixed());
+            $('#ProGrandTotal').val(grandTotal.toFixed());
 
-            $("#disPercent").blur(function () {
+            $("#disPercent").blur(function ()
+            {
                 debugger
 
                 var disPercentage = $('#disPercent').val();
                 var calProPer = parseFloat((disPercentage / 100) * grandTotal);
                 $('#disAmount').val(calProPer.toFixed());
-                var TotAmt = parseFloat(grandTotal - calProPer);
-                $('#ProGrandTotal').val(TotAmt.toFixed());
-            });
-
-            $("#TaxP").blur(function () {
-                debugger
-
-                var taxPercentage = $('#TaxP').val();
-                var TotAmt = $('#ProGrandTotal').val();
-                var calProPer1 = parseFloat((taxPercentage / 100) * TotAmt);
-                $('#TaxPamt').val(calProPer1.toFixed());
-                var NetAmount = parseFloat(TotAmt) + parseFloat(calProPer1);
-                $('#netAmt').val(NetAmount.toFixed());
-
+                var netAmount = parseFloat(grandTotal - calProPer);
+                $('#netAmt').val(netAmount.toFixed());
             });
 
         }
@@ -536,21 +501,21 @@
                             let amount = 0;
 
                             lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
-                            TotalAmt += amount;
+                            grandTotal += amount;
 
                             $('#tblpurchaserequest').append(row);
                             sNo++;
                         }
-                        console.log(TotalAmt);
-                        $('#ProTotal').val(TotalAmt.toFixed());
+                        console.log(grandTotal);
+                        $('#ProGrandTotal').val(grandTotal.toFixed());
 
                         $("#disPercent").blur(function () {
                             debugger
 
                             var disPercentage = $('#disPercent').val();
-                            var calProPer = parseFloat((disPercentage / 100) * TotalAmt);
+                            var calProPer = parseFloat((disPercentage / 100) * grandTotal);
                             $('#disAmount').val(calProPer.toFixed());
-                            var netAmount = parseFloat(TotalAmt - calProPer);
+                            var netAmount = parseFloat(grandTotal - calProPer);
                             $('#netAmt').val(netAmount.toFixed());
                         });
 
@@ -559,5 +524,4 @@
             }
         });
     }
-
 </script>

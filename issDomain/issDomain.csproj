@@ -105,6 +105,7 @@
     <Compile Include="Models\receiptEntry.cs" />
     <Compile Include="Models\SiteDetails.cs" />
     <Compile Include="Models\tblStock.cs" />
+    <Compile Include="Models\TblType.cs" />
     <Compile Include="Models\ToolsMaster.cs" />
     <Compile Include="Models\ToolsTransfer.cs" />
     <Compile Include="Models\Users.cs" />

@@ -229,6 +229,46 @@
     <Compile Include="Migrations\202207110755481_ConM13.Designer.cs">
       <DependentUpon>202207110755481_ConM13.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207130907343_ConM14.cs" />
+    <Compile Include="Migrations\202207130907343_ConM14.Designer.cs">
+      <DependentUpon>202207130907343_ConM14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207131611090_ConM15.cs" />
+    <Compile Include="Migrations\202207131611090_ConM15.Designer.cs">
+      <DependentUpon>202207131611090_ConM15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207140519509_COnM16.cs" />
+    <Compile Include="Migrations\202207140519509_COnM16.Designer.cs">
+      <DependentUpon>202207140519509_COnM16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207140622252_ConM17.cs" />
+    <Compile Include="Migrations\202207140622252_ConM17.Designer.cs">
+      <DependentUpon>202207140622252_ConM17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207150417539_ConM18.cs" />
+    <Compile Include="Migrations\202207150417539_ConM18.Designer.cs">
+      <DependentUpon>202207150417539_ConM18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207150654444_COnM19.cs" />
+    <Compile Include="Migrations\202207150654444_COnM19.Designer.cs">
+      <DependentUpon>202207150654444_COnM19.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207160420394_ConM20.cs" />
+    <Compile Include="Migrations\202207160420394_ConM20.Designer.cs">
+      <DependentUpon>202207160420394_ConM20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207160611529_ConM21.cs" />
+    <Compile Include="Migrations\202207160611529_ConM21.Designer.cs">
+      <DependentUpon>202207160611529_ConM21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207160631352_ConM22.cs" />
+    <Compile Include="Migrations\202207160631352_ConM22.Designer.cs">
+      <DependentUpon>202207160631352_ConM22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202207180432261_ConM23.cs" />
+    <Compile Include="Migrations\202207180432261_ConM23.Designer.cs">
+      <DependentUpon>202207180432261_ConM23.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -474,6 +514,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207110755481_ConM13.resx">
       <DependentUpon>202207110755481_ConM13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207130907343_ConM14.resx">
+      <DependentUpon>202207130907343_ConM14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207131611090_ConM15.resx">
+      <DependentUpon>202207131611090_ConM15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207140519509_COnM16.resx">
+      <DependentUpon>202207140519509_COnM16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207140622252_ConM17.resx">
+      <DependentUpon>202207140622252_ConM17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207150417539_ConM18.resx">
+      <DependentUpon>202207150417539_ConM18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207150654444_COnM19.resx">
+      <DependentUpon>202207150654444_COnM19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207160420394_ConM20.resx">
+      <DependentUpon>202207160420394_ConM20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207160611529_ConM21.resx">
+      <DependentUpon>202207160611529_ConM21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207160631352_ConM22.resx">
+      <DependentUpon>202207160631352_ConM22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207180432261_ConM23.resx">
+      <DependentUpon>202207180432261_ConM23.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

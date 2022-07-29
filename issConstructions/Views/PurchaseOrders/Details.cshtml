@@ -87,15 +87,15 @@
             </tr>
             <tr>
                 <th>Project Name</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.ProjectName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.ProjectName) </td>
             </tr>
             <tr>
                 <th>Site Name</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteName) </td>
             </tr>
             <tr>
                 <th>Site Address</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteAddress) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteAddress) </td>
             </tr>
             <tr>
                 <th>Mobile No</th>
@@ -131,13 +131,14 @@
         <p style="float:right;">
             @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })*@
             @*<button type="button" class = "btn btn-default" id="btn-edit"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </button>*@
-            @Html.ActionLink("Edit Item", "Index", "PurchaseOrderTables", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+            @Html.ActionLink("Edit Item", "Index", "PurchaseOrderTables", new { id = Model.OrderId }, htmlAttributes: new { @class = "btn btn-default" })
             @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
         </p>
     </div>
 </div>
 
 <script>
+    var lstItems = [];
     $(document).ready(function ()
     {
             debugger
@@ -149,16 +150,35 @@
                     url: '@Url.Content("~/PurchaseOrders/getListOfPurchaes")',
                     type: 'POST',
                     dataType: 'json',
-                    data: { invoice: id },
+                    data: { invoice: id},
                     success: function (result) {
-
+                        $('#tblPurchaseOrder').empty();
                         console.log(result)
                         var row = "";
-                        if (result != null)
+                        if (result != null && result!="data")
                         {
+                            debugger
                             let sNo = 1;
                             for (var i = 0; i < result.length; i++)
                             {
+                                let list = {};
+                                list.productId = result[i].Product.ProductName;
+                                list.productText = result[i].Tax;
+                                list.purchaseRequestId = result[i].purchaseRequestId;
+                                list.Id = result[i].ID;
+                                list.Description = result[i].Description;
+                                list.Tax = result[i].Tax;
+                                list.Rate = result[i].Rate;
+                                list.Quantity = result[i].Quantity;
+                                list.Amount = result[i].Amount;
+                                list.discountPercent = result[i].discountPercent;
+                                list.discountAmount = result[i].discountAmount;
+                                list.TaxAmount = result[i].TaxAmount;
+                                list.TotalAmount = result[i].TotalAmount;
+                                list.ProductNo = result[i].ProductNo;
+
+                                list.sNo = sNo;
+                                lstItems.push(list);
                                 row = `<tr>`
                                 row +=    `<td>${sNo}</td>`
                                 row += `<td>${result[i].Product.ProductName}</td>`
@@ -183,10 +203,11 @@
 
                     }
                 });
-            }
-    });
+        }
 
-     $("#categoryId").change(function () {
+
+    });
+    $("#categoryId").change(function () {
         var supNameId = $(this).find('option:selected').val();
         SupplierId(supNameId);
     })
@@ -250,7 +271,7 @@
         //let inNo = $('#ProductNo').val();
         let productId = $('#Product').val();
         $.ajax({
-            url: '@Url.Content("~/PurchaseOrders/removePurchages")',
+            url: '@Url.Content("~/PurchaseRequests/removePurchages")',
             type: 'POST',
             dataType: 'json',
             data: { Id: item, InNo: productId },
@@ -323,127 +344,3 @@
     });
 </script>
 
-@*<h2>Details</h2>
-
-    <div>
-        <h4>PurchaseOrder</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Category.CategoryName)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Category.CategoryName)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Supplier.Suppliername)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Supplier.Suppliername)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.RequestID)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.RequestID)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.OrderId)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.OrderId)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.OrderDate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.OrderDate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.SupplierAddressId)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.SupplierAddressId)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ProjectId)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ProjectId)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.SiteId)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.SiteId)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.SiteAddressId)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.SiteAddressId)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.mobileno)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.mobileno)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.isDeleted)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.isDeleted)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.CreatedDate)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdateBy)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.UpdateBy)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdatedDate)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.UpdatedDate)
-            </dd>
-
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>*@
