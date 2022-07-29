@@ -243,6 +243,7 @@
         })
 
         $("#Product").change(function () {
+            debugger
             var taxAmount = $(this).find('option:selected').val();
             TaxId(taxAmount);
         })
@@ -318,7 +319,7 @@
                       op = "<option>---Please select ---</option>";
                       for (var i = 0; i < data.length; i++)
                       {
-                          op += "<option value=" + data[i].ProductName + ">" + data[i].ProductName + "</option>";
+                          op += "<option value=" + data[i].ID + ">" + data[i].ProductName + "</option>";
                       }
                       $("#Product").append(op);
 

@@ -118,7 +118,7 @@
                         <th>Total Amount</th>
                     </tr>
                 </thead>
-                <tbody id="tblPurchaseOrder"></tbody>
+                <tbody id="tblPurchaseRequest"></tbody>
             </table>
         </div>
 
@@ -155,7 +155,7 @@
                             for (var i = 0; i < result.length; i++)
                             {
                                 let list = {};
-                                list.productId = result[i].Product.ProductName;
+                                //list.productId = result[i].Prod;
                                 list.productText = result[i].Tax;
                                 list.issueid = result[i].issueid ;
                                 list.Id = result[i].ID;
@@ -174,7 +174,7 @@
                                 lstItems.push(list);
                                 row = `<tr>`
                                 row +=    `<td>${sNo}</td>`
-                                row += `<td>${result[i].Product.ProductName}</td>`
+                                row += `<td></td>`
                                 row +=    `<td>${result[i].Tax}</td>`
                                 row += `<td>${result[i].Description}</td>`
                                 row += `<td>${result[i].Rate}</td>`

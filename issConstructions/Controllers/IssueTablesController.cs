@@ -47,7 +47,7 @@ namespace issConstructions.Controllers
             //db.Entry(purch).State = EntityState.Modified;
             //db.SaveChanges();
             //return View(pur.ToList());
-            var issueTables = db.issueTables.Include(p => p.Product).Where(x => x.issueId == issues.IssueID).ToList();
+            var issueTables = db.issueTables.Include(p => p.Product).Where(x => x.issueId == Id).ToList();
             //var issueTables = db.issueTables.Include(i => i.Category).Include(i => i.Product);
             return View(issueTables.ToList());
         }
