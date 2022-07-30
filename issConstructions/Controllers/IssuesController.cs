@@ -39,14 +39,14 @@ namespace issConstructions.Controllers
                 return HttpNotFound();
             }
 
-            //Category
-            List<SelectListItem> Category = new List<SelectListItem>();
-            Category.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.categoryMasters.ToList())
-            {
-                Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
-            }
-            ViewBag.Category= Category;
+            ///Category
+            //List<SelectListItem> Category = new List<SelectListItem>();
+            //Category.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            //foreach (var item in db.categoryMasters.ToList())
+            //{
+            //    Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
+            //}
+            //ViewBag.Category= Category;
 
             //From Location
             List<SelectListItem> GName = new List<SelectListItem>();
@@ -101,6 +101,16 @@ namespace issConstructions.Controllers
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
             }
             ViewBag.ProductId = Product;
+
+
+            //Category
+            var listItem = new SelectList(db.categoryMasters, "ID", "CategoryName");
+            List<SelectListItem> Category = new List<SelectListItem>();
+            foreach (var item in db.categoryMasters.ToList())
+            {
+                Category.Add(new SelectListItem { Text = item.CategoryName, Value = item.ID.ToString() });
+            }
+            ViewBag.Category = Category;
 
             //Tax
             var listsItem = new SelectList(db.productMasters, "ID", "Tax");

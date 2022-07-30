@@ -57,12 +57,12 @@
 
     <div class="panel-group">
         <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
-            Purchase Order - Item Edit
+           Issues - Item Edit
         </div>
         <div class="panel panel-body" style="overflow:auto">
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label>Purchase Request ID</label>
+                <div class="form-group col-md-6" style=" display :none">
+                    <label>Issue ID</label>
                     @Html.EditorFor(model => model.issueId, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.issueId, "", new { @class = "text-danger" })
 
@@ -160,33 +160,33 @@
             SiteId(projectSite);
         })
 
-        $("#Category").change(function () {
+        $("#CategoryId").change(function () {
             var categoryName = $(this).find('option:selected').val();
             ProductVal(categoryName);
         })
 
-        $("#Product").change(function () {
+        $("#productId").change(function () {
             var taxAmount = $(this).find('option:selected').val();
-            TaxId(taxAmount);
+            Tax(taxAmount);
         })
 
         $("#Quantity").blur(function ()
         {
             debugger
-            var productrate = $('#ItemRate').val();
+            var productrate = $('#Rate').val();
             var amt = $('#Quantity').val() * productrate;
             $("#Amount").val(amt);
 
 
             if ($('#Amount').val() != '') {
                 //tax calcualtion
-                var taxper = $("#TaxId").val();
+                var taxper = $("#Tax").val();
                 var taxtotal = (taxper / 100) * amt;
 
                 //total calculation
                 var totalamount = amt + taxtotal;
-                $("#TaxAmt").val(taxtotal);
-                $("#TotalAmt").val(totalamount);
+                $("#TaxAmount").val(taxtotal);
+                $("#TotalAmount").val(totalamount);
             }
 
         })
@@ -236,14 +236,14 @@
                   data: { category: categoryName },
                   success: function (result) {
                       var data = result;
-                      $("#Product").empty();
+                      $("#productId").empty();
                       var op = "";
                       op = "<option>---Please select ---</option>";
                       for (var i = 0; i < data.length; i++)
                       {
-                          op += "<option value=" + data[i].ProductName + ">" + data[i].ProductName + "</option>";
+                          op += "<option value=" + data[i].ID + ">" + data[i].ProductName + "</option>";
                       }
-                      $("#Product").append(op);
+                      $("#productId").append(op);
 
                   },
                   error: function (err)
@@ -253,7 +253,7 @@
               });
     };
 
-     function TaxId(taxAmount)
+     function Tax(taxAmount)
     {
               $.ajax({
             type: 'POST',
@@ -262,10 +262,10 @@
                   data: { tax_Amount: taxAmount },
                   success: function (result) {
                      var data = result;
-                      $("#TaxId").empty();
+                      $("#Tax").empty();
                       for (var i = 0; i < data.length; i++)
                       {
-                    $("#TaxId").val(data[i].Tax)
+                    $("#Tax").val(data[i].Tax)
                       }
                   },
                   error: function (err)

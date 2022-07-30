@@ -37,19 +37,18 @@ namespace issConstructions.Controllers
                 ViewBag.ProjectName = "Project 1";
 
             }
+            var issueTable = db.issueTables.Include(p => p.Product).Where(x => x.issueId  == issues.IssueID).ToList();
+            var totalAmunt = issueTable.Sum(x => x.TotalAmount);
+            //var TaxPercentage = issues.Tax;
+            //var TaxPercentageAmount = (totalAmunt) * TaxPercentage / 100;
+            var NetAmount = totalAmunt;
+            var purch = db.issues.Where(x => x.IssueID == Id).FirstOrDefault();
 
-            //var issueTables = db.issueTables.Include(p => p.Product).Where(x => x.issueId == issues.IssueID).ToList();
-            //var totalAmunt = issueTables.Sum(x => x.TotalAmount);
+            purch.netAmount = totalAmunt;
+            db.Entry(purch).State = EntityState.Modified;
+            db.SaveChanges();
+            return View(issueTable.ToList());
 
-            //var NetAmount = (totalAmunt);
-            //var purch = db.issues.Where(x => x.OrderId == Id).FirstOrDefault();
-            //purch.NetAmount = (totalAmunt);
-            //db.Entry(purch).State = EntityState.Modified;
-            //db.SaveChanges();
-            //return View(pur.ToList());
-            var issueTables = db.issueTables.Include(p => p.Product).Where(x => x.issueId == Id).ToList();
-            //var issueTables = db.issueTables.Include(i => i.Category).Include(i => i.Product);
-            return View(issueTables.ToList());
         }
 
         // GET: IssueTables/Details/5
@@ -68,11 +67,24 @@ namespace issConstructions.Controllers
         }
 
         // GET: IssueTables/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName");
+
+            ViewBag.PId = id;
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName");
+           // return View();
+
+            List<SelectListItem> Category = new List<SelectListItem>();
+            Category.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            foreach (var item in db.categoryMasters.ToList())
+            {
+                Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
+            }
+            ViewBag.CategoryId = Category;
+
+            
             return View();
+                       
         }
 
         // POST: IssueTables/Create
@@ -82,49 +94,15 @@ namespace issConstructions.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,issueId,productId,CategoryId,Description,Tax,Rate,Quantity,Amount,TaxAmount,TotalAmount,ProductNo,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] IssueTable issueTable)
         {
-            if (ModelState.IsValid)
-            {
+           
                 db.issueTables.Add(issueTable);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            // return RedirectToAction("Index",issueTable.issueId);
+            return RedirectToAction("Index", "issueTables", new { Id = issueTable.issueId});
 
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issueTable.CategoryId);
-            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", issueTable.productId);
-            return View(issueTable);
-        }
 
-        // GET: IssueTables/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            IssueTable issueTable = db.issueTables.Find(id);
-            if (issueTable == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issueTable.CategoryId);
-            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", issueTable.productId);
-            return View(issueTable);
-        }
 
-        // POST: IssueTables/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,issueId,productId,CategoryId,Description,Tax,Rate,Quantity,Amount,TaxAmount,TotalAmount,ProductNo,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] IssueTable issueTable)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(issueTable).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issueTable.CategoryId);
+            ViewBag.Category = new SelectList(db.categoryMasters, "ID", "CategoryName", issueTable.Category);
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", issueTable.productId);
             return View(issueTable);
         }
@@ -163,6 +141,44 @@ namespace issConstructions.Controllers
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
+
+
+
+        // GET: IssueTables/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            IssueTable issueTable = db.issueTables.Find(id);
+            if (issueTable == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issueTable.CategoryId);
+            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", issueTable.productId);
+            return View(issueTable);
+        }
+
+        // POST: IssueTables/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ID,issueId,productId,CategoryId,Description,Tax,Rate,Quantity,Amount,TaxAmount,TotalAmount,ProductNo,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] IssueTable issueTable)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(issueTable).State = EntityState.Modified;
+                db.SaveChanges();
+                //  return RedirectToAction("Index");
+                return RedirectToAction("Index", "issueTables", new { Id = issueTable.issueId });
+            }
+            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName", issueTable.CategoryId);
+            ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", issueTable.productId);
+            return View(issueTable);
+        }
 
         // GET: IssueTables/Delete/5
         public ActionResult Delete(int? id)
