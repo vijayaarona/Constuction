@@ -1,4 +1,6 @@
-﻿@model IEnumerable<issDomain.Models.RateWork>
+﻿
+@model IEnumerable<issDomain.Models.RateWork>
+
 
 @{
     ViewBag.Title = "Index";
@@ -20,26 +22,38 @@
         color: white;
         float: right;
         margin: 10px;
-        border-radius: 3px;
+        border-radius: 10px;
         text-decoration: none;
     }
 
         .addNew:hover {
             text-decoration: none;
         }
+
+    table td {
+        font-size: 13px;
+    }
+
+    table th {
+        font-size: 13px;
+    }
 </style>
 <div class="panel-group">
     <div class="panel panel-heading header">
-        Labour Rate Work - Index Page
+        Purchase Request - Index Page
     </div>
     <div class="panel panel-body">
         @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
-        <table class="table" id="AGMaster">
+        <table class="table" id="AGMaster ">
             <thead>
                 <tr>
                     <th>
+                        <label>Rate Work ID</label>
+                    </th>
+                    <th>
                         <label> Date</label>
                     </th>
+
                     <th>
                         <label>Project Name</label>
                     </th>
@@ -61,39 +75,48 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-
-                    @if (@item.Date != null)
-                    {
+                    <tr>
                         <td>
-                            @item.Date.Value.ToShortDateString()
+                            @Html.DisplayFor(modelItem => item.RateWorkId)
                         </td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteDetails.ProjectName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteDetails.ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteDetails.SiteName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteDetails.SiteAddress)
-                    </td>
-                  
-                    <td>
-                        @Html.DisplayFor(modelItem => item.netAmount)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
-                </tr>
+
+                        @if (@item.Date != null)
+                        {
+                            <td>
+                                @item.Date.Value.ToShortDateString()
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SiteName.ProjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SiteName.ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SiteName.SiteName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SiteName.SiteAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.headName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.netAmount)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id}) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id})|
+                            <a href="@Url.Content("~/RateWorkTables/Index/"+item.RateWorkId)">Edit Items</a>
+
+                        </td>
+                    </tr>
 
                 }
             </tbody>
@@ -115,11 +138,11 @@
                         var printTitle = 'New Title';
                         return printTitle
                     }
-                   // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
                 },
                 {
                     extend: 'pdf',
-                  //  messageBottom: null
+                    //  messageBottom: null
                 },
                 {
                     extend: 'print',
@@ -130,4 +153,137 @@
 
     });
 </script>
+
+
+
+@*@{
+        ViewBag.Title = "Index";
+    }
+
+    <style>
+        .header {
+            margin-top: 10px;
+            border-top-style: solid;
+            border-top-width: 5px;
+            border-top-color: #FF5F04;
+            font-family: Calibri;
+            font-size: 22px;
+        }
+
+        .addNew {
+            padding: 5px;
+            background-color: #FF5F04;
+            color: white;
+            float: right;
+            margin: 10px;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+
+            .addNew:hover {
+                text-decoration: none;
+            }
+    </style>
+    <div class="panel-group">
+        <div class="panel panel-heading header">
+            Labour Rate Work - Index Page
+        </div>
+        <div class="panel panel-body">
+            @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+            <table class="table" id="AGMaster">
+                <thead>
+                    <tr>
+                        <th>
+                            <label> Date</label>
+                        </th>
+                        <th>
+                            <label>Project Name</label>
+                        </th>
+                        <th>
+                            <label>Site No</label>
+                        </th>
+                        <th>
+                            <label>Site Name</label>
+                        </th>
+                        <th>
+                            <label>Site Address</label>
+                        </th>
+                        <th>
+                            <label>Net Amount</label>
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            @if (@item.Date != null)
+                            {
+                                <td>
+                                    @item.Date.Value.ToShortDateString()
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SiteName.ProjectName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SiteName.ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SiteName.SiteName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SiteName.SiteAddress)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NetAmount)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#AGMaster').DataTable({
+                dom: 'Bfrtip',
+
+                buttons: [
+                    'copy',
+                    {
+                        extend: 'excel',
+                        title: function () {
+                            var printTitle = 'New Title';
+                            return printTitle
+                        }
+                        // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                    },
+                    {
+                        extend: 'pdf',
+                        //  messageBottom: null
+                    },
+                    {
+                        extend: 'print',
+                    }
+
+                ]
+            });
+
+        });
+    </script>*@
 

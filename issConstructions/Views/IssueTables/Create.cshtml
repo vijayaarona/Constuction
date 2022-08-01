@@ -41,6 +41,7 @@
         background-color: transparent;
     }
 </style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -61,8 +62,9 @@
         </div>
         <div class="panel panel-body" style="overflow:auto">
             <div class="row">
-                <div class="form-group col-md-6" style=" display :none">
+                <div class="form-group col-md-6" style="display:none">
                     <label>Issue ID</label>
+
                     @Html.EditorFor(model => model.issueId, new { htmlAttributes = new { @class = "form-control", } })
                     @Html.ValidationMessageFor(model => model.issueId, "", new { @class = "text-danger" })
 
@@ -150,9 +152,9 @@
 
 <script>
         $(function () {
-            $('#purchaseRequestId').val(@ViewBag.Pid);
+            $('#issueId').val(@ViewBag.Pid);
         })
-    </script>
+</script>
 
 <script>
         let sNo = 1;

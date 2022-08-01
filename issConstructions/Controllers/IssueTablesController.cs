@@ -71,18 +71,10 @@ namespace issConstructions.Controllers
         {
 
             ViewBag.PId = id;
+
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName");
-           // return View();
+            ViewBag.CategoryId = new SelectList(db.categoryMasters, "ID", "CategoryName");
 
-            List<SelectListItem> Category = new List<SelectListItem>();
-            Category.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.categoryMasters.ToList())
-            {
-                Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
-            }
-            ViewBag.CategoryId = Category;
-
-            
             return View();
                        
         }
