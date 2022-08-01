@@ -62,7 +62,7 @@
         </div>
         <div class="panel panel-body" style="overflow:auto">
             <div class="row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6" style="display:none">
                     <label>Purchase Request ID</label>
                     @Html.EditorFor(model => model.purchaseRequestId, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.purchaseRequestId, "", new { @class = "text-danger" })

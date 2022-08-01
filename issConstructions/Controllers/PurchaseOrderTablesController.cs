@@ -99,7 +99,8 @@ namespace issConstructions.Controllers
             {
                 db.purchaseOrderTables.Add(purchaseOrderTable);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                // return RedirectToAction("Index",purchaseOrderTable.purchaseRequestId);
+                return RedirectToAction("Index", "PurchaseOrderTables", new { Id = purchaseOrderTable.purchaseRequestId });
             }
 
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseOrderTable.productId);
@@ -133,7 +134,8 @@ namespace issConstructions.Controllers
             {
                 db.Entry(purchaseOrderTable).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", purchaseOrderTable.purchaseRequestId );
+                return RedirectToAction("Index", "PurchaseOrderTables", new { Id = purchaseOrderTable.purchaseRequestId });
+                // return RedirectToAction("Index", purchaseOrderTable.purchaseRequestId );
             }
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseOrderTable.productId);
             return View(purchaseOrderTable);

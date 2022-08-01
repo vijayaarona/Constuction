@@ -53,9 +53,9 @@ namespace issConstructions.Controllers
             var disAmount = (totalAmunt * DiscPercent) / 100;
             var TaxPercentageAmount = (totalAmunt - disAmount) * TaxPercentage / 100;
             var NetAmount = (totalAmunt - disAmount) + TaxPercentageAmount;
-            var purch = db.PurchaseOrders.Where(x => x.OrderId == Id).FirstOrDefault();
+            var purch = db.purchaseEntries.Where(x => x.purchaseId == Id).FirstOrDefault();
 
-            purch.dicountAmount = disAmount;
+            purch.totalDiscount = disAmount;
             purch.TotAmount = totalAmunt;
             purch.TotTax = TaxPercentageAmount;
             purch.grandTotal = totalAmunt - disAmount;
@@ -101,7 +101,8 @@ namespace issConstructions.Controllers
             {
                 db.purchaseEntryTables.Add(purchaseEntryTable);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return RedirectToAction("Index", "purchaseEntryTables", new { Id = purchaseEntryTable.purchaseRequestId });
             }
 
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseEntryTable.productId);
@@ -135,7 +136,8 @@ namespace issConstructions.Controllers
             {
                 db.Entry(purchaseEntryTable).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", purchaseEntryTable.purchaseRequestId);
+                // return RedirectToAction("Index", purchaseEntryTable.purchaseRequestId);
+                return RedirectToAction("Index", "purchaseEntryTables", new { Id = purchaseEntryTable.purchaseRequestId });
             }
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseEntryTable.productId);
             return View(purchaseEntryTable);

@@ -39,15 +39,6 @@ namespace issConstructions.Controllers
                 return HttpNotFound();
             }
 
-            //Category
-            List<SelectListItem> Category = new List<SelectListItem>();
-            Category.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.categoryMasters.ToList())
-            {
-                Category.Add(new SelectListItem { Text = item.CategoryName.ToString(), Value = item.ID.ToString() });
-            }
-            ViewBag.Category= Category;
-
             //From Location
             List<SelectListItem> GName = new List<SelectListItem>();
             GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -58,13 +49,13 @@ namespace issConstructions.Controllers
             ViewBag.GNameId = GName;
 
             //To Location
-            List<SelectListItem> SiteName = new List<SelectListItem>();
-            SiteName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            List<SelectListItem> SName = new List<SelectListItem>();
+            SName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
             {
-                SiteName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
+                SName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.SiteNameId = SiteName;
+            ViewBag.SNameId = SName;
 
             //Project
             List<SelectListItem> Project = new List<SelectListItem>();
@@ -73,7 +64,7 @@ namespace issConstructions.Controllers
             {
                 Project.Add(new SelectListItem { Text = item.ProjectName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.SiteName1Id = Project;
+            ViewBag.SiteNameId = Project;
 
             //SiteName
             List<SelectListItem> Site = new List<SelectListItem>();
@@ -101,6 +92,16 @@ namespace issConstructions.Controllers
                 Product.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
             }
             ViewBag.ProductId = Product;
+
+
+            //Category
+            var listItem = new SelectList(db.categoryMasters, "ID", "CategoryName");
+            List<SelectListItem> Category = new List<SelectListItem>();
+            foreach (var item in db.categoryMasters.ToList())
+            {
+                Category.Add(new SelectListItem { Text = item.CategoryName, Value = item.ID.ToString() });
+            }
+            ViewBag.Category = Category;
 
             //Tax
             var listsItem = new SelectList(db.productMasters, "ID", "Tax");
@@ -158,7 +159,7 @@ namespace issConstructions.Controllers
             {
                 Project.Add(new SelectListItem { Text = item.ProjectName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.SiteName1Id = Project;
+            ViewBag.SiteNameId = Project;
 
             List<SelectListItem> Site = new List<SelectListItem>();
             Site.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -190,7 +191,7 @@ namespace issConstructions.Controllers
             {
                 SiteDetails.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.SiteNameId = SiteDetails;
+            ViewBag.SNameId = SiteDetails;
             return View();
 
             //Tax
@@ -222,7 +223,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,IssuesDate,SiteName1Id,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,GNameId,SiteNameId,IssueID,TypeId")] Issues issues)
+        public ActionResult Create([Bind(Include = "ID,IssuesDate,SNameId,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,GNameId,SiteNameId,IssueID,TypeId")] Issues issues)
         {
 
             try
@@ -254,8 +255,8 @@ namespace issConstructions.Controllers
 
                 ViewBag.TypeId = new SelectList(db.tblTypes, "Id", "TypeName", issues.TypeId);
                 ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
-                ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "SiteName",issues.SiteNameId );
-                ViewBag.SiteName1Id = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SiteName1Id);
+                ViewBag.SNameId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SNameId);
+                ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName",issues.SiteNameId );
                 ViewBag.ProductId = new SelectList(db.siteDetails, "ID", "ProjectName",issues.ProductNo);
                 ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName",issues.SiteId);
                 ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", issues.SiteAddressId);
@@ -316,7 +317,7 @@ namespace issConstructions.Controllers
             ViewBag.TypeId = new SelectList(db.tblTypes, "Id", "TypeName", issues.TypeId);
             ViewBag.GNameId = new SelectList(db.godowns , "Id", "godownName", issues.GNameId );
             ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SiteNameId);
-            ViewBag.SiteName1Id = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SiteName1Id);
+            ViewBag.SNameId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SNameId);
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName",issues.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", issues.SiteAddressId);
             return View(issues);
@@ -327,7 +328,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,IssuesDate,SiteName1Id,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,GNameId,SiteNameId,IssueID,TypeId")] Issues issues)
+        public ActionResult Edit([Bind(Include = "ID,IssuesDate,SNameId,SiteId,SiteAddressId,netAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,GNameId,SiteNameId,IssueID,TypeId")] Issues issues)
         {
             if (ModelState.IsValid)
             {

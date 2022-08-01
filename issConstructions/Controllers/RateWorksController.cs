@@ -19,7 +19,11 @@ namespace issConstructions.Controllers
         // GET: RateWorks
         public ActionResult Index()
         {
-            return View(db.rateWorks.ToList());
+
+            var ratework = db.rateWorks.Include(p => p.SiteName);
+            return View(ratework.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.Id));
+
+            // return View(db.rateWorks.ToList());
         }
 
         // GET: RateWorks/Details/5
@@ -46,7 +50,7 @@ namespace issConstructions.Controllers
             {
                 Project.Add(new SelectListItem { Text = item.ProjectName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.projectId = Project;
+            ViewBag.SiteNameId = Project;
 
             List<SelectListItem> SiteNo = new List<SelectListItem>();
             SiteNo.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -54,7 +58,7 @@ namespace issConstructions.Controllers
             {
                 SiteNo.Add(new SelectListItem { Text = item.ID.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.siteNo = SiteNo;
+            ViewBag.siteNoId = SiteNo;
 
             List<SelectListItem> Site = new List<SelectListItem>();
             Site.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -62,7 +66,7 @@ namespace issConstructions.Controllers
             {
                 Site.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.SiteNameId = Site;
+            ViewBag.SiteId = Site;
             List<SelectListItem> SiteAddress = new List<SelectListItem>();
             SiteAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
@@ -97,22 +101,47 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Date,projectId,siteNoId,siteNameId,siteAddressId,headName,totalAmount,deduction,netAmount,passedBy,remark,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] RateWork rateWork)
+        public ActionResult Create([Bind(Include = "Id,Date,SiteNameId,siteNoId,siteId,siteAddressId,headName,totalAmount,deduction,netAmount,passedBy,remark,isDeleted,CreatedDate,UpdateBy,UpdatedDate,RateWorkId")] RateWork rateWork)
         {
-            if (ModelState.IsValid)
+
+            try
             {
+                int invoiceNo = 1;
+
+                rateWork.CreatedDate = DateTime.UtcNow;
+                rateWork.UpdatedDate = DateTime.UtcNow;
+
+                var RateWork = db.rateWorks.Where(x => x.isDeleted == false).ToList();
+                if (RateWork != null && RateWork.Count > 0)
+                {
+                    invoiceNo = RateWork.Max(x => x.RateWorkId);
+                    if (invoiceNo != 0)
+                    {
+                        invoiceNo = invoiceNo + 1;
+                    }
+                }
+                rateWork.RateWorkId = invoiceNo;
                 db.rateWorks.Add(rateWork);
+
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", rateWork.RateWorkId);
             }
-            ViewBag.projectId = new SelectList(db.siteDetails, "ID", "ProjectName", rateWork.projectId);
-            ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "SiteName", rateWork.siteNameId);
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", rateWork.siteAddressId);
-            ViewBag.SiteNo = new SelectList(db.siteDetails, "ID", "Id", rateWork.Id);
+            catch (Exception ex)
+            {
 
-            return View(rateWork);
+
+                ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", rateWork.SiteNameId);
+                ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", rateWork.siteId);
+                ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", rateWork.siteAddressId);
+                ViewBag.SiteNoId = new SelectList(db.siteDetails, "ID", "Id", rateWork.Id);
+
+                return View(rateWork);
+
+            }
+
         }
-
+            
         // GET: RateWorks/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -133,7 +162,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Date,projectId,siteNoId,siteNameId,siteAddressId,headName,totalAmount,deduction,netAmount,passedBy,remark,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] RateWork rateWork)
+        public ActionResult Edit([Bind(Include = "Id,Date,SiteNameId,siteNoId,siteNameId,siteAddressId,headName,totalAmount,deduction,netAmount,passedBy,remark,isDeleted,CreatedDate,UpdateBy,UpdatedDate,RateWorkId")] RateWork rateWork)
         {
             if (ModelState.IsValid)
             {

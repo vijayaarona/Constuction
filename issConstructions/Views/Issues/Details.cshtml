@@ -81,11 +81,11 @@
             </tr>
             <tr>
                 <th>To Location</th>
-                <td> @Html.DisplayFor(model => model.SiteName.SiteName) </td>
+                <td> @Html.DisplayFor(model => model.SName.SiteName) </td>
             </tr>
             <tr>
                 <th>Project Name</th>
-                <td> @Html.DisplayFor(model => model.SiteName.ProjectName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.ProjectName ) </td>
             </tr>
             <tr>
                 <th>Site Name</th>
@@ -107,15 +107,16 @@
                 <thead>
                     <tr>
                         <th>Sl.No</th>
+                        <th>Category Name</th>
                         <th>Item Name</th>
                         <th>Rate Of Tax</th>
                         <th>Description</th>
                         <th>Rate</th>
                         <th>Quantity</th>
                         <th>Amount</th>
-                        <th>Discount Amount</th>
                         <th>Tax Amount</th>
                         <th>Total Amount</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="tblPurchaseRequest"></tbody>
@@ -124,7 +125,7 @@
 
         <p style="float:right;">
 
-            @Html.ActionLink("Edit Item", "Index", "IssueTables", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
+            @Html.ActionLink("Edit Item", "Index", "IssueTables", new { id = Model.IssueID }, htmlAttributes: new { @class = "btn btn-default" })
             @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
         </p>
     </div>
@@ -155,17 +156,17 @@
                             for (var i = 0; i < result.length; i++)
                             {
                                 let list = {};
-                                //list.productId = result[i].Prod;
-                                list.productText = result[i].Tax;
+                                list.CategoryText = result[i].Category.CategoryName;
+                               // list.productId = result[i].product.ProductName;
+                                list.productText = result[i].ProductName;
                                 list.issueid = result[i].issueid ;
                                 list.Id = result[i].ID;
+                              //  list.categoryId =result[i].category.categoryName;                                
                                 list.Description = result[i].Description;
                                 list.Tax = result[i].Tax;
                                 list.Rate = result[i].Rate;
                                 list.Quantity = result[i].Quantity;
                                 list.Amount = result[i].Amount;
-                                list.discountPercent = result[i].discountPercent;
-                                list.discountAmount = result[i].discountAmount;
                                 list.TaxAmount = result[i].TaxAmount;
                                 list.TotalAmount = result[i].TotalAmount;
                                 list.ProductNo = result[i].ProductNo;
@@ -174,13 +175,13 @@
                                 lstItems.push(list);
                                 row = `<tr>`
                                 row +=    `<td>${sNo}</td>`
-                                row += `<td></td>`
+                                row += `<td>${result[i].Category.CategoryName}</td>`
+                                row += `<td>${result[i].Product.ProductName}</td>`
                                 row +=    `<td>${result[i].Tax}</td>`
                                 row += `<td>${result[i].Description}</td>`
                                 row += `<td>${result[i].Rate}</td>`
                                 row += `<td>${result[i].Quantity}</td>`
                                 row +=     `<td>${result[i].Amount}</td>`
-                                row += `<td>${result[i].discountAmount}</td>`
                                 row += `<td>${result[i].TaxAmount}</td>`
                                 row += `<td>${result[i].TotalAmount}</td>`
                                 row += `<td>

@@ -11,7 +11,8 @@ namespace issDomain.Models
         public int ID { get; set; }
         public int IssueID { get; set; }
         public DateTime? IssuesDate { get; set; }
-        public int SiteName1Id { get; set; }
+        public int SNameId { get; set; }
+        public virtual SiteDetails SName { get; set; }
         public int SiteId { get; set; }
         public int SiteNameId { get; set; }
         public int SiteAddressId { get; set; }

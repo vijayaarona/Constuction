@@ -269,6 +269,22 @@
     <Compile Include="Migrations\202207180432261_ConM23.Designer.cs">
       <DependentUpon>202207180432261_ConM23.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208010710439_ConM24.cs" />
+    <Compile Include="Migrations\202208010710439_ConM24.Designer.cs">
+      <DependentUpon>202208010710439_ConM24.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208010852523_ConM25.cs" />
+    <Compile Include="Migrations\202208010852523_ConM25.Designer.cs">
+      <DependentUpon>202208010852523_ConM25.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208010935132_ConM26.cs" />
+    <Compile Include="Migrations\202208010935132_ConM26.Designer.cs">
+      <DependentUpon>202208010935132_ConM26.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208010945436_ConM27.cs" />
+    <Compile Include="Migrations\202208010945436_ConM27.Designer.cs">
+      <DependentUpon>202208010945436_ConM27.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -544,6 +560,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202207180432261_ConM23.resx">
       <DependentUpon>202207180432261_ConM23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208010710439_ConM24.resx">
+      <DependentUpon>202208010710439_ConM24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208010852523_ConM25.resx">
+      <DependentUpon>202208010852523_ConM25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208010935132_ConM26.resx">
+      <DependentUpon>202208010935132_ConM26.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208010945436_ConM27.resx">
+      <DependentUpon>202208010945436_ConM27.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

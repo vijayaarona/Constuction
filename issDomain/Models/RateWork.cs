@@ -9,12 +9,14 @@ namespace issDomain.Models
     public class RateWork
     {
         public int Id { get; set; }
+
+        public int RateWorkId { get; set; }
         public DateTime? Date { get; set; }
-        public virtual SiteDetails SiteDetails { get; set; }
-        public int projectId { get; set; }
+        public int SiteNameId { get; set; }
         public int siteNoId { get; set; }
-        public int siteNameId { get; set; }
+        public int siteId { get; set; }
         public int siteAddressId { get; set; }
+        public virtual SiteDetails SiteName { get; set; }
         public string headName { get; set; }
         public decimal totalAmount { get; set; }
         public decimal deduction { get; set; }
