@@ -67,56 +67,72 @@
                         <label>Site Address</label>
                     </th>
                     <th>
+                        <label>Head Name</label>
+                    </th>
+                    <th>
+                        <label>Total Amount</label>
+                    </th>
+                    <th>
+                        <label>Deduction</label>
+                    </th>
+                    <th>
                         <label>Net Amount</label>
                     </th>
+
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RateWorkId)
-                        </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RateWorkId)
+                    </td>
 
-                        @if (@item.Date != null)
-                        {
-                            <td>
-                                @item.Date.Value.ToShortDateString()
-                            </td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
+                    @if (@item.Date != null)
+                    {
+                        <td>
+                            @item.Date.Value.ToShortDateString()
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SiteName.ProjectName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SiteName.ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SiteName.SiteName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SiteName.SiteAddress)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.headName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.netAmount)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id}) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id})|
-                            <a href="@Url.Content("~/RateWorkTables/Index/"+item.RateWorkId)">Edit Items</a>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteName.ProjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteName.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteName.SiteName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SiteName.SiteAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.headName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.totalAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.deduction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.netAmount)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })|
+                        <a href="@Url.Content("~/RateWorkTables/Index/"+item.RateWorkId)">Edit Items</a>
 
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
 
                 }
             </tbody>

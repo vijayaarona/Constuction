@@ -33,11 +33,12 @@ namespace issConstructions.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RateWork rateWork = db.rateWorks.Find(id);
+            RateWork rateWork = db.rateWorks.Where(x => x.isDeleted == false && x.Id == id).FirstOrDefault();
             if (rateWork == null)
             {
                 return HttpNotFound();
             }
+
             return View(rateWork);
         }
 
@@ -67,6 +68,7 @@ namespace issConstructions.Controllers
                 Site.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteId = Site;
+
             List<SelectListItem> SiteAddress = new List<SelectListItem>();
             SiteAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
@@ -82,6 +84,7 @@ namespace issConstructions.Controllers
                 umoId.Add(new SelectListItem { Text = item.UOM.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.UmoId = umoId;
+
             return View();
         }
 
@@ -111,10 +114,10 @@ namespace issConstructions.Controllers
                 rateWork.CreatedDate = DateTime.UtcNow;
                 rateWork.UpdatedDate = DateTime.UtcNow;
 
-                var RateWork = db.rateWorks.Where(x => x.isDeleted == false).ToList();
-                if (RateWork != null && RateWork.Count > 0)
+                var Rate = db.rateWorks.Where(x => x.isDeleted == false).ToList();
+                if (Rate != null && Rate.Count > 0)
                 {
-                    invoiceNo = RateWork.Max(x => x.RateWorkId);
+                    invoiceNo = Rate.Max(x => x.RateWorkId);
                     if (invoiceNo != 0)
                     {
                         invoiceNo = invoiceNo + 1;
@@ -125,11 +128,10 @@ namespace issConstructions.Controllers
 
 
                 db.SaveChanges();
-                return RedirectToAction("Index", rateWork.RateWorkId);
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-
 
                 ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", rateWork.SiteNameId);
                 ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", rateWork.siteId);
@@ -194,6 +196,14 @@ namespace issConstructions.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             RateWork rateWork = db.rateWorks.Find(id);
+            List<RateWorkTable> lstPR = db.rateWorkTables.Where(x => x.rateId == rateWork.RateWorkId).ToList();
+            foreach (var item in lstPR)
+            {
+                db.rateWorkTables.Remove(item);
+                db.SaveChanges();
+            }
+
+
             db.rateWorks.Remove(rateWork);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -205,14 +215,14 @@ namespace issConstructions.Controllers
             try
             {
                 int maxValue = 0;
-                var isnull = db.rateWorkTables.Where(x => x.Id != null).ToList();
+                var isnull = db.rateWorks.Where(x => x.RateWorkId != null).ToList();
                 if (isnull.Count == 0)
                 {
                     maxValue = 1;
                 }
                 else
                 {
-                    maxValue = db.rateWorkTables.Max(x => x.rateId);
+                    maxValue = db.rateWorks.Max(x => x.RateWorkId);
                     maxValue += 1;
 
                 }
@@ -222,8 +232,8 @@ namespace issConstructions.Controllers
                 rateWorkTable.UpdateBy = Display.Name;
                 db.rateWorkTables.Add(rateWorkTable);
                 db.SaveChanges();
-                var id = db.purchaseRequestTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
-                return Json(id.ID, JsonRequestBehavior.AllowGet);
+                var id = db.rateWorkTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+                return Json(id.Id, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -274,12 +284,12 @@ namespace issConstructions.Controllers
         }
 
         [HttpPost]
-        public JsonResult getListOfRateWork(int ID)
+        public JsonResult getListOfRateWork(int invoice)
         {
             try
             {
-
-                List<RateWorkTable> rateWorkTables = db.rateWorkTables.Where(x => x.rateId == ID).ToList();
+                var pr = db.rateWorks.Where(x => x.Id == invoice).FirstOrDefault();
+                List<RateWorkTable> rateWorkTables = db.rateWorkTables.Where(x => x.rateId == pr.RateWorkId).ToList();
                 return Json(rateWorkTables, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
