@@ -54,6 +54,10 @@
         font-size: 22px;
     }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <div class="panel-group">
     <div class="panel panel-heading header">
@@ -82,6 +86,11 @@
             <tr>
                 <th>Site Address</th>
                 <td> @Html.DisplayFor(model => model.SiteName.SiteAddress) </td>
+            </tr>
+
+            <tr>
+                <th>Head Name</th>
+                <td> @Html.DisplayFor(model => model.headName) </td>
             </tr>
             <tr>
                 <th>Total Amount</th>
@@ -118,14 +127,16 @@
         </div>
 
         <p style="float:right;">
-            @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })*@
-            @*<button type="button" class = "btn btn-default" id="btn-edit"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </button>*@
+
+            @Html.ActionLink("Edit Item", "Index", "RateWorkTables", new { id = Model.RateWorkId }, htmlAttributes: new { @class = "btn btn-default" })
             @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+
         </p>
     </div>
 </div>
 
 <script>
+    var lstItems = [];
     $(document).ready(function ()
     {
             debugger
@@ -137,27 +148,47 @@
                     url: '@Url.Content("~/RateWorks/getListOfRateWork")',
                     type: 'POST',
                     dataType: 'json',
-                    data: { ID: id },
+                    data: { invoice: id},
                     success: function (result) {
-                        debugger
+                        $('#tblRateWorkRequest').empty();
                         console.log(result)
                         var row = "";
-                        if (result != null)
+                        if (result != null && result!="data")
                         {
+                            debugger
                             let sNo = 1;
                             for (var i = 0; i < result.length; i++)
                             {
+                                let list = {};
+                                list.Description = result[i].Description;
+                                list.length = result[i].length;
+                                list.Breath = result[i].Breath;
+                                list.Id = result[i].ID;
+                                list.Deapth = result[i].Deapth;
+                                list.Nos = result[i].Nos;
+                                list.quantity = result[i].quantity;
+                                list.unitPrice = result[i].unitPrice;
+                                list.amount = result[i].amount;
+                               // list.UmoId = result[i].UmoId.Uom;
+
+                                list.sNo = sNo;
+                                lstItems.push(list);
                                 row = `<tr>`
-                                row += `<td>${sNo}</td>`
+                                row +=`<td>${sNo}</td>`
                                 row += `<td>${result[i].Description}</td>`
-                                row += `<td>${result[i].length}</td>`
+                                row +=`<td>${result[i].length}</td>`
                                 row += `<td>${result[i].Breath}</td>`
                                 row += `<td>${result[i].Deapth}</td>`
                                 row += `<td>${result[i].Nos}</td>`
                                 row += `<td>${result[i].quantity}</td>`
                                 row += `<td>${result[i].unitPrice}</td>`
                                 row += `<td>${result[i].amount}</td>`
-                                row += `<td>${result[i].umoId}</td>`
+                               // row += `<td>${result[i].UmoId.Uom}u</td>`
+                                
+                                row += `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${result[i].ID}')">Remove</button>
+                        </td>`
                                 row +=     `</tr>`;
                                 sNo++;
                                 $('#tblRateWorkRequest').append(row);
@@ -167,8 +198,58 @@
 
                     }
                 });
-            }
+        }
+
     });
+   
 </script>
+
+
+@*<script>
+        var lstItems = [];
+        $(document).ready(function ()
+        {
+                debugger
+                let id =@Model.Id;
+                get(id);
+
+                function get(id) {
+                    $.ajax({
+                        url: '@Url.Content("~/RateWorks/getListOfRateWork")',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {invoice: id },
+                        success: function (result) {
+                            debugger
+                            console.log(result)
+                            var row = "";
+                            if (result != null && result != "data")
+                            {
+                                let sNo = 1;
+                                for (var i = 0; i < result.length; i++)
+                                {
+                                    row = `<tr>`
+                                    row += `<td>${sNo}</td>`
+                                    row += `<td>${result[i].Description}</td>`
+                                    row += `<td>${result[i].length}</td>`
+                                    row += `<td>${result[i].Breath}</td>`
+                                    row += `<td>${result[i].Deapth}</td>`
+                                    row += `<td>${result[i].Nos}</td>`
+                                    row += `<td>${result[i].quantity}</td>`
+                                    row += `<td>${result[i].unitPrice}</td>`
+                                    row += `<td>${result[i].amount}</td>`
+                                    row += `<td>${result[i].umoId}</td>`
+                                    row +=     `</tr>`;
+                                    sNo++;
+                                    $('#tblRateWorkRequest').append(row);
+                                }
+
+                            }
+
+                        }
+                    });
+                }
+        });
+    </script>*@
 
 

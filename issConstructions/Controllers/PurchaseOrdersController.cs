@@ -272,11 +272,40 @@ namespace issConstructions.Controllers
                 var res = db.purchaseRequest.Where(x => x.RequestID == purchaseRequestOrderId).FirstOrDefault();
                 var req = db.purchaseRequestTables.Where(x => x.purchaseRequestId == res.RequestID).ToList();
                 var result = new { res, req };
+                int maxValue = 0;
+                var isnull = db.PurchaseOrders.Where(x => x.OrderId != null).ToList();
+                if (isnull.Count == 0)
+                {
+                    maxValue = 1;
+                }
+                else
+                {
+                    maxValue = db.PurchaseOrders.Max(x => x.OrderId);
+                    maxValue += 1;
+
+                }
+
+                foreach (var item in req)
+                {
+                    PurchaseOrderTable newItm = new PurchaseOrderTable();
+                    newItm.Amount = item.Amount;
+                    newItm.Description = item.Description;
+                    newItm.discountAmount = item.discountAmount;
+                    newItm.discountPercent = item.discountPercent;
+                    newItm.productId = item.productId;
+                    newItm.Rate = item.Rate;
+                    newItm.Quantity = item.Quantity;
+                    newItm.Tax = item.Tax;
+                    newItm.TaxAmount = item.TaxAmount;
+                    newItm.TotalAmount = item.TotalAmount;
+                    newItm.purchaseRequestId = maxValue;
+
+                    db.purchaseOrderTables.Add(newItm);
+                    db.SaveChanges();
+                }
+
                 return Json(result, JsonRequestBehavior.AllowGet);
 
-                //var pr = db.PurchaseOrders.Where(x => x.ID == invoice).FirstOrDefault();
-                //List<PurchaseOrderTable> purchaseOrderTables = db.purchaseOrderTables.Where(x => x.purchaseRequestId == pr.OrderId).ToList();
-                //return Json(purchaseOrderTables, JsonRequestBehavior.AllowGet);
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }

@@ -1,159 +1,407 @@
 ﻿@model issDomain.Models.RateWork
 
 @{
-    Layout = null;
+    ViewBag.Title = "Edit";
 }
 
-<!DOCTYPE html>
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>RateWork</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+
+    input, select, textarea {
+        max-width: 500px;
+    }
+
+    th, td {
+        border: 1px solid black;
+        text-align: center;
+        height: 50px;
+    }
+
+    .itemtable th {
+        text-align: center;
+    }
+
+    select #Product, #TaxId {
+        max-width: 500px;
+    }
+
+    .example-open .modal-backdrop {
+        background-color: transparent;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="panel-group">
+
+        <div class="panel panel-heading header">
+            Purchase Request - Edit Page
+        </div>
+        <div class="panel panel-body" style="overflow:auto">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Rate Work Date</label>
+                    @Html.TextBoxFor(x => x.Date, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                    @*@Html.TextBoxFor(m => m.RequestDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })*@
+                    @*@Html.TextBoxFor(model => model.RequestDate, new { htmlAttributes = new { @class = "form-control" } })*@
                 </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.SiteNameId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SiteNameId, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="form-group col-md-6">
+                    <label>Project Name</label>
+                    @Html.DropDownList("SiteNameId", null, htmlAttributes: new { @class = "form-control", @id = "projectId" })
                     @Html.ValidationMessageFor(model => model.SiteNameId, "", new { @class = "text-danger" })
                 </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.siteNoId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.siteNoId, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="form-group col-md-6">
+                    <label>Site No</label>
+                    @Html.DropDownList("SiteNoId", null, htmlAttributes: new { @class = "form-control", @id = "SiteNoId" })
                     @Html.ValidationMessageFor(model => model.siteNoId, "", new { @class = "text-danger" })
                 </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.siteId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.siteId, new { htmlAttributes = new { @class = "form-control" } })
+
+                <div class="form-group col-md-6">
+                    <label>Site Name</label>
+                    @Html.DropDownList("SiteId", null, htmlAttributes: new { @class = "form-control", @id = "SiteNameId" })
                     @Html.ValidationMessageFor(model => model.siteId, "", new { @class = "text-danger" })
                 </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.siteAddressId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.siteAddressId, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="form-group col-md-6">
+                    <label>Site Address</label>
+                    @Html.DropDownList("SiteAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SiteAddressId" })
                     @Html.ValidationMessageFor(model => model.siteAddressId, "", new { @class = "text-danger" })
                 </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.headName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.headName, new { htmlAttributes = new { @class = "form-control" } })
+
+                <div class="form-group col-md-6">
+                    <label>Head Name</label>
+                    @Html.EditorFor(model => model.headName, new { htmlAttributes = new { @class = "form-control", @id = "headName" } })
                     @Html.ValidationMessageFor(model => model.headName, "", new { @class = "text-danger" })
                 </div>
+
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.totalAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Total Amount : </label>
+                </div>
+                <div class="form-group col-md-3">
                     @Html.EditorFor(model => model.totalAmount, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.totalAmount, "", new { @class = "text-danger" })
+
                 </div>
+
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.deduction, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Deduction : </label>
+                </div>
+                <div class="form-group col-md-3">
                     @Html.EditorFor(model => model.deduction, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.deduction, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
                 </div>
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.netAmount, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+            <div class="row">
+                <div class="form-group col-md-2">
+
+                    <label>Net Amount : </label>
+                </div>
+                <div class="form-group col-md-3">
                     @Html.EditorFor(model => model.netAmount, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.netAmount, "", new { @class = "text-danger" })
+
                 </div>
+
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.passedBy, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Passed By : </label>
+                </div>
+                <div class="form-group col-md-3">
                     @Html.EditorFor(model => model.passedBy, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.passedBy, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.remark, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <label>Remarks : </label>
+                </div>
+                <div class="form-group col-md-3">
                     @Html.EditorFor(model => model.remark, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.remark, "", new { @class = "text-danger" })
+                    @*<input type="text" id="disAmount" name="disAmount" size="50" />*@
                 </div>
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.isDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.isDeleted)
-                        @Html.ValidationMessageFor(model => model.isDeleted, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.UpdateBy, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UpdateBy, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UpdateBy, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
+
+            <div class="form-group" style="float:right">
+                <input type="submit" value="Submit" class="btn btn-default" />
+                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
     </div>
-</body>
-</html>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+    let sNo = 1;
+    var lstItems = [];
+    var ntAmt;
+     $(document).ready(function ()
+    {
+
+
+        $("#projectId").change(function ()
+        {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+
+    });
+
+    $(document).keydown(function (event) {
+        if (event.altKey && event.which === 65) {
+            $('#myModal').modal('show');
+        }
+    });
+
+    $('#myModal').on('show.bs.modal', function (e)
+    {
+        $('body').addClass("example-open");
+    }).on('hide.bs.modal', function (e)
+    {
+        $('body').removeClass("example-open");
+    })
+
+
+    $("#Nos").blur(function () {
+        debugger
+        var plength = parseFloat($('#length').val());
+        var pbreath = parseFloat($('#breath').val());
+        var pdepth = parseFloat($('#depth').val());
+        var tot = parseFloat(plength * pbreath * pdepth);
+        var Amt = parseFloat($('#Nos').val()) * parseFloat(tot);
+        $("#Quantity").val(Amt.toFixed(2));
+
+    })
+
+    $("#unitPrice").blur(function () {
+        debugger
+        var qty = parseFloat($('#Quantity').val());
+        var price= parseFloat($('#unitPrice').val());
+        var amount = parseFloat(qty * price);
+        $("#amount").val(amount.toFixed(2));
+
+    })
+
+    function SiteId(projectSite)
+    {
+        debugger
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/RateWorks/SiteId")',
+            dataType: 'json',
+                  data: { site_NameId: projectSite },
+                  success: function (result) {
+                      var data = result;
+                      $("#SiteNameId").empty();
+                      $("#SiteNoId").empty();
+                      $("#SiteAddressId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                          $("#SiteNameId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
+                          $("#SiteNoId").append("<option value='" + data[i].ID + "'>" + data[i].ID + "</option>");
+                    $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+              });
+
+    };
+
+     $('#btnSave').click(function ()
+    {
+        debugger
+        let list = {};
+
+         list.Description = $('#description').val();
+         list.length = $('#length').val();
+         list.Breath = $('#breath').val();
+         list.Deapth = $('#depth').val();
+         list.Quantity = $('#Quantity').val();
+         list.Nos = $('#Nos').val();
+         list.unitPrice = $('#unitPrice').val();
+         list.amount = $('#amount').val();;
+         list.UMOId = $('#umoId').val();
+         list.UMOText = $('#umoId option:selected').text();
+
+        list.sNo = sNo;
+
+        $.ajax({
+                url: '@Url.Content("~/RateWorks/SaveRateWork")',
+                type: 'POST',
+                  dataType: 'json',
+            data: { rateWorkTable: list },
+                success: function (result)
+                {
+                    debugger
+                    console.log(result);
+                    list.Id = result;
+                    lstItems.push(list);
+                    console.log(lstItems);
+                    bindItems();
+                    $('#description').val('');
+                    $('#length').val('');
+                    $('#breath').val('');
+                    $('#depth').val('');
+                    $('#Quantity').val('');
+                    $('#Nos').val('');
+                    $('#unitPrice').val('');
+                    $('#amount').val('');
+                    $('#umoId').val(0);
+                    $('#myModal').modal('show');
+            },
+
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        //$('#myModal').modal('show');
+    });
+    function bindItems() {
+        $('#tblRateWork').empty();
+        if (lstItems.length > 0) {
+            debugger
+            let sNo = 1;
+            let grandTotal = 0;
+           // let calProPer = 0;
+            for (var i = 0; i < lstItems.length; i++)
+            {
+                var row = `<tr id=rm${sNo}>`
+                    + `<td>${sNo}</td>`
+                    + `<td>${lstItems[i].Description}</td>`
+                    + `<td>${lstItems[i].length}</td>`
+                    + `<td>${lstItems[i].Breath}</td>`
+                    + `<td>${lstItems[i].Deapth}</td>`
+                    + `<td>${lstItems[i].Quantity}</td>`
+                    + `<td>${lstItems[i].Nos}</td>`
+                    + `<td>${lstItems[i].unitPrice}</td>`
+                    + `<td>${lstItems[i].amount}</td>`
+                    + `<td>${lstItems[i].UMOText}</td>`
+                    + `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
+                        </td>`
+                    + "</tr>";
+
+                let amt = 0;
+
+
+
+                lstItems[i].amount != null ? amt = parseFloat(lstItems[i].amount) : amt = 0;
+                grandTotal += amt;
+
+                $('#tblRateWork').append(row);
+                sNo++;
+            }
+            console.log(grandTotal);
+            $('#totalAmount').val(grandTotal.toFixed());
+
+            $("#deduction").blur(function () {
+                debugger
+
+                var deduction = $('#deduction').val();
+                var totalAmt = $('#totalAmount').val();
+                var netAmount = parseFloat(totalAmt - deduction);
+                $('#netAmount').val(netAmount.toFixed());
+            });
+
+        }
+
+    }
+
+     function removeTR(item)
+    {
+        debugger
+
+        $.ajax({
+            url: '@Url.Content("~/RateWorks/removeRateWorks")',
+            type: 'POST',
+            dataType: 'json',
+            data: { Id: item },
+            success: function (result)
+            {
+                console.log(result);
+                debugger
+                if (result != null)
+                {
+                    lstItems = result;
+                    $('#tblRateWork').empty();
+                    if (lstItems.length > 0) {
+                        debugger
+                        let sNo = 1;
+
+                        for (var i = 0; i < lstItems.length; i++) {
+                            var row = `<tr id=rm${sNo}>`
+                                + `<td>${sNo}</td>`
+                                + `<td>${lstItems[i].Description}</td>`
+                                + `<td>${lstItems[i].length}</td>`
+                                + `<td>${lstItems[i].Breath}</td>`
+                                + `<td>${lstItems[i].Deapth}</td>`
+                                + `<td>${lstItems[i].Quantity}</td>`
+                                + `<td>${lstItems[i].Nos}</td>`
+                                + `<td>${lstItems[i].unitPrice}</td>`
+                                + `<td>${lstItems[i].amount}</td>`
+                                + `<td>${lstItems[i].UMOText}</td>`
+                                + `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
+                        </td>`
+                                + "</tr>";
+
+                            let amt = 0;
+
+
+
+                            lstItems[i].Amount != null ? amt = parseFloat(lstItems[i].Amount) : amt = 0;
+                            totalAmount += amt;
+
+                            $('#tblRateWork').append(row);
+                            sNo++;
+                        }
+                        console.log(totalAmount);
+                        $('#totalAmount').val(totalAmount.toFixed());
+
+                        $("#deduction").blur(function () {
+                            debugger
+
+                            var deduction = $('#deduction').val();
+                            var totalAmt = $('#totalAmount').val();
+                            var netAmount = parseFloat(totalAmt - deduction);
+                            $('#netAmount').val(netAmount.toFixed());
+                        });
+
+                   }
+                }
+            }
+        });
+    }
+
+
+</script>

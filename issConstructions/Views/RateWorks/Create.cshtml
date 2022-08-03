@@ -261,8 +261,6 @@
             SiteId(projectSite);
         })
        
-       
-
     });
 
     $(document).keydown(function (event) {
@@ -278,8 +276,28 @@
     {
         $('body').removeClass("example-open");
     })
-   
- 
+
+        
+    $("#Nos").blur(function () {
+        debugger
+        var plength = parseFloat($('#length').val());
+        var pbreath = parseFloat($('#breath').val());
+        var pdepth = parseFloat($('#depth').val());
+        var tot = parseFloat(plength * pbreath * pdepth);
+        var Amt = parseFloat($('#Nos').val()) * parseFloat(tot);
+        $("#Quantity").val(Amt.toFixed(2));
+
+    })
+
+    $("#unitPrice").blur(function () {
+        debugger
+        var qty = parseFloat($('#Quantity').val()); 
+        var price= parseFloat($('#unitPrice').val());
+        var amount = parseFloat(qty * price);
+        $("#amount").val(amount.toFixed(2));
+
+    })
+
     function SiteId(projectSite)
     {
         debugger
@@ -303,7 +321,8 @@
             error: function (err) {
                 console.log(err);
             }
-        });
+              });
+
     };
 
      $('#btnSave').click(function ()
@@ -360,7 +379,7 @@
         if (lstItems.length > 0) {
             debugger
             let sNo = 1;
-            let totalAmount = 0;
+            let grandTotal = 0;
            // let calProPer = 0;
             for (var i = 0; i < lstItems.length; i++)
             {
@@ -385,14 +404,14 @@
               
 
 
-                lstItems[i].Amount != null ? amt = parseFloat(lstItems[i].Amount) : amt = 0;
-                totalAmount += amt;
+                lstItems[i].amount != null ? amt = parseFloat(lstItems[i].amount) : amt = 0;
+                grandTotal += amt;
 
                 $('#tblRateWork').append(row);
                 sNo++;
             }
-            console.log(totalAmount);
-            $('#totalAmount').val(totalAmount.toFixed());
+            console.log(grandTotal);
+            $('#totalAmount').val(grandTotal.toFixed());
 
             $("#deduction").blur(function () {
                 debugger

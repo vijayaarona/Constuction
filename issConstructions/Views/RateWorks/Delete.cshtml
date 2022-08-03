@@ -69,6 +69,12 @@
 
 
         <table id="AccountGroupMaster">
+
+            <tr>
+                <th>Rate Work ID</th>
+                <td>  @Html.DisplayFor(model => model.RateWorkId) </td>
+            </tr>
+
             <tr>
                 <th>Request Date</th>
                 <td>  @Html.DisplayFor(model => model.Date) </td>
@@ -90,11 +96,37 @@
                 <th>Site Address</th>
                 <td> @Html.DisplayFor(model => model.SiteName.SiteAddress) </td>
             </tr>
+
+            <tr>
+                <th>Head Name</th>
+                <td> @Html.DisplayFor(model => model.headName) </td>
+            </tr>
+            <tr>
+                <th>Total Amount</th>
+                <td> @Html.DisplayFor(model => model.totalAmount) </td>
+            </tr>
+            <tr>
+                <th>Deduction</th>
+                <td> @Html.DisplayFor(model => model.deduction) </td>
+            </tr>
             <tr>
                 <th>Net Amount</th>
                 <td> @Html.DisplayFor(model => model.netAmount) </td>
             </tr>
-           
+            <tr>
+                <th> Created Date</th>
+                <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
+            </tr>
+
+            <tr>
+                <th> Updated By</th>
+                <td>  @Html.DisplayFor(model => model.UpdateBy)</td>
+            </tr>
+            <tr>
+                <th> Updated  Date</th>
+                <td>  @Html.DisplayFor(model => model.UpdatedDate)</td>
+            </tr>
+
         </table>
         <hr style="text-decoration:none" />
         @using (Html.BeginForm())
