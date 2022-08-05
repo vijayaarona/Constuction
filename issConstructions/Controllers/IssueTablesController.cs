@@ -89,8 +89,7 @@ namespace issConstructions.Controllers
            
                 db.issueTables.Add(issueTable);
                 db.SaveChanges();
-            // return RedirectToAction("Index",issueTable.issueId);
-            return RedirectToAction("Index", "issueTables", new { Id = issueTable.issueId});
+                return RedirectToAction("Index", "issueTables", new { Id = issueTable.issueId});
 
 
 
@@ -195,7 +194,7 @@ namespace issConstructions.Controllers
             IssueTable issueTable = db.issueTables.Find(id);
             db.issueTables.Remove(issueTable);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "issueTables", new { Id = issueTable.issueId });
         }
 
         protected override void Dispose(bool disposing)

@@ -71,7 +71,7 @@
                 <td>  @Html.DisplayFor(model => model.purchaseRequestId)</td>
             </tr>
             <tr>
-                <th>Prioduct  Name</th>
+                <th>Product  Name</th>
                 <td> @Html.DisplayFor(model => model.Product.ProductName)</td>
             </tr>
 
@@ -126,6 +126,7 @@
     <p style="float:right;">
         @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-default" })
         @Html.ActionLink("Back to List", "Index", "PurchaseRequestTables", new { id = ViewBag.Pid }, htmlAttributes: new { @class = "btn btn-default" })
+
 
 
     </p>

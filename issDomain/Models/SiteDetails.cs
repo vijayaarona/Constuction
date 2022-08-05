@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace issDomain.Models
    public class SiteDetails
     {
         public int ID { get; set; }
-        public int ProjectId;
-        public int SiteId;
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? ProjectDate { get; set; }
         public string ProjectName { get; set; }
         public string SiteName { get; set; }
@@ -56,6 +57,8 @@ namespace issDomain.Models
         public string Field { get; set; }
         public string Department { get; set; }
         public string TenderName { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? TenderDate { get; set; }
         public string TenderEMDCost { get; set; }
         public string WorkAllocated { get; set; }
@@ -67,11 +70,19 @@ namespace issDomain.Models
         public string TenderDD { get; set; }
         public string BankName { get; set; }
         public string DDNo { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? DDDate { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        
         public DateTime? RefundDate { get; set; }
         public bool isDeleted { get; set; } = false;
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? CreatedDate { get; set; }
         public string UpdateBy { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? UpdatedDate { get; set; }
     }
 }

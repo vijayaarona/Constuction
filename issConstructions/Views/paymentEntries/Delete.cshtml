@@ -70,6 +70,10 @@
 
         <table id="AccountGroupMaster">
             <tr>
+                <th>Payment ID</th>
+                <td>@Html.DisplayFor(model => model.paymentID)</td>
+            </tr>
+            <tr>
                 <th>Payment Date</th>
                 <td>@Html.DisplayFor(model => model.paymenttDate)</td>
             </tr>
@@ -79,15 +83,15 @@
             </tr>
             <tr>
                 <th>Project Name</th>
-                <td>  @Html.DisplayFor(model => model.siteDetails.ProjectName)</td>
+                <td>  @Html.DisplayFor(model => model.siteName.ProjectName)</td>
             </tr>
             <tr>
                 <th>Site Name</th>
-                <td>  @Html.DisplayFor(model => model.siteDetails.SiteName)</td>
+                <td>  @Html.DisplayFor(model => model.siteName.SiteName)</td>
             </tr>
             <tr>
-                <th>Account Ledger Name</th>
-                <td>  @Html.DisplayFor(model => model.accountLedger.AccountLedger)</td>
+                <th>Ledger Name</th>
+                <td>  @Html.DisplayFor(model => model.Ledger.AccountLedger)</td>
             </tr>
             <tr>
                 <th>Given By</th>
@@ -105,21 +109,7 @@
                 <th>Remarks</th>
                 <td>  @Html.DisplayFor(model => model.remarks)</td>
             </tr>
-            <tr>
-                <th> Created Date</th>
-                <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
-            </tr>
-
-            <tr>
-                <th> Updated By</th>
-                <td>  @Html.DisplayFor(model => model.UpdateBy)</td>
-            </tr>
-            <tr>
-                <th> Updated  Date</th>
-                <td>  @Html.DisplayFor(model => model.UpdatedDate)</td>
-            </tr>
-
-        </table>
+    </table>
         <hr style="text-decoration:none" />
         @using (Html.BeginForm())
         {

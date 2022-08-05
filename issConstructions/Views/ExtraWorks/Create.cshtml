@@ -63,24 +63,24 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label>Project Name</label>
-                    @Html.DropDownList("projectId", null, htmlAttributes: new { @class = "form-control", @id = "projectId" })
-                    @Html.ValidationMessageFor(model => model.projectId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("SiteNameId", null, htmlAttributes: new { @class = "form-control", @id = "projectId" })
+                    @Html.ValidationMessageFor(model => model.SiteNameId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site No</label>
-                    @Html.DropDownList("SiteNo", null, htmlAttributes: new { @class = "form-control", @id = "SiteNoId" })
-                    @Html.ValidationMessageFor(model => model.siteNo, "", new { @class = "text-danger" })
+                    @Html.DropDownList("SiteNoId", null, htmlAttributes: new { @class = "form-control", @id = "SiteNoId" })
+                    @Html.ValidationMessageFor(model => model.siteNoId, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group col-md-6">
                     <label>Site Name</label>
-                    @Html.DropDownList("SiteNameId", null, htmlAttributes: new { @class = "form-control", @id = "SiteNameId" })
-                    @Html.ValidationMessageFor(model => model.siteName, "", new { @class = "text-danger" })
+                    @Html.DropDownList("SiteId", null, htmlAttributes: new { @class = "form-control", @id = "SiteNameId" })
+                    @Html.ValidationMessageFor(model => model.siteId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site Address</label>
                     @Html.DropDownList("SiteAddressId", null, htmlAttributes: new { @class = "form-control", @id = "SiteAddressId" })
-                    @Html.ValidationMessageFor(model => model.siteAddress, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.siteAddressId, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group col-md-6">
@@ -257,7 +257,26 @@
         $('body').removeClass("example-open");
     })
    
- 
+
+    $("#Nos").blur(function () {
+        debugger
+        var plength = parseFloat($('#length').val());
+        var pbreath = parseFloat($('#breath').val());
+        var pdepth = parseFloat($('#depth').val());
+        var tot = parseFloat(plength * pbreath * pdepth);
+        var Amt = parseFloat($('#Nos').val()) * parseFloat(tot);
+        $("#Quantity").val(Amt.toFixed(2));
+
+    })
+
+    $("#unitPrice").blur(function () {
+        debugger
+        var qty = parseFloat($('#Quantity').val());
+        var price = parseFloat($('#unitPrice').val());
+        var amount = parseFloat(qty * price);
+        $("#amount").val(amount.toFixed(2));
+
+    })
     function SiteId(projectSite)
     {
         debugger
@@ -292,7 +311,7 @@
          list.Description = $('#description').val();
          list.Length = $('#length').val();
          list.Breath = $('#breath').val();
-         list.Depth = $('#depth').val();
+         list.Deapth = $('#depth').val();
          list.Quantity = $('#Quantity').val();
          list.Nos = $('#Nos').val();
          list.UnitPrice = $('#unitPrice').val();
@@ -347,7 +366,7 @@
                     + `<td>${lstItems[i].Description}</td>`
                     + `<td>${lstItems[i].Length}</td>`
                     + `<td>${lstItems[i].Breath}</td>`
-                    + `<td>${lstItems[i].Depth}</td>`
+                    + `<td>${lstItems[i].Deapth}</td>`
                     + `<td>${lstItems[i].Quantity}</td>`
                     + `<td>${lstItems[i].Nos}</td>`
                     + `<td>${lstItems[i].UnitPrice}</td>`

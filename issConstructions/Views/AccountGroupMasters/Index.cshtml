@@ -42,6 +42,7 @@
         <table class="table" id="AGMaster">
             <thead>
                 <tr>
+                 
                     <th>
                         <label>Group Name</label>
                     </th>
@@ -49,44 +50,26 @@
                         <label>Parent Name</label>
                     </th>
 
-                    <th>
-                        <label>Created Date</label>
-                    </th>
-                    <th>
-                        <label>Updated By</label>
-                    </th>
-                    <th>
-                        <label>Updated Date</label>
-                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.GroupName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ParentGroup)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreatedDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UpdateBy)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UpdatedDate)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                        </td>
-                    </tr>
+                <tr>
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GroupName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParentGroup)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
 
                 }
             </tbody>

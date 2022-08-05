@@ -99,7 +99,6 @@ namespace issConstructions.Controllers
             {
                 db.purchaseOrderTables.Add(purchaseOrderTable);
                 db.SaveChanges();
-                // return RedirectToAction("Index",purchaseOrderTable.purchaseRequestId);
                 return RedirectToAction("Index", "PurchaseOrderTables", new { Id = purchaseOrderTable.purchaseRequestId });
             }
 
@@ -135,7 +134,6 @@ namespace issConstructions.Controllers
                 db.Entry(purchaseOrderTable).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", "PurchaseOrderTables", new { Id = purchaseOrderTable.purchaseRequestId });
-                // return RedirectToAction("Index", purchaseOrderTable.purchaseRequestId );
             }
             ViewBag.productId = new SelectList(db.productMasters, "ID", "ProductName", purchaseOrderTable.productId);
             return View(purchaseOrderTable);
@@ -164,7 +162,7 @@ namespace issConstructions.Controllers
             PurchaseOrderTable purchaseOrderTable = db.purchaseOrderTables.Find(id);
             db.purchaseOrderTables.Remove(purchaseOrderTable);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "PurchaseOrderTables", new { Id = purchaseOrderTable.purchaseRequestId });
         }
 
         protected override void Dispose(bool disposing)

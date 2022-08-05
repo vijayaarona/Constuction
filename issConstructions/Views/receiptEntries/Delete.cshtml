@@ -53,6 +53,8 @@
 </style>
 
 
+
+
 <div class="panel-group">
 
     <div class="panel panel-heading header">
@@ -67,20 +69,28 @@
         <table id="AccountGroupMaster">
 
             <tr>
+                <th>Receipt ID</th>
+                <td>  @Html.DisplayFor(model => model.receiptID)</td>
+            </tr>
+            <tr>
                 <th>Receipt Date</th>
                 <td>  @Html.DisplayFor(model => model.receiptDate)</td>
             </tr>
             <tr>
-                <th>Project</th>
-                <td>  @Html.DisplayFor(model => model.siteDetailsId)</td>
+                <th>Payment Type</th>
+                <td>  @Html.DisplayFor(model => model.accountLedger.AccountLedger)</td>
+            </tr>
+            <tr>
+                <th>Project Name</th>
+                <td>  @Html.DisplayFor(model => model.siteName.ProjectName)</td>
             </tr>
             <tr>
                 <th>Site Name</th>
-                <td>  @Html.DisplayFor(model => model.siteDetailsId)</td>
+                <td>  @Html.DisplayFor(model => model.siteName.SiteName)</td>
             </tr>
             <tr>
                 <th>Account Ledger Name</th>
-                <td>  @Html.DisplayFor(model => model.accountLedgerId)</td>
+                <td>  @Html.DisplayFor(model => model.Ledger.AccountLedger)</td>
             </tr>
             <tr>
                 <th>Given By</th>
@@ -97,19 +107,6 @@
             <tr>
                 <th>Remarks</th>
                 <td>  @Html.DisplayFor(model => model.remarks)</td>
-            </tr>
-            <tr>
-                <th> Created Date</th>
-                <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
-            </tr>
-
-            <tr>
-                <th> Updated By</th>
-                <td>  @Html.DisplayFor(model => model.UpdateBy)</td>
-            </tr>
-            <tr>
-                <th> Updated  Date</th>
-                <td>  @Html.DisplayFor(model => model.UpdatedDate)</td>
             </tr>
         </table>
         <hr style="text-decoration:none" />
