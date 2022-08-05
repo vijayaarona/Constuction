@@ -19,7 +19,10 @@ namespace issConstructions.Controllers
         // GET: ExtraWorks
         public ActionResult Index()
         {
-            return View(db.extraWorks.ToList());
+
+            var extrawork = db.extraWorks.Include(p => p.SiteName);
+            return View(extrawork.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.Id));
+
         }
 
         // GET: ExtraWorks/Details/5
@@ -29,7 +32,7 @@ namespace issConstructions.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ExtraWork extraWork = db.extraWorks.Find(id);
+            ExtraWork extraWork = db.extraWorks.Where(x => x.isDeleted == false && x.Id == id).FirstOrDefault();
             if (extraWork == null)
             {
                 return HttpNotFound();
@@ -40,13 +43,13 @@ namespace issConstructions.Controllers
         // GET: ExtraWorks/Create
         public ActionResult Create()
         {
-            List<SelectListItem> Project = new List<SelectListItem>();
-            Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            List<SelectListItem> SiteName = new List<SelectListItem>();
+            SiteName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
             {
-                Project.Add(new SelectListItem { Text = item.ProjectName.ToString(), Value = item.ID.ToString() });
+                SiteName.Add(new SelectListItem { Text = item.ProjectName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.projectId = Project;
+            ViewBag.SiteNameId = SiteName;
 
             List<SelectListItem> SiteNo = new List<SelectListItem>();
             SiteNo.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -54,7 +57,7 @@ namespace issConstructions.Controllers
             {
                 SiteNo.Add(new SelectListItem { Text = item.ID.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.siteNo = SiteNo;
+            ViewBag.siteNoId = SiteNo;
 
             List<SelectListItem> Site = new List<SelectListItem>();
             Site.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -62,7 +65,7 @@ namespace issConstructions.Controllers
             {
                 Site.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
             }
-            ViewBag.SiteNameId = Site;
+            ViewBag.siteId = Site;
             List<SelectListItem> SiteAddress = new List<SelectListItem>();
             SiteAddress.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.siteDetails.ToList())
@@ -82,25 +85,61 @@ namespace issConstructions.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        public JsonResult SiteId(int site_NameId)
+        {
+            if (site_NameId > 0)
+            {
+                var resp = db.siteDetails.Where(x => x.ID == site_NameId).ToList();
+                return Json(resp, JsonRequestBehavior.AllowGet);
+            }
+            else return Json("NoData", JsonRequestBehavior.AllowGet);
+        }
+
+
         // POST: ExtraWorks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,date,projectId,siteNo,siteName,siteAddress,headName,totalAmt,passBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ExtraWork extraWork)
+        public ActionResult Create([Bind(Include = "Id,date,SiteNameId,siteNo,siteId,siteAddressId,headName,totalAmt,passBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate,ExtraWorkId")] ExtraWork extraWork)
         {
-            if (ModelState.IsValid)
+            try
             {
+                int invoiceNo = 1;
+
+                extraWork.CreatedDate = DateTime.UtcNow;
+                extraWork.UpdatedDate = DateTime.UtcNow;
+
+                var Extra = db.extraWorks.Where(x => x.isDeleted == false).ToList();
+                if (Extra != null && Extra.Count > 0)
+                {
+                    invoiceNo = Extra.Max(x => x.ExtraWorkId);
+                    if (invoiceNo != 0)
+                    {
+                        invoiceNo = invoiceNo + 1;
+                    }
+                }
+                extraWork.ExtraWorkId = invoiceNo;
                 db.extraWorks.Add(extraWork);
+
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.projectId = new SelectList(db.siteDetails, "ID", "ProjectName", extraWork.projectId);
-            ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "SiteName", extraWork.siteName);
-            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", extraWork.siteAddress);
-            ViewBag.SiteNo = new SelectList(db.siteDetails, "ID", "Id", extraWork.Id);
+            catch (Exception ex)
+            {
 
-            return View(extraWork);
+                ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", extraWork.SiteNameId);
+                ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", extraWork.siteId);
+                ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", extraWork.siteAddressId);
+                ViewBag.SiteNoId = new SelectList(db.siteDetails, "ID", "Id", extraWork.siteNoId);
+
+                return View(extraWork);
+
+            }
+
         }
 
         // GET: ExtraWorks/Edit/5
@@ -110,11 +149,15 @@ namespace issConstructions.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ExtraWork extraWork = db.extraWorks.Find(id);
+            ExtraWork extraWork = db.extraWorks.Where(x => x.isDeleted == false && x.Id == id).FirstOrDefault();
             if (extraWork == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", extraWork.SiteNameId);
+            ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", extraWork.siteId);
+            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", extraWork.siteAddressId);
+            ViewBag.SiteNoId = new SelectList(db.siteDetails, "ID", "Id", extraWork.siteNoId);
             return View(extraWork);
         }
 
@@ -123,15 +166,28 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,date,projectId,siteNo,siteName,siteAddress,headName,totalAmt,passBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate")] ExtraWork extraWork)
+        public ActionResult Edit([Bind(Include = "Id,date,SiteNameId,siteNoId,siteId,siteAddressId,headName,totalAmt,passBy,remarks,isDeleted,CreatedDate,UpdateBy,UpdatedDate,ExtraWorkId")] ExtraWork extraWork)
         {
-            if (ModelState.IsValid)
+           
+            try
             {
+                extraWork.CreatedDate = DateTime.UtcNow;
+                extraWork.UpdatedDate = DateTime.UtcNow;
                 db.Entry(extraWork).State = EntityState.Modified;
+                extraWork.ExtraWorkId = extraWork.ExtraWorkId ;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(extraWork);
+            catch (Exception)
+            {
+                ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", extraWork.SiteNameId);
+                ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", extraWork.siteId);
+                ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", extraWork.siteAddressId);
+                ViewBag.SiteNoId = new SelectList(db.siteDetails, "ID", "Id", extraWork.siteNoId);
+                return View(extraWork);
+
+            }
         }
 
         // GET: ExtraWorks/Delete/5
@@ -155,20 +211,17 @@ namespace issConstructions.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             ExtraWork extraWork = db.extraWorks.Find(id);
+            List<ExtraWorkTable> lstPR = db.extraWorkTables.Where(x => x.extraWorkId == extraWork.ExtraWorkId).ToList();
+            foreach (var item in lstPR)
+            {
+                db.extraWorkTables.Remove(item);
+                db.SaveChanges();
+            }
+
+
             db.extraWorks.Remove(extraWork);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public JsonResult SiteId(int site_NameId)
-        {
-            if (site_NameId > 0)
-            {
-                var resp = db.siteDetails.Where(x => x.ID == site_NameId).ToList();
-                return Json(resp, JsonRequestBehavior.AllowGet);
-            }
-            else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -178,14 +231,14 @@ namespace issConstructions.Controllers
             {
 
                 int maxValue = 0;
-                var isnull = db.extraWorkTables.Where(x => x.Id != null).ToList();
+                var isnull = db.extraWorks.Where(x => x.ExtraWorkId != null).ToList();
                 if (isnull.Count == 0)
                 {
                     maxValue = 1;
                 }
                 else
                 {
-                    maxValue = db.extraWorkTables.Max(x => x.extraWorkId);
+                    maxValue = db.extraWorks.Max(x => x.ExtraWorkId);
                     maxValue += 1;
 
                 }
@@ -195,8 +248,8 @@ namespace issConstructions.Controllers
                 extraWorkTable.UpdateBy = Display.Name;
                 db.extraWorkTables.Add(extraWorkTable);
                 db.SaveChanges();
-                var id = db.purchaseRequestTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
-                return Json(id.ID, JsonRequestBehavior.AllowGet);
+                var id = db.extraWorkTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+                return Json(id.Id, JsonRequestBehavior.AllowGet);
 
                
             }
@@ -219,20 +272,20 @@ namespace issConstructions.Controllers
         }
 
         [HttpPost]
-        public JsonResult getListOfExtraWork(int ID)
+        public JsonResult getListOfExtraWork(int invoice)
         {
             try
             {
-
-                List<ExtraWorkTable>  extraWorkTables= db.extraWorkTables.Where(x => x.extraWorkId == ID).ToList();
+                var pr = db.extraWorks.Where(x => x.Id == invoice).FirstOrDefault();
+                List<ExtraWorkTable> extraWorkTables = db.extraWorkTables.Where(x => x.extraWorkId == pr.ExtraWorkId).ToList();
                 return Json(extraWorkTables, JsonRequestBehavior.AllowGet);
+
             }
             catch (Exception ex)
             {
 
                 return Json("data", JsonRequestBehavior.AllowGet);
             }
-
         }
 
         [HttpPost]

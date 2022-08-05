@@ -151,6 +151,7 @@
     <Compile Include="Controllers\DesignationMastersController.cs" />
     <Compile Include="Controllers\EmployeeMastersController.cs" />
     <Compile Include="Controllers\ExtraWorksController.cs" />
+    <Compile Include="Controllers\ExtraWorkTablesController.cs" />
     <Compile Include="Controllers\GodownsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IssuesController.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Controllers\PurchaseRequestsController.cs" />
     <Compile Include="Controllers\PurchaseRequestTablesController.cs" />
     <Compile Include="Controllers\RateWorksController.cs" />
+    <Compile Include="Controllers\RateWorkTablesController.cs" />
     <Compile Include="Controllers\receiptEntriesController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SiteDetailsController.cs" />
@@ -284,6 +286,34 @@
     <Compile Include="Migrations\202208010945436_ConM27.cs" />
     <Compile Include="Migrations\202208010945436_ConM27.Designer.cs">
       <DependentUpon>202208010945436_ConM27.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208040423190_ConM28.cs" />
+    <Compile Include="Migrations\202208040423190_ConM28.Designer.cs">
+      <DependentUpon>202208040423190_ConM28.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208040519285_ConM29.cs" />
+    <Compile Include="Migrations\202208040519285_ConM29.Designer.cs">
+      <DependentUpon>202208040519285_ConM29.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208040553001_ConM30.cs" />
+    <Compile Include="Migrations\202208040553001_ConM30.Designer.cs">
+      <DependentUpon>202208040553001_ConM30.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208050448431_ConM31.cs" />
+    <Compile Include="Migrations\202208050448431_ConM31.Designer.cs">
+      <DependentUpon>202208050448431_ConM31.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208050501431_conM32.cs" />
+    <Compile Include="Migrations\202208050501431_conM32.Designer.cs">
+      <DependentUpon>202208050501431_conM32.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208050521508_ConM33.cs" />
+    <Compile Include="Migrations\202208050521508_ConM33.Designer.cs">
+      <DependentUpon>202208050521508_ConM33.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208050633433_ConM34.cs" />
+    <Compile Include="Migrations\202208050633433_ConM34.Designer.cs">
+      <DependentUpon>202208050633433_ConM34.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
@@ -457,6 +487,16 @@
     <Content Include="Views\IssueTables\Details.cshtml" />
     <Content Include="Views\IssueTables\Edit.cshtml" />
     <Content Include="Views\IssueTables\Index.cshtml" />
+    <Content Include="Views\RateWorkTables\Create.cshtml" />
+    <Content Include="Views\RateWorkTables\Delete.cshtml" />
+    <Content Include="Views\RateWorkTables\Details.cshtml" />
+    <Content Include="Views\RateWorkTables\Edit.cshtml" />
+    <Content Include="Views\RateWorkTables\Index.cshtml" />
+    <Content Include="Views\ExtraWorkTables\Create.cshtml" />
+    <Content Include="Views\ExtraWorkTables\Delete.cshtml" />
+    <Content Include="Views\ExtraWorkTables\Details.cshtml" />
+    <Content Include="Views\ExtraWorkTables\Edit.cshtml" />
+    <Content Include="Views\ExtraWorkTables\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -572,6 +612,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208010945436_ConM27.resx">
       <DependentUpon>202208010945436_ConM27.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208040423190_ConM28.resx">
+      <DependentUpon>202208040423190_ConM28.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208040519285_ConM29.resx">
+      <DependentUpon>202208040519285_ConM29.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208040553001_ConM30.resx">
+      <DependentUpon>202208040553001_ConM30.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208050448431_ConM31.resx">
+      <DependentUpon>202208050448431_ConM31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208050501431_conM32.resx">
+      <DependentUpon>202208050501431_conM32.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208050521508_ConM33.resx">
+      <DependentUpon>202208050521508_ConM33.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208050633433_ConM34.resx">
+      <DependentUpon>202208050633433_ConM34.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

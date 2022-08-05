@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<issDomain.Models.paymentEntry>
 
+
 <style>
     .header {
         margin-top: 10px;
@@ -16,14 +17,23 @@
         color: white;
         float: right;
         margin: 10px;
-        border-radius: 3px;
+        border-radius: 10px;
         text-decoration: none;
     }
 
         .addNew:hover {
             text-decoration: none;
         }
+
+    table td {
+        font-size: 13px;
+    }
+
+    table th {
+        font-size: 13px;
+    }
 </style>
+<
 <div class="panel-group">
     <div class="panel panel-heading header">
         Payment Entry - Index Page
@@ -34,7 +44,10 @@
             <thead>
                 <tr>
                     <th>
-                        <label>Payment Date</label>
+                        <label>Pay ID</label>
+                    </th>
+                    <th>
+                        <label>Pay Date</label>
                     </th>
                     <th>
                         <label>Payment Type</label>
@@ -46,7 +59,7 @@
                         <label>Site Name</label>
                     </th>
                     <th>
-                        <label>Account Ledger Name</label>
+                        <label>Ledger Name</label>
                     </th>
                     <th>
                         <label>Given By</label>
@@ -61,14 +74,9 @@
                         <label>Remarks</label>
                     </th>
                     <th>
-                        <label>Created Date</label>
+                        <label>Actions</label>
                     </th>
-                    <th>
-                        <label>Updated By</label>
-                    </th>
-                    <th>
-                        <label>Updated Date</label>
-                    </th>
+
                     <th></th>
                 </tr>
             </thead>
@@ -76,6 +84,10 @@
                 @foreach (var item in Model)
                 {
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.paymentID)
+                    </td>
+
                     @if (@item.paymenttDate != null)
                     {
                         <td>
@@ -91,13 +103,13 @@
                         @Html.DisplayFor(modelItem => item.accountLedger.AccountLedger)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.siteDetails.ProjectName)
+                        @Html.DisplayFor(modelItem => item.siteName.ProjectName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.siteDetails.SiteAddress)
+                        @Html.DisplayFor(modelItem => item.siteName.SiteName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.accountLedger.AccountLedger)
+                        @Html.DisplayFor(modelItem => item.Ledger.AccountLedger)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.givenBy)
@@ -112,19 +124,9 @@
                         @Html.DisplayFor(modelItem => item.remarks)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdateBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdatedDate)
-                    </td>
-                    <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
-                        <a href="~/Report/Paymentvoucher/@item.ID">Voucher</a>
                     </td>
                 </tr>
 
@@ -135,32 +137,5 @@
 
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $('#AGMaster').DataTable({
-            dom: 'Bfrtip',
 
-            buttons: [
-                'copy',
-                {
-                    extend: 'excel',
-                    title: function () {
-                        var printTitle = 'New Title';
-                        return printTitle
-                    }
-                   // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
-                },
-                {
-                    extend: 'pdf',
-                  //  messageBottom: null
-                },
-                {
-                    extend: 'print',
-                }
-
-            ]
-        });
-
-    });
-</script>
 

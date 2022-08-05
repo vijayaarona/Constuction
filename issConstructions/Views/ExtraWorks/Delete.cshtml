@@ -69,26 +69,35 @@
 
 
         <table id="AccountGroupMaster">
+
             <tr>
-                <th>Request Date</th>
+                <th>Extra Work ID</th>
+                <td>  @Html.DisplayFor(model => model.ExtraWorkId) </td>
+            </tr>
+            <tr>
+                <th>Extra Work Date</th>
                 <td>  @Html.DisplayFor(model => model.date) </td>
             </tr>
 
             <tr>
                 <th>Project Name</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.ProjectName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.ProjectName) </td>
             </tr>
             <tr>
                 <th>Site No</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.ID) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.ID) </td>
             </tr>
             <tr>
                 <th>Site Name</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteName) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteName) </td>
             </tr>
             <tr>
                 <th>Site Address</th>
-                <td> @Html.DisplayFor(model => model.SiteDetails.SiteAddress) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.SiteAddress) </td>
+            </tr>
+            <tr>
+                <th>Head Name</th>
+                <td> @Html.DisplayFor(model => model.headName) </td>
             </tr>
             <tr>
                 <th>Total Amount</th>

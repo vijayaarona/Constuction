@@ -1,0 +1,394 @@
+﻿@model issDomain.Models.RateWorkTable
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+
+    input, select, textarea {
+        max-width: 500px;
+    }
+
+    th, td {
+        border: 1px solid black;
+        text-align: center;
+        height: 50px;
+    }
+
+    .itemtable th {
+        text-align: center;
+    }
+
+    select #Product, #TaxId {
+        max-width: 500px;
+    }
+
+    .example-open .modal-backdrop {
+        background-color: transparent;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="panel-group">
+        <div class="panel panel-heading header" style="margin-top: 10px;border-top-style: solid;border-top-width: 5px;border-top-color: #FF5F04;font-family: Calibri;font-size: 22px;">
+            Labour Rate Work - Item Add
+        </div>
+        <div class="panel panel-body" style="overflow:auto">
+            <div class="row">
+                <div class="form-group col-md-6" style="display:none">
+                    <label>Rate Work ID</label>
+                    @Html.EditorFor(model => model.rateId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.rateId, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Description</label>
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Length</label>
+                    @Html.EditorFor(model => model.length, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.length, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Breath</label>
+                    @Html.EditorFor(model => model.Breath, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Breath, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Depth</label>
+                    @Html.EditorFor(model => model.Deapth, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Deapth, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Nos</label>
+                    @Html.EditorFor(model => model.Nos, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nos, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Quantity</label>
+                    @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.quantity, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Unit Price</label>
+                    @Html.EditorFor(model => model.unitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.unitPrice, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Amount</label>
+                    @Html.EditorFor(model => model.amount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>UOM</label>
+                    @Html.DropDownList("umoId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.umoId, "", new { @class = "text-danger" })
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <p style="float:right;">
+        <input type="submit" value="Save" class="btn btn-default" />
+        @*@Html.ActionLink("Back to List", "Index", new { id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })*@
+        @Html.ActionLink("Back to List", "Index", "RateWorkTables", new { id = ViewBag.Pid }, htmlAttributes: new { @class = "btn btn-default" })
+
+    </p>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(function () {
+       $('#rateId').val(@ViewBag.Pid);
+    })
+</script>
+<script type="text/javascript">
+    let sNo = 1;
+    var lstItems = [];
+    var ntAmt;
+     $(document).ready(function ()
+    {
+
+
+        $("#projectId").change(function ()
+        {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+
+    });
+
+    $(document).keydown(function (event) {
+        if (event.altKey && event.which === 65) {
+            $('#myModal').modal('show');
+        }
+    });
+
+    $('#myModal').on('show.bs.modal', function (e)
+    {
+        $('body').addClass("example-open");
+    }).on('hide.bs.modal', function (e)
+    {
+        $('body').removeClass("example-open");
+    })
+
+
+    $("#Nos").blur(function () {
+        debugger
+        var plength = parseFloat($('#length').val());
+        var pbreath = parseFloat($('#Breath').val());
+        var pdepth = parseFloat($('#Deapth').val());
+        var tot = parseFloat(plength * pbreath * pdepth);
+        var Amt = parseFloat($('#Nos').val()) * parseFloat(tot);
+        $("#quantity").val(Amt.toFixed(2));
+
+    })
+
+    $("#unitPrice").blur(function () {
+        debugger
+        var qty = parseFloat($('#quantity').val());
+        var price= parseFloat($('#unitPrice').val());
+        var amount = parseFloat(qty * price);
+        $("#amount").val(amount.toFixed(2));
+
+    })
+
+    function SiteId(projectSite)
+    {
+        debugger
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/RateWorks/SiteId")',
+            dataType: 'json',
+                  data: { site_NameId: projectSite },
+                  success: function (result) {
+                      var data = result;
+                      $("#SiteNameId").empty();
+                      $("#SiteNoId").empty();
+                      $("#SiteAddressId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                          $("#SiteNameId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
+                          $("#SiteNoId").append("<option value='" + data[i].ID + "'>" + data[i].ID + "</option>");
+                    $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+              });
+
+    };
+
+     $('#btnSave').click(function ()
+    {
+        debugger
+        let list = {};
+
+         list.Description = $('#description').val();
+         list.length = $('#length').val();
+         list.Breath = $('#breath').val();
+         list.Deapth = $('#depth').val();
+         list.Quantity = $('#Quantity').val();
+         list.Nos = $('#Nos').val();
+         list.unitPrice = $('#unitPrice').val();
+         list.amount = $('#amount').val();;
+         list.UMOId = $('#umoId').val();
+         list.UMOText = $('#umoId option:selected').text();
+
+        list.sNo = sNo;
+
+        $.ajax({
+                url: '@Url.Content("~/RateWorks/SaveRateWork")',
+                type: 'POST',
+                  dataType: 'json',
+            data: { rateWorkTable: list },
+                success: function (result)
+                {
+                    debugger
+                    console.log(result);
+                    list.Id = result;
+                    lstItems.push(list);
+                    console.log(lstItems);
+                    bindItems();
+                    $('#description').val('');
+                    $('#length').val('');
+                    $('#breath').val('');
+                    $('#depth').val('');
+                    $('#Quantity').val('');
+                    $('#Nos').val('');
+                    $('#unitPrice').val('');
+                    $('#amount').val('');
+                    $('#umoId').val(0);
+                    $('#myModal').modal('show');
+            },
+
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        //$('#myModal').modal('show');
+    });
+    function bindItems() {
+        $('#tblRateWork').empty();
+        if (lstItems.length > 0) {
+            debugger
+            let sNo = 1;
+            let grandTotal = 0;
+           // let calProPer = 0;
+            for (var i = 0; i < lstItems.length; i++)
+            {
+                var row = `<tr id=rm${sNo}>`
+                    + `<td>${sNo}</td>`
+                    + `<td>${lstItems[i].Description}</td>`
+                    + `<td>${lstItems[i].length}</td>`
+                    + `<td>${lstItems[i].Breath}</td>`
+                    + `<td>${lstItems[i].Deapth}</td>`
+                    + `<td>${lstItems[i].Quantity}</td>`
+                    + `<td>${lstItems[i].Nos}</td>`
+                    + `<td>${lstItems[i].unitPrice}</td>`
+                    + `<td>${lstItems[i].amount}</td>`
+                    + `<td>${lstItems[i].UMOText}</td>`
+                    + `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
+                        </td>`
+                    + "</tr>";
+
+                let amt = 0;
+
+
+
+                lstItems[i].amount != null ? amt = parseFloat(lstItems[i].amount) : amt = 0;
+                grandTotal += amt;
+
+                $('#tblRateWork').append(row);
+                sNo++;
+            }
+            console.log(grandTotal);
+            $('#totalAmount').val(grandTotal.toFixed());
+
+            $("#deduction").blur(function () {
+                debugger
+
+                var deduction = $('#deduction').val();
+                var totalAmt = $('#totalAmount').val();
+                var netAmount = parseFloat(totalAmt - deduction);
+                $('#netAmount').val(netAmount.toFixed());
+            });
+
+        }
+
+    }
+
+     function removeTR(item)
+    {
+        debugger
+
+        $.ajax({
+            url: '@Url.Content("~/RateWorks/removeRateWorks")',
+            type: 'POST',
+            dataType: 'json',
+            data: { Id: item },
+            success: function (result)
+            {
+                console.log(result);
+                debugger
+                if (result != null)
+                {
+                    lstItems = result;
+                    $('#tblRateWork').empty();
+                    if (lstItems.length > 0) {
+                        debugger
+                        let sNo = 1;
+
+                        for (var i = 0; i < lstItems.length; i++) {
+                            var row = `<tr id=rm${sNo}>`
+                                + `<td>${sNo}</td>`
+                                + `<td>${lstItems[i].Description}</td>`
+                                + `<td>${lstItems[i].length}</td>`
+                                + `<td>${lstItems[i].Breath}</td>`
+                                + `<td>${lstItems[i].Deapth}</td>`
+                                + `<td>${lstItems[i].Quantity}</td>`
+                                + `<td>${lstItems[i].Nos}</td>`
+                                + `<td>${lstItems[i].unitPrice}</td>`
+                                + `<td>${lstItems[i].amount}</td>`
+                                + `<td>${lstItems[i].UMOText}</td>`
+                                + `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
+                        </td>`
+                                + "</tr>";
+
+                            let amt = 0;
+
+
+
+                            lstItems[i].Amount != null ? amt = parseFloat(lstItems[i].Amount) : amt = 0;
+                            totalAmount += amt;
+
+                            $('#tblRateWork').append(row);
+                            sNo++;
+                        }
+                        console.log(totalAmount);
+                        $('#totalAmount').val(totalAmount.toFixed());
+
+                        $("#deduction").blur(function () {
+                            debugger
+
+                            var deduction = $('#deduction').val();
+                            var totalAmt = $('#totalAmount').val();
+                            var netAmount = parseFloat(totalAmt - deduction);
+                            $('#netAmount').val(netAmount.toFixed());
+                        });
+
+                   }
+                }
+            }
+        });
+    }
+
+
+</script>
+

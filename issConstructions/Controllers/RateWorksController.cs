@@ -151,11 +151,15 @@ namespace issConstructions.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RateWork rateWork = db.rateWorks.Find(id);
-            if (rateWork == null)
+            RateWork rateWork = db.rateWorks.Where(x => x.isDeleted == false && x.Id == id).FirstOrDefault();
+            if (rateWork  == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", rateWork.SiteNameId);
+            ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", rateWork.siteId);
+            ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", rateWork.siteAddressId);
+            ViewBag.SiteNoId = new SelectList(db.siteDetails, "ID", "Id", rateWork.Id);
             return View(rateWork);
         }
 
@@ -166,13 +170,26 @@ namespace issConstructions.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Date,SiteNameId,siteNoId,siteNameId,siteAddressId,headName,totalAmount,deduction,netAmount,passedBy,remark,isDeleted,CreatedDate,UpdateBy,UpdatedDate,RateWorkId")] RateWork rateWork)
         {
-            if (ModelState.IsValid)
+            try
             {
+                rateWork.CreatedDate = DateTime.UtcNow;
+                rateWork.UpdatedDate = DateTime.UtcNow;
                 db.Entry(rateWork).State = EntityState.Modified;
+                rateWork.RateWorkId = rateWork.RateWorkId;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(rateWork);
+            catch (Exception)
+            {
+                ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", rateWork.SiteNameId);
+                ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", rateWork.siteId);
+                ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", rateWork.siteAddressId);
+                ViewBag.SiteNoId = new SelectList(db.siteDetails, "ID", "Id", rateWork.Id);
+                return View(rateWork);
+
+            }
+
         }
 
         // GET: RateWorks/Delete/5
@@ -244,21 +261,23 @@ namespace issConstructions.Controllers
         }
 
         [HttpPost]
-        public JsonResult removeRateWorks(string Id)
+        public JsonResult removeRateWorks(string Id, int? InNo)
+        
         {
             try
             {
 
                 if (!string.IsNullOrEmpty(Id) && Id != "undefined")
+
                 {
-                    int maxId = db.rateWorks.Max(x => x.Id);
+                    int maxId = db.rateWorks.Max(x => x.RateWorkId);
                     if (maxId != null && maxId == 0)
                     {
                         maxId = 1;
                     }
                     else maxId += 1;
                     int pId = int.Parse(Id);
-                    var p = db.rateWorkTables.Where(x => x.Id == pId && x.isDeleted == false).FirstOrDefault();
+                    var p = db.rateWorkTables.Where(x => x.rateId  == pId && x.isDeleted == false).FirstOrDefault();
                     db.rateWorkTables.Remove(p);
                     db.SaveChanges();
                     var resp = db.rateWorkTables.Where(x => x.rateId == maxId && x.isDeleted == false).ToList();

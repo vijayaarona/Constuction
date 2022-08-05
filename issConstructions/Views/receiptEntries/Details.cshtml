@@ -33,7 +33,7 @@
     #AccountGroupMaster th {
         border: 1px solid #ddd;
         padding: 8px;
-        text-align: left;
+        text-align: center;
     }
 
     #btn-edit a:hover {
@@ -55,6 +55,10 @@
         font-size: 22px;
     }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <div class="panel-group">
     <div class="panel panel-heading header">
@@ -63,22 +67,32 @@
     <div class="panel panel-body">
 
         <table id="AccountGroupMaster">
-         
+
+
+            <tr>
+                <th>Receipt ID</th>
+                <td>  @Html.DisplayFor(model => model.receiptID)</td>
+            </tr>
+
             <tr>
                 <th>Receipt Date</th>
                 <td>  @Html.DisplayFor(model => model.receiptDate)</td>
             </tr>
             <tr>
-                <th>Project</th>
-                <td>  @Html.DisplayFor(model => model.siteDetailsId)</td>
+                <th>Payment Type</th>
+                <td>  @Html.DisplayFor(model => model.accountLedger.AccountLedger)</td>
+            </tr>
+            <tr>
+                <th>Project Name</th>
+                <td>  @Html.DisplayFor(model => model.siteName.ProjectName)</td>
             </tr>
             <tr>
                 <th>Site Name</th>
-                <td>  @Html.DisplayFor(model => model.siteDetailsId)</td>
+                <td>  @Html.DisplayFor(model => model.siteName.SiteName)</td>
             </tr>
             <tr>
                 <th>Account Ledger Name</th>
-                <td>  @Html.DisplayFor(model => model.accountLedgerId)</td>
+                <td>  @Html.DisplayFor(model => model.Ledger.AccountLedger) </td>
             </tr>
             <tr>
                 <th>Given By</th>
@@ -96,19 +110,7 @@
                 <th>Remarks</th>
                 <td>  @Html.DisplayFor(model => model.remarks)</td>
             </tr>
-            <tr>
-                <th> Created Date</th>
-                <td>   @Html.DisplayFor(model => model.CreatedDate)</td>
-            </tr>
-
-            <tr>
-                <th> Updated By</th>
-                <td>  @Html.DisplayFor(model => model.UpdateBy)</td>
-            </tr>
-            <tr>
-                <th> Updated  Date</th>
-                <td>  @Html.DisplayFor(model => model.UpdatedDate)</td>
-            </tr>
+          
         </table>
 
         <p style="float:right;">
@@ -131,11 +133,11 @@
                         var printTitle = 'New Title';
                         return printTitle
                     }
-                   // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
+                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
                 },
                 {
                     extend: 'pdf',
-                  //  messageBottom: null
+                    //  messageBottom: null
                 },
                 {
                     extend: 'print',

@@ -3,8 +3,6 @@
 @{
     ViewBag.Title = "Edit";
 }
-
-
 <style>
     .header {
         margin-top: 10px;
@@ -18,6 +16,28 @@
     .btn-default {
         background-color: #FF5F04;
         color: white;
+    }
+
+    input, select, textarea {
+        max-width: 500px;
+    }
+
+    th, td {
+        border: 1px solid black;
+        text-align: center;
+        height: 50px;
+    }
+
+    .itemtable th {
+        text-align: center;
+    }
+
+    select #Product, #TaxId {
+        max-width: 500px;
+    }
+
+    .example-open .modal-backdrop {
+        background-color: transparent;
     }
 </style>
 
@@ -33,28 +53,33 @@
         <div class="panel panel-body">
             <div class="row">
                 <div class="form-group col-md-6">
+                    <label>Receipt  ID</label>
+                    @Html.EditorFor(model => model.receiptID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.receiptID, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
                     <label>Receipt Date</label>
                     @Html.TextBoxFor(m => m.receiptDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Payment Type</label>
                     @Html.DropDownList("accountLedgerId", null, htmlAttributes: new { @class = "form-control", @id = "accountLedgerId" })
-                    @Html.ValidationMessageFor(model => model.accountLedgerId, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.accountLedger, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Project</label>
-                    @Html.DropDownList("projectNameId", null, htmlAttributes: new { @class = "form-control", @id = "projectNameId" })
-                    @Html.ValidationMessageFor(model => model.siteDetails, "", new { @class = "text-danger" })
+                    @Html.DropDownList("siteNameId", null, htmlAttributes: new { @class = "form-control", @id = "projectNameId" })
+                    @Html.ValidationMessageFor(model => model.siteName.ProjectName, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Site Name</label>
-                    @Html.DropDownList("siteDetailsId", null, htmlAttributes: new { @class = "form-control", @id = "siteNameId" })
-                    @Html.ValidationMessageFor(model => model.siteDetailsId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("siteId", null, htmlAttributes: new { @class = "form-control", @id = "siteNameId" })
+                    @Html.ValidationMessageFor(model => model.siteId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Account Ledger Name</label>
-                    @Html.DropDownList("accountLedgerNameId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.accountLedger, "", new { @class = "text-danger" })
+                    @Html.DropDownList("LedgerId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LedgerId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-6">
                     <label>Given By</label>

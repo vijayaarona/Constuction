@@ -13,6 +13,7 @@
         border-top-color: #FF5F04;
         font-family: Calibri;
         font-size: 22px;
+        text-align: left;
     }
 
     .addNew {
@@ -23,26 +24,28 @@
         margin: 10px;
         border-radius: 3px;
         text-decoration: none;
+        text-align:left ;
     }
 
         .addNew:hover {
             text-decoration: none;
+            text-align: left;
         }
 </style>
 <div class="panel-group">
     <div class="panel panel-heading header">
         Account Ledger - Index Page
     </div>
-    <div class="panel panel-body" style="overflow:auto">
+    <div class="panel panel-body"  style="overflow:auto " >
         @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
-        <table class="table" id="AGMaster">
+        <table class="table" id="AGMaster" style="text-align:left">
             <thead>
                 <tr>
                     <th>
-                        <label>Account Ledger</label>
+                        <label>Account Ledger Name</label>
                     </th>
                     <th>
-                        <label>Account Group</label>
+                        <label>Account Group Name</label>
                     </th>
                     <th>
                         <label>Opening Balance</label>
@@ -54,13 +57,7 @@
                     <th>
                         <label>Created Date</label>
                     </th>
-                    <th>
-                        <label>Updated By</label>
-                    </th>
-                    <th>
-                        <label>Updated Date</label>
-                    </th>
-                    <th></th>
+                                      <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -83,12 +80,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.CreatedDate)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdateBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdatedDate)
-                    </td>
+                   
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |

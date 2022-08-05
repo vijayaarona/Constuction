@@ -271,7 +271,7 @@ namespace issConstructions.Controllers
             {
                 var res = db.purchaseRequest.Where(x => x.RequestID == purchaseRequestOrderId).FirstOrDefault();
                 var req = db.purchaseRequestTables.Where(x => x.purchaseRequestId == res.RequestID).ToList();
-                var result = new { res, req };
+                
                 int maxValue = 0;
                 var isnull = db.PurchaseOrders.Where(x => x.OrderId != null).ToList();
                 if (isnull.Count == 0)
@@ -284,10 +284,11 @@ namespace issConstructions.Controllers
                     maxValue += 1;
 
                 }
-
+               List<PurchaseRequestTable> list = new List<PurchaseRequestTable>();
                 foreach (var item in req)
                 {
                     PurchaseOrderTable newItm = new PurchaseOrderTable();
+                    PurchaseRequestTable repItem = new PurchaseRequestTable();
                     newItm.Amount = item.Amount;
                     newItm.Description = item.Description;
                     newItm.discountAmount = item.discountAmount;
@@ -299,11 +300,29 @@ namespace issConstructions.Controllers
                     newItm.TaxAmount = item.TaxAmount;
                     newItm.TotalAmount = item.TotalAmount;
                     newItm.purchaseRequestId = maxValue;
+                    
+                   
 
                     db.purchaseOrderTables.Add(newItm);
                     db.SaveChanges();
+                    repItem.Amount = item.Amount;
+                    repItem.Description = item.Description;
+                    repItem.discountAmount = item.discountAmount;
+                    repItem.discountPercent = item.discountPercent;
+                    repItem.productId = item.productId;
+                    repItem.Rate = item.Rate;
+                    repItem.Quantity = item.Quantity;
+                    repItem.Tax = item.Tax;
+                    repItem.TaxAmount = item.TaxAmount;
+                    repItem.TotalAmount = item.TotalAmount;
+                    repItem.ProductNo = item.ProductNo;
+                    repItem.Product = item.Product;
+                    repItem.purchaseRequestId = maxValue;
+                    repItem.ID = db.purchaseOrderTables.Max(x => x.ID);
+                    list.Add(repItem);
                 }
-
+                req = list;
+                var result = new { res, req };
                 return Json(result, JsonRequestBehavior.AllowGet);
 
             }
@@ -458,7 +477,7 @@ namespace issConstructions.Controllers
                     }
                     else
                     {
-                        var resp = db.purchaseRequestTables.Where(x => x.purchaseRequestId == inNo).ToList();
+                        var resp = db.purchaseOrderTables.Where(x => x.purchaseRequestId == inNo).ToList();
                         return Json(resp, JsonRequestBehavior.AllowGet);
                     }
 
