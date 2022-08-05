@@ -271,7 +271,7 @@
         //let inNo = $('#ProductNo').val();
         let productId = $('#Product').val();
         $.ajax({
-            url: '@Url.Content("~/PurchaseRequests/removePurchages")',
+            url: '@Url.Content("~/PurchaseOrders/removePurchages")',
             type: 'POST',
             dataType: 'json',
             data: { Id: item, InNo: productId },
