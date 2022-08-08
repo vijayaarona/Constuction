@@ -228,8 +228,11 @@
     {
 
         $("#TypeId").change(function () {
+            debugger
             var TypeName = $(this).find('option:selected').val();
             TypeId(TypeName);
+
+            ddl(TypeName);
         })
 
         $("#ProjectId").change(function () {
@@ -302,7 +305,23 @@
             }
         });
     };
-
+    function ddl(id)
+    {
+        debugger
+       $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Issues/ddl_change")',
+           dataType: 'json',
+           data: { a: id },
+                  success: function (result) {
+                 
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    };
+    
 
     function ProductVal(categoryName)
     {
@@ -379,7 +398,7 @@
     {
         debugger
         let list = {};
-        
+
          list.CategoryId = $('#Category').val();
          list.productId = $('#Product').val();
          list.productText = $('#Product option:selected').text();
