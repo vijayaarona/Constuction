@@ -170,7 +170,7 @@ namespace issConstructions.Controllers
 
             List<SelectListItem> Request = new List<SelectListItem>();
             Request.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.purchaseRequest.ToList())
+            foreach (var item in db.purchaseRequest.Where(x => x.Status == null).ToList())
             {
                 if (item.RequestID != 0)
                     Request.Add(new SelectListItem { Text = item.RequestID.ToString(), Value = item.RequestID.ToString() });
@@ -204,7 +204,9 @@ namespace issConstructions.Controllers
                 }
                 purchaseOrder.OrderId = invoiceNo;
                 db.PurchaseOrders.Add(purchaseOrder);
-
+                var puc = db.purchaseRequest.Where(x => x.RequestID == purchaseOrder.RequestID).FirstOrDefault();
+                puc.Status = "1";
+                db.Entry(puc).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -302,7 +304,8 @@ namespace issConstructions.Controllers
                         newItm.TaxAmount = item.TaxAmount;
                         newItm.TotalAmount = item.TotalAmount;
                         newItm.purchaseRequestId = maxValue;
-
+                        newItm.ProductNo = item.ProductNo;
+                        newItm.Product = item.Product;
                         db.purchaseOrderTables.Add(newItm);
                         db.SaveChanges();
                         repItem.Amount = item.Amount;
@@ -332,7 +335,7 @@ namespace issConstructions.Controllers
                         repItem.Description = item.Description;
                         repItem.discountAmount = item.discountAmount;
                         repItem.discountPercent = item.discountPercent;
-                        repItem.ID =item.ID;
+                        repItem.ID = item.ID;
                         repItem.Product = item.Product;
                         repItem.productId = item.productId;
                         repItem.ProductNo = item.ProductNo;
@@ -347,7 +350,7 @@ namespace issConstructions.Controllers
                     }
                     req = list;
                 }
-                
+
                 var result = new { res, req };
                 return Json(result, JsonRequestBehavior.AllowGet);
 
@@ -491,11 +494,11 @@ namespace issConstructions.Controllers
                 if (!string.IsNullOrEmpty(Id) && Id != "undefined")
                 {
                     int pId = int.Parse(Id);
-                    var p = db.purchaseOrderTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
-                    int inNo = p.productId;
+                    var p = db.purchaseOrderTables.Where(x => x.ID == pId).FirstOrDefault();
+                 
                     if (p != null)
                     {
-
+                        int inNo = p.productId;
                         db.purchaseOrderTables.Remove(p);
                         db.SaveChanges();
                         var resp = db.purchaseOrderTables.Where(x => x.purchaseRequestId == p.purchaseRequestId).ToList();
@@ -503,6 +506,7 @@ namespace issConstructions.Controllers
                     }
                     else
                     {
+                        int inNo = p.productId;
                         var resp = db.purchaseOrderTables.Where(x => x.purchaseRequestId == inNo).ToList();
                         return Json(resp, JsonRequestBehavior.AllowGet);
                     }
