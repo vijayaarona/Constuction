@@ -180,8 +180,8 @@ namespace issConstructions.Controllers
             List<SelectListItem> GName = new List<SelectListItem>();
             GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
             foreach (var item in db.godowns.ToList())
-            {
-                GName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
+           {
+               GName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
             }
             ViewBag.GNameId = GName;
 
@@ -468,11 +468,14 @@ namespace issConstructions.Controllers
             }
 
         }
+
+        
         [HttpPost]
         public JsonResult ddl_change(int a)
         {
             if (a == 3)
             {
+                
                 List<SelectListItem> GName = new List<SelectListItem>();
                 GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
                 foreach (var item in db.godowns.ToList())
@@ -481,13 +484,13 @@ namespace issConstructions.Controllers
                 }
                 ViewBag.GNameId = GName;
 
-                List<SelectListItem> SiteDetails = new List<SelectListItem>();
-                SiteDetails.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+                List<SelectListItem> SName = new List<SelectListItem>();
+                SName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
                 foreach (var item in db.siteDetails.ToList())
                 {
-                    SiteDetails.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
+                    SName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
                 }
-                ViewBag.SNameId = SiteDetails;
+                ViewBag.SNameId = SName;
             }
             else if (a == 4)
             {
@@ -499,13 +502,13 @@ namespace issConstructions.Controllers
                 }
                 ViewBag.GNameId = GName;
 
-                List<SelectListItem> SiteDetails = new List<SelectListItem>();
-                SiteDetails.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+                List<SelectListItem> SName = new List<SelectListItem>();
+                SName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
                 foreach (var item in db.siteDetails.ToList())
                 {
-                    SiteDetails.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
+                    SName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
                 }
-                ViewBag.SNameId = SiteDetails;
+                ViewBag.SNameId = SName;
             }
             else if (a == 5)
             {
@@ -517,13 +520,13 @@ namespace issConstructions.Controllers
                 }
                 ViewBag.GNameId = GName;
 
-                List<SelectListItem> SiteDetails = new List<SelectListItem>();
-                SiteDetails.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+                List<SelectListItem> SName = new List<SelectListItem>();
+                SName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
                 foreach (var item in db.godowns.ToList())
                 {
-                    SiteDetails.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
+                    SName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
                 }
-                ViewBag.SNameId = SiteDetails;
+                ViewBag.SNameId = SName;
             }
 
             return Json("data", JsonRequestBehavior.AllowGet);

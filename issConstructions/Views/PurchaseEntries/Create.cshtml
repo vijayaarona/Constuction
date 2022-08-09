@@ -436,27 +436,6 @@
                         </td>`
                               row += `</tr>`;
                               sNo++;
-
-
-                              //console.log(result.req);
-                              //var row = "";
-                              //if (result.req.length > 0) {
-                              //    for (var i = 0; i < result.req.length; i++) {
-                              //        row += "<tr>"
-                              //        row  += "<td>"+(i + 1)+"</td>"
-                              //        row  += "<td>" + result.req[i].Product.ProductName +"</td>"
-
-                              //      row  += "<td>" + result.req[i].Product.Tax +"</td>"
-                              //      row  += "<td>" + result.req[i].Description +"</td>"
-                              //      row  += "<td>" + result.req[i].Rate +"</td>"
-                              //      row  += "<td>" + result.req[i].Quantity +"</td>"
-                              //      row  += "<td>" + result.req[i].Amount +"</td>"
-                              //      row  += "<td>" + result.req[i].discountAmount +"</td>"
-                              //      row  += "<td>" + result.req[i].TaxAmount +"</td>"
-                              //      row  += "<td>" + result.req[i].TotalAmount +"</td>"
-                              //      row  += "<td></td>"
-                              //      row  += "</tr>";
-                              //    }
                               $('#tblpurchaserequest').append(row);
                           }
                       }
@@ -707,7 +686,7 @@
         //let inNo = $('#ProductNo').val();
         let productId = $('#Product').val();
         $.ajax({
-            url: '@Url.Content("~/PurchaseOrders/removePurchages")',
+            url: '@Url.Content("~/PurchaseEntries/removePurchages")',
             type: 'POST',
             dataType: 'json',
             data: { Id: item, InNo: productId },

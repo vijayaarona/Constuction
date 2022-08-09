@@ -305,6 +305,8 @@
             }
         });
     };
+
+   
     function ddl(id)
     {
         debugger
@@ -314,14 +316,14 @@
            dataType: 'json',
            data: { a: id },
                   success: function (result) {
-                 
+
             },
             error: function (err) {
                 console.log(err);
             }
         });
     };
-    
+
 
     function ProductVal(categoryName)
     {
@@ -373,7 +375,8 @@
     };
 
       function TypeId(TypeName)
-    {
+      {
+          debugger
               $.ajax({
             type: 'POST',
             url: '@Url.Content("~/Issues/TypeId")',
