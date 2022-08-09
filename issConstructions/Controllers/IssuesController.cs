@@ -176,22 +176,11 @@ namespace issConstructions.Controllers
                 SiteAddress.Add(new SelectListItem { Text = item.SiteAddress.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteAddressId = SiteAddress;
-
-            List<SelectListItem> GName = new List<SelectListItem>();
-            GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.godowns.ToList())
-           {
-               GName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
-            }
-            ViewBag.GNameId = GName;
-
-            List<SelectListItem> SiteDetails = new List<SelectListItem>();
-            SiteDetails.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.siteDetails.ToList())
-            {
-                SiteDetails.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
-            }
-            ViewBag.SNameId = SiteDetails;
+            List<ddlLocations> ddl = new List<ddlLocations>();
+            ddlLocations ddlLocations = new ddlLocations();
+            ddlLocations.text = "----Please Select----";
+            ddl.Add(ddlLocations);
+            ViewBag.location = ddl;
             return View();
 
             //Tax
@@ -473,63 +462,44 @@ namespace issConstructions.Controllers
         [HttpPost]
         public JsonResult ddl_change(int a)
         {
+            List<ddlLocations> lstGodown = new List<ddlLocations>();
+            List<ddlLocations> lstSite = new List<ddlLocations>();
+            var godwn = db.godowns.ToList();
+            var site = db.siteDetails.ToList();
             if (a == 3)
             {
-                
-                List<SelectListItem> GName = new List<SelectListItem>();
-                GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-                foreach (var item in db.godowns.ToList())
+                foreach (var item in godwn)
                 {
-                    GName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
-                }
-                ViewBag.GNameId = GName;
-
-                List<SelectListItem> SName = new List<SelectListItem>();
-                SName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-                foreach (var item in db.siteDetails.ToList())
+                    ddlLocations newItem = new ddlLocations();
+                    newItem.value = item.Id;
+                    newItem.text = item.godownName;
+                    lstGodown.Add(newItem);
+                } 
+                foreach (var item in site)
                 {
-                    SName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
+                    ddlLocations newItem = new ddlLocations();
+                    newItem.value = item.ID;
+                    newItem.text = item.SiteName;
+                    lstSite.Add(newItem);
                 }
-                ViewBag.SNameId = SName;
+               
             }
             else if (a == 4)
             {
-                List<SelectListItem> GName = new List<SelectListItem>();
-                GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-                foreach (var item in db.siteDetails.ToList())
-                {
-                    GName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
-                }
-                ViewBag.GNameId = GName;
-
-                List<SelectListItem> SName = new List<SelectListItem>();
-                SName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-                foreach (var item in db.siteDetails.ToList())
-                {
-                    SName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
-                }
-                ViewBag.SNameId = SName;
+                
             }
             else if (a == 5)
             {
-                List<SelectListItem> GName = new List<SelectListItem>();
-                GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-                foreach (var item in db.siteDetails.ToList())
-                {
-                    GName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
-                }
-                ViewBag.GNameId = GName;
-
-                List<SelectListItem> SName = new List<SelectListItem>();
-                SName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-                foreach (var item in db.godowns.ToList())
-                {
-                    SName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
-                }
-                ViewBag.SNameId = SName;
+               
             }
-
-            return Json("data", JsonRequestBehavior.AllowGet);
+            var result = new { lstGodown, lstSite };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
+    }
+
+    public class ddlLocations
+    {
+        public int value { get; set; }
+        public string text { get; set; }
     }
 }

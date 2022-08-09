@@ -199,7 +199,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-save="modal" id="btnSave" data-dismiss="modal">Add</button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancel()">Close</button>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -632,7 +632,10 @@
             {
                 var row = `<tr id=rm${sNo}>`
                     + `<td>${sNo}</td>`
-                    + `<td>${lstItems[i].productText}</td>`
+                if (lstItems[i].productText != undefined) { + `<td>${lstItems[i].productText}</td>` }
+                else {
+                   + `<td>${result.req[i].Product.ProductName}</td>`
+                    }
                     + `<td>${lstItems[i].Tax}</td>`
                     + `<td>${lstItems[i].Description}</td>`
                     + `<td>${lstItems[i].Rate}</td>`

@@ -12,7 +12,7 @@ using issDomain.Models;
 
 namespace issConstructions.Controllers
 {
-   // [CustomAuthorize(Roles = "Admin,Manager")]
+    // [CustomAuthorize(Roles = "Admin,Manager")]
     public class PurchaseEntriesController : Controller
     {
         private issDB db = new issDB();
@@ -209,7 +209,7 @@ namespace issConstructions.Controllers
                 }
                 purchaseEntry.purchaseId = invoiceNo;
                 db.purchaseEntries.Add(purchaseEntry);
-                var OrderId = db.purchaseEntries.Where(x => x.OrderId==null).ToList();
+                var OrderId = db.purchaseEntries.Where(x => x.OrderId == null).ToList();
 
                 if (OrderId != null && OrderId.Count > 0)
                 {
@@ -218,10 +218,13 @@ namespace issConstructions.Controllers
                     puc.Status = "1";
                     db.Entry(puc).State = EntityState.Modified;
                 }
-                    db.SaveChanges();
-                     return RedirectToAction("Index");
+                //tblStock tblStock = new tblStock();
+                //tblStock.categoryId = purchaseEntry.CategoryId;
+                //db.tblStocks.Add(tblStock);
+                db.SaveChanges();
+                return RedirectToAction("Index");
 
-                   
+
             }
             catch (Exception ex)
             {
@@ -255,7 +258,7 @@ namespace issConstructions.Controllers
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", purchaseEntry.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", purchaseEntry.SiteAddressId);
             ViewBag.OrderId = new SelectList(db.PurchaseOrders, "ID", "SiteAddress", purchaseEntry.OrderId);
-            
+
             return View(purchaseEntry);
         }
         [HttpPost]
@@ -267,7 +270,7 @@ namespace issConstructions.Controllers
                 var req = db.purchaseOrderTables.Where(x => x.purchaseRequestId == res.OrderId).ToList();
 
                 int maxValue = 0;
-                var isnull = db.purchaseEntries.Where(x => x.purchaseId!= null).ToList();
+                var isnull = db.purchaseEntries.Where(x => x.purchaseId != null).ToList();
                 if (isnull.Count == 0)
                 {
                     maxValue = 1;
@@ -362,7 +365,7 @@ namespace issConstructions.Controllers
                 purchaseEntry.CreatedDate = DateTime.UtcNow;
                 purchaseEntry.UpdatedDate = DateTime.UtcNow;
                 db.Entry(purchaseEntry).State = EntityState.Modified;
-                purchaseEntry.purchaseId  = purchaseEntry.purchaseId;
+                purchaseEntry.purchaseId = purchaseEntry.purchaseId;
 
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -432,7 +435,7 @@ namespace issConstructions.Controllers
 
                 }
 
-                
+
                 purchaseEntryTable.purchaseRequestId = maxValue;
                 purchaseEntryTable.CreatedDate = DateTime.UtcNow;
                 purchaseEntryTable.UpdatedDate = DateTime.UtcNow;
