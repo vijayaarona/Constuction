@@ -126,7 +126,7 @@ namespace issConstructions.Controllers
 
             List<SelectListItem> order = new List<SelectListItem>();
             order.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.PurchaseOrders.ToList())
+            foreach (var item in db.PurchaseOrders.Where(x => x.Status == null).ToList())
             {
                 if (item.OrderId != 0)
                     order.Add(new SelectListItem { Text = item.OrderId.ToString(), Value = item.OrderId.ToString() });
@@ -209,9 +209,19 @@ namespace issConstructions.Controllers
                 }
                 purchaseEntry.purchaseId = invoiceNo;
                 db.purchaseEntries.Add(purchaseEntry);
+                var OrderId = db.purchaseEntries.Where(x => x.OrderId==null).ToList();
 
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (OrderId != null && OrderId.Count > 0)
+                {
+
+                    var puc = db.PurchaseOrders.Where(x => x.OrderId == purchaseEntry.OrderId).FirstOrDefault();
+                    puc.Status = "1";
+                    db.Entry(puc).State = EntityState.Modified;
+                }
+                    db.SaveChanges();
+                     return RedirectToAction("Index");
+
+                   
             }
             catch (Exception ex)
             {
@@ -255,10 +265,9 @@ namespace issConstructions.Controllers
             {
                 var res = db.PurchaseOrders.Where(x => x.OrderId == purchaseRequestOrderId).FirstOrDefault();
                 var req = db.purchaseOrderTables.Where(x => x.purchaseRequestId == res.OrderId).ToList();
-                var result = new { res, req };
 
                 int maxValue = 0;
-                var isnull = db.purchaseEntries.Where(x => x.purchaseId != null).ToList();
+                var isnull = db.purchaseEntries.Where(x => x.purchaseId!= null).ToList();
                 if (isnull.Count == 0)
                 {
                     maxValue = 1;
@@ -267,28 +276,76 @@ namespace issConstructions.Controllers
                 {
                     maxValue = db.purchaseEntries.Max(x => x.purchaseId);
                     maxValue += 1;
-
                 }
-
-                foreach (var item in req)
+                List<PurchaseOrderTable> list = new List<PurchaseOrderTable>();
+                var itemTable = db.purchaseEntryTables.Where(x => x.purchaseRequestId == res.OrderId).ToList();
+                if (itemTable.Count == 0)
                 {
-                    PurchaseEntryTable newItm = new PurchaseEntryTable();
-                    newItm.Amount = item.Amount;
-                    newItm.Description = item.Description;
-                    newItm.discountAmount = item.discountAmount;
-                    newItm.discountPercent = item.discountPercent;
-                    newItm.productId = item.productId;
-                    newItm.Rate = item.Rate;
-                    newItm.Quantity = item.Quantity;
-                    newItm.Tax = item.Tax;
-                    newItm.TaxAmount = item.TaxAmount;
-                    newItm.TotalAmount = item.TotalAmount;
-                    newItm.purchaseRequestId = maxValue;
-
-                    db.purchaseEntryTables.Add(newItm);
-                    db.SaveChanges();
+                    foreach (var item in req)
+                    {
+                        PurchaseEntryTable newItm = new PurchaseEntryTable();
+                        PurchaseOrderTable repItem = new PurchaseOrderTable();
+                        newItm.Amount = item.Amount;
+                        newItm.Description = item.Description;
+                        newItm.discountAmount = item.discountAmount;
+                        newItm.discountPercent = item.discountPercent;
+                        newItm.productId = item.productId;
+                        newItm.Rate = item.Rate;
+                        newItm.Quantity = item.Quantity;
+                        newItm.Tax = item.Tax;
+                        newItm.TaxAmount = item.TaxAmount;
+                        newItm.TotalAmount = item.TotalAmount;
+                        newItm.purchaseRequestId = maxValue;
+                        newItm.ProductNo = item.ProductNo;
+                        newItm.Product = item.Product;
+                        db.purchaseEntryTables.Add(newItm);
+                        db.SaveChanges();
+                        repItem.Amount = item.Amount;
+                        repItem.Description = item.Description;
+                        repItem.discountAmount = item.discountAmount;
+                        repItem.discountPercent = item.discountPercent;
+                        repItem.productId = item.productId;
+                        repItem.Rate = item.Rate;
+                        repItem.Quantity = item.Quantity;
+                        repItem.Tax = item.Tax;
+                        repItem.TaxAmount = item.TaxAmount;
+                        repItem.TotalAmount = item.TotalAmount;
+                        repItem.ProductNo = item.ProductNo;
+                        repItem.Product = item.Product;
+                        repItem.purchaseRequestId = maxValue;
+                        repItem.ID = db.purchaseEntryTables.Max(x => x.ID);
+                        list.Add(repItem);
+                    }
                 }
+                else
+                {
+                    foreach (var item in itemTable)
+                    {
+                        PurchaseOrderTable repItem = new PurchaseOrderTable();
+                        repItem.Amount = item.Amount;
+                        repItem.CreatedDate = item.CreatedDate;
+                        repItem.Description = item.Description;
+                        repItem.discountAmount = item.discountAmount;
+                        repItem.discountPercent = item.discountPercent;
+                        repItem.ID = item.ID;
+                        repItem.Product = item.Product;
+                        repItem.productId = item.productId;
+                        repItem.ProductNo = item.ProductNo;
+                        repItem.purchaseRequestId = item.purchaseRequestId;
+                        repItem.Quantity = item.Quantity;
+                        repItem.Rate = item.Rate;
+                        repItem.Tax = item.Tax;
+                        repItem.TaxAmount = item.TaxAmount;
+                        repItem.TotalAmount = item.TotalAmount;
+                        repItem.UpdateBy = item.UpdateBy;
+                        list.Add(repItem);
+                    }
+                    req = list;
+                }
+
+                var result = new { res, req };
                 return Json(result, JsonRequestBehavior.AllowGet);
+
             }
             else return Json("NoData", JsonRequestBehavior.AllowGet);
         }
@@ -396,30 +453,32 @@ namespace issConstructions.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult removePurchages(string Id, int? InNo)
+        public JsonResult removePurchages(string Id)
         {
             try
             {
-                if (!string.IsNullOrEmpty(Id))
+                if (!string.IsNullOrEmpty(Id) && Id != "undefined")
                 {
                     int pId = int.Parse(Id);
-                    var p = db.purchaseEntryTables.Where(x => x.ID == pId && x.isDeleted == false).FirstOrDefault();
-                    int inNo = p.productId;
+                    var p = db.purchaseEntryTables.Where(x => x.ID == pId).FirstOrDefault();
+
                     if (p != null)
                     {
-
+                        int inNo = p.productId;
                         db.purchaseEntryTables.Remove(p);
                         db.SaveChanges();
-                        var resp = db.purchaseEntryTables.Where(x => x.productId == inNo && x.isDeleted == false).ToList();
+                        var resp = db.purchaseEntryTables.Where(x => x.purchaseRequestId == p.purchaseRequestId).ToList();
                         return Json(resp, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
+                        int inNo = p.productId;
                         var resp = db.purchaseEntryTables.Where(x => x.purchaseRequestId == inNo).ToList();
                         return Json(resp, JsonRequestBehavior.AllowGet);
                     }
 
                 }
+
             }
             catch (Exception ex)
             {

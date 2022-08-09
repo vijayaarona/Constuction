@@ -119,7 +119,7 @@
                         <th>Quantity</th>
                         <th>Unit Price</th>
                         <th>Amount</th>
-                        <th>Actions</th>
+                       
                     </tr>
                 </thead>
                 <tbody id="tblRateWorkRequest"></tbody>
@@ -171,6 +171,7 @@
                                 list.quantity = result[i].quantity;
                                 list.unitPrice = result[i].unitPrice;
                                 list.amount = result[i].amount;
+                                //list.UmoId = result[i].Umo.Uom;
                                 
                                 list.sNo = sNo;
                                 lstItems.push(list);
@@ -184,12 +185,12 @@
                                 row += `<td>${result[i].quantity}</td>`
                                 row += `<td>${result[i].unitPrice}</td>`
                                 row += `<td>${result[i].amount}</td>`
-                               // row += `<td>${result[i].UmoId.Uom}u</td>`
+                               // row += `<td>${result[i].Umo.Umo}u</td>`
 
-                                row += `<td>
+                        //        row += `<td>
 
-                        <button type="button" class="btn btn-default" onclick="removeTR('${result[i].ID}')">Remove</button>
-                        </td>`
+                        //<button type="button" class="btn btn-default" onclick="removeTR('${result[i].ID}')">Remove</button>
+                        //</td>`
                                 row +=     `</tr>`;
                                 sNo++;
                                 $('#tblRateWorkRequest').append(row);

@@ -204,9 +204,14 @@ namespace issConstructions.Controllers
                 }
                 purchaseOrder.OrderId = invoiceNo;
                 db.PurchaseOrders.Add(purchaseOrder);
-                var puc = db.purchaseRequest.Where(x => x.RequestID == purchaseOrder.RequestID).FirstOrDefault();
-                puc.Status = "1";
-                db.Entry(puc).State = EntityState.Modified;
+                var Request = db.PurchaseOrders.Where(x => x.RequestID== null).ToList();
+
+                if (Request != null && Request.Count > 0)
+                {
+                    var puc = db.purchaseRequest.Where(x => x.RequestID == purchaseOrder.RequestID).FirstOrDefault();
+                    puc.Status = "1";
+                    db.Entry(puc).State = EntityState.Modified;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
