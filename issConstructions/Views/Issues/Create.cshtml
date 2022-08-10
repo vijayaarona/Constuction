@@ -67,7 +67,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label>From Location</label>
-                    <select class="form-control" id="ddlFromLcation">
+                    <select class="form-control" id="ddlFromLcation" name="GNameId">
                         @for (int i = 0; i < ViewBag.location.Count; i++)
                         {
                             <option value='@ViewBag.location[i].value'>@ViewBag.location[i].text</option>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label>To Location</label>
-                    <select class="form-control" id="ddlToLocation">
+                    <select class="form-control" id="ddlToLocation" name="SiteId">
                         @for (int i = 0; i < ViewBag.location.Count; i++)
                         {
                             <option value='@ViewBag.location[i].value'>@ViewBag.location[i].text</option>
