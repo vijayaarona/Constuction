@@ -15,7 +15,7 @@ namespace issDomain.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? IssuesDate { get; set; }
         public int SNameId { get; set; }
-        public virtual SiteDetails SName { get; set; }
+       // public virtual SiteDetails SName { get; set; }
         public int SiteId { get; set; }
         public int SiteNameId { get; set; }
         public int SiteAddressId { get; set; }
@@ -30,7 +30,8 @@ namespace issDomain.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? UpdatedDate { get; set; }
         public int GNameId { get; set; }
-        public virtual Godown GName { get; set; }
+
+      //  public virtual Godown GName { get; set; }
         public int TypeId { get; set; }
         public  virtual TblType Type { get; set; }
         public int ProductNo { get; set; }
