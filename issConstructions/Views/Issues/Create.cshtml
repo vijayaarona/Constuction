@@ -67,14 +67,14 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label>From Location</label>
-                    <select class = "form-control" id="ddlFromLcation">
+                    <select class="form-control" id="ddlFromLcation">
                         @for (int i = 0; i < ViewBag.location.Count; i++)
                         {
                             <option value='@ViewBag.location[i].value'>@ViewBag.location[i].text</option>
+                            
                         }
+
                     </select>
-                    @*@Html.DropDownList("GNameId", null, htmlAttributes: new { @class = "form-control", @id = "GNameId" })
-                        @Html.ValidationMessageFor(model => model.GNameId, "", new { @class = "text-danger" })*@
                 </div>
                 <div class="form-group col-md-6">
                     <label>To Location</label>
@@ -84,8 +84,6 @@
                             <option value='@ViewBag.location[i].value'>@ViewBag.location[i].text</option>
                         }
                     </select>
-                    @*@Html.DropDownList("SNameId", null, htmlAttributes: new { @class = "form-control", @id = "SiteNameId" })
-        @Html.ValidationMessageFor(model => model.SNameId, "", new { @class = "text-danger" })*@
                 </div>
 
                 <div class="form-group col-md-6">
@@ -338,10 +336,12 @@
                    for (var i = 0; i < result.lstGodown.length; i++) {
                        // ddlFromLcation
                        frmLcation += `<option value=${result.lstGodown[i].value}>${result.lstGodown[i].text}</option>`;
+                        
                    }
                    for (var j = 0; j < result.lstSite.length; j++) {
-                       // ddlFromLcation
+                       // ddltoLcation
                        toLcation += `<option value=${result.lstSite[j].value}>${result.lstSite[j].text}</option>`;
+                        
                    }
                    $('#ddlFromLcation').append(frmLcation);
                    $('#ddlToLocation').append(toLcation);

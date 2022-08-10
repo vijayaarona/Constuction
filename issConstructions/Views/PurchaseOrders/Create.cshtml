@@ -631,12 +631,13 @@
             for (var i = 0; i < lstItems.length; i++)
             {
                 var row = `<tr id=rm${sNo}>`
-                    + `<td>${sNo}</td>`
-                if (lstItems[i].productText != undefined) { + `<td>${lstItems[i].productText}</td>` }
-                else {
-                   + `<td>${result.req[i].Product.ProductName}</td>`
-                    }
+                //    + `<td>${sNo}</td>`
+                //if (lstItems[i].productText != undefined) { + `<td>${lstItems[i].productText}</td>` }
+                //else {
+                //   + `<td>${result.req[i].Product.ProductName}</td>`
+                //    }
                     + `<td>${lstItems[i].Tax}</td>`
+                    + `<td>${lstItems[i].productText}</td>`
                     + `<td>${lstItems[i].Description}</td>`
                     + `<td>${lstItems[i].Rate}</td>`
                     + `<td>${lstItems[i].Quantity}</td>`

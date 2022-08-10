@@ -20,7 +20,7 @@ namespace issConstructions.Controllers
         public ActionResult Index()
         {
 
-            var issues = db.issues.Include(p => p.GName).Include(p => p.SiteName);
+            var issues = db.issues.Include(p => p.SiteName).Include(p => p.SiteName);
             return View(issues.Where(x => x.isDeleted == false).ToList().OrderByDescending(x => x.ID));
 
         }
@@ -39,23 +39,23 @@ namespace issConstructions.Controllers
                 return HttpNotFound();
             }
 
-            //From Location
-            List<SelectListItem> GName = new List<SelectListItem>();
-            GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.godowns.ToList())
-            {
-                GName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
-            }
-            ViewBag.GNameId = GName;
+            ////From Location
+            //List<SelectListItem> GName = new List<SelectListItem>();
+            //GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            //foreach (var item in db.godowns.ToList())
+            //{
+            //    GName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
+            //}
+            //ViewBag.GNameId = GName;
 
             //To Location
-            List<SelectListItem> SName = new List<SelectListItem>();
-            SName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.siteDetails.ToList())
-            {
-                SName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
-            }
-            ViewBag.SNameId = SName;
+            //List<SelectListItem> SName = new List<SelectListItem>();
+            //SName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            //foreach (var item in db.siteDetails.ToList())
+            //{
+            //    SName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
+            //}
+            //ViewBag.SNameId = SName;
 
             //Project
             List<SelectListItem> Project = new List<SelectListItem>();
@@ -238,13 +238,14 @@ namespace issConstructions.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index", issues.IssueID);
             }
+
             catch (Exception ex)
             {
 
 
                 ViewBag.TypeId = new SelectList(db.tblTypes, "Id", "TypeName", issues.TypeId);
-                ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
-                ViewBag.SNameId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SNameId);
+               // ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
+                //ViewBag.SNameId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SNameId);
                 ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SiteNameId);
                 ViewBag.ProductId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.ProductNo);
                 ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SiteId);
@@ -304,9 +305,9 @@ namespace issConstructions.Controllers
                 return HttpNotFound();
             }
             ViewBag.TypeId = new SelectList(db.tblTypes, "Id", "TypeName", issues.TypeId);
-            ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
+           // ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
             ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SiteNameId);
-            ViewBag.SNameId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SNameId);
+           // ViewBag.SNameId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SNameId);
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", issues.SiteAddressId);
             return View(issues);
@@ -486,11 +487,39 @@ namespace issConstructions.Controllers
             }
             else if (a == 4)
             {
-                
+                foreach (var item in site)
+                {
+                    ddlLocations newItem = new ddlLocations();
+                    newItem.value = item.ID ;
+                    newItem.text = item.SiteName;
+                    lstGodown.Add(newItem);
+                }
+                foreach (var item in site)
+                {
+                    ddlLocations newItem = new ddlLocations();
+                    newItem.value = item.ID;
+                    newItem.text = item.SiteName;
+                    lstSite.Add(newItem);
+                }
             }
             else if (a == 5)
             {
-               
+
+                foreach (var item in site )
+                {
+                    ddlLocations newItem = new ddlLocations();
+                    newItem.value = item.ID;
+                    newItem.text = item.SiteName;
+                    lstGodown.Add(newItem);
+                }
+                foreach (var item in godwn)
+                {
+                    ddlLocations newItem = new ddlLocations();
+                    newItem.value = item.Id;
+                    newItem.text = item.godownName;
+                    lstSite.Add(newItem);
+                }
+
             }
             var result = new { lstGodown, lstSite };
             return Json(result, JsonRequestBehavior.AllowGet);

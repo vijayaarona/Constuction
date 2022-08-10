@@ -315,6 +315,10 @@
     <Compile Include="Migrations\202208050633433_ConM34.Designer.cs">
       <DependentUpon>202208050633433_ConM34.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208101608314_ConM341.cs" />
+    <Compile Include="Migrations\202208101608314_ConM341.Designer.cs">
+      <DependentUpon>202208101608314_ConM341.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -633,6 +637,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208050633433_ConM34.resx">
       <DependentUpon>202208050633433_ConM34.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208101608314_ConM341.resx">
+      <DependentUpon>202208101608314_ConM341.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

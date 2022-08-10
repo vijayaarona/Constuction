@@ -208,6 +208,7 @@ namespace issConstructions.Controllers
                     }
                 }
                 purchaseEntry.purchaseId = invoiceNo;
+
                 db.purchaseEntries.Add(purchaseEntry);
                 var OrderId = db.purchaseEntries.Where(x => x.OrderId == null).ToList();
 
@@ -218,9 +219,9 @@ namespace issConstructions.Controllers
                     puc.Status = "1";
                     db.Entry(puc).State = EntityState.Modified;
                 }
-                //tblStock tblStock = new tblStock();
-                //tblStock.categoryId = purchaseEntry.CategoryId;
-                //db.tblStocks.Add(tblStock);
+                // tblStock tblStock = new tblStock();
+                // tblStock.categoryId = purchaseEntry.CategoryId;
+                // db.tblStocks.Add(tblStock);
                 db.SaveChanges();
                 return RedirectToAction("Index");
 
@@ -441,8 +442,43 @@ namespace issConstructions.Controllers
                 purchaseEntryTable.UpdatedDate = DateTime.UtcNow;
                 purchaseEntryTable.UpdateBy = Display.Name;
 
-
                 db.purchaseEntryTables.Add(purchaseEntryTable);
+                PurchaseEntry purchaseentry = new PurchaseEntry();
+
+
+                //var purtype = db.purchaseEntries.Where(x => x.PurType == ptype).ToList();
+                //if (ptype ==)
+
+                //if (purtype != null && purtype.Count > 0)
+                //{
+
+                //    var puc = db.PurchaseOrders.Where(x => x.OrderId == purchaseEntryOrderId).FirstOrDefault();
+                //    puc.Status = "1";
+                //    db.Entry(puc).State = EntityState.Modified;
+                //}
+                if (purchaseentry.PurType == "")
+                {
+                    var items = db.purchaseEntryTables.Where(x => x.purchaseRequestId == maxValue).ToList();
+                    if (items.Count > 0)
+                    {
+                        foreach (var row in items)
+                        {
+                            tblStock tblStock = new tblStock();
+                            tblStock.categoryId = purchaseentry.CategoryId;
+                            tblStock.productId = purchaseEntryTable.productId;
+                            tblStock.quantity = purchaseEntryTable.Quantity;
+                            tblStock.rate = purchaseEntryTable.Rate;
+                            tblStock.CreatedDate = purchaseEntryTable.CreatedDate;
+                            tblStock.UpdateBy = purchaseEntryTable.UpdateBy;
+                            tblStock.UpdatedDate = purchaseEntryTable.UpdatedDate;
+
+                            db.tblStocks.Add(tblStock);
+                            db.SaveChanges();
+                        }
+                    }
+                    
+                }
+
                 db.SaveChanges();
 
                 var id = db.purchaseEntryTables.OrderByDescending(x => x.CreatedDate).FirstOrDefault();
