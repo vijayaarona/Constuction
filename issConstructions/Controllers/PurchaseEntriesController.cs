@@ -445,8 +445,7 @@ namespace issConstructions.Controllers
                 db.purchaseEntryTables.Add(purchaseEntryTable);
                 PurchaseEntry purchaseentry = new PurchaseEntry();
 
-
-                //var purtype = db.purchaseEntries.Where(x => x.PurType == ptype).ToList();
+              // var Ptype = ('#Purchasetype').text();
                 //if (ptype ==)
 
                 //if (purtype != null && purtype.Count > 0)
@@ -457,6 +456,7 @@ namespace issConstructions.Controllers
                 //    db.Entry(puc).State = EntityState.Modified;
                 //}
                 if (purchaseentry.PurType == "")
+                
                 {
                     var items = db.purchaseEntryTables.Where(x => x.purchaseRequestId == maxValue).ToList();
                     if (items.Count > 0)

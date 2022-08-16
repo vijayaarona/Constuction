@@ -16,17 +16,57 @@
         color: white;
         float: right;
         margin: 10px;
-        border-radius: 3px;
+        border-radius: 10px;
         text-decoration: none;
     }
 
         .addNew:hover {
             text-decoration: none;
         }
+
+    table td {
+        font-size: 13px;
+    }
+
+    table th {
+        font-size: 13px;
+    }
+</style>
+<style>
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    .addNew {
+        padding: 5px;
+        background-color: #FF5F04;
+        color: white;
+        float: right;
+        margin: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+    }
+
+        .addNew:hover {
+            text-decoration: none;
+        }
+
+    table td {
+        font-size: 13px;
+    }
+
+    table th {
+        font-size: 13px;
+    }
 </style>
 <div class="panel-group">
     <div class="panel panel-heading header">
-        Tool - Index Page
+        Tools Transfer - Index Page
     </div>
     <div class="panel panel-body" style="overflow:auto">
         @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
@@ -61,43 +101,34 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FLocation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TLocation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ToolsName.ToolsName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.qty)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AuthPerson)
-                    </td>
-                    @*<td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdateBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedDate)
-        </td>*@
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GodownId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SNameId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tools.ToolsName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.qty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AuthPerson)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
 
                 }
             </tbody>
