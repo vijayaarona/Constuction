@@ -219,9 +219,17 @@ namespace issConstructions.Controllers
                     puc.Status = "1";
                     db.Entry(puc).State = EntityState.Modified;
                 }
-                // tblStock tblStock = new tblStock();
-                // tblStock.categoryId = purchaseEntry.CategoryId;
-                // db.tblStocks.Add(tblStock);
+
+                if (purchaseEntry.PurType== "1")
+                {
+                    tblStock tblStock = new tblStock();
+                    tblStock.categoryId = purchaseEntry.CategoryId;
+                    tblStock.rate = purchaseEntry;
+                    tblStock.productId = purchaseEntry.ProductNo;
+                    tblStock.productId = purchaseEntry.ProductNo;
+                    db.tblStocks.Add(tblStock);
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
 
