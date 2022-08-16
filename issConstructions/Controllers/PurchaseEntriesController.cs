@@ -224,7 +224,7 @@ namespace issConstructions.Controllers
                 {
                     tblStock tblStock = new tblStock();
                     tblStock.categoryId = purchaseEntry.CategoryId;
-                    tblStock.rate = purchaseEntry;
+                    tblStock.rate = purchaseEntry.NetAmount;
                     tblStock.productId = purchaseEntry.ProductNo;
                     tblStock.productId = purchaseEntry.ProductNo;
                     db.tblStocks.Add(tblStock);
