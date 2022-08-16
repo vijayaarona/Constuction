@@ -57,8 +57,10 @@
                     <th>
                         <label>Issue Date</label>
                     </th>
+                    <th>
+                        <label>Issue Type</label>
+                    </th>
 
-                   
                     <th>
                         <label>Project Name</label>
                     </th>
@@ -68,7 +70,7 @@
                     <th>
                         <label>Amount</label>
                     </th>
-                    
+
                     <th>Action</th>
                 </tr>
             </thead>
@@ -90,10 +92,12 @@
                         <td></td>
                     }
 
-                   
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type.TypeName)
+                    </td>
 
                     <td>
-                        @Html.DisplayFor(modelItem => item.SiteName.ProjectName) 
+                        @Html.DisplayFor(modelItem => item.SiteName.ProjectName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SiteName.SiteName)
@@ -101,7 +105,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.netAmount)
                     </td>
-                    
+
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |

@@ -22,11 +22,30 @@
     input, select, textarea {
         max-width: 500px;
     }
+
+    th, td {
+        border: 1px solid black;
+        text-align: center;
+        height: 50px;
+    }
+
+    .itemtable th {
+        text-align: center;
+    }
+
+    select #Product, #TaxId {
+        max-width: 500px;
+    }
+
+    .example-open .modal-backdrop {
+        background-color: transparent;
+    }
 </style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 @using (Html.BeginForm())
 {
@@ -46,11 +65,30 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label>Transfer Type</label>
-                    <select class="form-control" id="TypeId" name="UOM">
-                        <option>Godown To Site</option>
-                        <option>Site To Site</option>
-                        <option>Site To Godown</option>
+                    <label> Transfer Type</label>
+                    @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="form-group col-md-6">
+                    <label>From Location</label>
+                    <select class="form-control" id="ddlFromLcation" name="GNameId">
+                        @for (int i = 0; i < ViewBag.location.Count; i++)
+                        {
+                            <option value='@ViewBag.location[i].value'>@ViewBag.location[i].text</option>
+
+                        }
+
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>To Location</label>
+                    <select class="form-control" id="ddlToLocation" name="SNameId">
+                        @for (int i = 0; i < ViewBag.location.Count; i++)
+                        {
+                            <option value='@ViewBag.location[i].value'>@ViewBag.location[i].text</option>
+                        }
                     </select>
                 </div>
                 <div class="form-group col-md-6">
@@ -59,7 +97,7 @@
                     @Html.ValidationMessageFor(model => model.ToolsId, "", new { @class = "text-danger" })
                 </div>
 
-               
+
                 <div class="form-group col-md-6">
                     <label>Quantity</label>
                     @Html.EditorFor(model => model.qty, new { htmlAttributes = new { @class = "form-control" } })
@@ -72,13 +110,13 @@
                     @Html.ValidationMessageFor(model => model.AuthPerson, "", new { @class = "text-danger" })
                 </div>
             </div>
-                <div class="form-group" style="float:right">
+            <div class="form-group" style="float:right">
 
-                    <input type="submit" value="Submit" class="btn btn-default" />
-                    @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+                <input type="submit" value="Submit" class="btn btn-default" />
+                @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
 
-                </div>
             </div>
+        </div>
     </div>
 
 
@@ -88,29 +126,59 @@
     @Scripts.Render("~/bundles/jqueryval")
 
 }
-@*<script>
-
-    $(document).ready(function () {
-
+<script>
+    let sNo = 1;
+    var lstItems = [];
+    var ntAmt;
+    $(document).ready(function ()
+    {
 
         $("#TypeId").change(function () {
-            var FromId = $(this).find('option:selected').val();
-            FLocationId(FromId);
-        });
+            debugger
+            var TypeName = $(this).find('option:selected').val();
+            TypeId(TypeName);
+
+            ddl(TypeName);
+        })
+
     });
 
-          function FLocationId(FromId)
+    $('#myModal').on('show.bs.modal', function (e) {
+        $('body').addClass("example-open");
+    }).on('hide.bs.modal', function (e) {
+        $('body').removeClass("example-open");
+    });
+
+
+    function ddl(id)
     {
-              $.ajax({
-                  type: 'POST',
+        debugger
+       $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/ToolsTransfers/ddl_change")',
+           dataType: 'json',
+           data: { a: id },
+           success: function (result) {
+               console.log(result);
+               $('#ddlFromLcation').empty();
+               $('#ddlToLocation').empty();
+               if (result) {
+                   var frmLcation = "<option value=0>---Please select ----";
+                   var toLcation = "<option value=0>---Please select ----";
 
-            url: '@Url.Content("~/ToolsTransfers/FLocId")',
-            dataType: 'json',
-                  data: { From_Id: FromId },
-                  success: function (result)
-                  {
+                   for (var i = 0; i < result.lstGodown.length; i++) {
+                       // ddlFromLcation
+                       frmLcation += `<option value=${result.lstGodown[i].value}>${result.lstGodown[i].text}</option>`;
 
-                      console.log(result);
+                   }
+                   for (var j = 0; j < result.lstSite.length; j++) {
+                       // ddltoLcation
+                       toLcation += `<option value=${result.lstSite[j].value}>${result.lstSite[j].text}</option>`;
+
+                   }
+                   $('#ddlFromLcation').append(frmLcation);
+                   $('#ddlToLocation').append(toLcation);
+               }
             },
             error: function (err) {
                 console.log(err);
@@ -118,4 +186,31 @@
         });
     };
 
-</script>*@
+
+
+      function TypeId(TypeName)
+      {
+          debugger
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/ToolsTransfers/TypeId")',
+                  dataType: 'json',
+                  data: { type_name: TypeName},
+                  success: function (result) {
+                     var data = result;
+                      $("#TypeId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                    $("#TypeId").val(data[i].TypeName)
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+
+
+</script>
+

@@ -39,24 +39,7 @@ namespace issConstructions.Controllers
                 return HttpNotFound();
             }
 
-            ////From Location
-            //List<SelectListItem> GName = new List<SelectListItem>();
-            //GName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            //foreach (var item in db.godowns.ToList())
-            //{
-            //    GName.Add(new SelectListItem { Text = item.godownName.ToString(), Value = item.Id.ToString() });
-            //}
-            //ViewBag.GNameId = GName;
-
-            //To Location
-            //List<SelectListItem> SName = new List<SelectListItem>();
-            //SName.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            //foreach (var item in db.siteDetails.ToList())
-            //{
-            //    SName.Add(new SelectListItem { Text = item.SiteName.ToString(), Value = item.ID.ToString() });
-            //}
-            //ViewBag.SNameId = SName;
-
+            
             //Project
             List<SelectListItem> Project = new List<SelectListItem>();
             Project.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
@@ -176,6 +159,7 @@ namespace issConstructions.Controllers
                 SiteAddress.Add(new SelectListItem { Text = item.SiteAddress.ToString(), Value = item.ID.ToString() });
             }
             ViewBag.SiteAddressId = SiteAddress;
+
             List<ddlLocations> ddl = new List<ddlLocations>();
             ddlLocations ddlLocations = new ddlLocations();
             ddlLocations.text = "----Please Select----";
@@ -244,8 +228,6 @@ namespace issConstructions.Controllers
 
 
                 ViewBag.TypeId = new SelectList(db.tblTypes, "Id", "TypeName", issues.TypeId);
-               // ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
-                //ViewBag.SNameId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SNameId);
                 ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SiteNameId);
                 ViewBag.ProductId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.ProductNo);
                 ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SiteId);
@@ -304,13 +286,26 @@ namespace issConstructions.Controllers
             {
                 return HttpNotFound();
             }
+
+           
             ViewBag.TypeId = new SelectList(db.tblTypes, "Id", "TypeName", issues.TypeId);
-           // ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
-            ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SiteNameId);
-           // ViewBag.SNameId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SNameId);
+            //ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
+            //ViewBag.SNameId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SNameId);
+            ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SiteNameId);
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", issues.SiteAddressId);
+
+            List<ddlLocations> ddl = new List<ddlLocations>();
+            ddlLocations ddlLocations = new ddlLocations();
+            ddlLocations.text = "----Please Select----";
+            ddl.Add(ddlLocations);
+            ViewBag.location = ddl;
+            return View();
+
+
             return View(issues);
+
+
         }
 
         // POST: Issues/Edit/5
@@ -502,7 +497,7 @@ namespace issConstructions.Controllers
                     lstSite.Add(newItem);
                 }
             }
-            else if (a == 5)
+            else if (a == 7)
             {
 
                 foreach (var item in site )
@@ -526,9 +521,9 @@ namespace issConstructions.Controllers
         }
     }
 
-    public class ddlLocations
-    {
-        public int value { get; set; }
-        public string text { get; set; }
-    }
+    //public class ddlLocations
+    //{
+    //    public int value { get; set; }
+    //    public string text { get; set; }
+    //}
 }

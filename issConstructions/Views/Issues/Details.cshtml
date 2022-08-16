@@ -75,10 +75,15 @@
                 <th>Issue Date</th>
                 <td>  @Html.DisplayFor(model => model.IssuesDate) </td>
             </tr>
-            
+
+            <tr>
+                <th>Issue Type</th>
+                <td>  @Html.DisplayFor(model => model.Type.TypeName) </td>
+            </tr>
+
             <tr>
                 <th>Project Name</th>
-                <td> @Html.DisplayFor(model => model.SiteName.ProjectName ) </td>
+                <td> @Html.DisplayFor(model => model.SiteName.ProjectName) </td>
             </tr>
             <tr>
                 <th>Site Name</th>
