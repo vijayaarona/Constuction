@@ -115,8 +115,13 @@
 
                 <div class="form-group col-md-6">
                     <label>Purchase Type</label>
-                    @Html.DropDownList("type", null, htmlAttributes: new { @class = "form-control", @id = "Purchasetype" })
-                    @Html.ValidationMessageFor(model => model.PurType, "", new { @class = "text-danger" })
+                    <select class="form-control" id="PurchaseType" name="PType">
+                        <option>Site</option>
+                        <option>Godown</option>
+                    </select>
+
+                    @*@Html.DropDownList("Purchasetype", null, htmlAttributes: new { @class = "form-control", @id = "Purchasetype" })
+        @Html.ValidationMessageFor(model => model.PType, "", new { @class = "text-danger" })*@
                 </div>
             </div>
             <button type="button" style="float:right" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Item</button>

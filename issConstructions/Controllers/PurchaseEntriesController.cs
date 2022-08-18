@@ -96,13 +96,13 @@ namespace issConstructions.Controllers
             }
             ViewBag.ProductId = Product;
 
-            //Purchase Type
+            ////Purchase Type
 
-            List<SelectListItem> type = new List<SelectListItem>();
-            type.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            type.Add(new SelectListItem { Text = "Godown", Value = "1" });
-            type.Add(new SelectListItem { Text = "Site", Value = "2" });
-            ViewBag.type = type;
+            //List<SelectListItem> type = new List<SelectListItem>();
+            //type.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
+            //type.Add(new SelectListItem { Text = "Godown", Value = "1" });
+            //type.Add(new SelectListItem { Text = "Site", Value = "2" });
+            //ViewBag.Purchasetype = type;
 
             //Tax
             var listsItem = new SelectList(db.productMasters, "ID", "Tax");
@@ -189,7 +189,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,SiteNameId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TotTax,TotAmount,PurType")] PurchaseEntry purchaseEntry)
+        public ActionResult Create([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,SiteNameId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,PType,TotTax,TotAmount")] PurchaseEntry purchaseEntry)
         {
             try
             {
@@ -220,14 +220,27 @@ namespace issConstructions.Controllers
                     db.Entry(puc).State = EntityState.Modified;
                 }
 
-                if (purchaseEntry.PurType== "1")
-                {
-                    tblStock tblStock = new tblStock();
-                    tblStock.categoryId = purchaseEntry.CategoryId;
-                    tblStock.rate = purchaseEntry.NetAmount;
-                    tblStock.productId = purchaseEntry.ProductNo;
-                    tblStock.productId = purchaseEntry.ProductNo;
-                    db.tblStocks.Add(tblStock);
+
+                if (purchaseEntry.PType == "Godown")
+                { 
+                    var items = db.purchaseEntryTables.Where(x => x.purchaseRequestId == invoiceNo).ToList();
+                    if (items.Count > 0)
+                    {
+                        foreach (var row in items)
+                        {
+                            tblStock tblStock = new tblStock();
+                            tblStock.categoryId = purchaseEntry.CategoryId;
+                            tblStock.productId = row.productId;
+                            tblStock.quantity = row.Quantity;
+                            tblStock.rate = row.Rate;
+                            tblStock.CreatedDate = purchaseEntry.CreatedDate;
+                            tblStock.UpdateBy = purchaseEntry.UpdateBy;
+                            tblStock.UpdatedDate = purchaseEntry.UpdatedDate;
+
+                            db.tblStocks.Add(tblStock);
+                            db.SaveChanges();
+                        }
+                    }
                 }
 
                 db.SaveChanges();
@@ -367,7 +380,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,SiteNameId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TotTax,TotAmount,PurType")] PurchaseEntry purchaseEntry)
+        public ActionResult Edit([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,SiteNameId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TotTax,TotAmount,PType")] PurchaseEntry purchaseEntry)
         {
             try
             {
@@ -453,39 +466,7 @@ namespace issConstructions.Controllers
                 db.purchaseEntryTables.Add(purchaseEntryTable);
                 PurchaseEntry purchaseentry = new PurchaseEntry();
 
-              // var Ptype = ('#Purchasetype').text();
-                //if (ptype ==)
-
-                //if (purtype != null && purtype.Count > 0)
-                //{
-
-                //    var puc = db.PurchaseOrders.Where(x => x.OrderId == purchaseEntryOrderId).FirstOrDefault();
-                //    puc.Status = "1";
-                //    db.Entry(puc).State = EntityState.Modified;
-                //}
-                if (purchaseentry.PurType == "")
-                
-                {
-                    var items = db.purchaseEntryTables.Where(x => x.purchaseRequestId == maxValue).ToList();
-                    if (items.Count > 0)
-                    {
-                        foreach (var row in items)
-                        {
-                            tblStock tblStock = new tblStock();
-                            tblStock.categoryId = purchaseentry.CategoryId;
-                            tblStock.productId = purchaseEntryTable.productId;
-                            tblStock.quantity = purchaseEntryTable.Quantity;
-                            tblStock.rate = purchaseEntryTable.Rate;
-                            tblStock.CreatedDate = purchaseEntryTable.CreatedDate;
-                            tblStock.UpdateBy = purchaseEntryTable.UpdateBy;
-                            tblStock.UpdatedDate = purchaseEntryTable.UpdatedDate;
-
-                            db.tblStocks.Add(tblStock);
-                            db.SaveChanges();
-                        }
-                    }
-                    
-                }
+             
 
                 db.SaveChanges();
 
