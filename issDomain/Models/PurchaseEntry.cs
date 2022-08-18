@@ -49,6 +49,6 @@ namespace issDomain.Models
         public decimal Tax { get; set; }
         public decimal TotTax { get; set; }
         public decimal TotAmount { get; set; }
-        public String  PurType { get; set; }
+        public string  PType { get; set; }
     }
 }

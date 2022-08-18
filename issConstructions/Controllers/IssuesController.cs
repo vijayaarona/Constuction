@@ -217,13 +217,30 @@ namespace issConstructions.Controllers
                 }
                 issues.IssueID = invoiceNo;
                 db.issues.Add(issues);
-                var stock = db.tblStocks.Where(x => x.categoryId == issues.GNameId && x.productId == issues.ProductNo).FirstOrDefault();
-                if (stock!=null)
+                IssueTable issuetable = new IssueTable();
+
+            // Stock Update
+             
+                var items = db.issueTables.Where(x => x.issueId == invoiceNo).ToList();
+                if (items.Count > 0)
                 {
-                    stock.rate = (stock.rate - issues.netAmount);
-                    db.Entry(stock).State = EntityState.Modified;
+                    foreach (var row in items)
+                    {
+                        tblStock tblStock = new tblStock();
+                        var stock = db.tblStocks.Where(x => x.categoryId == row.CategoryId && x.productId == row.productId).FirstOrDefault();
+
+                        if (stock != null)
+                         {
+                             stock.quantity = (stock.quantity - row.Quantity);
+
+                             db.Entry(stock).State = EntityState.Modified;
+                         }
+
+
+                    }
+
                 }
-               
+           
                 db.SaveChanges();
                 return RedirectToAction("Index", issues.IssueID);
             }
