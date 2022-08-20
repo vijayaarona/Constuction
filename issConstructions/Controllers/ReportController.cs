@@ -10,9 +10,11 @@ using issConstructions.Custom;
 using issConstructions.Models;
 using issDomain.Models;
 
+
+
 namespace issConstructions.Controllers
 {
-    [CustomAuthorize(Roles = "Admin,Manager")]
+   // [CustomAuthorize(Roles = "Admin,Manager")]
     public class ReportController : Controller
     {
         private issDB db = new issDB();
@@ -39,6 +41,13 @@ namespace issConstructions.Controllers
         {
             var RawData = db.receiptEntries.Where(x => x.ID == id).FirstOrDefault();
             return Json(RawData, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Payment(SiteName siteName)
+        {
+            var lstsitename = db.siteDetails.ToList();
+            ViewBag.siteName = lstsitename;
+            return View(lstsitename);
         }
     }
 }

@@ -132,10 +132,24 @@
                             </ul>
                         </div>
                     <li>
-                        <a class="dropdown-item">
-                            <i class="typcn typcn-eject text-primary"></i>
-                            Reports
-                        </a>
+                        <div class="col-md-2">
+                            <a href="#" class="navbar-brand" data-toggle="dropdown" style="font-size:15px;color:white !important" aria-expanded="true">
+                                Reports
+                            </a>
+
+                            <ul class="dropdown-menu" style="font-family:Calibri;padding:5px;background-color:#ebcece;">
+                                <li>@Html.ActionLink("Purchase Request Report", "Index", "PurchaseRequests")</li>
+                                <li>@Html.ActionLink("Purchase Order Report", "Index", "PurchaseOrders")</li>
+                                <li>@Html.ActionLink("Purchase Report", "Index", "PurchaseEntries")</li>
+                                <li>@Html.ActionLink("Labour Rate Work Report", "Index", "RateWorks")</li>
+                                <li>@Html.ActionLink("Extra Work Report", "Index", "ExtraWorks")</li>
+                                <li>@Html.ActionLink("Tools Transfer Report", "Index", "ToolsTransfers")</li>
+                                <li>@Html.ActionLink("Receipt Entry Report", "Index", "receiptEntries")</li>
+                                <li>@Html.ActionLink("Payment Entry Report", "Payment", "Report")</li>
+
+
+                            </ul>
+                            </div>
                     </li>
 
                     <li>

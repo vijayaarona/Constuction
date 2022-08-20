@@ -32,38 +32,12 @@
         font-size: 13px;
     }
 </style>
-<style>
-    .header {
-        margin-top: 10px;
-        border-top-style: solid;
-        border-top-width: 5px;
-        border-top-color: #FF5F04;
-        font-family: Calibri;
-        font-size: 22px;
-    }
 
-    .addNew {
-        padding: 5px;
-        background-color: #FF5F04;
-        color: white;
-        float: right;
-        margin: 10px;
-        border-radius: 10px;
-        text-decoration: none;
-    }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-        .addNew:hover {
-            text-decoration: none;
-        }
-
-    table td {
-        font-size: 13px;
-    }
-
-    table th {
-        font-size: 13px;
-    }
-</style>
 <div class="panel-group">
     <div class="panel panel-heading header">
         Tools Transfer - Index Page
@@ -74,16 +48,13 @@
             <thead>
                 <tr>
                     <th>
+                        Trans ID
+                    </th>
+                    <th>
                         Transfer Date
                     </th>
                     <th>
-                        Type
-                    </th>
-                    <th>
-                        From Location
-                    </th>
-                    <th>
-                        To Location
+                        Transfer Type
                     </th>
                     <th>
                         Tools Name
@@ -103,16 +74,13 @@
                 {
                     <tr>
                         <td>
+                            @Html.DisplayFor(modelItem => item.TId)
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.TDate)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.GodownId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SNameId)
+                            @Html.DisplayFor(modelItem => item.Type.TypeName)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Tools.ToolsName)

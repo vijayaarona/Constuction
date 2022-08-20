@@ -126,7 +126,7 @@ namespace issConstructions.Controllers
 
             List<SelectListItem> order = new List<SelectListItem>();
             order.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.PurchaseOrders.Where(x => x.Status == null).ToList())
+            foreach (var item in db.PurchaseOrders.Where(x => x.Sta == 0).ToList())
             {
                 if (item.OrderId != 0)
                     order.Add(new SelectListItem { Text = item.OrderId.ToString(), Value = item.OrderId.ToString() });
@@ -189,7 +189,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,SiteNameId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,PType,TotTax,TotAmount")] PurchaseEntry purchaseEntry)
+        public ActionResult Create([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,SiteNameId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,PType,TotTax,TotAmount,Sta")] PurchaseEntry purchaseEntry)
         {
             try
             {
@@ -210,14 +210,18 @@ namespace issConstructions.Controllers
                 purchaseEntry.purchaseId = invoiceNo;
 
                 db.purchaseEntries.Add(purchaseEntry);
-                var OrderId = db.purchaseEntries.Where(x => x.OrderId == null).ToList();
+                var OrderId = db.purchaseEntries.Where(x => x.OrderId !=0).ToList();
 
                 if (OrderId != null && OrderId.Count > 0)
                 {
 
                     var puc = db.PurchaseOrders.Where(x => x.OrderId == purchaseEntry.OrderId).FirstOrDefault();
-                    puc.Status = "1";
-                    db.Entry(puc).State = EntityState.Modified;
+
+                    if (puc != null)
+                    {
+                        puc.Sta = 1;
+                        db.Entry(puc).State = EntityState.Modified;
+                    }
                 }
 
 
@@ -229,9 +233,12 @@ namespace issConstructions.Controllers
                         foreach (var row in items)
                         {
                             tblStock tblStock = new tblStock();
+                            tblStock.PId = purchaseEntry.purchaseId;
                             tblStock.categoryId = purchaseEntry.CategoryId;
                             tblStock.productId = row.productId;
                             tblStock.quantity = row.Quantity;
+                            tblStock.IssueQty  = 0;
+                            tblStock.Type = "Purchase";
                             tblStock.rate = row.Rate;
                             tblStock.CreatedDate = purchaseEntry.CreatedDate;
                             tblStock.UpdateBy = purchaseEntry.UpdateBy;
@@ -380,7 +387,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,SiteNameId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TotTax,TotAmount,PType")] PurchaseEntry purchaseEntry)
+        public ActionResult Edit([Bind(Include = "ID,OrderId,PurchaseOrder,ProductNo,Invoice,purchaseId,purchaseDate,CategoryId,Category,SupplierId,SupplierAddressId,Supplier,SiteNameId,SiteId,SiteAddressId,SiteDetails,mobileno,ReceivedBy,Remarks,ReffBillNo,DeliveryNo,totalDiscount,totalTax,freightCharges,NetAmount,grandTotal,discountPercentage,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TotTax,TotAmount,PType,Sta")] PurchaseEntry purchaseEntry)
         {
             try
             {
@@ -388,6 +395,38 @@ namespace issConstructions.Controllers
                 purchaseEntry.UpdatedDate = DateTime.UtcNow;
                 db.Entry(purchaseEntry).State = EntityState.Modified;
                 purchaseEntry.purchaseId = purchaseEntry.purchaseId;
+
+                if (purchaseEntry.PType == "Godown")
+                {
+
+                    List<tblStock> lstPR1 = db.tblStocks.Where(x => x.PId == purchaseEntry.purchaseId).ToList();
+                    foreach (var item1 in lstPR1)
+                    {
+                        db.tblStocks.Remove(item1);
+                        db.SaveChanges();
+                    }
+                    var items = db.purchaseEntryTables.Where(x => x.purchaseRequestId == purchaseEntry.purchaseId).ToList();
+                    if (items.Count > 0)
+                    {
+                        foreach (var row in items)
+                        {
+                            tblStock tblStock = new tblStock();
+                            tblStock.PId = purchaseEntry.purchaseId;
+                            tblStock.categoryId = purchaseEntry.CategoryId;
+                            tblStock.productId = row.productId;
+                            tblStock.quantity = row.Quantity;
+                            tblStock.IssueQty = 0;
+                            tblStock.Type = "Purchase";
+                            tblStock.rate = row.Rate;
+                            tblStock.CreatedDate = purchaseEntry.CreatedDate;
+                            tblStock.UpdateBy = purchaseEntry.UpdateBy;
+                            tblStock.UpdatedDate = purchaseEntry.UpdatedDate;
+
+                            db.tblStocks.Add(tblStock);
+                            db.SaveChanges();
+                        }
+                    }
+                }
 
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -424,7 +463,26 @@ namespace issConstructions.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+           
             PurchaseEntry purchaseEntry = db.purchaseEntries.Find(id);
+
+            List<PurchaseEntryTable> lstPR = db.purchaseEntryTables.Where(x => x.purchaseRequestId == purchaseEntry.purchaseId).ToList();
+            foreach (var item in lstPR)
+            {
+                db.purchaseEntryTables.Remove(item);
+                db.SaveChanges();
+            }
+
+           // tblStock tblStock = db.tblStocks.Find(id);
+
+            List<tblStock> lstPR1= db.tblStocks.Where(x => x.PId == purchaseEntry.purchaseId).ToList();
+            foreach (var item1 in lstPR1)
+            {
+                db.tblStocks.Remove(item1);
+                db.SaveChanges();
+            }
+
+
             purchaseEntry.isDeleted = true;
             db.purchaseEntries.Remove(purchaseEntry);
             db.SaveChanges();
