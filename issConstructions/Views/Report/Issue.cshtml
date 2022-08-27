@@ -1,7 +1,8 @@
 ﻿
 @{
-    ViewBag.Title = "Payment";
+    ViewBag.Title = "Issue";
 }
+
 
 <style>
     .header {
@@ -37,7 +38,7 @@
 </style>
 <div class="panel-group">
     <div class="panel panel-heading header">
-        Payment Report
+        Issue Report
     </div>
 
     <div class="panel panel-body">
@@ -83,43 +84,45 @@
 
                 </div>
             </div>
-           <div class="card">
-            <div class="card-header header-elements-inline">
-                <div class="header-elements">
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <div class="header-elements">
                         <div class="list-icons" style="margin-left:85%;">
 
-                                    @*<button href="#" class="dropdown-item" id="btnSearch"><i class="icon-search4"></i> Search</button>*@
-                                    <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel" style=" width:50%;"></i> PDF</button>
-                                    <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel"></i> .xlsx</button>
-                                    <button href="#" class="dropdown-item" id="btnprint"><i class="icon-printer"></i> Print</button>
-                                </div>
-                            </div>
+                            @*<button href="#" class="dropdown-item" id="btnSearch"><i class="icon-search4"></i> Search</button>*@
+                            <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel" style=" width:50%;"></i> PDF</button>
+                            <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel"></i> .xlsx</button>
+                            <button href="#" class="dropdown-item" id="btnprint"><i class="icon-printer"></i> Print</button>
                         </div>
-
-                        <div class="card">
-                            <table class="table datatable-basic table-bordered table-striped table-hover" id="tblempdetails">
-                                <thead>
-                                    <tr>
-                                        <th>Payment ID</th>
-                                        <th>Payment Date</th>
-                                        <th>Ledger Name</th>
-                                        <th>Site Name</th>
-                                        <th>Given By</th>
-                                        <th>Collected By</th>
-                                        <th>Amount</th>
-                                        <th>Remarks</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody id="tblDetails"></tbody>
-                            </table>
-                        </div>
-
                     </div>
                 </div>
+
+                <div class="card">
+                    <table class="table datatable-basic table-bordered table-striped table-hover" id="tblempdetails">
+                        <thead>
+                            <tr>
+                                <th>Issue ID</th>
+                                <th>Date</th>
+                                <th>Issue Type</th>
+                                <th>Category Name</th>
+                                <th>Item Name</th>
+                                <th>Rate</th>
+                                <th>Qty</th>
+                                <th>Dis Amt</th>
+                                <th>Tax Amt</th>
+                                <th>Amount</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="tblDetails"></tbody>
+                    </table>
+                </div>
+
             </div>
+        </div>
+    </div>
 </div>
- <script>
+<script>
     $(function () {
             $('#empCategory').select2();
         $("#exportexcel").click(function () {
@@ -207,4 +210,4 @@
         }
         return buf;
     }
-            </script>
+</script>

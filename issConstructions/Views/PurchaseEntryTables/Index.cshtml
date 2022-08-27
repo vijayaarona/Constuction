@@ -89,14 +89,15 @@
         <h3>Project Name: @ViewBag.ProjectName</h3>
         <h3>Supplier Name: @ViewBag.Suppliername</h3>
     </div>
-    <div class="panel panel-body" style="overflow:auto">
+    <<div class="panel panel-body">
+    <div class="card-header header-elements-inline">
         <p style="float:right;">
             @Html.ActionLink("Add New", "Create", new { Id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
             @Html.ActionLink("Back", "Index", "PurchaseEntries", new { id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
 
         </p>
 
-        <table class="table">
+        <table class="table datatable-basic table-bordered table-striped table-hover">
             <tr>
                 <th>
                     Purchase.ID
@@ -185,6 +186,7 @@
         </table>
     </div>
 </div>
+    </div> 
 <script type="text/javascript">
     $(function () {
         $('#AGMaster').DataTable({

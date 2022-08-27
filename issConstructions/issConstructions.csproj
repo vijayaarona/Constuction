@@ -171,7 +171,9 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SiteDetailsController.cs" />
     <Compile Include="Controllers\SiteName.cs" />
+    <Compile Include="Controllers\Supname.cs" />
     <Compile Include="Controllers\SupplierMastersController.cs" />
+    <Compile Include="Controllers\SupplierName.cs" />
     <Compile Include="Controllers\ToolsMastersController.cs" />
     <Compile Include="Controllers\ToolsTransfersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -358,6 +360,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Images\logo-construction.png" />
+    <Content Include="Assets\js\app.js" />
+    <Content Include="Assets\js\custom.js" />
+    <Content Include="Assets\js\FileSaver.js" />
+    <Content Include="Assets\js\jquery.validate.js" />
+    <Content Include="Assets\js\picker_date.js" />
+    <Content Include="Assets\js\xlsx.full.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -535,6 +543,17 @@
     <Content Include="Views\ExtraWorkTables\Edit.cshtml" />
     <Content Include="Views\ExtraWorkTables\Index.cshtml" />
     <Content Include="Views\Report\Payment.cshtml" />
+    <Content Include="Views\Report\Receipt.cshtml" />
+    <Content Include="Views\Report\PurchaseRequest.cshtml" />
+    <Content Include="Views\Report\PurchaseOrder.cshtml" />
+    <Content Include="Views\Report\Purchase.cshtml" />
+    <Content Include="Views\Report\PurchaseCat.cshtml" />
+    <Content Include="Views\Report\PurchaseBill.cshtml" />
+    <Content Include="Views\Report\Issue.cshtml" />
+    <Content Include="Views\Report\IssueCat.cshtml" />
+    <Content Include="Views\Report\RateWork.cshtml" />
+    <Content Include="Views\Report\ExtraWork.cshtml" />
+    <Content Include="Views\Report\ToolsTransfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

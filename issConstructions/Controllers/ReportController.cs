@@ -49,5 +49,149 @@ namespace issConstructions.Controllers
             ViewBag.siteName = lstsitename;
             return View(lstsitename);
         }
+        public ActionResult Receipt(SiteName siteName)
+        {
+            var lstsitename = db.siteDetails.ToList();
+            ViewBag.siteName = lstsitename;
+            return View(lstsitename);
+        }
+
+       public ActionResult PurchaseRequest()
+        {
+            List<SelectListItem> SiteName = new List<SelectListItem>();
+            
+            foreach (var item in db.siteDetails.ToList())
+            {
+                SiteName.Add(new SelectListItem { Text = item.SiteName, Value = item.ID.ToString() });
+                
+            }
+            ViewBag.SiteName = SiteName;
+
+            List<SelectListItem> SupName = new List<SelectListItem>();
+
+            foreach (var item in db.supplierMasters.ToList())
+            {
+                SupName.Add(new SelectListItem { Text = item.Suppliername, Value = item.ID.ToString() });
+            }
+            ViewBag.SupName =SupName;
+            return View();
+        }
+
+        public ActionResult PurchaseOrder()
+        {
+            List<SelectListItem> SiteName = new List<SelectListItem>();
+
+            foreach (var item in db.siteDetails.ToList())
+            {
+                SiteName.Add(new SelectListItem { Text = item.SiteName, Value = item.ID.ToString() });
+
+            }
+            ViewBag.SiteName = SiteName;
+
+            List<SelectListItem> SupName = new List<SelectListItem>();
+
+            foreach (var item in db.supplierMasters.ToList())
+            {
+                SupName.Add(new SelectListItem { Text = item.Suppliername, Value = item.ID.ToString() });
+            }
+            ViewBag.SupName = SupName;
+            return View();
+        }
+
+        public ActionResult Purchase()
+        {
+            List<SelectListItem> SiteName = new List<SelectListItem>();
+
+            foreach (var item in db.siteDetails.ToList())
+            {
+                SiteName.Add(new SelectListItem { Text = item.SiteName, Value = item.ID.ToString() });
+
+            }
+            ViewBag.SiteName = SiteName;
+
+            List<SelectListItem> SupName = new List<SelectListItem>();
+
+            foreach (var item in db.supplierMasters.ToList())
+            {
+                SupName.Add(new SelectListItem { Text = item.Suppliername, Value = item.ID.ToString() });
+            }
+            ViewBag.SupName = SupName;
+            return View();
+        }
+
+        public ActionResult PurchaseCat()
+        {
+            List<SelectListItem> Category = new List<SelectListItem>();
+
+            foreach (var item in db.categoryMasters.ToList())
+            {
+                Category.Add(new SelectListItem { Text = item.CategoryName, Value = item.ID.ToString() });
+
+            }
+            ViewBag.Category = Category;
+
+            List<SelectListItem> ItemName = new List<SelectListItem>();
+
+            foreach (var item in db.productMasters.ToList())
+            {
+                ItemName.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
+            }
+            ViewBag.ItemName = ItemName;
+            return View();
+        }
+
+        public ActionResult PurchaseBill()
+        {
+            return View();
+        }
+
+        public ActionResult Issue(SiteName siteName)
+        {
+            var lstsitename = db.siteDetails.ToList();
+            ViewBag.siteName = lstsitename;
+            return View(lstsitename);
+        }
+
+        public ActionResult IssueCat()
+        {
+            List<SelectListItem> Category = new List<SelectListItem>();
+
+            foreach (var item in db.categoryMasters.ToList())
+            {
+                Category.Add(new SelectListItem { Text = item.CategoryName, Value = item.ID.ToString() });
+
+            }
+            ViewBag.Category = Category;
+
+            List<SelectListItem> ItemName = new List<SelectListItem>();
+
+            foreach (var item in db.productMasters.ToList())
+            {
+                ItemName.Add(new SelectListItem { Text = item.ProductName, Value = item.ID.ToString() });
+            }
+            ViewBag.ItemName = ItemName;
+            return View();
+        }
+
+        public ActionResult RateWork(SiteName siteName)
+        {
+            var lstsitename = db.siteDetails.ToList();
+            ViewBag.siteName = lstsitename;
+            return View(lstsitename);
+        }
+
+        public ActionResult ExtraWork(SiteName siteName)
+        {
+            var lstsitename = db.siteDetails.ToList();
+            ViewBag.siteName = lstsitename;
+            return View(lstsitename);
+        }
+
+        public ActionResult ToolsTransfer()
+        {
+            return View();
+        }
+
     }
+
 }

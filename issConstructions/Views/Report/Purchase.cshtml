@@ -1,8 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "Payment";
+    ViewBag.Title = "Purchase";
 }
 
+<
 <style>
     .header {
         margin-top: 10px;
@@ -37,7 +38,7 @@
 </style>
 <div class="panel-group">
     <div class="panel panel-heading header">
-        Payment Report
+        Purchase Report
     </div>
 
     <div class="panel panel-body">
@@ -51,75 +52,95 @@
                             <option value="">--Please Select--</option>
                             @foreach (var item in ViewBag.SiteName)
                             {
-                                <option value="@item.ID">@item.SiteName </option>
+                                // <option value="@item.ID">@item.SiteName </option>
+                                <option value="@item.Value">@item.Text </option>
                             }
                         </select>
                     </div>
                 </div>
-                <div class="col-md-2" style=" left :10%">
-                    <div class="form-group">
-                        <label>From Date</label>
-                        <div class="input-group">
-                            <span class="input-group-prepend">
-                                <span class="input-group-text"><i class="icon-calendar22" id="fromicon"></i></span>
-                            </span>
-                            <input type="date" class="form-control daterange-single-date" id="fromdate">
+
+                <div class="row">
+                    <div class="col-md-2" style=" left :9%">
+                        <div class="form-group">
+                            <label class="d-block">Select Supplier Name</label>
+                            <select name="empCategory" id="empCategory" class="form-control col-xs-12" style=" width:350%" required>
+                                <option value="">--Please Select--</option>
+                                @foreach (var item in ViewBag.SupName)
+                                {
+                                    //<option value="@item.ID">@item.SupplierName </option>
+                                    <option value="@item.Value">@item.Text </option>
+                                }
+                            </select>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-2" style=" left :8%">
-                    <div class="form-group">
-                        <label>To Date</label>
-                        <div class="input-group">
-                            <span class="input-group-prepend">
-                                <span class="input-group-text"><i class="icon-calendar22" id="toicon"></i></span>
-                            </span>
-                            <input type="date" class="form-control daterange-single-date" id="todate">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2" style=" left :8%;">
-                    <button type="button" class="dropdown-item" id="btnSearch" style="padding: 8px; background-color: #FF5F04; color: white; margin: 20px; border-radius: 10px; width:60%;"> Search</button>
-
-                </div>
-            </div>
-           <div class="card">
-            <div class="card-header header-elements-inline">
-                <div class="header-elements">
-                        <div class="list-icons" style="margin-left:85%;">
-
-                                    @*<button href="#" class="dropdown-item" id="btnSearch"><i class="icon-search4"></i> Search</button>*@
-                                    <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel" style=" width:50%;"></i> PDF</button>
-                                    <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel"></i> .xlsx</button>
-                                    <button href="#" class="dropdown-item" id="btnprint"><i class="icon-printer"></i> Print</button>
-                                </div>
+                    <div class="col-md-2" style=" left :18%">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-calendar22" id="fromicon"></i></span>
+                                </span>
+                                <input type="date" class="form-control daterange-single-date" id="fromdate">
                             </div>
                         </div>
-
-                        <div class="card">
-                            <table class="table datatable-basic table-bordered table-striped table-hover" id="tblempdetails">
-                                <thead>
-                                    <tr>
-                                        <th>Payment ID</th>
-                                        <th>Payment Date</th>
-                                        <th>Ledger Name</th>
-                                        <th>Site Name</th>
-                                        <th>Given By</th>
-                                        <th>Collected By</th>
-                                        <th>Amount</th>
-                                        <th>Remarks</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody id="tblDetails"></tbody>
-                            </table>
+                    </div>
+                    <div class="col-md-2" style=" left :15%">
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-calendar22" id="toicon"></i></span>
+                                </span>
+                                <input type="date" class="form-control daterange-single-date" id="todate">
+                            </div>
                         </div>
+                    </div>
+                    <div class="col-md-2" style=" left :12%;">
+                        <button type="button" class="dropdown-item" id="btnSearch" style="padding: 8px; background-color: #FF5F04; color: white; margin: 20px; border-radius: 10px; width:60%;"> Search</button>
 
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-header header-elements-inline">
+                        <div class="header-elements">
+                            <div class="list-icons" style="margin-left:85%;">
+
+                                @*<button href="#" class="dropdown-item" id="btnSearch"><i class="icon-search4"></i> Search</button>*@
+                                <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel" style=" width:50%;"></i> PDF</button>
+                                <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel"></i> .xlsx</button>
+                                <button href="#" class="dropdown-item" id="btnprint"><i class="icon-printer"></i> Print</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <table class="table datatable-basic table-bordered table-striped table-hover" id="tblempdetails">
+                            <thead>
+                                <tr>
+                                    <th>Pur.ID</th>
+                                    <th>Pur.Date</th>
+                                    <th>Category Name</th>
+                                    <th>Supplier Name</th>
+                                    <th>Site Name</th>
+                                    <th>Item Name</th>
+                                    <th>Rate</th>
+                                    <th>Qty</th>
+                                    <th>Dis.Amt</th>
+                                    <th>Tax Amt</th>
+                                    <th>Amount</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="tblDetails"></tbody>
+                        </table>
+                    </div>
+
+                </div>
             </div>
+        </div>
+    </div>
 </div>
- <script>
+<script>
     $(function () {
             $('#empCategory').select2();
         $("#exportexcel").click(function () {
@@ -207,4 +228,6 @@
         }
         return buf;
     }
-            </script>
+</script>
+
+

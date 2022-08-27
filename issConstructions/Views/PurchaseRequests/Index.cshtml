@@ -44,98 +44,99 @@
         Purchase Request - Index Page
     </div>
     <div class="panel panel-body">
-        @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
-        <table class="table" id="AGMaster ">
-            <thead>
-                <tr>
-                    <th>
-                        <label>Request ID</label>
-                    </th>
-                    <th>
-                        <label>Request Date</label>
-                    </th>
+        <div class="card-header header-elements-inline">
+            @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+            <table class="table datatable-basic table-bordered table-striped table-hover" id="AGMaster ">
+                <thead>
+                    <tr>
+                        <th>
+                            <label>Request ID</label>
+                        </th>
+                        <th>
+                            <label>Request Date</label>
+                        </th>
 
-                    <th>
-                        <label>Supplier Name</label>
-                    </th>
-                    <th>
-                        <label>Project Name</label>
-                    </th>
-                    <th>
-                        <label>Total Amount</label>
-                    </th>
-                    <th>
-                        <label>Discount Amount</label>
-                    </th>
-                    <th>
-                        <label>Grand Total</label>
-                    </th>
-                    <th>
-                        <label>Tax Amount</label>
-                    </th>
+                        <th>
+                            <label>Supplier Name</label>
+                        </th>
+                        <th>
+                            <label>Project Name</label>
+                        </th>
+                        <th>
+                            <label>Total Amount</label>
+                        </th>
+                        <th>
+                            <label>Discount Amount</label>
+                        </th>
+                        <th>
+                            <label>Grand Total</label>
+                        </th>
+                        <th>
+                            <label>Tax Amount</label>
+                        </th>
 
-                    <th>
-                        <label>Net Amount</label>
-                    </th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequestID)
-                    </td>
-
-                    @if (@item.RequestDate != null)
+                        <th>
+                            <label>Net Amount</label>
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
                     {
-                        <td>
-                            @item.RequestDate.Value.ToShortDateString()
-                        </td>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequestID)
+                            </td>
+
+                            @if (@item.RequestDate != null)
+                            {
+                                <td>
+                                    @item.RequestDate.Value.ToShortDateString()
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SiteName.ProjectName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotAmount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.dicountAmount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.grandTotal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TotTax)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NetAmount)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.ID })|
+                                <a href="@Url.Content("~/PurchaseRequestTables/Index/"+item.RequestID)">Edit Items</a>
+
+                            </td>
+                        </tr>
+
                     }
-                    else
-                    {
-                        <td></td>
-                    }
-                    
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Supplier.Suppliername)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SiteName.ProjectName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotAmount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.dicountAmount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.grandTotal)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotTax)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NetAmount)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })|
-                        <a href="@Url.Content("~/PurchaseRequestTables/Index/"+item.RequestID)">Edit Items</a>
-                       
-                    </td>
-                </tr>
+                </tbody>
 
-                }
-            </tbody>
-
-        </table>
-
+            </table>
+        </div>
     </div>
-</div>
+    </div>
 <script type="text/javascript">
     $(function () {
         $('#AGMaster').DataTable({
