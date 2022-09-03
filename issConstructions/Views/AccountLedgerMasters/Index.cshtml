@@ -36,65 +36,67 @@
     <div class="panel panel-heading header">
         Account Ledger - Index Page
     </div>
-    <div class="panel panel-body"  style="overflow:auto " >
-        @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
-        <table class="table" id="AGMaster" style="text-align:left">
-            <thead>
-                <tr>
-                    <th>
-                        <label>Account Ledger Name</label>
-                    </th>
-                    <th>
-                        <label>Account Group Name</label>
-                    </th>
-                    <th>
-                        <label>Opening Balance</label>
-                    </th>
-                    <th>
-                        <label>Type</label>
-                    </th>
+    <div class="panel panel-body" style="overflow:auto ">
+        <div class="card-header header-elements-inline">
+            @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+            <table class="table datatable-basic table-bordered table-striped table-hover" id="AGMaster" style="text-align:left">
+                <thead>
+                    <tr>
+                        <th>
+                            <label>S.No</label>
+                        </th>
+                        <th>
+                            <label>Account Ledger Name</label>
+                        </th>
+                        <th>
+                            <label>Account Group Name</label>
+                        </th>
+                        <th>
+                            <label>Opening Balance</label>
+                        </th>
+                        <th>
+                            <label>Type</label>
+                        </th>
+                        <th>
+                            <label>Actions</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
+                    {
+                        <tr>
+                            <td>
+                                @item.Index  
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.AccountLedger)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.AccountGroup.GroupName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.OpeningBal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.Type)
+                            </td>
 
-                    <th>
-                        <label>Created Date</label>
-                    </th>
-                                      <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AccountLedger)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AccountGroup.GroupName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OpeningBal)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Data.ID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Data.ID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Data.ID })
+                            </td>
+                        </tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                    </td>
-                   
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                    </td>
-                </tr>
+                    }
+                </tbody>
 
-                }
-            </tbody>
+            </table>
 
-        </table>
-
+        </div>
     </div>
-</div>
+    </div>
 <script type="text/javascript">
     $(function () {
         $('#AGMaster').DataTable({
@@ -105,17 +107,25 @@
                 {
                     extend: 'excel',
                     title: function () {
-                        var printTitle = 'New Title';
+                        var printTitle = 'Account Ledger Master';
                         return printTitle
                     }
                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
                 },
                 {
                     extend: 'pdf',
+                    title: function () {
+                        var printTitle = 'Account Ledger Master';
+                        return printTitle
+                    }
                   //  messageBottom: null
                 },
                 {
                     extend: 'print',
+                    title: function () {
+                        var printTitle = 'Account Ledger Master';
+                        return printTitle
+                    }
                 }
 
             ]

@@ -35,83 +35,72 @@
         Supplier - Index Page
     </div>
     <div class="panel panel-body" style="overflow:auto">
-        @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
-        <table class="table" id="AGMaster">
-            <thead>
-                <tr>
-                    <th>
-                        Supplier Name
-                    </th>
-                    <th>
-                        Address
-                    </th>
-                    <th>
-                        Category
-                    </th>
-                    <th>
-                        Contact Person
-                    </th>
-                    <th>
-                        Phone No
-                    </th>
+        <div class="card-header header-elements-inline">
+            @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+            <table class="table datatable-basic table-bordered table-striped table-hover" id="AGMaster">
+                <thead>
+                    <tr>
+                        <th>
+                            S.No
+                        </th>
+                        <th>
+                            Supplier Name
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Contact Person
+                        </th>
+                        <th>
+                            Phone No
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
+                    {
+                        <tr>
+                            <td>
+                                @item.Index  
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.Suppliername)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.Category.CategoryName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.Contactperson)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.Phonenumber)
+                            </td>
 
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Data.ID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Data.ID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Data.ID })
+                            </td>
+                        </tr>
 
-                    <th>
-                        Created Date
-                    </th>
-                    <th>
-                        Updated By
-                    </th>
-                    <th>
-                        Updated Date
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Suppliername)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Contactperson)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Phonenumber)
-                    </td>
+                    }
+                </tbody>
 
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdateBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdatedDate)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                    </td>
-                </tr>
-
-                }
-            </tbody>
-
-        </table>
-
+            </table>
+            </div>
+        </div>
     </div>
-</div>
 <script type="text/javascript">
     $(function () {
         $('#AGMaster').DataTable({
@@ -122,17 +111,25 @@
                 {
                     extend: 'excel',
                     title: function () {
-                        var printTitle = 'New Title';
+                        var printTitle = 'Supplier Master';
                         return printTitle
                     }
                     // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
                 },
                 {
                     extend: 'pdf',
+                    title: function () {
+                        var printTitle = 'Supplier Master';
+                        return printTitle
+                    }
                     //  messageBottom: null
                 },
                 {
                     extend: 'print',
+                    title: function () {
+                        var printTitle = 'Supplier Master';
+                        return printTitle
+                    }
                 }
 
             ]

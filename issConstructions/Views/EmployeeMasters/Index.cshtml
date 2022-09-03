@@ -34,73 +34,81 @@
         Employee - Index Page
     </div>
     <div class="panel panel-body" style="overflow:auto">
-        @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
-        <table class="table" id="AGMaster"  >
-            <thead>
-                <tr>
-                    <th>
-                      Employee Name 
-                    </th>
+        <div class="card-header header-elements-inline">
+            @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+            <table class="table datatable-basic table-bordered table-striped table-hover" id="AGMaster">
+                <thead>
+                    <tr>
+                        <th>
+                            S.No
+                        </th>
+                        <th>
+                            Employee Name
+                        </th>
 
-                    <th>
-                        Mobile No
-                    </th>
+                        <th>
+                            Mobile No
+                        </th>
 
-                    <th>
-                       Designation
-                    </th>
-                    <th>
-                        Category
-                    </th>
-                    <th>
-                        Date of Join
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                    <th>
-                       Salary Type
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.name)
-                    </td>
+                        <th>
+                            Designation
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Date of Join
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Salary Type
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
+                    {
+                        <tr>
+                            <td>
+                                @item.Index  
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.name)
+                            </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Mobilenumber)
-                    </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.Mobilenumber)
+                            </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Designation.DesignationName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateofJoin)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SalaryType)
-                    </td>
-                    
-                    
-                </tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.Designation.DesignationName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.Category.CategoryName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.DateofJoin)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.SalaryType)
+                            </td>
 
-                }
-            </tbody>
 
-        </table>
+                        </tr>
 
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
     </div>
-</div>
+    </div>
 <script type="text/javascript">
     $(function () {
         $('#AGMaster').DataTable({
@@ -111,17 +119,25 @@
                 {
                     extend: 'excel',
                     title: function () {
-                        var printTitle = 'New Title';
+                        var printTitle = 'Employee Master';
                         return printTitle
                     }
                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
                 },
                 {
                     extend: 'pdf',
+                    title: function () {
+                        var printTitle = 'Employee Master';
+                        return printTitle
+                    }
                   //  messageBottom: null
                 },
                 {
                     extend: 'print',
+                    title: function () {
+                        var printTitle = 'Employee Master';
+                        return printTitle
+                    }
                 }
 
             ]

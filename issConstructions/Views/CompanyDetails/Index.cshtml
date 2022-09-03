@@ -32,78 +32,67 @@
         Company Details - Index Page
     </div>
     <div class="panel panel-body">
-        @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
-        <table class="table" id="AGMaster">
-            <thead>
-                <tr>
-                    <th>
-                        Company Name
-                    </th>
-                    <th>
-                        Print Name
-                    </th>
-                    <th>
-                        Addres
-                    </th>
-                    
-                    
-                    <th>
-                        Phone No
-                    </th>
-                    <th>
-                        Created Date
-                    </th>
-                    <th>
-                        Updated By
-                    </th>
-                    <th>
-                        Updated Date
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NameoftheCompany)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PrintName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                   
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                   
+        <div class="card-header header-elements-inline">
+            @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+            <table class="table datatable-basic table-bordered table-striped table-hover" id="AGMaster">
+                <thead>
+                    <tr>
+                        <th>
+                            S.No
+                        </th>
+                        <th>
+                            Company Name
+                        </th>
+                        <th>
+                            Print Name
+                        </th>
+                        <th>
+                            Addres
+                        </th>
+                        <th>
+                            Phone No
+                        </th>
+                        <th>
+                           Actions
+                        </th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i + 1 }))
+                    {
+                        <tr>
+                            <td>
+                                @item.Index  
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.NameoftheCompany)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.PrintName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.Address)
+                            </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdateBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdatedDate)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                    </td>
-                </tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Data.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Data.ID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Data.ID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Data.ID })
+                            </td>
+                        </tr>
 
-                }
-            </tbody>
+                    }
+                </tbody>
 
-        </table>
+            </table>
 
+        </div>
     </div>
-</div>
+    </div>
 <script type="text/javascript">
     $(function () {
         $('#AGMaster').DataTable({
@@ -114,17 +103,25 @@
                 {
                     extend: 'excel',
                     title: function () {
-                        var printTitle = 'New Title';
+                        var printTitle = 'Company Master';
                         return printTitle
                     }
                    // messageTop: 'The information in this table is copyright to Sirius Cybernetics Corp.'
                 },
                 {
                     extend: 'pdf',
+                    title: function () {
+                        var printTitle = 'Company Master';
+                        return printTitle
+                    }
                   //  messageBottom: null
                 },
                 {
                     extend: 'print',
+                    title: function () {
+                        var printTitle = 'Company Master';
+                        return printTitle
+                    }
                 }
 
             ]
