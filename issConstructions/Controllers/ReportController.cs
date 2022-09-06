@@ -192,6 +192,17 @@ namespace issConstructions.Controllers
             return View();
         }
 
+        #region Methods
+        [HttpPost]
+        public JsonResult getPurchaseRequestList(string fDate,string tDate)
+        {
+            DateTime fromDate = Convert.ToDateTime(fDate);
+            DateTime toDate = Convert.ToDateTime(tDate);
+            var requests = db.purchaseRequest.Where(x => x.CreatedDate >= fromDate && x.CreatedDate <= toDate).ToList();
+            return Json(requests,JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
     }
 
 }
