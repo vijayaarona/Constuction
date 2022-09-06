@@ -10,6 +10,8 @@ namespace issDomain.Models
     public class ToolsTransfer
     {
         public int Id { get; set; }
+
+        public int TId { get; set; }
         public DateTime? TDate { get; set; }
         public int GodownId { get; set; }
         public int SNameId { get; set; }

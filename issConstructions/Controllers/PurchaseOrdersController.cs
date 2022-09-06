@@ -170,7 +170,7 @@ namespace issConstructions.Controllers
 
             List<SelectListItem> Request = new List<SelectListItem>();
             Request.Add(new SelectListItem { Text = "---Please Select---", Value = "0" });
-            foreach (var item in db.purchaseRequest.Where(x => x.Status == null).ToList())
+            foreach (var item in db.purchaseRequest.Where(x => x.Sta == 0).ToList())
             {
                 if (item.RequestID != 0)
                     Request.Add(new SelectListItem { Text = item.RequestID.ToString(), Value = item.RequestID.ToString() });
@@ -184,7 +184,7 @@ namespace issConstructions.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,RequestID,OrderId,ProductNo,OrderDate,CategoryId,SupplierId,SupplierAddressId,SiteNameId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TotTax,TotAmount")] PurchaseOrder purchaseOrder)
+        public ActionResult Create([Bind(Include = "ID,RequestID,OrderId,ProductNo,OrderDate,CategoryId,SupplierId,SupplierAddressId,SiteNameId,SiteId,SiteAddressId,mobileno,NetAmount,grandTotal,discountPercentage,dicountAmount,isDeleted,CreatedDate,UpdateBy,UpdatedDate,Tax,TotTax,TotAmount,Status")] PurchaseOrder purchaseOrder)
         {
             try
             {
@@ -204,13 +204,17 @@ namespace issConstructions.Controllers
                 }
                 purchaseOrder.OrderId = invoiceNo;
                 db.PurchaseOrders.Add(purchaseOrder);
-                var Request = db.PurchaseOrders.Where(x => x.RequestID== null).ToList();
+                var Request = db.PurchaseOrders.Where(x => x.RequestID!= 0).ToList();
 
                 if (Request != null && Request.Count > 0)
                 {
                     var puc = db.purchaseRequest.Where(x => x.RequestID == purchaseOrder.RequestID).FirstOrDefault();
-                    puc.Status = "1";
-                    db.Entry(puc).State = EntityState.Modified;
+                   
+                    if (puc!= null)
+                    { 
+                        puc.Sta = 1;
+                        db.Entry(puc).State = EntityState.Modified;
+                    }
                 }
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -434,6 +438,7 @@ namespace issConstructions.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             PurchaseOrder purchaseOrder = db.PurchaseOrders.Find(id);
+           
             List<PurchaseOrderTable> lstPR = db.purchaseOrderTables.Where(x => x.purchaseRequestId == purchaseOrder.OrderId).ToList();
             foreach (var item in lstPR)
             {

@@ -1,82 +1,417 @@
 ﻿@model issDomain.Models.ToolsTransfer
-
 @{
-    Layout = null;
+    ViewBag.Title = "Details";
 }
 
-<!DOCTYPE html>
+<style>
+    #AccountGroupMaster {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>ToolsTransfer</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.TDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.TDate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Type)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Type)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.FLocation)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.FLocation)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.TLocation)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.TLocation)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.ToolsId)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.ToolsId)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.qty)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.qty)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.AuthPerson)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.AuthPerson)
-            </dd>
-    
-        </dl>
+    .btn-default {
+        background-color: #FF5F04;
+        color: white;
+    }
+
+    #AccountGroupMaster td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #AccountGroupMaster tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #AccountGroupMaster tr:hover {
+        background-color: #ddd;
+    }
+
+    #AccountGroupMaster th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    #btn-edit a:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+    #btn-edit a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .header {
+        margin-top: 10px;
+        border-top-style: solid;
+        border-top-width: 5px;
+        border-top-color: #FF5F04;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div class="panel-group">
+    <div class="panel panel-heading header">
+        Tools Transfer -  Details Page
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+    <div class="panel panel-body">
+
+        <table id="AccountGroupMaster">
+            <tr>
+                <th>Transfer ID</th>
+                <td>  @Html.DisplayFor(model => model.TId) </td>
+            </tr>
+            <tr>
+                <th>Transfer Date</th>
+                <td>  @Html.DisplayFor(model => model.TDate) </td>
+            </tr>
+
+            <tr>
+                <th>Transfer Type</th>
+                <td>  @Html.DisplayFor(model => model.Type.TypeName) </td>
+            </tr>
+
+            <tr>
+                <th>Tools Name</th>
+                <td> @Html.DisplayFor(model => model.Tools.ToolsName) </td>
+            </tr>
+            <tr>
+                <th>Qty</th>
+                <td> @Html.DisplayFor(model => model.qty) </td>
+            </tr>
+
+            <tr>
+                <th>Authority Person</th>
+                <td> @Html.DisplayFor(model => model.AuthPerson) </td>
+            </tr>
+
+        </table>
+      
+        <p style="float:right;">
+
+            @Html.ActionLink("Back to List", "Index", null, htmlAttributes: new { @class = "btn btn-default" })
+        </p>
+    </div>
+</div>
+
+@*<script>
+    var lstItems = [];
+    $(document).ready(function ()
+    {
+            debugger
+            let id =@Model;
+            get(id);
+
+            function get(id) {
+                $.ajax({
+                    url: '@Url.Content("~/Issues/getListOfPurchaes")',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { invoice: id },
+                    success: function (result) {
+                        $('#tblPurchaseRequest').empty();
+                        console.log(result)
+                        var row = "";
+                        if (result != null && result!="data")
+                        {
+                            debugger
+                            let sNo = 1;
+                            for (var i = 0; i < result.length; i++)
+                            {
+                                let list = {};
+                                list.CategoryText = result[i].Category.CategoryName;
+                               // list.productId = result[i].product.ProductName;
+                                list.productText = result[i].ProductName;
+                                list.issueid = result[i].issueid ;
+                                list.Id = result[i].ID;
+                              //  list.categoryId =result[i].category.categoryName;
+                                list.Description = result[i].Description;
+                                list.Tax = result[i].Tax;
+                                list.Rate = result[i].Rate;
+                                list.Quantity = result[i].Quantity;
+                                list.Amount = result[i].Amount;
+                                list.TaxAmount = result[i].TaxAmount;
+                                list.TotalAmount = result[i].TotalAmount;
+                                list.ProductNo = result[i].ProductNo;
+
+                                list.sNo = sNo;
+                                lstItems.push(list);
+                                row = `<tr>`
+                                row +=    `<td>${sNo}</td>`
+                                row += `<td>${result[i].Category.CategoryName}</td>`
+                                row += `<td>${result[i].Product.ProductName}</td>`
+                                row +=    `<td>${result[i].Tax}</td>`
+                                row += `<td>${result[i].Description}</td>`
+                                row += `<td>${result[i].Rate}</td>`
+                                row += `<td>${result[i].Quantity}</td>`
+                                row +=     `<td>${result[i].Amount}</td>`
+                                row += `<td>${result[i].TaxAmount}</td>`
+                                row += `<td>${result[i].TotalAmount}</td>`
+                        //        row += `<td>
+
+                        //<button type="button" class="btn btn-default" onclick="removeTR('${result[i].ID}')">Remove</button>
+                        //</td>`
+                                row +=     `</tr>`;
+                                sNo++;
+                                $('#tblPurchaseRequest').append(row);
+                            }
+
+                        }
+
+                    }
+                });
+        }
+
+
+    });
+
+    $(document).ready(function ()
+    {
+
+        $("#TypeId").change(function () {
+            var TypeName = $(this).find('option:selected').val();
+            TypeId(TypeName);
+        })
+
+        $("#ProjectId").change(function () {
+            var projectSite = $(this).find('option:selected').val();
+            SiteId(projectSite);
+        })
+
+        $("#Category").change(function () {
+            var categoryName = $(this).find('option:selected').val();
+            ProductVal(categoryName);
+        })
+
+        $("#Product").change(function () {
+            var taxAmount = $(this).find('option:selected').val();
+            TaxId(taxAmount);
+        })
+
+        $("#Quantity").blur(function ()
+        {
+            debugger
+            var productrate = $('#ItemRate').val();
+            var amt = $('#Quantity').val() * productrate;
+            $("#Amount").val(amt);
+
+
+            if ($('#Amount').val() != '') {
+                //tax calcualtion
+                var taxper = $("#TaxId").val();
+                var taxtotal = (taxper / 100) * amt;
+
+                //total calculation
+                var totalamount = amt + taxtotal;
+                $("#TaxAmt").val(taxtotal);
+                $("#TotalAmt").val(totalamount);
+            }
+
+        })
+
+    });
+
+    $('#myModal').on('show.bs.modal', function (e) {
+        $('body').addClass("example-open");
+    }).on('hide.bs.modal', function (e) {
+        $('body').removeClass("example-open");
+    });
+
+     function SiteId(projectSite)
+     {
+         debugger
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Issues/SiteId")',
+            dataType: 'json',
+                  data: { site_NameId: projectSite },
+                  success: function (result) {
+                      var data = result;
+                      $("#SiteId").empty();
+                      $("#SiteAddressId").empty();
+
+                      for (var i = 0; i < data.length; i++)
+                      {
+                          $("#SiteId").append("<option value='" + data[i].ID + "'>" + data[i].SiteName + "</option>");
+                          $("#SiteAddressId").append("<option value='" + data[i].ID + "'>" + data[i].SiteAddress + "</option>");
+
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    };
+
+
+    function ProductVal(categoryName)
+    {
+        debugger
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Issues/ProductVal")',
+                  dataType: 'json',
+                  data: { category: categoryName },
+                  success: function (result) {
+                      var data = result;
+                      $("#Product").empty();
+                      var op = "";
+                      op = "<option>---Please select ---</option>";
+                      for (var i = 0; i < data.length; i++)
+                      {
+                          op += "<option value=" + data[i].ProductName + ">" + data[i].ProductName + "</option>";
+                      }
+                      $("#Product").append(op);
+
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+
+     function TaxId(taxAmount)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Issues/TaxId")',
+                  dataType: 'json',
+                  data: { tax_Amount: taxAmount },
+                  success: function (result) {
+                     var data = result;
+                      $("#TaxId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                    $("#TaxId").val(data[i].Tax)
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+
+      function TypeId(TypeName)
+    {
+              $.ajax({
+            type: 'POST',
+            url: '@Url.Content("~/Issues/TypeId")',
+                  dataType: 'json',
+                  data: { type_name: TypeName},
+                  success: function (result) {
+                     var data = result;
+                      $("#TypeId").empty();
+                      for (var i = 0; i < data.length; i++)
+                      {
+                    $("#TypeId").val(data[i].TypeName)
+                      }
+                  },
+                  error: function (err)
+                  {
+                console.log(err);
+                  }
+              });
+    };
+
+    $('#btnSave').click(function ()
+    {
+        debugger
+        let list = {};
+
+         list.CategoryId = $('#Category').val();
+         list.productId = $('#Product').val();
+         list.productText = $('#Product option:selected').text();
+         list.CategoryText = $('#Category option:selected').text();
+         list.Description = $('#Description').val();
+         list.Tax = $('#TaxId').val();
+         list.Rate = $('#ItemRate').val();
+         list.Quantity = $('#Quantity').val();
+         list.Amount = $('#Amount').val();
+         list.TaxAmount = $('#TaxAmt').val();;
+         list.TotalAmount = $('#TotalAmt').val();;
+
+        list.sNo = sNo;
+
+        $.ajax({
+                url: '@Url.Content("~/Issues/savePurchages")',
+                type: 'POST',
+                  dataType: 'json',
+            data: { issueTable: list },
+                success: function (result)
+                {
+                    debugger
+                    console.log(result);
+                    list.Id = result;
+                    lstItems.push(list);
+                    console.log(lstItems);
+                    bindItems();
+                    $('#product').val(0);
+                    $('#Category').val(0);
+                    $('#Description').val('');
+                    $('#ItemRate').val('');
+                    $('#Quantity').val('');
+                    $('#TaxId').val('');
+                    $('#Amount').val('');
+                    $('#TaxAmt').val('');
+                    $('#TotalAmt').val('');
+                    $('#gstAmount').val('');
+            },
+
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+
+    function bindItems() {
+        $('#tblpurchaserequest').empty();
+        if (lstItems.length > 0) {
+            debugger
+            let sNo = 1;
+            let grandTotal = 0;
+            // let calProPer = 0;
+            for (var i = 0; i < lstItems.length; i++) {
+                var row = `<tr id=rm${sNo}>`
+                    + `<td>${sNo}</td>`
+                    + `<td>${lstItems[i].productText}</td>`
+                    + `<td>${lstItems[i].CategoryText}</td>`
+                    + `<td>${lstItems[i].Tax}</td>`
+                    + `<td>${lstItems[i].Description}</td>`
+                    + `<td>${lstItems[i].Rate}</td>`
+                    + `<td>${lstItems[i].Quantity}</td>`
+                    + `<td>${lstItems[i].Amount}</td>`
+                    + `<td>${lstItems[i].TaxAmount}</td>`
+                    + `<td>${lstItems[i].TotalAmount}</td>`
+                    + `<td>
+
+                        <button type="button" class="btn btn-default" onclick="removeTR('${lstItems[i].Id}')">Remove</button>
+                        </td>`
+                    + "</tr>";
+
+                let amount = 0;
+
+
+
+                lstItems[i].TotalAmount != null ? amount = parseFloat(lstItems[i].TotalAmount) : amount = 0;
+                grandTotal += amount;
+
+                $('#tblpurchaserequest').append(row);
+                sNo++;
+            }
+            console.log(grandTotal);
+            $('#netAmt').val(grandTotal.toFixed());
+        }
+    }
+</script>*@
+

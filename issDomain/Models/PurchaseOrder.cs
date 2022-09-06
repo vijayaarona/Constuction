@@ -45,6 +45,6 @@ namespace issDomain.Models
         public decimal Tax { get; set; }
         public decimal TotTax { get; set; }
         public decimal TotAmount { get; set; }
-        public string Status { get; set; }
+        public int Sta { get; set; } = 0;
     }
 }

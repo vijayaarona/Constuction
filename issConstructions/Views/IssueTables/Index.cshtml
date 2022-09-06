@@ -88,96 +88,98 @@
         <h3>Project Name: @ViewBag.ProjectName</h3>
         
     </div>
-    <div class="panel panel-body" style="overflow:auto">
-        <p style="float:right;">
-            @Html.ActionLink("Add New", "Create", new { Id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
-            @Html.ActionLink("Back", "Index", "Issues", new { id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
+    <div class="panel panel-body">
+        <div class="card-header header-elements-inline">
+            <p style="float:right;">
+                @Html.ActionLink("Add New", "Create", new { Id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
+                @Html.ActionLink("Back", "Index", "Issues", new { id = ViewBag.pId }, htmlAttributes: new { @class = "btn btn-default" })
 
-        </p>
+            </p>
 
-        <table class="table">
-            <tr>
-                <th>
-                    Issue.ID
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category.CategoryName)
+            <table class="table datatable-basic table-bordered table-striped table-hover">
+                <tr>
+                    <th>
+                        Issue.ID
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category.CategoryName)
 
-                <th>
-                    @Html.DisplayNameFor(model => model.Product.ProductName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Quantity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tax)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TaxAmount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TotalAmount)
-                </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Product.ProductName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Rate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tax)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TaxAmount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TotalAmount)
+                    </th>
 
-                <th></th>
-            </tr>
+                    <th></th>
+                </tr>
 
-            @foreach (var item in Model)
-            {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.issueId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tax)
-            </td>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.issueId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tax)
+                        </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.TaxAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaxAmount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalAmount)
+                        </td>
 
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
 
-            </td>
-        </tr>
-            }
+                        </td>
+                    </tr>
+                }
 
-        </table>
+            </table>
+        </div>
     </div>
-</div>
+    </div>
 <script type="text/javascript">
     $(function () {
         $('#AGMaster').DataTable({

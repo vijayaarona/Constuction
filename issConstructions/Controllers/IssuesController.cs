@@ -227,15 +227,18 @@ namespace issConstructions.Controllers
                     foreach (var row in items)
                     {
                         tblStock tblStock = new tblStock();
-                        var stock = db.tblStocks.Where(x => x.categoryId == row.CategoryId && x.productId == row.productId).FirstOrDefault();
-
-                        if (stock != null)
-                         {
-                             stock.quantity = (stock.quantity - row.Quantity);
-
-                             db.Entry(stock).State = EntityState.Modified;
-                         }
-
+                        tblStock.PId = issues.IssueID;
+                        tblStock.categoryId = row.CategoryId;
+                        tblStock.productId = row.productId;
+                        tblStock.quantity = 0;
+                        tblStock.IssueQty = row.Quantity;
+                        tblStock.Type = "Issue";
+                        tblStock.rate = row.Rate;
+                        tblStock.CreatedDate = issues.CreatedDate ;
+                        tblStock.UpdateBy = issues.UpdateBy;
+                        tblStock.UpdatedDate = issues.UpdatedDate;
+                        db.tblStocks.Add(tblStock);
+                        db.SaveChanges();
 
                     }
 
@@ -303,7 +306,7 @@ namespace issConstructions.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Issues issues = db.issues.Find(id);
+            Issues issues = db.issues.Where(x => x.isDeleted == false && x.ID == id).FirstOrDefault();
             if (issues == null)
             {
                 return HttpNotFound();
@@ -311,20 +314,9 @@ namespace issConstructions.Controllers
 
            
             ViewBag.TypeId = new SelectList(db.tblTypes, "Id", "TypeName", issues.TypeId);
-            //ViewBag.GNameId = new SelectList(db.godowns, "Id", "godownName", issues.GNameId);
-            //ViewBag.SNameId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SNameId);
             ViewBag.SiteNameId = new SelectList(db.siteDetails, "ID", "ProjectName", issues.SiteNameId);
             ViewBag.SiteId = new SelectList(db.siteDetails, "ID", "SiteName", issues.SiteId);
             ViewBag.SiteAddressId = new SelectList(db.siteDetails, "ID", "SiteAddress", issues.SiteAddressId);
-
-            List<ddlLocations> ddl = new List<ddlLocations>();
-            ddlLocations ddlLocations = new ddlLocations();
-            ddlLocations.text = "----Please Select----";
-            ddl.Add(ddlLocations);
-            ViewBag.location = ddl;
-            return View();
-
-
             return View(issues);
 
 
@@ -342,6 +334,35 @@ namespace issConstructions.Controllers
 
                 issues.UpdatedDate = DateTime.UtcNow;
                 db.Entry(issues).State = EntityState.Modified;
+
+                    List<tblStock> lstPR1 = db.tblStocks.Where(x => x.PId ==issues.IssueID).ToList();
+                    foreach (var item1 in lstPR1)
+                    {
+                        db.tblStocks.Remove(item1);
+                        db.SaveChanges();
+                    }
+                    var items = db.issueTables.Where(x => x.issueId == issues.IssueID).ToList();
+                    if (items.Count > 0)
+                    {
+                        foreach (var row in items)
+                        {
+                            tblStock tblStock = new tblStock();
+                            tblStock.PId = issues.IssueID;
+                            tblStock.categoryId = row.CategoryId;
+                            tblStock.productId = row.productId;
+                            tblStock.quantity = 0;
+                            tblStock.IssueQty = row.Quantity;
+                            tblStock.Type = "Issue";
+                            tblStock.rate = row.Rate;
+                            tblStock.CreatedDate = issues.CreatedDate;
+                            tblStock.UpdateBy = issues.UpdateBy;
+                            tblStock.UpdatedDate = issues.UpdatedDate;
+                            db.tblStocks.Add(tblStock);
+                            db.SaveChanges();
+                     
+                        }
+                    }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -374,6 +395,14 @@ namespace issConstructions.Controllers
             foreach (var item in lstPR)
             {
                 db.issueTables.Remove(item);
+                db.SaveChanges();
+            }
+            //Stock
+
+            List<tblStock> lstPR1 = db.tblStocks.Where(x => x.PId == issues.IssueID).ToList();
+            foreach (var item1 in lstPR1)
+            {
+                db.tblStocks.Remove(item1);
                 db.SaveChanges();
             }
 

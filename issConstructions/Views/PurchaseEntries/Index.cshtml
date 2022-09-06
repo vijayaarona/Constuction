@@ -46,9 +46,10 @@
     <div class="panel panel-heading header">
         Purchase Entry - Index Page
     </div>
-    <div class="panel panel-body" style="overflow:auto">
+    <div class="panel panel-body">
+    <div class="card-header header-elements-inline">
         @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
-        <table class="table" id="AGMaster">
+        <table class="table datatable-basic table-bordered table-striped table-hover" id="AGMaster">
             <thead>
                 <tr>
                     <th>
@@ -89,7 +90,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.purchaseId)
                         </td>
-                        @if (@item.purchaseDate!= null)
+                        @if (@item.purchaseDate != null)
                         {
                             <td>
                                 @item.purchaseDate.Value.ToShortDateString()
@@ -137,6 +138,7 @@
 
     </div>
 </div>
+    </div>
 <script type="text/javascript">
     $(function () {
         $('#AGMaster').DataTable({

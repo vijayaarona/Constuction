@@ -170,7 +170,10 @@
     <Compile Include="Controllers\receiptEntriesController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SiteDetailsController.cs" />
+    <Compile Include="Controllers\SiteName.cs" />
+    <Compile Include="Controllers\Supname.cs" />
     <Compile Include="Controllers\SupplierMastersController.cs" />
+    <Compile Include="Controllers\SupplierName.cs" />
     <Compile Include="Controllers\ToolsMastersController.cs" />
     <Compile Include="Controllers\ToolsTransfersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -327,12 +330,42 @@
     <Compile Include="Migrations\202208170535072_ConM36.Designer.cs">
       <DependentUpon>202208170535072_ConM36.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208190415499_COnM37.cs" />
+    <Compile Include="Migrations\202208190415499_COnM37.Designer.cs">
+      <DependentUpon>202208190415499_COnM37.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208190507086_ConM38.cs" />
+    <Compile Include="Migrations\202208190507086_ConM38.Designer.cs">
+      <DependentUpon>202208190507086_ConM38.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208190518451_ConM39.cs" />
+    <Compile Include="Migrations\202208190518451_ConM39.Designer.cs">
+      <DependentUpon>202208190518451_ConM39.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208190721462_ConM40.cs" />
+    <Compile Include="Migrations\202208190721462_ConM40.Designer.cs">
+      <DependentUpon>202208190721462_ConM40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208190734428_ConM41.cs" />
+    <Compile Include="Migrations\202208190734428_ConM41.Designer.cs">
+      <DependentUpon>202208190734428_ConM41.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208190738318_ConM42.cs" />
+    <Compile Include="Migrations\202208190738318_ConM42.Designer.cs">
+      <DependentUpon>202208190738318_ConM42.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\issModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Images\logo-construction.png" />
+    <Content Include="Assets\js\app.js" />
+    <Content Include="Assets\js\custom.js" />
+    <Content Include="Assets\js\FileSaver.js" />
+    <Content Include="Assets\js\jquery.validate.js" />
+    <Content Include="Assets\js\picker_date.js" />
+    <Content Include="Assets\js\xlsx.full.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -509,6 +542,18 @@
     <Content Include="Views\ExtraWorkTables\Details.cshtml" />
     <Content Include="Views\ExtraWorkTables\Edit.cshtml" />
     <Content Include="Views\ExtraWorkTables\Index.cshtml" />
+    <Content Include="Views\Report\Payment.cshtml" />
+    <Content Include="Views\Report\Receipt.cshtml" />
+    <Content Include="Views\Report\PurchaseRequest.cshtml" />
+    <Content Include="Views\Report\PurchaseOrder.cshtml" />
+    <Content Include="Views\Report\Purchase.cshtml" />
+    <Content Include="Views\Report\PurchaseCat.cshtml" />
+    <Content Include="Views\Report\PurchaseBill.cshtml" />
+    <Content Include="Views\Report\Issue.cshtml" />
+    <Content Include="Views\Report\IssueCat.cshtml" />
+    <Content Include="Views\Report\RateWork.cshtml" />
+    <Content Include="Views\Report\ExtraWork.cshtml" />
+    <Content Include="Views\Report\ToolsTransfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -654,6 +699,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208170535072_ConM36.resx">
       <DependentUpon>202208170535072_ConM36.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208190415499_COnM37.resx">
+      <DependentUpon>202208190415499_COnM37.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208190507086_ConM38.resx">
+      <DependentUpon>202208190507086_ConM38.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208190518451_ConM39.resx">
+      <DependentUpon>202208190518451_ConM39.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208190721462_ConM40.resx">
+      <DependentUpon>202208190721462_ConM40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208190734428_ConM41.resx">
+      <DependentUpon>202208190734428_ConM41.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208190738318_ConM42.resx">
+      <DependentUpon>202208190738318_ConM42.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

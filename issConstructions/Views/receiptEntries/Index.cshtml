@@ -67,107 +67,109 @@
         font-size: 13px;
     }
 </style>
-<div class="panel-group">
-    <div class="panel panel-heading header">
-        Receipt Entry - Index Page
-    </div>
-    <div class="panel panel-body" style="overflow:auto">
-        @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
-        <table class="table" id="AGMaster">
-            <thead>
-                <tr>
+        <div class="panel-group">
+            <div class="panel panel-heading header">
+                Receipt Entry - Index Page
+            </div>
+            <div class="panel panel-body">
+                <div class="card-header header-elements-inline">
+                    @Html.ActionLink("Add New", "Create", null, htmlAttributes: new { @class = "addNew" })
+                    <table class="table datatable-basic table-bordered table-striped table-hover" id="AGMaster">
+                        <thead>
+                            <tr>
 
-                    <th>
-                        <label>Receipt ID</label>
-                    </th>
-                    <th>
-                        <label>Receipt Date</label>
-                    </th>
-                    <th>
-                        <label>Payment Type</label>
-                    </th>
-                    <th>
-                        <label>Project Name</label>
-                    </th>
-                    <th>
-                        <label>Site Name</label>
-                    </th>
-                    <th>
-                        <label>Ledger Name</label>
-                    </th>
-                    <th>
-                        <label>Given By</label>
-                    </th>
-                    <th>
-                        <label>Collected By</label>
-                    </th>
-                    <th>
-                        <label>Amount</label>
-                    </th>
-                    <th>
-                        <label>Remarks</label>
-                    </th>
-                    <th>
-                        <label>Actions</label>
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.receiptID)
-                    </td>
+                                <th>
+                                    <label>Receipt ID</label>
+                                </th>
+                                <th>
+                                    <label>Receipt Date</label>
+                                </th>
+                                <th>
+                                    <label>Payment Type</label>
+                                </th>
+                                <th>
+                                    <label>Project Name</label>
+                                </th>
+                                <th>
+                                    <label>Site Name</label>
+                                </th>
+                                <th>
+                                    <label>Ledger Name</label>
+                                </th>
+                                <th>
+                                    <label>Given By</label>
+                                </th>
+                                <th>
+                                    <label>Collected By</label>
+                                </th>
+                                <th>
+                                    <label>Amount</label>
+                                </th>
+                                <th>
+                                    <label>Remarks</label>
+                                </th>
+                                <th>
+                                    <label>Actions</label>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.receiptID)
+                                    </td>
 
-                    @if (@item.receiptDate != null)
-                    {
-                        <td>
-                            @item.receiptDate.Value.ToShortDateString()
+                                    @if (@item.receiptDate != null)
+                                    {
+                                        <td>
+                                            @item.receiptDate.Value.ToShortDateString()
 
-                        </td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                    <td>
-                        @Html.DisplayFor(modelItem => item.accountLedger.AccountLedger)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.siteName.ProjectName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.siteName.SiteName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ledger.AccountLedger) 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.givenBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.collectBy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.amount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.remarks)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }) 
-                       @*<a href="~/Report/Receiptvoucher/@item.ID">Voucher</a>*@
-                    </td>
-                </tr>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.accountLedger.AccountLedger)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.siteName.ProjectName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.siteName.SiteName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ledger.AccountLedger)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.givenBy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.collectBy)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.amount)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.remarks)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                        @*<a href="~/Report/Receiptvoucher/@item.ID">Voucher</a>*@
+                                    </td>
+                                </tr>
 
-                }
-            </tbody>
+                            }
+                        </tbody>
 
-        </table>
+                    </table>
 
-    </div>
-</div>
+                </div>
+            </div>
+            </div> 

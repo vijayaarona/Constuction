@@ -68,26 +68,15 @@
                     @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control", @id = "TypeId" })
                     @Html.ValidationMessageFor(model => model.Type.TypeName, "", new { @class = "text-danger" })
                 </div>
-
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6"  style=" display :none ">
                     <label>From Location</label>
-                    <select class="form-control" id="ddlFromLcation" name="GNameId">
-                        @for (int i = 0; i < ViewBag.location.Count; i++)
-                        {
-                            <option value='@ViewBag.location[i].value'>@ViewBag.location[i].text</option>
-
-                        }
-
-                    </select>
+                    @Html.EditorFor(model => model.GNameId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GNameId, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6"  style=" display :none ">
                     <label>To Location</label>
-                    <select class="form-control" id="ddlToLocation" name="SNameId">
-                        @for (int i = 0; i < ViewBag.location.Count; i++)
-                        {
-                            <option value='@ViewBag.location[i].value'>@ViewBag.location[i].text</option>
-                        }
-                    </select>
+                    @Html.EditorFor(model => model.SNameId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SNameId , "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group col-lg-6">
@@ -110,7 +99,7 @@
 
                 <div class="form-group col-lg-6">
                     <label>Net Amount</label>
-                    @Html.EditorFor(model => model.netAmount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.netAmount, new { htmlAttributes = new { @class = "form-control" } } )
                     @Html.ValidationMessageFor(model => model.netAmount, "", new { @class = "text-danger" })
                 </div>
             </div>
