@@ -198,8 +198,41 @@ namespace issConstructions.Controllers
         {
             DateTime fromDate = Convert.ToDateTime(fDate);
             DateTime toDate = Convert.ToDateTime(tDate);
-            var requests = db.purchaseRequest.Where(x => x.CreatedDate >= fromDate && x.CreatedDate <= toDate).ToList();
+            var requests = db.purchaseRequest.Where(x => x.RequestDate >= fromDate && x.RequestDate <= toDate).ToList();
             return Json(requests,JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Methods
+        [HttpPost]
+        public JsonResult getPurchaseOrderList(string fDate, string tDate)
+        {
+            DateTime fromDate = Convert.ToDateTime(fDate);
+            DateTime toDate = Convert.ToDateTime(tDate);
+            var orders = db.PurchaseOrders.Where(x => x.OrderDate >= fromDate && x.OrderDate <= toDate).ToList();
+            return Json(orders, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Methods
+        [HttpPost]
+        public JsonResult getPurchaseList(string fDate, string tDate)
+        {
+            DateTime fromDate = Convert.ToDateTime(fDate);
+            DateTime toDate = Convert.ToDateTime(tDate);
+            var orders = db.purchaseEntries.Where(x => x.purchaseDate >= fromDate && x.purchaseDate <= toDate).ToList();
+            return Json(orders, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Methods
+        [HttpPost]
+        public JsonResult getIssueList(string fDate, string tDate)
+        {
+            DateTime fromDate = Convert.ToDateTime(fDate);
+            DateTime toDate = Convert.ToDateTime(tDate);
+            var orders = db.issues.Where(x => x.IssuesDate>= fromDate && x.IssuesDate <= toDate).ToList();
+            return Json(orders, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

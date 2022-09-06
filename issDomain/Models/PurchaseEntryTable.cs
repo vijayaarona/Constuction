@@ -31,6 +31,8 @@ namespace issDomain.Models
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? UpdatedDate { get; set; }
+
+        public DateTime? PurchaseDate { get; set; }
     }
 }
 

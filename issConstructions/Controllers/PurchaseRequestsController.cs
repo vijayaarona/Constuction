@@ -376,6 +376,7 @@ namespace issConstructions.Controllers
                 //PurchaseRequest purchaseRequest = new PurchaseRequest();
                 int maxValue = 0;
                 var isnull = db.purchaseRequest.Where(x => x.RequestID!= null).ToList();
+                
                 if (isnull.Count == 0)
                 {
                     maxValue = 1;
@@ -390,8 +391,9 @@ namespace issConstructions.Controllers
                 PurchaseRequestTable.purchaseRequestId = maxValue;
                 PurchaseRequestTable.CreatedDate = DateTime.UtcNow;
                 PurchaseRequestTable.UpdatedDate = DateTime.UtcNow;
+                //PurchaseRequestTable.RequestDate = DateTime.UtcNow;
                 PurchaseRequestTable.UpdateBy = Display.Name;
-
+             
                 db.purchaseRequestTables.Add(PurchaseRequestTable);
                 // db.purchaseRequest.Add(purchaseRequest);
                 db.SaveChanges();

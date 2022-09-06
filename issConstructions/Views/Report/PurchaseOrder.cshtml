@@ -121,12 +121,13 @@
                                     <th>Category Name</th>
                                     <th>Supplier Name</th>
                                     <th>Site Name</th>
-                                    <th>Item Name</th>
-                                    <th>Rate</th>
-                                    <th>Qty</th>
+                                    <th>Total Amt</th>
+                                    <th>Dis (%)</th>
                                     <th>Dis.Amt</th>
+                                    <th>Grand Total</th>
+                                    <th>Tax (%)</th>
                                     <th>Tax Amt</th>
-                                    <th>Amount</th>
+                                    <th>Net Amt</th>
 
                                 </tr>
                             </thead>
@@ -141,7 +142,7 @@
 </div>
 <script>
     $(function () {
-            $('#empCategory').select2();
+          //  $('#empCategory').select2();
         $("#exportexcel").click(function () {
             exportToExcel();
         });
@@ -151,31 +152,41 @@
         });
 
         $("#btnSearch").click(function () {
-            var id = document.getElementById("empCategory");
-             var category = id.options[id.selectedIndex].value;
-            Details(category);
+           // var id = document.getElementById("empCategory");
+             //var category = id.options[id.selectedIndex].value;
+            Details();
         });
 
     });
-    function Details(category) {
-        $("#tblDetails").empty();
+    function Details() {
+        debugger
+        let fromDate = $('#fromdate').val();
+        let toDate = $('#todate').val();
         $.ajax({
             type: 'POST',
-            url: '@Url.Content("~/Reports/EmpDetails")',
+            url: '@Url.Content("/Report/getPurchaseOrderList")',
             dataType: 'json',
-            data: { CATEGORY: category },
+            data: { fDate: fromDate, tDate: toDate },
             success: function (result) {
-                var data = JSON.parse(result);
+                $("#tblDetails").empty();
+                console.log(result);
+                var data = result;//JSON.parse(result);
                 var row;
                 for (var i = 0; i < data.length; i++) {
                     row = '<tr>';
-                    row += '<td>' + data[i].employeeid + '</td>';
-                    row += '<td>' + data[i].name + '</td>';
-                    row += '<td>' + data[i].Category + '</td>';
-                    row += '<td>' + data[i].Department + '</td>';
-                    row += '<td>' + data[i].biocode + '</td>';
-                    row += '<td>' + data[i].bisSalary + '</td>';
-                    row += '<td>' + data[i].status + '</td>';
+                    row += '<td>' + data[i].OrderId + '</td>';
+                    row += '<td>' + DateConvertion(data[i].OrderDate) + '</td>';
+                    row += '<td>' + data[i].Category.CategoryName + '</td>';
+                    row += '<td>' + data[i].Supplier.Suppliername + '</td>';
+                    row += '<td>' + data[i].SiteName.SiteName + '</td>';
+                    row += '<td>' + data[i].TotAmount + '</td>';
+                    row += '<td>' + data[i].discountPercentage + '</td>';
+                    row += '<td>' + data[i].dicountAmount + '</td>';
+                    row += '<td>' + data[i].grandTotal + '</td>';
+                    row += '<td>' + data[i].Tax + '</td>';
+                    row += '<td>' + data[i].TotTax + '</td>';
+                    row += '<td>' + data[i].NetAmount + '</td>';
+
                     row += '</tr>';
                     $("#tblDetails").append(row);
                 }
@@ -185,6 +196,8 @@
             }
         });
     }
+
+
     function exportToExcel() {
         var wscols = [
             { wch: 10 },

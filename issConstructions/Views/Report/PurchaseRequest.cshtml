@@ -1,4 +1,4 @@
-﻿
+﻿ 
 @{
     ViewBag.Title = "PurchaseRequest";
 }
@@ -57,88 +57,89 @@
                         </select>
                     </div>
                 </div>
-          
-            <div class="row">
-                <div class="col-md-2" style=" left :9%">
-                    <div class="form-group">
-                        <label class="d-block">Select Supplier Name</label>
-                        <select name="empCategory" id="empCategory" class="form-control col-xs-12" style=" width:350%" required>
-                            <option value="">--Please Select--</option>
-                            @foreach (var item in ViewBag.SupName)
-                            {
-                                //<option value="@item.ID">@item.SupplierName </option>
-                                <option value="@item.Value">@item.Text </option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-2" style=" left :18%">
-                    <div class="form-group">
-                        <label>From Date</label>
-                        <div class="input-group">
-                            <span class="input-group-prepend">
-                                <span class="input-group-text"><i class="icon-calendar22" id="fromicon"></i></span>
-                            </span>
-                            <input type="date" class="form-control daterange-single-date" id="fromdate">
+
+                <div class="row">
+                    <div class="col-md-2" style=" left :9%">
+                        <div class="form-group">
+                            <label class="d-block">Select Supplier Name</label>
+                            <select name="empCategory" id="empCategory" class="form-control col-xs-12" style=" width:350%" required>
+                                <option value="">--Please Select--</option>
+                                @foreach (var item in ViewBag.SupName)
+                                {
+                                    //<option value="@item.ID">@item.SupplierName </option>
+                                    <option value="@item.Value">@item.Text </option>
+                                }
+                            </select>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-2" style=" left :15%">
-                    <div class="form-group">
-                        <label>To Date</label>
-                        <div class="input-group">
-                            <span class="input-group-prepend">
-                                <span class="input-group-text"><i class="icon-calendar22" id="toicon"></i></span>
-                            </span>
-                            <input type="date" class="form-control daterange-single-date" id="todate">
+                    <div class="col-md-2" style=" left :18%">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-calendar22" id="fromicon"></i></span>
+                                </span>
+                                <input type="date" class="form-control daterange-single-date" id="fromdate">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-2" style=" left :12%;">
-                    <button type="button" class="dropdown-item" id="btnSearch" style="padding: 8px; background-color: #FF5F04; color: white; margin: 20px; border-radius: 10px; width:60%;"> Search</button>
-
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header header-elements-inline">
-                    <div class="header-elements">
-                        <div class="list-icons" style="margin-left:85%;">
-
-                            @*<button href="#" class="dropdown-item" id="btnSearch"><i class="icon-search4"></i> Search</button>*@
-                            <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel" style=" width:50%;"></i> PDF</button>
-                            <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel"></i> .xlsx</button>
-                            <button href="#" class="dropdown-item" id="btnprint"><i class="icon-printer"></i> Print</button>
+                    <div class="col-md-2" style=" left :15%">
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-calendar22" id="toicon"></i></span>
+                                </span>
+                                <input type="date" class="form-control daterange-single-date" id="todate">
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-md-2" style=" left :12%;">
+                        <button type="button" class="dropdown-item" id="btnSearch" style="padding: 8px; background-color: #FF5F04; color: white; margin: 20px; border-radius: 10px; width:60%;"> Search</button>
 
+                    </div>
+                </div>
                 <div class="card">
-                    <table class="table datatable-basic table-bordered table-striped table-hover" id="tblempdetails">
-                        <thead>
-                            <tr>
-                                <th>Req.ID</th>
-                                <th>Req.Date</th>
-                                <th>Category Name</th>
-                                <th>Supplier Name</th>
-                                <th>Site Name</th>
-                                <th>Item Name</th>
-                                <th>Rate</th>
-                                <th>Qty</th>
-                                <th>Dis.Amt</th>
-                                <th>Tax Amt</th>
-                                <th>Amount</th>
+                    <div class="card-header header-elements-inline">
+                        <div class="header-elements">
+                            <div class="list-icons" style="margin-left:85%;">
 
-                            </tr>
-                        </thead>
-                        <tbody id="tblDetails"></tbody>
-                    </table>
+                                @*<button href="#" class="dropdown-item" id="btnSearch"><i class="icon-search4"></i> Search</button>*@
+                                <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel" style=" width:50%;"></i> PDF</button>
+                                <button href="#" class="dropdown-item" id="exportexcel"><i class="icon-file-excel"></i> .xlsx</button>
+                                <button href="#" class="dropdown-item" id="btnprint"><i class="icon-printer"></i> Print</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <table class="table datatable-basic table-bordered table-striped table-hover" id="tblempdetails">
+                            <thead>
+                                <tr>
+                                    <th>Req.ID</th>
+                                    <th>Req.Date</th>
+                                    <th>Category Name</th>
+                                    <th>Supplier Name</th>
+                                    <th>Site Name</th>
+                                    <th>Total Amt</th>
+                                    <th>Dis (%)</th>
+                                    <th>Dis.Amt</th>
+                                    <th>Grand Total</th>
+                                    <th>Tax (%)</th>
+                                    <th>Tax Amt</th>
+                                    <th>Net Amt</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblDetails"></tbody>
+                        </table>
+                    </div>
+
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-    </div>
 <script>
     $(function () {
             //$('#empCategory').select2();
@@ -157,6 +158,7 @@
         });
 
     });
+
     function Details() {
         debugger
         let fromDate = $('#fromdate').val();
@@ -167,6 +169,7 @@
             dataType: 'json',
             data: { fDate: fromDate, tDate: toDate },
             success: function (result) {
+                $("#tblDetails").empty();
                 console.log(result);
                 var data = result;//JSON.parse(result);
                 var row;
@@ -177,13 +180,14 @@
                     row += '<td>' + data[i].Category.CategoryName + '</td>';
                     row += '<td>' + data[i].Supplier.Suppliername + '</td>';
                     row += '<td>' + data[i].SiteName.SiteName + '</td>';
-                    row += '<td>' + + '</td>';
-                    row += '<td>' + data[i].Tax + '</td>';
-                    row += '<td>' + data[i].dicountAmount + '</td>';
+                    row += '<td>' + data[i].TotAmount + '</td>';
                     row += '<td>' + data[i].discountPercentage + '</td>';
+                    row += '<td>' + data[i].dicountAmount + '</td>';
+                    row += '<td>' + data[i].grandTotal + '</td>';
+                    row += '<td>' + data[i].Tax + '</td>';
                     row += '<td>' + data[i].TotTax + '</td>';
-                    
                     row += '<td>' + data[i].NetAmount + '</td>';
+               
                     row += '</tr>';
                     $("#tblDetails").append(row);
                 }
@@ -193,6 +197,8 @@
             }
         });
     }
+
+
     function exportToExcel() {
         var wscols = [
             { wch: 10 },

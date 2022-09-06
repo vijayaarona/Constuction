@@ -108,7 +108,6 @@ namespace issConstructions.Controllers
 
             try
             {
-
                 db.purchaseRequestTables.Add(purchaseRequestTable);
                 db.SaveChanges();
                 return RedirectToAction("Index", "purchaseRequestTables", new { Id = purchaseRequestTable.purchaseRequestId });

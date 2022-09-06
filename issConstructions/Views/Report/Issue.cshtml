@@ -104,13 +104,10 @@
                                 <th>Issue ID</th>
                                 <th>Date</th>
                                 <th>Issue Type</th>
-                                <th>Category Name</th>
-                                <th>Item Name</th>
-                                <th>Rate</th>
-                                <th>Qty</th>
-                                <th>Dis Amt</th>
-                                <th>Tax Amt</th>
-                                <th>Amount</th>
+                                <th>Project Name</th>
+                                <th>Site Name</th>
+                                <th>Site Address</th>
+                                <th>Net Amount</th>
                                 
                             </tr>
                         </thead>
@@ -124,7 +121,7 @@
 </div>
 <script>
     $(function () {
-            $('#empCategory').select2();
+           // $('#empCategory').select2();
         $("#exportexcel").click(function () {
             exportToExcel();
         });
@@ -134,31 +131,35 @@
         });
 
         $("#btnSearch").click(function () {
-            var id = document.getElementById("empCategory");
-             var category = id.options[id.selectedIndex].value;
-            Details(category);
+           // var id = document.getElementById("empCategory");
+           //  var category = id.options[id.selectedIndex].value;
+            Details();
         });
 
     });
-    function Details(category) {
-        $("#tblDetails").empty();
+     function Details() {
+        debugger
+        let fromDate = $('#fromdate').val();
+        let toDate = $('#todate').val();
         $.ajax({
             type: 'POST',
-            url: '@Url.Content("~/Reports/EmpDetails")',
+            url: '@Url.Content("/Report/getIssueList")',
             dataType: 'json',
-            data: { CATEGORY: category },
+            data: { fDate: fromDate, tDate: toDate },
             success: function (result) {
-                var data = JSON.parse(result);
+                $("#tblDetails").empty();
+                console.log(result);
+                var data = result;//JSON.parse(result);
                 var row;
                 for (var i = 0; i < data.length; i++) {
                     row = '<tr>';
-                    row += '<td>' + data[i].employeeid + '</td>';
-                    row += '<td>' + data[i].name + '</td>';
-                    row += '<td>' + data[i].Category + '</td>';
-                    row += '<td>' + data[i].Department + '</td>';
-                    row += '<td>' + data[i].biocode + '</td>';
-                    row += '<td>' + data[i].bisSalary + '</td>';
-                    row += '<td>' + data[i].status + '</td>';
+                    row += '<td>' + data[i].IssueID + '</td>';
+                    row += '<td>' + DateConvertion(data[i].IssuesDate) + '</td>';
+                    row += '<td>' + data[i].Type.TypeName + '</td>';
+                    row += '<td>' + data[i].SiteName.ProjectName + '</td>';
+                    row += '<td>' + data[i].SiteName.SiteName + '</td>';
+                    row += '<td>' + data[i].SiteName.SiteAddress + '</td>';
+                    row += '<td>' + data[i].netAmount + '</td>';
                     row += '</tr>';
                     $("#tblDetails").append(row);
                 }
@@ -168,7 +169,8 @@
             }
         });
     }
-    function exportToExcel() {
+
+ function exportToExcel() {
         var wscols = [
             { wch: 10 },
             { wch: 20 },
