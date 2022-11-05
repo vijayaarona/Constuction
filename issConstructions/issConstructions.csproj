@@ -234,6 +234,46 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\assets\css\style.css" />
+    <Content Include="Assets\assets\images\theme-img\avatars\1.jpg" />
+    <Content Include="Assets\assets\images\theme-img\avatars\2.jpg" />
+    <Content Include="Assets\assets\images\theme-img\avatars\3.jpg" />
+    <Content Include="Assets\assets\images\theme-img\avatars\4.jpg" />
+    <Content Include="Assets\assets\images\theme-img\avatars\5.jpg" />
+    <Content Include="Assets\assets\images\theme-img\avatars\6.jpg" />
+    <Content Include="Assets\assets\images\theme-img\avatars\7.jpg" />
+    <Content Include="Assets\assets\images\theme-img\avatars\8.jpg" />
+    <Content Include="Assets\assets\images\theme-img\avatars\9.jpg" />
+    <Content Include="Assets\assets\images\theme-img\brand\coreui.svg" />
+    <Content Include="Assets\assets\images\theme-img\favicon\android-icon-144x144.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\android-icon-192x192.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\android-icon-36x36.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\android-icon-48x48.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\android-icon-72x72.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\android-icon-96x96.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon-114x114.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon-120x120.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon-144x144.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon-152x152.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon-180x180.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon-57x57.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon-60x60.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon-72x72.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon-76x76.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon-precomposed.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\apple-icon.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\browserconfig.xml" />
+    <Content Include="Assets\assets\images\theme-img\favicon\favicon-16x16.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\favicon-32x32.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\favicon-96x96.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\favicon.ico" />
+    <Content Include="Assets\assets\images\theme-img\favicon\ms-icon-144x144.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\ms-icon-150x150.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\ms-icon-310x310.png" />
+    <Content Include="Assets\assets\images\theme-img\favicon\ms-icon-70x70.png" />
+    <Content Include="Assets\assets\plugins\constrctionui\js\issconstruction.bundle.min.js" />
+    <Content Include="Assets\assets\plugins\simplebar\css\simplebar.css" />
+    <Content Include="Assets\assets\plugins\simplebar\js\simplebar.min.js" />
     <Content Include="Assets\Images\logo-construction.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -245,6 +285,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Assets\assets\css\style.css.map" />
+    <Content Include="Assets\assets\images\theme-img\favicon\manifest.json" />
+    <Content Include="Assets\assets\plugins\constrctionui\js\issconstruction.bundle.min.js.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -404,6 +447,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\assets\js\" />
+    <Folder Include="Assets\assets\sass\" />
     <Folder Include="System\Data\" />
   </ItemGroup>
   <ItemGroup>
